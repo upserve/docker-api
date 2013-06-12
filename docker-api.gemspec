@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = %w{lib}
   gem.version       = Docker::VERSION
   gem.add_dependency 'rest-client'
+  gem.add_dependency 'i18n'
   gem.add_dependency 'active_support', '>= 3.0.0'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
