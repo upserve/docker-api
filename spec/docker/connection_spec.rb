@@ -38,16 +38,66 @@ describe Docker::Connection do
     end
   end
 
-  context '#resource' do
+  describe '#resource' do
     its(:resource) { should be_a RestClient::Resource }
   end
 
   [:get, :put, :post, :delete, :[]].each do |method|
-    context "##{method}" do
+    describe "##{method}" do
       it 'is delegated to #resource' do
         subject.resource.should_receive(method)
         subject.public_send(method)
       end
+    end
+  end
+
+  describe '#==' do
+    let(:host) { 'localhost' }
+    let(:port) { 4243 }
+    subject { described_class.new(:host => host, :port => port) }
+
+    context 'when the argument is not a Docker::Connection' do
+      let(:other_connection) { :not_a_connection }
+
+      it 'returns false' do
+        (subject == other_connection).should be_false
+      end
+    end
+
+    context 'when the argument is a Docker::Connection' do
+      let(:other_connection) { described_class.new(:host => other_host,
+                                                   :port => other_port) }
+
+      context 'and the host and/or port are the different' do
+        let(:other_host) { 'google.com' }
+        let(:other_port) { 1000 }
+
+        it 'returns false' do
+          (subject == other_connection).should be_false
+        end
+      end
+
+      context 'and the host and port are the same' do
+        let(:other_host) { host }
+        let(:other_port) { port }
+
+        it 'returns true' do
+          (subject == other_connection).should be_true
+        end
+      end
+    end
+  end
+
+  describe '#to_s' do
+    let(:host) { 'google.com' }
+    let(:port) { 4000 }
+    let(:expected_string) do
+      "Docker::Connection { :host => #{host}, :port => #{port} }"
+    end
+    subject { described_class.new(:host => host, :port => port) }
+
+    it 'returns a pretty printed version with the host and port' do
+      subject.to_s.should == expected_string
     end
   end
 end
