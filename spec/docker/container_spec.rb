@@ -170,10 +170,10 @@ describe Docker::Container, :class do
     end
   end
 
-  describe '#filesystem_changes' do
+  describe '#changes' do
     context 'when the Container has not been created' do
       it 'raises an error' do
-        expect { subject.filesystem_changes }
+        expect { subject.changes }
             .to raise_error Docker::Error::ContainerError
       end
     end
@@ -187,22 +187,23 @@ describe Docker::Container, :class do
         after { Excon.stubs.shift }
 
         it 'raises an error' do
-          expect { subject.filesystem_changes }
+          expect { subject.changes }
               .to raise_error(Excon::Errors::InternalServerError)
         end
       end
 
       context 'when the HTTP response status is 200' do
-        let(:changes) { subject.filesystem_changes }
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
+        let(:changes) { subject.changes }
+        before do
+          subject.create!('Cmd' => ['ls'], 'Image' => 'base')
+          subject.start
+          subject.wait
+        end
 
         it 'returns the changes as an array', :vcr do
-          pending 'Docker returns a 500 error'
           changes.should be_a Array
           changes.should be_all { |change| change.is_a?(Hash) }
-          changes.length.should == 1
-          changes.first['Path'].should == '/lol'
-          changes.first['Kind'].should == 1
+          changes.length.should_not be_zero
         end
       end
     end
@@ -231,11 +232,19 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
+        before do
+         subject.create!('Cmd' => ['ls'], 'Image' => 'base')
+         subject.start
+         subject.wait
+        end
 
         it 'yields each chunk', :vcr do
-          pending 'Docker returns a 500 error; not sure why yet'
-          subject.export { |chunk| puts chunk }
+          first = nil
+          subject.export do |chunk|
+            first = chunk
+            break
+          end
+          first[257..262].should == "ustar\000" # Make sure the export is a tar.
         end
       end
     end
@@ -263,11 +272,13 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
+        before { subject.create!('Cmd' => ['/usr/bin/sleep 10'], 'Image' => 'base') }
 
         it 'starts the container', :vcr do
-          pending 'Docker returns a 500 error'
           subject.start
+          described_class.all.map(&:id).should be_any { |id|
+            id.start_with?(subject.id)
+          }
         end
       end
     end
@@ -298,8 +309,13 @@ describe Docker::Container, :class do
         before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
 
         it 'stops the container', :vcr do
-          pending 'Docker returns a 500 error'
           subject.tap(&:start).stop
+          described_class.all(:all => true).map(&:id).should be_any { |id|
+            id.start_with?(subject.id)
+          }
+          described_class.all.map(&:id).should be_none { |id|
+            id.start_with?(subject.id)
+          }
         end
       end
     end
@@ -330,8 +346,13 @@ describe Docker::Container, :class do
         before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
 
         it 'kills the container', :vcr do
-          pending 'Docker returns a 500 error'
           subject.kill
+          described_class.all.map(&:id).should be_none { |id|
+            id.start_with?(subject.id)
+          }
+          described_class.all(:all => true).map(&:id).should be_any { |id|
+            id.start_with?(subject.id)
+          }
         end
       end
     end
@@ -359,11 +380,21 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
+        before { subject.create!('Cmd' => ['/usr/bin/sleep 50'], 'Image' => 'base') }
 
-        it 'kills the container', :vcr do
-          pending 'Docker returns a 500 error'
+        it 'restarts the container', :vcr do
+          subject.start
+          described_class.all.map(&:id).should be_any { |id|
+            id.start_with?(subject.id)
+          }
+          subject.stop
+          described_class.all.map(&:id).should be_none { |id|
+            id.start_with?(subject.id)
+          }
           subject.restart
+          described_class.all.map(&:id).should be_any { |id|
+            id.start_with?(subject.id)
+          }
         end
       end
     end
@@ -391,11 +422,11 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
+        before { subject.create!('Cmd' => %w[tar nonsense] , 'Image' => 'base') }
 
         it 'waits for the command to finish', :vcr do
-          pending 'Docker returns a 500 error'
-          subject.wait
+          subject.start
+          subject.wait['StatusCode'].should == 64
         end
       end
     end
@@ -414,12 +445,13 @@ describe Docker::Container, :class do
       end
     end
 
-    context 'when the HTTP response is a 200' do
+    context 'when the HTTP response is a 200', :current do
       it 'materializes each Container into a Docker::Container', :vcr do
-        pending 'Docker returns a 500 error'
-        subject.all.should be_all { |container|
+        subject.new.create!('Cmd' => ['ls'], 'Image' => 'base')
+        subject.all(:all => true).should be_all { |container|
           container.is_a?(Docker::Container)
         }
+        subject.all(:all => true).length.should_not be_zero
       end
     end
   end

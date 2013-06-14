@@ -50,7 +50,7 @@ class Docker::Container
   def export(&block)
     ensure_created!
     self.connection.get(
-      :path           => "/containers/#{self.id}/changes",
+      :path           => "/containers/#{self.id}/export",
       :headers        => { 'Content-Type' => 'application/octet-stream' },
       :expects        => 200,
       :response_block => block
@@ -59,20 +59,20 @@ class Docker::Container
   end
 
   {
-    :json => :get,              # Get a description of the Container.
-    :wait => :post,             # Block until the command finishes.
-    :start => :post,            # Start the Container.
-    :filesystem_changes => :get # See the Container's changes to the filesystem.
+    :json => :get,   # Get a description of the Container.
+    :wait => :post,  # Block until the command finishes.
+    :start => :post, # Start the Container.
+    :changes => :get # See the Container's changes to the filesystem.
   }.each do |method, http_method|
     define_method(method) do
       ensure_created!
-      response = self.connection.request(
+      body = self.connection.request(
         :method  => http_method,
         :path    => "/containers/#{self.id}/#{method}",
         :headers => { 'Content-Type' => 'application/json' },
-        :expects => 200
-      )
-      JSON.parse(response.body) unless response.body.nil?
+        :expects => [200, 204]
+      ).body
+      JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
     end
   end
 
@@ -82,14 +82,14 @@ class Docker::Container
   [:stop, :kill, :restart].each do |method|
     define_method(method) do |time = 0|
       ensure_created!
-      response = self.connection.request(
+      body = self.connection.request(
         :method  => :post,
         :path    => "/containers/#{self.id}/#{method}",
         :headers => { 'Content-Type' => 'application/json' },
         :query   => { :t => time },
         :expects => 204
-      )
-      JSON.parse(response.body) unless response.body.nil?
+      ).body
+      JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
     end
   end
 
