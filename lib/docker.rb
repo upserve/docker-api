@@ -1,4 +1,5 @@
-require 'rest_client'
+require 'json'
+require 'excon'
 require 'active_support/core_ext'
 
 # The top-level module for this gem. It's purpose is to hold global
@@ -6,7 +7,7 @@ require 'active_support/core_ext'
 module Docker
   class << self
     def host
-      @host ||= 'localhost'
+      @host ||= 'http://localhost'
     end
 
     def port
@@ -36,3 +37,4 @@ end
 require 'docker/version'
 require 'docker/error'
 require 'docker/connection'
+require 'docker/container'

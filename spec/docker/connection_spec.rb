@@ -10,7 +10,7 @@ describe Docker::Connection do
       end
 
       it 'defaults to \'localhost\' for the host' do
-        subject.new.host.should == 'localhost'
+        subject.new.host.should == 'http://localhost'
       end
     end
 
@@ -39,10 +39,10 @@ describe Docker::Connection do
   end
 
   describe '#resource' do
-    its(:resource) { should be_a RestClient::Resource }
+    its(:resource) { should be_a Excon::Connection }
   end
 
-  [:get, :put, :post, :delete, :[]].each do |method|
+  [:get, :put, :post, :delete].each do |method|
     describe "##{method}" do
       it 'is delegated to #resource' do
         subject.resource.should_receive(method)

@@ -10,12 +10,12 @@ class Docker::Connection
       raise Docker::Error::ArgumentError, "Expected a Hash, got: #{options}"
     end
     self.port = options[:port] || 4243
-    self.host = options[:host] || 'localhost'
+    self.host = options[:host] || 'http://localhost'
   end
 
   # The actual client that sends HTTP methods to the docker server.
   def resource
-    @resource ||= RestClient::Resource.new("#{self.host}:#{self.port}")
+    @resource ||= Excon.new(self.host, :port => self.port)
   end
 
   def to_s
@@ -29,7 +29,7 @@ class Docker::Connection
   end
 
   # Delegate all HTTP methods to the resource.
-  delegate :get, :put, :post, :delete, :[], :to => :resource
+  delegate :get, :put, :post, :delete, :request, :to => :resource
 
 private
   attr_writer :host, :port

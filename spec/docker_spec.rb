@@ -5,7 +5,7 @@ describe Docker do
 
   it { should be_a Module }
   its(:port) { should == 4243 }
-  its(:host) { should == 'localhost' }
+  its(:host) { should == 'http://localhost' }
   its(:connection) { should be_a Docker::Connection }
 
   describe '#reset_connection!' do

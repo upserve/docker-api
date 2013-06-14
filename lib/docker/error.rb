@@ -7,4 +7,8 @@ module Docker::Error
 
   # Raised when invalid arguments are passed to a method.
   class ArgumentError < DockerError; end
+
+  # Raised when there is a state issue with a Container, such as trying to
+  # create a Container that already exists.
+  class ContainerError < DockerError; end
 end
