@@ -29,7 +29,11 @@ class Docker::Connection
   end
 
   # Delegate all HTTP methods to the resource.
-  delegate :get, :put, :post, :delete, :request, :to => :resource
+  [:get, :put, :post, :delete, :request].each do |method|
+    define_method(method) do |*args, &block|
+      self.resource.public_send(method, *args, &block)
+    end
+  end
 
 private
   attr_writer :host, :port

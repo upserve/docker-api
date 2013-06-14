@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'excon'
   gem.add_dependency 'json'
   gem.add_dependency 'i18n'
-  gem.add_dependency 'active_support', '>= 3.0.0'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cane'
