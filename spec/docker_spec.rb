@@ -4,7 +4,7 @@ describe Docker do
   subject { Docker }
 
   it { should be_a Module }
-  its(:port) { should == 4243 }
+  its(:options) { should == { :port => 4243 } }
   its(:url) { should == 'http://localhost' }
   its(:connection) { should be_a Docker::Connection }
 
@@ -17,11 +17,11 @@ describe Docker do
     end
   end
 
-  [:port=, :url=].each do |method|
+  [:options=, :url=].each do |method|
     describe "##{method}" do
-      it 'calls #reset_connection! first' do
+      it 'calls #reset_connection!' do
         subject.should_receive(:reset_connection!)
-        subject.public_send(method, :value)
+        subject.public_send(method, {})
       end
     end
   end

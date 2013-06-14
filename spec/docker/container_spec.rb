@@ -57,9 +57,11 @@ describe Docker::Container, :class do
 
   describe '#==' do
     let(:id) { 'abec1fd' }
-    let(:port) { 4243 }
+    let(:options) { { :port => 4243 } }
     let(:host) { 'localhost' }
-    let(:connection) { Docker::Connection.new(:host => host, :port => port) }
+    let(:connection) do
+      Docker::Connection.new(:host => host, :options => options)
+    end
     subject { described_class.new(:id => id, :connection => connection) }
 
     context 'when the argument is not a Container' do

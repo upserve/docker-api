@@ -9,22 +9,22 @@ module Docker
       @url ||= 'http://localhost'
     end
 
-    def port
-      @port ||= 4243
+    def options
+      @options ||= { :port => 4243 }
     end
 
     def url=(new_url)
-      reset_connection!
       @url = new_url
+      reset_connection!
     end
 
-    def port=(new_port)
+    def options=(new_options)
+      @options = { :port => 4243 }.merge(new_options)
       reset_connection!
-      @port = new_port
     end
 
     def connection
-      @connection ||= Connection.new(:url => url, :port => port)
+      @connection ||= Connection.new(url, options)
     end
 
     def reset_connection!

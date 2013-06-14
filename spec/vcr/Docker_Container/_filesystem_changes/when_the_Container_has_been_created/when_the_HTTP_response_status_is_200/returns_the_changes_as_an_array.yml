@@ -1,0 +1,31 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["ls"],"Image":"base"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAxNCBKdW4gMjAxMyAxODoyMzo1MCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"790963b83db5"}'
+    http_version: 
+  recorded_at: Fri, 14 Jun 2013 18:23:50 GMT
+recorded_with: VCR 2.5.0
