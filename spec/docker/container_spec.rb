@@ -439,4 +439,27 @@ describe Docker::Container, :class do
       end
     end
   end
+
+  describe '.all' do
+    subject { described_class }
+
+    context 'when the HTTP response is not a 200' do
+      before { Excon.stub({ :method => :get }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.all }
+            .to raise_error(Excon::Errors::InternalServerError)
+      end
+    end
+
+    context 'when the HTTP response is a 200' do
+      it 'materializes each Container into a Docker::Container', :vcr do
+        pending 'Docker returns a 500 error'
+        subject.all.should be_all { |container|
+          container.is_a?(Docker::Container)
+        }
+      end
+    end
+  end
 end

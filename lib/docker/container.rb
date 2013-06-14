@@ -102,6 +102,18 @@ class Docker::Container
   def to_s
     "Docker::Container { :id => #{self.id}, :connection => #{self.connection} }"
   end
+
+  def self.all(options = {}, connection = Docker.connection)
+    response = connection.get(
+      :path    => '/containers/json',
+      :headers => { 'Content-Type' =>  'application/json' },
+      :query   => options,
+      :expects => 200
+    )
+    JSON.parse(response.body).map { |container_hash|
+      new(:id => container_hash['Id'], :connection => connection)
+    }
+  end
 private
 
   def ensure_created!
