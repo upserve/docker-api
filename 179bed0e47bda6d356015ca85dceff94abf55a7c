@@ -1,0 +1,11 @@
+{
+  "built_on": "master",
+  "duration": 43.967,
+  "full_display_name": "gem.docker-api #24 - add-containers",
+  "id": "2013-06-14_18-47-04",
+  "number": 24,
+  "result": "FAILURE",
+  "status_message": "?",
+  "time": "2013-06-14 18:47:04 -0400",
+  "url": "job/gem.docker-api/24/"
+}
