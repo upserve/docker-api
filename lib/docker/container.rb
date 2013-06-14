@@ -93,12 +93,6 @@ class Docker::Container
     end
   end
 
-  def ==(other_container)
-    other_container.is_a?(Docker::Container) &&
-      (other_container.id == self.id) &&
-        (other_container.connection == self.connection)
-  end
-
   def to_s
     "Docker::Container { :id => #{self.id}, :connection => #{self.connection} }"
   end

@@ -11,7 +11,6 @@ class Docker::Connection
     end
     self.url = url
     self.options = { :port => 4243 }.merge(options)
-    puts "options in class: #{self.options}"
   end
 
   # The actual client that sends HTTP methods to the docker server.

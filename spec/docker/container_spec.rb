@@ -55,47 +55,6 @@ describe Docker::Container, :class do
     end
   end
 
-  describe '#==' do
-    let(:id) { 'abec1fd' }
-    let(:options) { { :port => 4243 } }
-    let(:host) { 'localhost' }
-    let(:connection) do
-      Docker::Connection.new(:host => host, :options => options)
-    end
-    subject { described_class.new(:id => id, :connection => connection) }
-
-    context 'when the argument is not a Container' do
-      let(:other_container) { :not_a_container }
-
-      it 'returns false' do
-        (subject == other_container).should be_false
-      end
-    end
-
-    context 'when the argument is not a Container' do
-      let(:other_container) do
-        described_class.new(:id => other_id, :connection => other_connection)
-      end
-      let(:other_connection) { connection }
-
-      context 'when the ids and/or connections don\'t match' do
-        let(:other_id) { 'ee7bc2d' }
-
-        it 'returns false' do
-          (subject == other_container).should be_false
-        end
-      end
-
-      context 'when the ids and connections do match' do
-        let(:other_id) { id }
-
-        it 'returns true' do
-          (subject == other_container).should be_true
-        end
-      end
-    end
-  end
-
   describe '#to_s' do
     let(:id) { 'bf119e2' }
     let(:connection) { Docker::Connection.new }
