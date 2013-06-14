@@ -9,8 +9,8 @@ describe Docker::Connection do
         subject.new.port.should == 4243
       end
 
-      it 'defaults to \'localhost\' for the host' do
-        subject.new.host.should == 'http://localhost'
+      it 'defaults to \'http://localhost\' for the url' do
+        subject.new.url.should == 'http://localhost'
       end
     end
 
@@ -23,12 +23,12 @@ describe Docker::Connection do
       end
 
       context 'when the argument is a Hash' do
-        let(:host) { 'google.com' }
+        let(:url) { 'google.com' }
         let(:port) { 80 }
-        let(:options) { { :host => host, :port => port } }
+        let(:options) { { :url => url, :port => port } }
 
-        it 'sets the specified host' do
-          subject.new(options).host.should == host
+        it 'sets the specified url' do
+          subject.new(options).url.should == url
         end
 
         it 'sets the specified port' do
@@ -52,9 +52,9 @@ describe Docker::Connection do
   end
 
   describe '#==' do
-    let(:host) { 'localhost' }
+    let(:url) { 'http://localhost' }
     let(:port) { 4243 }
-    subject { described_class.new(:host => host, :port => port) }
+    subject { described_class.new(:url => url, :port => port) }
 
     context 'when the argument is not a Docker::Connection' do
       let(:other_connection) { :not_a_connection }
@@ -65,11 +65,11 @@ describe Docker::Connection do
     end
 
     context 'when the argument is a Docker::Connection' do
-      let(:other_connection) { described_class.new(:host => other_host,
+      let(:other_connection) { described_class.new(:url => other_url,
                                                    :port => other_port) }
 
-      context 'and the host and/or port are the different' do
-        let(:other_host) { 'google.com' }
+      context 'and the url and/or port are the different' do
+        let(:other_url) { 'google.com' }
         let(:other_port) { 1000 }
 
         it 'returns false' do
@@ -77,8 +77,8 @@ describe Docker::Connection do
         end
       end
 
-      context 'and the host and port are the same' do
-        let(:other_host) { host }
+      context 'and the url and port are the same' do
+        let(:other_url) { url }
         let(:other_port) { port }
 
         it 'returns true' do
@@ -89,14 +89,14 @@ describe Docker::Connection do
   end
 
   describe '#to_s' do
-    let(:host) { 'google.com' }
+    let(:url) { 'google.com' }
     let(:port) { 4000 }
     let(:expected_string) do
-      "Docker::Connection { :host => #{host}, :port => #{port} }"
+      "Docker::Connection { :url => #{url}, :port => #{port} }"
     end
-    subject { described_class.new(:host => host, :port => port) }
+    subject { described_class.new(:url => url, :port => port) }
 
-    it 'returns a pretty printed version with the host and port' do
+    it 'returns a pretty printed version with the url and port' do
       subject.to_s.should == expected_string
     end
   end

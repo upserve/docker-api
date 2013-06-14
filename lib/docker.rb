@@ -5,17 +5,17 @@ require 'excon'
 # configuration variables that are used as defaults in other classes.
 module Docker
   class << self
-    def host
-      @host ||= 'http://localhost'
+    def url
+      @url ||= 'http://localhost'
     end
 
     def port
       @port ||= 4243
     end
 
-    def host=(new_host)
+    def url=(new_url)
       reset_connection!
-      @host = new_host
+      @url = new_url
     end
 
     def port=(new_port)
@@ -24,7 +24,7 @@ module Docker
     end
 
     def connection
-      @connection ||= Connection.new(:host => host, :port => port)
+      @connection ||= Connection.new(:url => url, :port => port)
     end
 
     def reset_connection!

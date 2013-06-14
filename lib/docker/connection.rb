@@ -1,7 +1,7 @@
 # This class represents a Connection to a Docker server. The Connection is
-# immutable in that once the host and port is set they cannot be changed.
+# immutable in that once the url and port is set they cannot be changed.
 class Docker::Connection
-  attr_reader :host, :port
+  attr_reader :url, :port
 
   # Create a new Connection. By default, the Connection points to localhost at
   # port 4243, but this can be changed via an options Hash.
@@ -10,21 +10,21 @@ class Docker::Connection
       raise Docker::Error::ArgumentError, "Expected a Hash, got: #{options}"
     end
     self.port = options[:port] || 4243
-    self.host = options[:host] || 'http://localhost'
+    self.url = options[:url] || 'http://localhost'
   end
 
   # The actual client that sends HTTP methods to the docker server.
   def resource
-    @resource ||= Excon.new(self.host, :port => self.port)
+    @resource ||= Excon.new(self.url, :port => self.port)
   end
 
   def to_s
-    "Docker::Connection { :host => #{self.host}, :port => #{self.port} }"
+    "Docker::Connection { :url => #{self.url}, :port => #{self.port} }"
   end
 
   def ==(other_connection)
     other_connection.is_a?(self.class) &&
-      (other_connection.host == self.host) &&
+      (other_connection.url == self.url) &&
         (other_connection.port == self.port)
   end
 
@@ -36,5 +36,5 @@ class Docker::Connection
   end
 
 private
-  attr_writer :host, :port
+  attr_writer :url, :port
 end
