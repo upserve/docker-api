@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # WARNING if you're re-recording any of these VCRs, you must be running the
 # Docker daemon and have the base Image pulled.
-describe Docker::Container, :class do
+describe Docker::Container do
   describe '#initialize' do
     subject { described_class }
 
@@ -233,9 +233,9 @@ describe Docker::Container, :class do
 
       context 'when the HTTP response status is 200' do
         before do
-         subject.create!('Cmd' => ['ls'], 'Image' => 'base')
-         subject.start
-         subject.wait
+          subject.create!('Cmd' => ['ls'], 'Image' => 'base')
+          subject.start
+          subject.wait
         end
 
         it 'yields each chunk', :vcr do
@@ -245,6 +245,40 @@ describe Docker::Container, :class do
             break
           end
           first[257..262].should == "ustar\000" # Make sure the export is a tar.
+        end
+      end
+    end
+  end
+
+  describe '#attach' do
+    context 'when the Container has not been created' do
+      it 'raises an error' do
+        expect { subject.attach { } }
+            .to raise_error Docker::Error::ContainerError
+      end
+    end
+
+    context 'when the Container has been created' do
+      context 'when the HTTP response status is not 200' do
+        before do
+          subject.stub(:created?).and_return(true)
+          Excon.stub({ :method => :post }, { :status => 500 })
+        end
+        after { Excon.stubs.shift }
+
+        it 'raises an error' do
+          expect { subject.attach { } }
+              .to raise_error(Excon::Errors::InternalServerError)
+        end
+      end
+
+      context 'when the HTTP response status is 200', :current do
+        before { subject.create!('Cmd' => %w[uname -r], 'Image' => 'base') }
+
+        it 'yields each chunk', :vcr do
+          subject.tap(&:start).attach { |chunk|
+            chunk.should == "3.8.0-25-generic\n"
+          }
         end
       end
     end
@@ -448,7 +482,7 @@ describe Docker::Container, :class do
       end
     end
 
-    context 'when the HTTP response is a 200', :current do
+    context 'when the HTTP response is a 200' do
       it 'materializes each Container into a Docker::Container', :vcr do
         subject.new.create!('Cmd' => ['ls'], 'Image' => 'base')
         subject.all(:all => true).should be_all { |container|

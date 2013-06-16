@@ -58,6 +58,22 @@ class Docker::Container
     self
   end
 
+  # Given a Hash of options about which streams to connect to, attaches to the
+  # Container. By default, attaches to STDOUT and STDERR. Much like #export,
+  # this method accepts a block with which it processes the stream.
+  def attach(query = {}, &block)
+    ensure_created!
+    query = { :stdout => true, :stderr => true, :stream => true }.merge(query)
+    self.connection.post(
+      :path    => "/containers/#{self.id}/attach",
+      :query   => query,
+      :headers => { 'Content-Type' => 'application/vnd.docker.raw-stream' },
+      :expects => 200,
+      :response_block => block
+    )
+    self
+  end
+
   {
     :json => :get,   # Get a description of the Container.
     :wait => :post,  # Block until the command finishes.
