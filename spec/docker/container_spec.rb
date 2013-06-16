@@ -272,7 +272,8 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => ['/usr/bin/sleep 10'], 'Image' => 'base') }
+        before { subject.create!('Cmd' => ['/usr/bin/sleep 10'],
+                                 'Image' => 'base') }
 
         it 'starts the container', :vcr do
           subject.start
@@ -380,7 +381,8 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['/usr/bin/sleep 50'], 'Image' => 'base') }
+        before { subject.create!('Cmd' => ['/usr/bin/sleep 50'],
+                                 'Image' => 'base') }
 
         it 'restarts the container', :vcr do
           subject.start
@@ -422,7 +424,8 @@ describe Docker::Container, :class do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => %w[tar nonsense] , 'Image' => 'base') }
+        before { subject.create!('Cmd' => %w[tar nonsense],
+                                 'Image' => 'base') }
 
         it 'waits for the command to finish', :vcr do
           subject.start
