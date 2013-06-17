@@ -1,30 +1,30 @@
-require 'rest_client'
-require 'active_support/core_ext'
+require 'json'
+require 'excon'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
   class << self
-    def host
-      @host ||= 'localhost'
+    def url
+      @url ||= 'http://localhost'
     end
 
-    def port
-      @port ||= 4243
+    def options
+      @options ||= { :port => 4243 }
     end
 
-    def host=(new_host)
+    def url=(new_url)
+      @url = new_url
       reset_connection!
-      @host = new_host
     end
 
-    def port=(new_port)
+    def options=(new_options)
+      @options = { :port => 4243 }.merge(new_options)
       reset_connection!
-      @port = new_port
     end
 
     def connection
-      @connection ||= Connection.new(:host => host, :port => port)
+      @connection ||= Connection.new(url, options)
     end
 
     def reset_connection!
@@ -36,3 +36,4 @@ end
 require 'docker/version'
 require 'docker/error'
 require 'docker/connection'
+require 'docker/container'
