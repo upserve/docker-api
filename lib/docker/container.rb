@@ -9,13 +9,12 @@ class Docker::Container
   # Connection is specified and it is not a Docker::Connection, a
   # Docker::Error::ArgumentError is raised.
   def initialize(options = {})
-    id = options[:id]
-    connection = options[:connection] || Docker.connection
-    unless connection.is_a?(Docker::Connection)
+    options[:connection] ||= Docker.connection
+    unless options[:connection].is_a?(Docker::Connection)
       raise Docker::Error::ArgumentError, "Expected a Docker::Connection."
     end
-    self.id = id
-    self.connection = connection
+    self.id = options[:id]
+    self.connection = options[:connection]
   end
 
   # Returns true if the Container has been created, false otherwise.
@@ -23,27 +22,27 @@ class Docker::Container
     !!self.id
   end
 
-  # Create a Container with the specified body. If the container is created
+  # Create a Container with the specified body. If the Container is created
   # successfully, self is returned.
   def create!(body = {})
     case
     when self.created?
-      raise Docker::Error::ContainerError, 'This container already exists!'
+      raise Docker::Error::ContainerError, 'This Container already exists!'
     when !body.is_a?(Hash)
       raise Docker::Error::ArgumentError, 'Expected a Hash'
     else
-       response = self.connection.post(
-         :path    => '/containers/create',
-         :headers => { 'Content-Type' => 'application/json' },
-         :body    => body.to_json,
-         :expects => 201
-       )
-       self.id = JSON.parse(response.body)['Id']
-       self
+      response = self.connection.post(
+        :path    => '/containers/create',
+        :headers => { 'Content-Type' => 'application/json' },
+        :body    => body.to_json,
+        :expects => 201
+      )
+      self.id = JSON.parse(response.body)['Id']
+      self
     end
   end
 
-  # Export the container. Since the export will naturally be a lot of data,
+  # Export the Container. Since the export will naturally be a lot of data,
   # you must pass a block to process each chunk of the response. Each chunk,
   # along with the remaining and total block is yielded several times, but
   # handling only the chunk will suffice.
@@ -125,12 +124,11 @@ class Docker::Container
     }
   end
 private
+  attr_writer :id, :connection
 
   def ensure_created!
     unless created?
-      raise Docker::Error::ContainerError, 'This container is not created.'
+      raise Docker::Error::ContainerError, 'This Container is not created.'
     end
   end
-
-  attr_writer :id, :connection
 end

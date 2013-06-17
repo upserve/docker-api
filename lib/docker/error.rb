@@ -11,4 +11,7 @@ module Docker::Error
   # Raised when there is a state issue with a Container, such as trying to
   # create a Container that already exists.
   class ContainerError < DockerError; end
+
+  # Analogous to ContainerError for Images.
+  class ImageError < DockerError; end
 end
