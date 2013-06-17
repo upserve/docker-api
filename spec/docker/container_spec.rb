@@ -233,7 +233,8 @@ describe Docker::Container do
 
       context 'when the HTTP response status is 200' do
         before do
-          subject.create!('Cmd' => %w[rm -rf / --no-preserve-root], 'Image' => 'base')
+          subject.create!('Cmd' => %w[rm -rf / --no-preserve-root],
+                          'Image' => 'base')
           subject.start
         end
 
