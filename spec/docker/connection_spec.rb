@@ -6,48 +6,62 @@ describe Docker::Connection do
 
     context 'with no arguments' do
       it 'defaults to port 4243' do
-        subject.new.port.should == 4243
+        subject.new.options.should == { :port => 4243 }
       end
 
-      it 'defaults to \'localhost\' for the host' do
-        subject.new.host.should == 'localhost'
+      it 'defaults to \'http://localhost\' for the url' do
+        subject.new.url.should == 'http://localhost'
       end
     end
 
     context 'with an argument' do
-      context 'when the argument is not a Hash' do
+      context 'when the second argument is not a Hash' do
         it 'raises a Docker::Error::ArgumentError' do
-          expect { subject.new(:not_a_hash) }
+          expect { subject.new('http://localhost', :lol) }
               .to raise_error Docker::Error::ArgumentError
         end
       end
 
       context 'when the argument is a Hash' do
-        let(:host) { 'google.com' }
+        let(:url) { 'google.com' }
         let(:port) { 80 }
-        let(:options) { { :host => host, :port => port } }
+        let(:options) { { :port => port } }
 
-        it 'sets the specified host' do
-          subject.new(options).host.should == host
+        it 'sets the specified url' do
+          subject.new(url, options).url.should == url
         end
 
         it 'sets the specified port' do
-          subject.new(options).port.should == port
+          subject.new(url, options).options[:port].should == port
         end
       end
     end
   end
 
-  context '#resource' do
-    its(:resource) { should be_a RestClient::Resource }
+  describe '#resource' do
+    its(:resource) { should be_a Excon::Connection }
   end
 
-  [:get, :put, :post, :delete, :[]].each do |method|
-    context "##{method}" do
+  [:get, :put, :post, :delete].each do |method|
+    describe "##{method}" do
       it 'is delegated to #resource' do
         subject.resource.should_receive(method)
         subject.public_send(method)
       end
+    end
+  end
+
+  describe '#to_s' do
+    let(:url) { 'google.com' }
+    let(:port) { 4000 }
+    let(:options) { { :port => port } }
+    let(:expected_string) do
+      "Docker::Connection { :url => #{url}, :options => #{options} }"
+    end
+    subject { described_class.new(url, options) }
+
+    it 'returns a pretty printed version with the url and port' do
+      subject.to_s.should == expected_string
     end
   end
 end
