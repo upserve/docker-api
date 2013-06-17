@@ -233,9 +233,8 @@ describe Docker::Container do
 
       context 'when the HTTP response status is 200' do
         before do
-          subject.create!('Cmd' => ['ls'], 'Image' => 'base')
+          subject.create!('Cmd' => %w[rm -rf / --no-preserve-root], 'Image' => 'base')
           subject.start
-          subject.wait
         end
 
         it 'yields each chunk', :vcr do
@@ -272,7 +271,7 @@ describe Docker::Container do
         end
       end
 
-      context 'when the HTTP response status is 200', :current do
+      context 'when the HTTP response status is 200' do
         before { subject.create!('Cmd' => %w[uname -r], 'Image' => 'base') }
 
         it 'yields each chunk', :vcr do
