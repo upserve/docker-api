@@ -99,7 +99,7 @@ describe Docker::Image do
         after { Excon.stubs.shift }
 
         it 'raises an error' do
-          expect { subject.create! }.to raise_error(Excon::Errors::BadRequest)
+          expect { subject.create! }.to raise_error(Docker::Error::ClientError)
         end
       end
 
@@ -130,7 +130,7 @@ describe Docker::Image do
 
         it 'raises an error' do
           expect { subject.remove }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -163,7 +163,7 @@ describe Docker::Image do
 
         it 'raises an error' do
           expect { subject.insert }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -195,7 +195,7 @@ describe Docker::Image do
 
         it 'raises an error' do
           expect { subject.push }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -226,7 +226,7 @@ describe Docker::Image do
 
         it 'raises an error' do
           expect { subject.tag }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -258,7 +258,7 @@ describe Docker::Image do
 
         it 'raises an error' do
           expect { subject.json }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -292,7 +292,7 @@ describe Docker::Image do
 
         it 'raises an error' do
           expect { subject.history }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -318,7 +318,7 @@ describe Docker::Image do
 
       it 'raises an error' do
         expect { subject.all }
-            .to raise_error(Excon::Errors::InternalServerError)
+            .to raise_error(Docker::Error::ServerError)
       end
     end
 
@@ -343,7 +343,7 @@ describe Docker::Image do
 
       it 'raises an error' do
         expect { subject.search }
-            .to raise_error(Excon::Errors::InternalServerError)
+            .to raise_error(Docker::Error::ServerError)
       end
     end
 

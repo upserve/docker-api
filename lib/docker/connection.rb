@@ -21,7 +21,13 @@ class Docker::Connection
   # Delegate all HTTP methods to the resource.
   [:get, :put, :post, :delete, :request].each do |method|
     define_method(method) do |*args, &block|
-      self.resource.public_send(method, *args, &block)
+      begin
+        self.resource.public_send(method, *args, &block)
+      rescue Excon::Errors::BadRequest => ex
+        raise Docker::Error::ClientError, ex.message
+      rescue Excon::Errors::InternalServerError => ex
+        raise Docker::Error::ServerError, ex.message
+      end
     end
   end
 

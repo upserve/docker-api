@@ -101,7 +101,7 @@ describe Docker::Container do
         after { Excon.stubs.shift }
 
         it 'raises an error' do
-          expect { subject.create! }.to raise_error(Excon::Errors::BadRequest)
+          expect { subject.create! }.to raise_error(Docker::Error::ClientError)
         end
       end
 
@@ -154,7 +154,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.json }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -188,7 +188,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.changes }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -227,7 +227,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.export { } }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -268,7 +268,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.attach { } }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -301,7 +301,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.start }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -336,7 +336,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.stop }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -373,7 +373,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.kill }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -410,7 +410,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.restart }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -453,7 +453,7 @@ describe Docker::Container do
 
         it 'raises an error' do
           expect { subject.wait }
-              .to raise_error(Excon::Errors::InternalServerError)
+              .to raise_error(Docker::Error::ServerError)
         end
       end
 
@@ -478,7 +478,7 @@ describe Docker::Container do
 
       it 'raises an error' do
         expect { subject.all }
-            .to raise_error(Excon::Errors::InternalServerError)
+            .to raise_error(Docker::Error::ServerError)
       end
     end
 
