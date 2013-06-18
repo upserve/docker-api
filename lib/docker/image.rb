@@ -33,13 +33,13 @@ class Docker::Image
 
   def self.search(query = {}, connection = Docker.connection)
     body = connection.get(
-      :path    => "/#{self.resource_prefix}/search",
+      :path    => "/images/search",
       :headers => { 'Content-Type' =>  'application/json' },
-      :query   => options,
+      :query   => query,
       :expects => (200..204)
     ).body
     (body.nil? || body.empty? ? [] : JSON.parse(body)).map { |hash|
-      new(:id => hash['Id'], :connection => connection)
+      new(:id => hash['Name'], :connection => connection)
     }
   end
 end
