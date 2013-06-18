@@ -1,0 +1,59 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/images/create
+    body:
+      encoding: US-ASCII
+      string: fromRepo=base&fromSrc=-
+    headers:
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"88102eea99bc"}'
+    http_version: 
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+- request:
+    method: get
+    uri: http://localhost:4243/images/88102eea99bc/history
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '[{"Id":"88102eea99bc","Created":1371571479}]'
+    http_version: 
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+recorded_with: VCR 2.5.0

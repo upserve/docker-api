@@ -16,7 +16,7 @@ http_interactions:
     headers:
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAxNiBKdW4gMjAxMyAwNjoxNjo0NiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNzowNjowNyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -25,9 +25,9 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"b2e0221e31eb"}'
+      string: ! '{"Id":"b78fee732c62"}'
     http_version: 
-  recorded_at: Sun, 16 Jun 2013 06:16:46 GMT
+  recorded_at: Tue, 18 Jun 2013 17:06:07 GMT
 - request:
     method: get
     uri: http://localhost:4243/containers/json?all=true
@@ -47,13 +47,120 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAxNiBKdW4gMjAxMyAwNjoxNjo0NiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNzowNjowNyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"b2e0221e31eb9f32284a3741a8e6ccaf6e74605e75614293fd99e880fdc1cf74","Image":"base:latest","Command":"ls
+      string: ! '[{"Id":"b78fee732c62f30149fc65bbc1dacb4cd1b56c3cfc288d36849b06c1c12888fc","Image":"base:latest","Command":"ls
+        ","Created":1371575167,"Status":"Exit 0","Ports":""},{"Id":"34acef901aaf3132562bcfde6e4c8f574c99eefb318043fdffe65bc59ac409b5","Image":"base:latest","Command":"ls
+        ","Created":1371575137,"Status":"Exit 0","Ports":""},{"Id":"4f72f8e6c61dd96abc60d65cacdcf08a06c7f7f3339abfced9900167f01de5e4","Image":"base:latest","Command":"ls
+        ","Created":1371575082,"Status":"Exit 0","Ports":""},{"Id":"e471ece03f965877f44b5c1165aee3deb7dd5d0941c04e1ca911d242c030714d","Image":"base:latest","Command":"ls
+        ","Created":1371572639,"Status":"Exit 0","Ports":""},{"Id":"71cc12ceecc1a37ba10eb01d440b8e2b4c67df5ea947ef2b0e66248e64b4ac8d","Image":"base:latest","Command":"tar
+        nonsense","Created":1371572638,"Status":"Exit 64","Ports":""},{"Id":"b2e3a84b58183a42fac79ae06d425b76f35404c7bfb67f5672429a726079a09f","Image":"base:latest","Command":"/usr/bin/sleep
+        50 ","Created":1371572638,"Status":"Exit 127","Ports":""},{"Id":"4aea86723a6a467275655b8c47add681fc469e1b2ccadee4dcdb1a16a8e277c6","Image":"base:latest","Command":"ls
+        ","Created":1371572638,"Status":"Exit 0","Ports":""},{"Id":"26591d730d6e55548877792b075ce10f21882e7f9fd41d3bff2a9a503924bb91","Image":"base:latest","Command":"ls
+        ","Created":1371572637,"Status":"Exit 0","Ports":""},{"Id":"25e2da98859854324a0a4ba4ae6c37d4fdd56fd416e208036b0e678e5de29072","Image":"base:latest","Command":"/usr/bin/sleep
+        10 ","Created":1371572637,"Status":"Exit 127","Ports":""},{"Id":"c4cde19ef35db5551123736c9e64e057b7c58743ce1b8746acfb82e4f2cc72bf","Image":"base:latest","Command":"uname
+        -r","Created":1371572637,"Status":"Exit 0","Ports":""},{"Id":"48f458781e8d8e284df9178fd8cd08ede7a0186bda0adeea00c75b945f8303de","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371572635,"Status":"Exit 1","Ports":""},{"Id":"8a70da775026529fe55c28c8b6cfcaf1bb46fc483f79e59764979f893c259cda","Image":"base:latest","Command":"ls
+        ","Created":1371572635,"Status":"Exit 0","Ports":""},{"Id":"e724df5d84db6fe431545dc140dde8e4ede561d5549495b4e64e39d2e0c31dfe","Image":"base:latest","Command":"ls
+        ","Created":1371572634,"Status":"Exit 0","Ports":""},{"Id":"da457ee2275e9cb338e2cf3e56af965c6ce49cb8f94151f36b8c89868f09b049","Image":"base:latest","Command":"date
+        ","Created":1371572634,"Status":"Exit 0","Ports":""},{"Id":"f1a82ada05b3d10a5abd97330d41657fdc57c3d88188b71b9adf2db46bcf4532","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371564614,"Status":"Exit 1","Ports":""},{"Id":"9172cce30fd841144be45e90a58c74f4ae16b1467b8ed5a1a50b8bb37623a164","Image":"base:latest","Command":"ls
+        ","Created":1371564614,"Status":"Exit 0","Ports":""},{"Id":"1da1c248715e2ca5506e80431546bca2bd3079202ab58cb5a0f405c7ba2fffeb","Image":"base:latest","Command":"ls
+        ","Created":1371564614,"Status":"Exit 0","Ports":""},{"Id":"841dce3f798a4bbdd7ade4600585ace5a9d2b5b041c4c3e6b045bea7c82144b6","Image":"base:latest","Command":"date
+        ","Created":1371564614,"Status":"Exit 0","Ports":""},{"Id":"e07f3ac34451f145c2bf404eb31b7bd91124fee7f01e4c42cb2005a9a26a080d","Image":"base:latest","Command":"ls
+        ","Created":1371562209,"Status":"Exit 0","Ports":""},{"Id":"46992a6c41dee65ff27556dd347527735779caf1a69f3131643f4426430f4857","Image":"8aac8db3ec39","Command":"ls
+        ","Created":1371562199,"Status":"Exit 255","Ports":""},{"Id":"57b8d6178246d3286341ce27226d02d509a81e7c4e57effaec3b184b0f8acd26","Image":"base:latest","Command":"ls
+        ","Created":1371561065,"Status":"Exit 0","Ports":""},{"Id":"8d110ba5553f206e0abbb55399ddaaebfd79db0da83e191efc76977b2418cc4e","Image":"base:latest","Command":"ls
+        ","Created":1371561042,"Status":"Exit 0","Ports":""},{"Id":"0296e0c0e15d5337219c106bde60be5dc969684455d00949f67a480e98ba324f","Image":"base:latest","Command":"ls
+        ","Created":1371499668,"Status":"Exit 0","Ports":""},{"Id":"cfa2a0e0ba12431cf6d7a0dc3634c189a39d615d84aeabaec9ae9a08ee9aaa96","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371486821,"Status":"Exit 1","Ports":""},{"Id":"91cdbe3653fa4b3a1cb914aa375e5fd2343e38bd19697157c4972f59ca38e078","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371486785,"Status":"Exit 1","Ports":""},{"Id":"ff1a4d46bba657ed1b79b8afaeced4b1c3e2908951c66118e310aedbcd46c6ce","Image":"base:latest","Command":"rm
+        -rf / --no-yreserve-root","Created":1371486778,"Status":"Exit 1","Ports":""},{"Id":"9ddeba06b4e12ba7e6336dca289b14362e736a9652cb12df6e6956bb36180502","Image":"base:latest","Command":"rm
+        -rf / --no-reserve-root","Created":1371486774,"Status":"Exit 1","Ports":""},{"Id":"49bbf72661840e8f50c31e979557a3f83cb4f0ab578b3bc07bef5dbec49d986d","Image":"base:latest","Command":"rm
+        -rf /","Created":1371486768,"Status":"Exit 1","Ports":""},{"Id":"97634691716fa22adc75403d2727815507577b5af10ff5194d5b5ed89cbc99c4","Image":"base:latest","Command":"du
+        -h","Created":1371486751,"Status":"Exit 1","Ports":""},{"Id":"2fd5e8d32dc0f286ed4adcb543d60909b5b1652d10e90ca056e31d83b4dae0cc","Image":"base:latest","Command":"rm
+        -rf /lib /bin /usr /var","Created":1371486678,"Status":"Exit 0","Ports":""},{"Id":"7f88074a0f6f444bfe87a86e4911b96c8a2e0f658a369f7d1b78f90c48655cec","Image":"base:latest","Command":"du
+        -h","Created":1371486636,"Status":"Exit 1","Ports":""},{"Id":"191dd85aefccfbb2e9917468cbbef5fa0423cb7bd3bf77f0c12fa18a7cca77c2","Image":"base:latest","Command":"du
+        ","Created":1371486625,"Status":"Exit 1","Ports":""},{"Id":"f7595a7c29c00716dd446c76ba009e37fe74f508cc5fe33b0efca3f8d69a8be9","Image":"base:latest","Command":"rm
+        -rf /usr /var","Created":1371486597,"Status":"Exit 0","Ports":""},{"Id":"6e419149894e11d493a93c1632d84bd143600b1843bf0805708130ab76717c30","Image":"base:latest","Command":"rm
+        -rf /usr /var /sbin","Created":1371486580,"Status":"Exit 1","Ports":""},{"Id":"87bab8f303ffbb2287ccc9f36da944de6b12003e68735438f8a02dc5e4dae4ae","Image":"base:latest","Command":"''rm
+        -rf /usr /var /sbin''","Created":1371486556,"Status":"Exit 127","Ports":""},{"Id":"afe924e88074f92a29f5e0dfdb4419298692b26a1768dc1e356471cd2a4f703d","Image":"base:latest","Command":"rm
+        -rf /usr ","Created":1371486477,"Status":"Exit 127","Ports":""},{"Id":"adaceee7eb95d90d25a68012ced2a9bb880582a3c338f5b2cb613cfb36140d04","Image":"base:latest","Command":"/bin/rm
+        -rf /usr ","Created":1371486473,"Status":"Exit 127","Ports":""},{"Id":"09527c4ef18ff0aa703ce2ba7346c2b259c633f4ac3e8ad40fdcd9b288fafd7c","Image":"base:latest","Command":"/bin/rm
+        -rf /usr | xargs ls ","Created":1371486469,"Status":"Exit 127","Ports":""},{"Id":"beab3947b4c0fc32dd9ff28d23c9ec6fec5faa3bda96ab6c41b2448c9ad44bb2","Image":"base:latest","Command":"/bin/rm
+        -rf /usr; ls ","Created":1371486458,"Status":"Exit 127","Ports":""},{"Id":"564d4451d3c2f52bf3d06c6d9e98fde312db0d5507099e74bd2c3b952e651a82","Image":"base:latest","Command":"/bin/rm
+        -rf /usr && ls ","Created":1371486455,"Status":"Exit 127","Ports":""},{"Id":"3f7690b7b9f6a327269f65a9e431b3f8a8600e3c622cf948e18ccae6bffd278b","Image":"base:latest","Command":"/bin/rm
+        -rf /usr","Created":1371486442,"Status":"Exit 0","Ports":""},{"Id":"33f198073fe7893c17b20aa9a28ba6fba09fbbc2861ad27e5063be873d72a72c","Image":"base:latest","Command":"/bin/rm
+        /usr","Created":1371486437,"Status":"Exit 1","Ports":""},{"Id":"5ba8b36ca7588caf9a898cf715e164a122e60f9f7747888fffa278506f9a96f2","Image":"base:latest","Command":"/bin/rm
+        ","Created":1371486434,"Status":"Exit 1","Ports":""},{"Id":"2852e1e1283ebcfa1d1148ad359505343dedf1f14555e09ca995b30184868b59","Image":"base:latest","Command":"''/bin/rm
+        -rf /usr /var /sbin''","Created":1371486393,"Status":"Exit 127","Ports":""},{"Id":"2c06163cfbd0d82290c9c0598a38bcdf87739b4853adeb076e182bb48245b1aa","Image":"base:latest","Command":"''rm
+        -rf usr var sbin''","Created":1371486270,"Status":"Exit 127","Ports":""},{"Id":"6e9508ccfe7ffedff913123b3e265c0e8a991600c7e283e93fbf5c1331edf45c","Image":"base:latest","Command":"''rm
+        -rf usr var sbin''","Created":1371486173,"Status":"Exit 127","Ports":""},{"Id":"dbd102629eb9ad3b31201a19ddf6dc2372a4ffce372ba54ffe483616079e901c","Image":"base:latest","Command":"rm
+        -rf usr","Created":1371486147,"Status":"Exit 0","Ports":""},{"Id":"0bf46f1af9c5c5de06a0e46cc983993dee4ce1784520c35c32090bfdc791fd38","Image":"base:latest","Command":"du
+        -h /run","Created":1371486139,"Status":"Exit 0","Ports":""},{"Id":"c8a197683b28b050bd436574de4e233ffa7b35f829fec78deaa7c750c658baab","Image":"base:latest","Command":"du
+        -h /run","Created":1371486132,"Status":"Exit 0","Ports":""},{"Id":"53c36569833999b6d6f0295f1800a0cf5e61855615ca15ac5e89cc8334855e9d","Image":"base:latest","Command":"du
+        -h /root","Created":1371486129,"Status":"Exit 0","Ports":""},{"Id":"5331df3efedc9c4ae70f677a8c8dab520890db3206d1f93d55061b4c86fc8fda","Image":"base:latest","Command":"ls
+        -l","Created":1371486121,"Status":"Exit 0","Ports":""},{"Id":"8f5205185c98c573f96fd92e9904fab9cf459ba84784fecc8ac6dfe3f9c97a61","Image":"base:latest","Command":"du
+        -h sys","Created":1371486117,"Status":"Exit 0","Ports":""},{"Id":"d9e2eb52fc58ec97f47ededfbbe9a289e50c6a5aab31c7fb671f2bf1441959ca","Image":"base:latest","Command":"du
+        -h tmp","Created":1371486115,"Status":"Exit 0","Ports":""},{"Id":"78395d1c858c80ebec6368caac5e81b01757bc7034553aba6ab69bbda912ddd1","Image":"base:latest","Command":"du
+        -h mnt","Created":1371486111,"Status":"Exit 0","Ports":""},{"Id":"89cc00fcd0c74e887bf528e83a84269af253ad2d1251efef6aa0c0fcf7390047","Image":"base:latest","Command":"du
+        -h sbin","Created":1371486101,"Status":"Exit 0","Ports":""},{"Id":"7f94f88e311db6dbd076e3267aa9c0b169041a2c923794dbeff22079b1c38b33","Image":"base:latest","Command":"du
+        -h run","Created":1371486096,"Status":"Exit 0","Ports":""},{"Id":"dfac4e64045668d63bb80b779937772cc279f0e7aa03cde0e4e1fca2edbf3f24","Image":"base:latest","Command":"ls
+        -l","Created":1371486093,"Status":"Exit 0","Ports":""},{"Id":"bcebea67bfc6058dca9f58b8cb0f377b642c6a44678dfe41307197127b22caa8","Image":"base:latest","Command":"du
+        -h sys","Created":1371486090,"Status":"Exit 0","Ports":""},{"Id":"a7a88e3071c039146914c5d2227f669ed80bef256da9115806abbbee120e9332","Image":"base:latest","Command":"ls
+        -l","Created":1371486082,"Status":"Exit 0","Ports":""},{"Id":"8d0ce0bf7f816acdedf2a7d2ef047a075d1feccc13cf71d6cae68da9b580f0b8","Image":"base:latest","Command":"du
+        -h /var/","Created":1371486068,"Status":"Exit 0","Ports":""},{"Id":"42a135fc9a75984bdd82911da0e2a9f2c3d5c6c1c32a22a7f436c7147ef22456","Image":"base:latest","Command":"ls
+        -l","Created":1371486063,"Status":"Exit 0","Ports":""},{"Id":"16870eadd24da81098d8298f87b8d3b6e95170a5f68bc2c31e809779807101de","Image":"base:latest","Command":"du
+        -h /usr/","Created":1371486058,"Status":"Exit 0","Ports":""},{"Id":"7f2a61d7de2353d5a9d1a38eafc2e8369999785e8a997071b650c5cf4ad72f36","Image":"base:latest","Command":"ls
+        -l","Created":1371486055,"Status":"Exit 0","Ports":""},{"Id":"c6d9762ac65ba96dc156c52a87f0ad16856179132d4404bdedeb6a41c111f70f","Image":"base:latest","Command":"du
+        -h /proc/","Created":1371486048,"Status":"Exit 1","Ports":""},{"Id":"c4b86bd1a7d92dba19376dfae6691a7efb33bff9693aa4b131378e1a80d02087","Image":"base:latest","Command":"du
+        -h /mnt/","Created":1371486044,"Status":"Exit 0","Ports":""},{"Id":"5adc9df516bcaa1c20dfa8c582f2ee349461f4550a3ec625fad51af044aec05f","Image":"base:latest","Command":"du
+        -h /mnt","Created":1371486042,"Status":"Exit 0","Ports":""},{"Id":"26dcfa04754b358446fbc3b853ca45bb252bdf95a88c03e4938d55f460807aaf","Image":"base:latest","Command":"du
+        -h media","Created":1371486038,"Status":"Exit 0","Ports":""},{"Id":"d9cfddd0fa54045f72579f137dab7a943a84b924a6a001a5c776edf4b1d8a47a","Image":"base:latest","Command":"du
+        -h meda","Created":1371486037,"Status":"Exit 1","Ports":""},{"Id":"34c9cd77736f6858164c0649ed438fd1bfd1ef384eb50e900c2e44e5203bfc4e","Image":"base:latest","Command":"du
+        -h lib64","Created":1371486034,"Status":"Exit 0","Ports":""},{"Id":"029cc8c1dc050ea0c0691050621b6bd55af377aa9ccdc980abec3fb2a8e06888","Image":"base:latest","Command":"ls
+        -l","Created":1371486023,"Status":"Exit 0","Ports":""},{"Id":"b5d3f1ed22d1930cfe7b62cb309d7d9b963446b229181adfc75777a5c62d101d","Image":"base:latest","Command":"du
+        -h lib/","Created":1371486016,"Status":"Exit 0","Ports":""},{"Id":"79a7d9d8523b38ff2f21485baa19701adf6b4447f6faef3686f1bc931a4f8341","Image":"base:latest","Command":"du
+        -h home/","Created":1371486013,"Status":"Exit 0","Ports":""},{"Id":"ea0a474f738b9b80c0cd84c2ea005ea3d8475012c03ba886e86b376fdd1708e6","Image":"base:latest","Command":"du
+        -h home","Created":1371486011,"Status":"Exit 0","Ports":""},{"Id":"77b39e4e6dc44b5b2791e5d2b78460361a0e72931b26dc957a34846570384ef7","Image":"base:latest","Command":"du
+        -h dev/","Created":1371486008,"Status":"Exit 0","Ports":""},{"Id":"9183de3a7e28f06e9d24cc07b63995c006fa363a37d0b2d9849a5eb2f5e63e89","Image":"base:latest","Command":"du
+        -h boot/","Created":1371486005,"Status":"Exit 0","Ports":""},{"Id":"5362f3f6ddfb42034585020e2eb398b96bf734af5ba1f3031da034aedd43b8f6","Image":"base:latest","Command":"du
+        -h boot","Created":1371486003,"Status":"Exit 0","Ports":""},{"Id":"acb7bd7b0b37b3442b29bacceb165940d7c336e442f2f9312aeecb112db51d8d","Image":"base:latest","Command":"du
+        -h bin","Created":1371485999,"Status":"Exit 0","Ports":""},{"Id":"3578d15e487d4a16f23b67852508c50114ee1e6226c4df7d144e3aa41832aafb","Image":"base:latest","Command":"du
+        -h opt/","Created":1371485994,"Status":"Exit 0","Ports":""},{"Id":"10c749371dbe6b0bbcc7bdfe8bff211887816dcdac6f6a2e22ac94687e9ea261","Image":"base:latest","Command":"du
+        -h opt","Created":1371485990,"Status":"Exit 0","Ports":""},{"Id":"5e6ac42b5db85764790e077e740acf909a90fcca0e7d0d067a33a209a219115e","Image":"base:latest","Command":"ls
+        -l","Created":1371485975,"Status":"Exit 0","Ports":""},{"Id":"a160a8ba72093e830b06867583c9736e9c94507ca19e43e4b2776a6db6099608","Image":"base:latest","Command":"df
+        ","Created":1371485966,"Status":"Exit 1","Ports":""},{"Id":"50fee130a7f8db250afa20751b6e258919f0208adb8b61906ebf69033b4ad6f7","Image":"base:latest","Command":"du
+        ","Created":1371485960,"Status":"Exit 1","Ports":""},{"Id":"4a700ac09f933ef8ccd6df79cdd5aea1933bd3ff3bbb7b19bc4769b54701c67e","Image":"base:latest","Command":"uname
+        -r","Created":1371371421,"Status":"Exit 0","Ports":""},{"Id":"bdb820e5c54ef56f08930c377d9a2a06fb88854d74c24c907eb408559e70548b","Image":"base:latest","Command":"uname
+        -r","Created":1371371402,"Status":"Exit 0","Ports":""},{"Id":"0aecfefc20384b2bc45e09c497b01d36c247c007c1cf595e552044b78c99ac17","Image":"base:latest","Command":"uname
+        -r","Created":1371371343,"Status":"Exit 0","Ports":""},{"Id":"82f9cf88edf8df55b00530c58be136d235e28720b213ef3080d19c8a32f00624","Image":"base:latest","Command":"ls
+        ","Created":1371371304,"Status":"Exit 0","Ports":""},{"Id":"6875f42449454730b288a784c7f7c6a0fc1d04af25e448cd432bd5f4088fe122","Image":"base:latest","Command":"uname
+        -a","Created":1371371143,"Status":"Exit 0","Ports":""},{"Id":"54f5523a19c0f3b826f5f602e3690ff186a5c5b24f33ef33e1ca92adbfc8961c","Image":"base:latest","Command":"uname
+        -a","Created":1371371036,"Status":"Exit 0","Ports":""},{"Id":"96f50086625454fc60c501c7d8167579a441b073f60c44537ec5c16b14df1795","Image":"base:latest","Command":"sleep
+        1","Created":1371370984,"Status":"Exit 0","Ports":""},{"Id":"f6b155e27477aeb44653c02ab9da16def8faeb3d311c153724523bb0147674c6","Image":"base:latest","Command":"sleep
+        1; ls","Created":1371370965,"Status":"Exit 1","Ports":""},{"Id":"83dc57bdf1a6f3d790fe355cca89a65b6fe86b7340f1252eaec3d9c2bdd20a3c","Image":"base:latest","Command":"sleep
+        1 && ls","Created":1371370946,"Status":"Exit 1","Ports":""},{"Id":"acd8b57f7832bad19bf9d0b9d0aa41b3eae2c101ab5f83acaa971c6420717259","Image":"base:latest","Command":"sleep
+        1 && ls","Created":1371370938,"Status":"Exit 1","Ports":""},{"Id":"8948527de89c462c16ae694afe5cc4baa602e19ade92042c6971a68ff3508852","Image":"base:latest","Command":"sleep
+        1","Created":1371370920,"Status":"Exit 0","Ports":""},{"Id":"60b9066495fd362f99e6f61d956e97a5517f145dd030bc9cf92e40efa4719f25","Image":"base:latest","Command":"ls
+        ","Created":1371370903,"Status":"Exit 0","Ports":""},{"Id":"4d4aa4f933156c6fcb5692ea6ad39082b9ad7e29f5ee87e6b79cf002db275cb4","Image":"base:latest","Command":"/bin/ls
+        ","Created":1371370856,"Status":"Exit 0","Ports":""},{"Id":"2764229f27e565b67e071e670cfeb1b9a6e76067392c9081088a55bb404b6abb","Image":"base:latest","Command":"ls
+        ","Created":1371370819,"Status":"Exit 0","Ports":""},{"Id":"e796ca0b06a5c23c877749dc36ea392deb518898d2a3542e802afc0fb8a23e05","Image":"base:latest","Command":"ls
+        ","Created":1371370811,"Status":"Exit 0","Ports":""},{"Id":"764657c3f278065563fe4d7ee3eeae74e357f0403c0fc103a8126a59d9e0f9df","Image":"base:latest","Command":"ls
+        ","Created":1371370719,"Status":"Exit 0","Ports":""},{"Id":"d378f27cd033b221b1f9487786f89a6e3fceb00b474dbaf090f782b2b99881bf","Image":"base:latest","Command":"ls
+        ","Created":1371370698,"Status":"Exit 0","Ports":""},{"Id":"89f6f2d970910f90c257f25cd877992bdb14ce839c7f10820f279e5bc8d24deb","Image":"base:latest","Command":"ls
+        ","Created":1371370622,"Status":"Exit 0","Ports":""},{"Id":"4c4ed1c0786738cb95a3cc09d9b47e7933ae5abb514951a9e77eadc21f95745f","Image":"base:latest","Command":"ls
+        ","Created":1371370521,"Status":"Exit 0","Ports":""},{"Id":"8fbe524835d3a8a180a95eb719ac0dd3b76f5396772f849fa6fa7e8ee5d860fd","Image":"base:latest","Command":"ls
+        ","Created":1371370496,"Status":"Exit 0","Ports":""},{"Id":"acd89fea505cbc01ee0c58f9106c601186022d27dc76194ef1f11abeac30cbaa","Image":"base:latest","Command":"ls
+        ","Created":1371370437,"Status":"Exit 0","Ports":""},{"Id":"5b92feb9852b304c67df446d5d32bed37c7ade80c50c8afdc09fa2a08d59b992","Image":"base:latest","Command":"/bin/find
+        /etc -name ''*''","Created":1371370370,"Status":"Exit 127","Ports":""},{"Id":"08d816240363d826668243673657c24b5d5c2f5e4ed29d53721bb2374f2d80fe","Image":"base:latest","Command":"/bin/find
+        /etc -name ''*''","Created":1371370364,"Status":"Exit 127","Ports":""},{"Id":"9ad33e640f60922364714078e84a3eeec4a212e9ccc03c150a4f50f3c6de754e","Image":"base:latest","Command":"find
+        /etc -name ''*''","Created":1371370330,"Status":"Exit 0","Ports":""},{"Id":"acd41cd7773cdb4428d59443bc2b744f068e777147bd099c050464e3eefbfde4","Image":"base:latest","Command":"/usr/bin/sleep
+        50 ","Created":1371363480,"Status":"Exit 127","Ports":""},{"Id":"b2e0221e31eb9f32284a3741a8e6ccaf6e74605e75614293fd99e880fdc1cf74","Image":"base:latest","Command":"ls
         ","Created":1371363406,"Status":"Exit 0","Ports":""},{"Id":"01eee46d1cb7f9cb63dca8dea6a9552ef5e26bebb4360e4a5a3139896d0952e9","Image":"base:latest","Command":"tar
         nonsense","Created":1371363406,"Status":"Exit 64","Ports":""},{"Id":"a0f3cd215b71783d26d6b76cebec1b21655058b173d46edba1d5dbb13e2f3d66","Image":"base:latest","Command":"/usr/bin/sleep
         50 ","Created":1371363405,"Status":"Exit 127","Ports":""},{"Id":"39c9f9406051f8413849fe4fe67629e0a3d960a67a301b7de7be767bd8ec0800","Image":"base:latest","Command":"ls
@@ -71,7 +178,7 @@ http_interactions:
         ","Created":1371363179,"Status":"Exit 0","Ports":""},{"Id":"c250130f3deeeb0925dad14767f7f1ab1d3aa8c20727c27533676644375c7916","Image":"base:latest","Command":"ls
         ","Created":1371363130,"Status":"Exit 0","Ports":""}]'
     http_version: 
-  recorded_at: Sun, 16 Jun 2013 06:16:46 GMT
+  recorded_at: Tue, 18 Jun 2013 17:06:07 GMT
 - request:
     method: get
     uri: http://localhost:4243/containers/json?all=true
@@ -91,13 +198,120 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAxNiBKdW4gMjAxMyAwNjoxNjo0NiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNzowNjowNyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"b2e0221e31eb9f32284a3741a8e6ccaf6e74605e75614293fd99e880fdc1cf74","Image":"base:latest","Command":"ls
+      string: ! '[{"Id":"b78fee732c62f30149fc65bbc1dacb4cd1b56c3cfc288d36849b06c1c12888fc","Image":"base:latest","Command":"ls
+        ","Created":1371575167,"Status":"Exit 0","Ports":""},{"Id":"34acef901aaf3132562bcfde6e4c8f574c99eefb318043fdffe65bc59ac409b5","Image":"base:latest","Command":"ls
+        ","Created":1371575137,"Status":"Exit 0","Ports":""},{"Id":"4f72f8e6c61dd96abc60d65cacdcf08a06c7f7f3339abfced9900167f01de5e4","Image":"base:latest","Command":"ls
+        ","Created":1371575082,"Status":"Exit 0","Ports":""},{"Id":"e471ece03f965877f44b5c1165aee3deb7dd5d0941c04e1ca911d242c030714d","Image":"base:latest","Command":"ls
+        ","Created":1371572639,"Status":"Exit 0","Ports":""},{"Id":"71cc12ceecc1a37ba10eb01d440b8e2b4c67df5ea947ef2b0e66248e64b4ac8d","Image":"base:latest","Command":"tar
+        nonsense","Created":1371572638,"Status":"Exit 64","Ports":""},{"Id":"b2e3a84b58183a42fac79ae06d425b76f35404c7bfb67f5672429a726079a09f","Image":"base:latest","Command":"/usr/bin/sleep
+        50 ","Created":1371572638,"Status":"Exit 127","Ports":""},{"Id":"4aea86723a6a467275655b8c47add681fc469e1b2ccadee4dcdb1a16a8e277c6","Image":"base:latest","Command":"ls
+        ","Created":1371572638,"Status":"Exit 0","Ports":""},{"Id":"26591d730d6e55548877792b075ce10f21882e7f9fd41d3bff2a9a503924bb91","Image":"base:latest","Command":"ls
+        ","Created":1371572637,"Status":"Exit 0","Ports":""},{"Id":"25e2da98859854324a0a4ba4ae6c37d4fdd56fd416e208036b0e678e5de29072","Image":"base:latest","Command":"/usr/bin/sleep
+        10 ","Created":1371572637,"Status":"Exit 127","Ports":""},{"Id":"c4cde19ef35db5551123736c9e64e057b7c58743ce1b8746acfb82e4f2cc72bf","Image":"base:latest","Command":"uname
+        -r","Created":1371572637,"Status":"Exit 0","Ports":""},{"Id":"48f458781e8d8e284df9178fd8cd08ede7a0186bda0adeea00c75b945f8303de","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371572635,"Status":"Exit 1","Ports":""},{"Id":"8a70da775026529fe55c28c8b6cfcaf1bb46fc483f79e59764979f893c259cda","Image":"base:latest","Command":"ls
+        ","Created":1371572635,"Status":"Exit 0","Ports":""},{"Id":"e724df5d84db6fe431545dc140dde8e4ede561d5549495b4e64e39d2e0c31dfe","Image":"base:latest","Command":"ls
+        ","Created":1371572634,"Status":"Exit 0","Ports":""},{"Id":"da457ee2275e9cb338e2cf3e56af965c6ce49cb8f94151f36b8c89868f09b049","Image":"base:latest","Command":"date
+        ","Created":1371572634,"Status":"Exit 0","Ports":""},{"Id":"f1a82ada05b3d10a5abd97330d41657fdc57c3d88188b71b9adf2db46bcf4532","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371564614,"Status":"Exit 1","Ports":""},{"Id":"9172cce30fd841144be45e90a58c74f4ae16b1467b8ed5a1a50b8bb37623a164","Image":"base:latest","Command":"ls
+        ","Created":1371564614,"Status":"Exit 0","Ports":""},{"Id":"1da1c248715e2ca5506e80431546bca2bd3079202ab58cb5a0f405c7ba2fffeb","Image":"base:latest","Command":"ls
+        ","Created":1371564614,"Status":"Exit 0","Ports":""},{"Id":"841dce3f798a4bbdd7ade4600585ace5a9d2b5b041c4c3e6b045bea7c82144b6","Image":"base:latest","Command":"date
+        ","Created":1371564614,"Status":"Exit 0","Ports":""},{"Id":"e07f3ac34451f145c2bf404eb31b7bd91124fee7f01e4c42cb2005a9a26a080d","Image":"base:latest","Command":"ls
+        ","Created":1371562209,"Status":"Exit 0","Ports":""},{"Id":"46992a6c41dee65ff27556dd347527735779caf1a69f3131643f4426430f4857","Image":"8aac8db3ec39","Command":"ls
+        ","Created":1371562199,"Status":"Exit 255","Ports":""},{"Id":"57b8d6178246d3286341ce27226d02d509a81e7c4e57effaec3b184b0f8acd26","Image":"base:latest","Command":"ls
+        ","Created":1371561065,"Status":"Exit 0","Ports":""},{"Id":"8d110ba5553f206e0abbb55399ddaaebfd79db0da83e191efc76977b2418cc4e","Image":"base:latest","Command":"ls
+        ","Created":1371561042,"Status":"Exit 0","Ports":""},{"Id":"0296e0c0e15d5337219c106bde60be5dc969684455d00949f67a480e98ba324f","Image":"base:latest","Command":"ls
+        ","Created":1371499668,"Status":"Exit 0","Ports":""},{"Id":"cfa2a0e0ba12431cf6d7a0dc3634c189a39d615d84aeabaec9ae9a08ee9aaa96","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371486821,"Status":"Exit 1","Ports":""},{"Id":"91cdbe3653fa4b3a1cb914aa375e5fd2343e38bd19697157c4972f59ca38e078","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1371486785,"Status":"Exit 1","Ports":""},{"Id":"ff1a4d46bba657ed1b79b8afaeced4b1c3e2908951c66118e310aedbcd46c6ce","Image":"base:latest","Command":"rm
+        -rf / --no-yreserve-root","Created":1371486778,"Status":"Exit 1","Ports":""},{"Id":"9ddeba06b4e12ba7e6336dca289b14362e736a9652cb12df6e6956bb36180502","Image":"base:latest","Command":"rm
+        -rf / --no-reserve-root","Created":1371486774,"Status":"Exit 1","Ports":""},{"Id":"49bbf72661840e8f50c31e979557a3f83cb4f0ab578b3bc07bef5dbec49d986d","Image":"base:latest","Command":"rm
+        -rf /","Created":1371486768,"Status":"Exit 1","Ports":""},{"Id":"97634691716fa22adc75403d2727815507577b5af10ff5194d5b5ed89cbc99c4","Image":"base:latest","Command":"du
+        -h","Created":1371486751,"Status":"Exit 1","Ports":""},{"Id":"2fd5e8d32dc0f286ed4adcb543d60909b5b1652d10e90ca056e31d83b4dae0cc","Image":"base:latest","Command":"rm
+        -rf /lib /bin /usr /var","Created":1371486678,"Status":"Exit 0","Ports":""},{"Id":"7f88074a0f6f444bfe87a86e4911b96c8a2e0f658a369f7d1b78f90c48655cec","Image":"base:latest","Command":"du
+        -h","Created":1371486636,"Status":"Exit 1","Ports":""},{"Id":"191dd85aefccfbb2e9917468cbbef5fa0423cb7bd3bf77f0c12fa18a7cca77c2","Image":"base:latest","Command":"du
+        ","Created":1371486625,"Status":"Exit 1","Ports":""},{"Id":"f7595a7c29c00716dd446c76ba009e37fe74f508cc5fe33b0efca3f8d69a8be9","Image":"base:latest","Command":"rm
+        -rf /usr /var","Created":1371486597,"Status":"Exit 0","Ports":""},{"Id":"6e419149894e11d493a93c1632d84bd143600b1843bf0805708130ab76717c30","Image":"base:latest","Command":"rm
+        -rf /usr /var /sbin","Created":1371486580,"Status":"Exit 1","Ports":""},{"Id":"87bab8f303ffbb2287ccc9f36da944de6b12003e68735438f8a02dc5e4dae4ae","Image":"base:latest","Command":"''rm
+        -rf /usr /var /sbin''","Created":1371486556,"Status":"Exit 127","Ports":""},{"Id":"afe924e88074f92a29f5e0dfdb4419298692b26a1768dc1e356471cd2a4f703d","Image":"base:latest","Command":"rm
+        -rf /usr ","Created":1371486477,"Status":"Exit 127","Ports":""},{"Id":"adaceee7eb95d90d25a68012ced2a9bb880582a3c338f5b2cb613cfb36140d04","Image":"base:latest","Command":"/bin/rm
+        -rf /usr ","Created":1371486473,"Status":"Exit 127","Ports":""},{"Id":"09527c4ef18ff0aa703ce2ba7346c2b259c633f4ac3e8ad40fdcd9b288fafd7c","Image":"base:latest","Command":"/bin/rm
+        -rf /usr | xargs ls ","Created":1371486469,"Status":"Exit 127","Ports":""},{"Id":"beab3947b4c0fc32dd9ff28d23c9ec6fec5faa3bda96ab6c41b2448c9ad44bb2","Image":"base:latest","Command":"/bin/rm
+        -rf /usr; ls ","Created":1371486458,"Status":"Exit 127","Ports":""},{"Id":"564d4451d3c2f52bf3d06c6d9e98fde312db0d5507099e74bd2c3b952e651a82","Image":"base:latest","Command":"/bin/rm
+        -rf /usr && ls ","Created":1371486455,"Status":"Exit 127","Ports":""},{"Id":"3f7690b7b9f6a327269f65a9e431b3f8a8600e3c622cf948e18ccae6bffd278b","Image":"base:latest","Command":"/bin/rm
+        -rf /usr","Created":1371486442,"Status":"Exit 0","Ports":""},{"Id":"33f198073fe7893c17b20aa9a28ba6fba09fbbc2861ad27e5063be873d72a72c","Image":"base:latest","Command":"/bin/rm
+        /usr","Created":1371486437,"Status":"Exit 1","Ports":""},{"Id":"5ba8b36ca7588caf9a898cf715e164a122e60f9f7747888fffa278506f9a96f2","Image":"base:latest","Command":"/bin/rm
+        ","Created":1371486434,"Status":"Exit 1","Ports":""},{"Id":"2852e1e1283ebcfa1d1148ad359505343dedf1f14555e09ca995b30184868b59","Image":"base:latest","Command":"''/bin/rm
+        -rf /usr /var /sbin''","Created":1371486393,"Status":"Exit 127","Ports":""},{"Id":"2c06163cfbd0d82290c9c0598a38bcdf87739b4853adeb076e182bb48245b1aa","Image":"base:latest","Command":"''rm
+        -rf usr var sbin''","Created":1371486270,"Status":"Exit 127","Ports":""},{"Id":"6e9508ccfe7ffedff913123b3e265c0e8a991600c7e283e93fbf5c1331edf45c","Image":"base:latest","Command":"''rm
+        -rf usr var sbin''","Created":1371486173,"Status":"Exit 127","Ports":""},{"Id":"dbd102629eb9ad3b31201a19ddf6dc2372a4ffce372ba54ffe483616079e901c","Image":"base:latest","Command":"rm
+        -rf usr","Created":1371486147,"Status":"Exit 0","Ports":""},{"Id":"0bf46f1af9c5c5de06a0e46cc983993dee4ce1784520c35c32090bfdc791fd38","Image":"base:latest","Command":"du
+        -h /run","Created":1371486139,"Status":"Exit 0","Ports":""},{"Id":"c8a197683b28b050bd436574de4e233ffa7b35f829fec78deaa7c750c658baab","Image":"base:latest","Command":"du
+        -h /run","Created":1371486132,"Status":"Exit 0","Ports":""},{"Id":"53c36569833999b6d6f0295f1800a0cf5e61855615ca15ac5e89cc8334855e9d","Image":"base:latest","Command":"du
+        -h /root","Created":1371486129,"Status":"Exit 0","Ports":""},{"Id":"5331df3efedc9c4ae70f677a8c8dab520890db3206d1f93d55061b4c86fc8fda","Image":"base:latest","Command":"ls
+        -l","Created":1371486121,"Status":"Exit 0","Ports":""},{"Id":"8f5205185c98c573f96fd92e9904fab9cf459ba84784fecc8ac6dfe3f9c97a61","Image":"base:latest","Command":"du
+        -h sys","Created":1371486117,"Status":"Exit 0","Ports":""},{"Id":"d9e2eb52fc58ec97f47ededfbbe9a289e50c6a5aab31c7fb671f2bf1441959ca","Image":"base:latest","Command":"du
+        -h tmp","Created":1371486115,"Status":"Exit 0","Ports":""},{"Id":"78395d1c858c80ebec6368caac5e81b01757bc7034553aba6ab69bbda912ddd1","Image":"base:latest","Command":"du
+        -h mnt","Created":1371486111,"Status":"Exit 0","Ports":""},{"Id":"89cc00fcd0c74e887bf528e83a84269af253ad2d1251efef6aa0c0fcf7390047","Image":"base:latest","Command":"du
+        -h sbin","Created":1371486101,"Status":"Exit 0","Ports":""},{"Id":"7f94f88e311db6dbd076e3267aa9c0b169041a2c923794dbeff22079b1c38b33","Image":"base:latest","Command":"du
+        -h run","Created":1371486096,"Status":"Exit 0","Ports":""},{"Id":"dfac4e64045668d63bb80b779937772cc279f0e7aa03cde0e4e1fca2edbf3f24","Image":"base:latest","Command":"ls
+        -l","Created":1371486093,"Status":"Exit 0","Ports":""},{"Id":"bcebea67bfc6058dca9f58b8cb0f377b642c6a44678dfe41307197127b22caa8","Image":"base:latest","Command":"du
+        -h sys","Created":1371486090,"Status":"Exit 0","Ports":""},{"Id":"a7a88e3071c039146914c5d2227f669ed80bef256da9115806abbbee120e9332","Image":"base:latest","Command":"ls
+        -l","Created":1371486082,"Status":"Exit 0","Ports":""},{"Id":"8d0ce0bf7f816acdedf2a7d2ef047a075d1feccc13cf71d6cae68da9b580f0b8","Image":"base:latest","Command":"du
+        -h /var/","Created":1371486068,"Status":"Exit 0","Ports":""},{"Id":"42a135fc9a75984bdd82911da0e2a9f2c3d5c6c1c32a22a7f436c7147ef22456","Image":"base:latest","Command":"ls
+        -l","Created":1371486063,"Status":"Exit 0","Ports":""},{"Id":"16870eadd24da81098d8298f87b8d3b6e95170a5f68bc2c31e809779807101de","Image":"base:latest","Command":"du
+        -h /usr/","Created":1371486058,"Status":"Exit 0","Ports":""},{"Id":"7f2a61d7de2353d5a9d1a38eafc2e8369999785e8a997071b650c5cf4ad72f36","Image":"base:latest","Command":"ls
+        -l","Created":1371486055,"Status":"Exit 0","Ports":""},{"Id":"c6d9762ac65ba96dc156c52a87f0ad16856179132d4404bdedeb6a41c111f70f","Image":"base:latest","Command":"du
+        -h /proc/","Created":1371486048,"Status":"Exit 1","Ports":""},{"Id":"c4b86bd1a7d92dba19376dfae6691a7efb33bff9693aa4b131378e1a80d02087","Image":"base:latest","Command":"du
+        -h /mnt/","Created":1371486044,"Status":"Exit 0","Ports":""},{"Id":"5adc9df516bcaa1c20dfa8c582f2ee349461f4550a3ec625fad51af044aec05f","Image":"base:latest","Command":"du
+        -h /mnt","Created":1371486042,"Status":"Exit 0","Ports":""},{"Id":"26dcfa04754b358446fbc3b853ca45bb252bdf95a88c03e4938d55f460807aaf","Image":"base:latest","Command":"du
+        -h media","Created":1371486038,"Status":"Exit 0","Ports":""},{"Id":"d9cfddd0fa54045f72579f137dab7a943a84b924a6a001a5c776edf4b1d8a47a","Image":"base:latest","Command":"du
+        -h meda","Created":1371486037,"Status":"Exit 1","Ports":""},{"Id":"34c9cd77736f6858164c0649ed438fd1bfd1ef384eb50e900c2e44e5203bfc4e","Image":"base:latest","Command":"du
+        -h lib64","Created":1371486034,"Status":"Exit 0","Ports":""},{"Id":"029cc8c1dc050ea0c0691050621b6bd55af377aa9ccdc980abec3fb2a8e06888","Image":"base:latest","Command":"ls
+        -l","Created":1371486023,"Status":"Exit 0","Ports":""},{"Id":"b5d3f1ed22d1930cfe7b62cb309d7d9b963446b229181adfc75777a5c62d101d","Image":"base:latest","Command":"du
+        -h lib/","Created":1371486016,"Status":"Exit 0","Ports":""},{"Id":"79a7d9d8523b38ff2f21485baa19701adf6b4447f6faef3686f1bc931a4f8341","Image":"base:latest","Command":"du
+        -h home/","Created":1371486013,"Status":"Exit 0","Ports":""},{"Id":"ea0a474f738b9b80c0cd84c2ea005ea3d8475012c03ba886e86b376fdd1708e6","Image":"base:latest","Command":"du
+        -h home","Created":1371486011,"Status":"Exit 0","Ports":""},{"Id":"77b39e4e6dc44b5b2791e5d2b78460361a0e72931b26dc957a34846570384ef7","Image":"base:latest","Command":"du
+        -h dev/","Created":1371486008,"Status":"Exit 0","Ports":""},{"Id":"9183de3a7e28f06e9d24cc07b63995c006fa363a37d0b2d9849a5eb2f5e63e89","Image":"base:latest","Command":"du
+        -h boot/","Created":1371486005,"Status":"Exit 0","Ports":""},{"Id":"5362f3f6ddfb42034585020e2eb398b96bf734af5ba1f3031da034aedd43b8f6","Image":"base:latest","Command":"du
+        -h boot","Created":1371486003,"Status":"Exit 0","Ports":""},{"Id":"acb7bd7b0b37b3442b29bacceb165940d7c336e442f2f9312aeecb112db51d8d","Image":"base:latest","Command":"du
+        -h bin","Created":1371485999,"Status":"Exit 0","Ports":""},{"Id":"3578d15e487d4a16f23b67852508c50114ee1e6226c4df7d144e3aa41832aafb","Image":"base:latest","Command":"du
+        -h opt/","Created":1371485994,"Status":"Exit 0","Ports":""},{"Id":"10c749371dbe6b0bbcc7bdfe8bff211887816dcdac6f6a2e22ac94687e9ea261","Image":"base:latest","Command":"du
+        -h opt","Created":1371485990,"Status":"Exit 0","Ports":""},{"Id":"5e6ac42b5db85764790e077e740acf909a90fcca0e7d0d067a33a209a219115e","Image":"base:latest","Command":"ls
+        -l","Created":1371485975,"Status":"Exit 0","Ports":""},{"Id":"a160a8ba72093e830b06867583c9736e9c94507ca19e43e4b2776a6db6099608","Image":"base:latest","Command":"df
+        ","Created":1371485966,"Status":"Exit 1","Ports":""},{"Id":"50fee130a7f8db250afa20751b6e258919f0208adb8b61906ebf69033b4ad6f7","Image":"base:latest","Command":"du
+        ","Created":1371485960,"Status":"Exit 1","Ports":""},{"Id":"4a700ac09f933ef8ccd6df79cdd5aea1933bd3ff3bbb7b19bc4769b54701c67e","Image":"base:latest","Command":"uname
+        -r","Created":1371371421,"Status":"Exit 0","Ports":""},{"Id":"bdb820e5c54ef56f08930c377d9a2a06fb88854d74c24c907eb408559e70548b","Image":"base:latest","Command":"uname
+        -r","Created":1371371402,"Status":"Exit 0","Ports":""},{"Id":"0aecfefc20384b2bc45e09c497b01d36c247c007c1cf595e552044b78c99ac17","Image":"base:latest","Command":"uname
+        -r","Created":1371371343,"Status":"Exit 0","Ports":""},{"Id":"82f9cf88edf8df55b00530c58be136d235e28720b213ef3080d19c8a32f00624","Image":"base:latest","Command":"ls
+        ","Created":1371371304,"Status":"Exit 0","Ports":""},{"Id":"6875f42449454730b288a784c7f7c6a0fc1d04af25e448cd432bd5f4088fe122","Image":"base:latest","Command":"uname
+        -a","Created":1371371143,"Status":"Exit 0","Ports":""},{"Id":"54f5523a19c0f3b826f5f602e3690ff186a5c5b24f33ef33e1ca92adbfc8961c","Image":"base:latest","Command":"uname
+        -a","Created":1371371036,"Status":"Exit 0","Ports":""},{"Id":"96f50086625454fc60c501c7d8167579a441b073f60c44537ec5c16b14df1795","Image":"base:latest","Command":"sleep
+        1","Created":1371370984,"Status":"Exit 0","Ports":""},{"Id":"f6b155e27477aeb44653c02ab9da16def8faeb3d311c153724523bb0147674c6","Image":"base:latest","Command":"sleep
+        1; ls","Created":1371370965,"Status":"Exit 1","Ports":""},{"Id":"83dc57bdf1a6f3d790fe355cca89a65b6fe86b7340f1252eaec3d9c2bdd20a3c","Image":"base:latest","Command":"sleep
+        1 && ls","Created":1371370946,"Status":"Exit 1","Ports":""},{"Id":"acd8b57f7832bad19bf9d0b9d0aa41b3eae2c101ab5f83acaa971c6420717259","Image":"base:latest","Command":"sleep
+        1 && ls","Created":1371370938,"Status":"Exit 1","Ports":""},{"Id":"8948527de89c462c16ae694afe5cc4baa602e19ade92042c6971a68ff3508852","Image":"base:latest","Command":"sleep
+        1","Created":1371370920,"Status":"Exit 0","Ports":""},{"Id":"60b9066495fd362f99e6f61d956e97a5517f145dd030bc9cf92e40efa4719f25","Image":"base:latest","Command":"ls
+        ","Created":1371370903,"Status":"Exit 0","Ports":""},{"Id":"4d4aa4f933156c6fcb5692ea6ad39082b9ad7e29f5ee87e6b79cf002db275cb4","Image":"base:latest","Command":"/bin/ls
+        ","Created":1371370856,"Status":"Exit 0","Ports":""},{"Id":"2764229f27e565b67e071e670cfeb1b9a6e76067392c9081088a55bb404b6abb","Image":"base:latest","Command":"ls
+        ","Created":1371370819,"Status":"Exit 0","Ports":""},{"Id":"e796ca0b06a5c23c877749dc36ea392deb518898d2a3542e802afc0fb8a23e05","Image":"base:latest","Command":"ls
+        ","Created":1371370811,"Status":"Exit 0","Ports":""},{"Id":"764657c3f278065563fe4d7ee3eeae74e357f0403c0fc103a8126a59d9e0f9df","Image":"base:latest","Command":"ls
+        ","Created":1371370719,"Status":"Exit 0","Ports":""},{"Id":"d378f27cd033b221b1f9487786f89a6e3fceb00b474dbaf090f782b2b99881bf","Image":"base:latest","Command":"ls
+        ","Created":1371370698,"Status":"Exit 0","Ports":""},{"Id":"89f6f2d970910f90c257f25cd877992bdb14ce839c7f10820f279e5bc8d24deb","Image":"base:latest","Command":"ls
+        ","Created":1371370622,"Status":"Exit 0","Ports":""},{"Id":"4c4ed1c0786738cb95a3cc09d9b47e7933ae5abb514951a9e77eadc21f95745f","Image":"base:latest","Command":"ls
+        ","Created":1371370521,"Status":"Exit 0","Ports":""},{"Id":"8fbe524835d3a8a180a95eb719ac0dd3b76f5396772f849fa6fa7e8ee5d860fd","Image":"base:latest","Command":"ls
+        ","Created":1371370496,"Status":"Exit 0","Ports":""},{"Id":"acd89fea505cbc01ee0c58f9106c601186022d27dc76194ef1f11abeac30cbaa","Image":"base:latest","Command":"ls
+        ","Created":1371370437,"Status":"Exit 0","Ports":""},{"Id":"5b92feb9852b304c67df446d5d32bed37c7ade80c50c8afdc09fa2a08d59b992","Image":"base:latest","Command":"/bin/find
+        /etc -name ''*''","Created":1371370370,"Status":"Exit 127","Ports":""},{"Id":"08d816240363d826668243673657c24b5d5c2f5e4ed29d53721bb2374f2d80fe","Image":"base:latest","Command":"/bin/find
+        /etc -name ''*''","Created":1371370364,"Status":"Exit 127","Ports":""},{"Id":"9ad33e640f60922364714078e84a3eeec4a212e9ccc03c150a4f50f3c6de754e","Image":"base:latest","Command":"find
+        /etc -name ''*''","Created":1371370330,"Status":"Exit 0","Ports":""},{"Id":"acd41cd7773cdb4428d59443bc2b744f068e777147bd099c050464e3eefbfde4","Image":"base:latest","Command":"/usr/bin/sleep
+        50 ","Created":1371363480,"Status":"Exit 127","Ports":""},{"Id":"b2e0221e31eb9f32284a3741a8e6ccaf6e74605e75614293fd99e880fdc1cf74","Image":"base:latest","Command":"ls
         ","Created":1371363406,"Status":"Exit 0","Ports":""},{"Id":"01eee46d1cb7f9cb63dca8dea6a9552ef5e26bebb4360e4a5a3139896d0952e9","Image":"base:latest","Command":"tar
         nonsense","Created":1371363406,"Status":"Exit 64","Ports":""},{"Id":"a0f3cd215b71783d26d6b76cebec1b21655058b173d46edba1d5dbb13e2f3d66","Image":"base:latest","Command":"/usr/bin/sleep
         50 ","Created":1371363405,"Status":"Exit 127","Ports":""},{"Id":"39c9f9406051f8413849fe4fe67629e0a3d960a67a301b7de7be767bd8ec0800","Image":"base:latest","Command":"ls
@@ -115,5 +329,5 @@ http_interactions:
         ","Created":1371363179,"Status":"Exit 0","Ports":""},{"Id":"c250130f3deeeb0925dad14767f7f1ab1d3aa8c20727c27533676644375c7916","Image":"base:latest","Command":"ls
         ","Created":1371363130,"Status":"Exit 0","Ports":""}]'
     http_version: 
-  recorded_at: Sun, 16 Jun 2013 06:16:46 GMT
+  recorded_at: Tue, 18 Jun 2013 17:06:07 GMT
 recorded_with: VCR 2.5.0
