@@ -1,11 +1,11 @@
 {
   "built_on": "master",
-  "duration": 29.588,
-  "full_display_name": "gem.docker-api #38 - add-images",
-  "id": "2013-06-18_13-18-14",
-  "number": 38,
+  "duration": 23.557,
+  "full_display_name": "gem.docker-api #39 - add-images",
+  "id": "2013-06-18_13-29-20",
+  "number": 39,
   "result": "FAILURE",
   "status_message": "?",
-  "time": "2013-06-18 13:18:14 -0400",
-  "url": "job/gem.docker-api/38/"
+  "time": "2013-06-18 13:29:20 -0400",
+  "url": "job/gem.docker-api/39/"
 }
