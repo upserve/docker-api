@@ -1,0 +1,11 @@
+{
+  "built_on": "master",
+  "duration": 18.808,
+  "full_display_name": "gem.docker-api #40 - add-images",
+  "id": "2013-06-18_13-29-47",
+  "number": 40,
+  "result": "SUCCESS",
+  "status_message": "?",
+  "time": "2013-06-18 13:29:47 -0400",
+  "url": "job/gem.docker-api/40/"
+}
