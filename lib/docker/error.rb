@@ -14,4 +14,8 @@ module Docker::Error
 
   # Analogous to ContainerError for Images.
   class ImageError < DockerError; end
+
+  # Raised when a method requires a Model to be in a certain state (typically
+  # created or not created), but the Model is not in that state.
+  class StateError < DockerError; end
 end
