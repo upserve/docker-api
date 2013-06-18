@@ -26,7 +26,7 @@ class Docker::Image
         :path    => '/images/create',
         :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
         :body    => hash_to_params(body),
-        :expects => 200
+        :expects => (200..204)
       ).body
       self.id = JSON.parse(body)['status']
       self
@@ -38,7 +38,7 @@ class Docker::Image
     self.connection.delete(
       :path => "/images/#{self.id}",
       :headers => { 'Content-Type' => 'application/json' },
-      :expects => 204
+      :expects => (200..204)
     )
     self.id = nil
     true
@@ -78,7 +78,7 @@ class Docker::Image
           :path    => "/images/#{resource}",
           :headers => { 'Content-Type' =>  'application/json' },
           :query   => options,
-          :expects => 200
+          :expects => (200..204)
         ).body
         ((body.nil? || body.empty?) ? [] : JSON.parse(body)).map { |image_hash|
           new(:id => image_hash['Id'] || image_hash['Name'],

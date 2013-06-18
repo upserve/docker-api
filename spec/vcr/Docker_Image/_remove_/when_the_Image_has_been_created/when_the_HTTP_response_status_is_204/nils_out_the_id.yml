@@ -19,18 +19,18 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDowMzo0NiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"6dca20f391b3"}'
+      string: ! '{"status":"1c1223c96836"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:03:46 GMT
+  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
 - request:
     method: delete
-    uri: http://localhost:4243/images/6dca20f391b3
+    uri: http://localhost:4243/images/1c1223c96836
     body:
       encoding: US-ASCII
       string: ''
@@ -44,7 +44,7 @@ http_interactions:
     headers:
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDowMzo0NiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -55,5 +55,5 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:03:46 GMT
+  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
 recorded_with: VCR 2.5.0

@@ -35,7 +35,7 @@ class Docker::Container
         :path    => '/containers/create',
         :headers => { 'Content-Type' => 'application/json' },
         :body    => body.to_json,
-        :expects => 201
+        :expects => (200..204)
       )
       self.id = JSON.parse(response.body)['Id']
       self
@@ -51,7 +51,7 @@ class Docker::Container
     self.connection.get(
       :path           => "/containers/#{self.id}/export",
       :headers        => { 'Content-Type' => 'application/octet-stream' },
-      :expects        => 200,
+      :expects        => (200..204),
       :response_block => block
     )
     self
@@ -67,7 +67,7 @@ class Docker::Container
       :path    => "/containers/#{self.id}/attach",
       :query   => query,
       :headers => { 'Content-Type' => 'application/vnd.docker.raw-stream' },
-      :expects => 200,
+      :expects => (200..204),
       :response_block => block
     )
     self
@@ -85,7 +85,7 @@ class Docker::Container
         :method  => http_method,
         :path    => "/containers/#{self.id}/#{method}",
         :headers => { 'Content-Type' => 'application/json' },
-        :expects => [200, 204]
+        :expects => (200..204)
       ).body
       JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
     end
@@ -102,7 +102,7 @@ class Docker::Container
         :path    => "/containers/#{self.id}/#{method}",
         :headers => { 'Content-Type' => 'application/json' },
         :query   => { :t => time },
-        :expects => 204
+        :expects => (200..204)
       ).body
       JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
     end
@@ -117,7 +117,7 @@ class Docker::Container
       :path    => '/containers/json',
       :headers => { 'Content-Type' =>  'application/json' },
       :query   => options,
-      :expects => 200
+      :expects => (200..204)
     )
     JSON.parse(response.body).map { |container_hash|
       new(:id => container_hash['Id'], :connection => connection)
