@@ -31,23 +31,15 @@ class Docker::Image
     true
   end
 
-  class << self
-    {
-      :all => 'json',
-      :search => 'search'
-    }.each do |method, resource|
-      define_method(method) do |options = {}, connection = Docker.connection|
-        body = connection.get(
-          :path    => "/images/#{resource}",
-          :headers => { 'Content-Type' =>  'application/json' },
-          :query   => options,
-          :expects => (200..204)
-        ).body
-        ((body.nil? || body.empty?) ? [] : JSON.parse(body)).map { |image_hash|
-          new(:id => image_hash['Id'] || image_hash['Name'],
-              :connection => connection)
-        }
-      end
-    end
+  def self.search(query = {}, connection = Docker.connection)
+    body = connection.get(
+      :path    => "/#{self.resource_prefix}/search",
+      :headers => { 'Content-Type' =>  'application/json' },
+      :query   => options,
+      :expects => (200..204)
+    ).body
+    (body.nil? || body.empty? ? [] : JSON.parse(body)).map { |hash|
+      new(:id => hash['Id'], :connection => connection)
+    }
   end
 end

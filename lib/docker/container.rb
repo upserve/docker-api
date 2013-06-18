@@ -25,16 +25,4 @@ class Docker::Container
   docker_request :stop, :post
   docker_request :kill, :post
   docker_request :restart, :post
-
-  def self.all(options = {}, connection = Docker.connection)
-    response = connection.get(
-      :path    => '/containers/json',
-      :headers => { 'Content-Type' =>  'application/json' },
-      :query   => options,
-      :expects => (200..204)
-    )
-    JSON.parse(response.body).map { |container_hash|
-      new(:id => container_hash['Id'], :connection => connection)
-    }
-  end
 end

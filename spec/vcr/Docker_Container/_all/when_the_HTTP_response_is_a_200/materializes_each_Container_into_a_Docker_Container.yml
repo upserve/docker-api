@@ -16,7 +16,7 @@ http_interactions:
     headers:
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1OSBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNzowNjowNyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -25,9 +25,9 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"e471ece03f96"}'
+      string: ! '{"Id":"b78fee732c62"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:23:59 GMT
+  recorded_at: Tue, 18 Jun 2013 17:06:07 GMT
 - request:
     method: get
     uri: http://localhost:4243/containers/json?all=true
@@ -47,13 +47,16 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1OSBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNzowNjowNyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"e471ece03f965877f44b5c1165aee3deb7dd5d0941c04e1ca911d242c030714d","Image":"base:latest","Command":"ls
+      string: ! '[{"Id":"b78fee732c62f30149fc65bbc1dacb4cd1b56c3cfc288d36849b06c1c12888fc","Image":"base:latest","Command":"ls
+        ","Created":1371575167,"Status":"Exit 0","Ports":""},{"Id":"34acef901aaf3132562bcfde6e4c8f574c99eefb318043fdffe65bc59ac409b5","Image":"base:latest","Command":"ls
+        ","Created":1371575137,"Status":"Exit 0","Ports":""},{"Id":"4f72f8e6c61dd96abc60d65cacdcf08a06c7f7f3339abfced9900167f01de5e4","Image":"base:latest","Command":"ls
+        ","Created":1371575082,"Status":"Exit 0","Ports":""},{"Id":"e471ece03f965877f44b5c1165aee3deb7dd5d0941c04e1ca911d242c030714d","Image":"base:latest","Command":"ls
         ","Created":1371572639,"Status":"Exit 0","Ports":""},{"Id":"71cc12ceecc1a37ba10eb01d440b8e2b4c67df5ea947ef2b0e66248e64b4ac8d","Image":"base:latest","Command":"tar
         nonsense","Created":1371572638,"Status":"Exit 64","Ports":""},{"Id":"b2e3a84b58183a42fac79ae06d425b76f35404c7bfb67f5672429a726079a09f","Image":"base:latest","Command":"/usr/bin/sleep
         50 ","Created":1371572638,"Status":"Exit 127","Ports":""},{"Id":"4aea86723a6a467275655b8c47add681fc469e1b2ccadee4dcdb1a16a8e277c6","Image":"base:latest","Command":"ls
@@ -175,7 +178,7 @@ http_interactions:
         ","Created":1371363179,"Status":"Exit 0","Ports":""},{"Id":"c250130f3deeeb0925dad14767f7f1ab1d3aa8c20727c27533676644375c7916","Image":"base:latest","Command":"ls
         ","Created":1371363130,"Status":"Exit 0","Ports":""}]'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:23:59 GMT
+  recorded_at: Tue, 18 Jun 2013 17:06:07 GMT
 - request:
     method: get
     uri: http://localhost:4243/containers/json?all=true
@@ -195,13 +198,16 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1OSBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNzowNjowNyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"e471ece03f965877f44b5c1165aee3deb7dd5d0941c04e1ca911d242c030714d","Image":"base:latest","Command":"ls
+      string: ! '[{"Id":"b78fee732c62f30149fc65bbc1dacb4cd1b56c3cfc288d36849b06c1c12888fc","Image":"base:latest","Command":"ls
+        ","Created":1371575167,"Status":"Exit 0","Ports":""},{"Id":"34acef901aaf3132562bcfde6e4c8f574c99eefb318043fdffe65bc59ac409b5","Image":"base:latest","Command":"ls
+        ","Created":1371575137,"Status":"Exit 0","Ports":""},{"Id":"4f72f8e6c61dd96abc60d65cacdcf08a06c7f7f3339abfced9900167f01de5e4","Image":"base:latest","Command":"ls
+        ","Created":1371575082,"Status":"Exit 0","Ports":""},{"Id":"e471ece03f965877f44b5c1165aee3deb7dd5d0941c04e1ca911d242c030714d","Image":"base:latest","Command":"ls
         ","Created":1371572639,"Status":"Exit 0","Ports":""},{"Id":"71cc12ceecc1a37ba10eb01d440b8e2b4c67df5ea947ef2b0e66248e64b4ac8d","Image":"base:latest","Command":"tar
         nonsense","Created":1371572638,"Status":"Exit 64","Ports":""},{"Id":"b2e3a84b58183a42fac79ae06d425b76f35404c7bfb67f5672429a726079a09f","Image":"base:latest","Command":"/usr/bin/sleep
         50 ","Created":1371572638,"Status":"Exit 127","Ports":""},{"Id":"4aea86723a6a467275655b8c47add681fc469e1b2ccadee4dcdb1a16a8e277c6","Image":"base:latest","Command":"ls
@@ -323,5 +329,5 @@ http_interactions:
         ","Created":1371363179,"Status":"Exit 0","Ports":""},{"Id":"c250130f3deeeb0925dad14767f7f1ab1d3aa8c20727c27533676644375c7916","Image":"base:latest","Command":"ls
         ","Created":1371363130,"Status":"Exit 0","Ports":""}]'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:23:59 GMT
+  recorded_at: Tue, 18 Jun 2013 17:06:07 GMT
 recorded_with: VCR 2.5.0

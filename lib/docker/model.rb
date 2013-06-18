@@ -69,6 +69,18 @@ module Docker::Model
       end
     end
 
+    def all(options = {}, connection = Docker.connection)
+      body = connection.get(
+        :path    => "#{self.resource_prefix}/json",
+        :headers => { 'Content-Type' =>  'application/json' },
+        :query   => options,
+        :expects => (200..204)
+      ).body
+      (body.nil? || body.empty? ? [] : JSON.parse(body)).map { |hash|
+        new(:id => hash['Id'], :connection => connection)
+      }
+    end
+
   private
   end
 
