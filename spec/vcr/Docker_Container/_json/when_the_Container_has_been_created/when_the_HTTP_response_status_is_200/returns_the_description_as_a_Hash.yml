@@ -16,7 +16,7 @@ http_interactions:
     headers:
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAxNiBKdW4gMjAxMyAwNjoxNjoxOCBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1NSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -25,12 +25,12 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"9144f61f5478"}'
+      string: ! '{"Id":"e724df5d84db"}'
     http_version: 
-  recorded_at: Sun, 16 Jun 2013 06:16:18 GMT
+  recorded_at: Tue, 18 Jun 2013 16:23:55 GMT
 - request:
     method: get
-    uri: http://localhost:4243/containers/9144f61f5478/json
+    uri: http://localhost:4243/containers/e724df5d84db/json
     body:
       encoding: US-ASCII
       string: ''
@@ -47,13 +47,13 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAxNiBKdW4gMjAxMyAwNjoxNjoxOCBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1NSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"9144f61f5478e84e6481550a60318cac8cf949492ca5a0bcde4a80b581dd94b7","Created":"2013-06-16T02:16:18.324399-04:00","Path":"ls","Args":[],"Config":{"Hostname":"9144f61f5478","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["ls"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":""},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IpAddress":"","IpPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","Volumes":null}'
+      string: ! '{"Id":"e724df5d84db6fe431545dc140dde8e4ede561d5549495b4e64e39d2e0c31dfe","Created":"2013-06-18T12:23:54.994446-04:00","Path":"ls","Args":[],"Config":{"Hostname":"e724df5d84db","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["ls"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":""},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IpAddress":"","IpPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","Volumes":null}'
     http_version: 
-  recorded_at: Sun, 16 Jun 2013 06:16:18 GMT
+  recorded_at: Tue, 18 Jun 2013 16:23:55 GMT
 recorded_with: VCR 2.5.0
