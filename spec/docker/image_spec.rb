@@ -104,11 +104,8 @@ describe Docker::Image do
       end
 
       context 'when the HTTP request returns a 200' do
-        let(:options) { { 'fromImage' => 'base' } }
-
         it 'sets the id', :vcr do
-          pending
-          expect { subject.create!(options) }
+          expect { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
               .to change { subject.id }
               .from(nil)
         end
@@ -138,11 +135,12 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 204' do
-        before { pending; subject.create!('fromImage' => 'base') }
+        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
 
-        it 'waits for the command to finish', :vcr do
-          pending
-          subject.remove!
+        it 'nils out the id', :vcr do
+          expect { subject.remove! }
+              .to change { subject.id }
+              .to nil
         end
       end
     end
@@ -170,11 +168,11 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 200' do
-        before { pending; subject.create!('fromImage' => 'base') }
+        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
 
-        it 'waits for the command to finish', :vcr do
-          pending
-          subject.insert
+        it 'inserts the file', :vcr do
+          expect { subject.insert('path' => '/', 'url' => 'lol') }
+              .to_not raise_error
         end
       end
     end
@@ -201,11 +199,10 @@ describe Docker::Image do
         end
       end
 
-      context 'when the HTTP response status is 200' do
-        before { pending; subject.create!('fromImage' => 'base') }
-
-        it 'waits for the command to finish', :vcr do
-          pending
+      context 'when the HTTP response status is 200', :current do
+        it 'pushes the Image', :vcr do
+          pending 'I don\'t want to push the Image to the Docker Registry'
+          subject.create!('fromRepo' => 'base', 'fromSrc' => '-')
           subject.push
         end
       end
@@ -234,11 +231,11 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 200' do
-        before { pending; subject.create!('fromImage' => 'base') }
+        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
 
-        it 'waits for the command to finish', :vcr do
-          pending
-          subject.tag
+        it 'tags the image with the repo name', :vcr do
+          expect { subject.tag(:repo => 'base2', :force => true) }
+              .to_not raise_error
         end
       end
     end
@@ -266,11 +263,13 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 200' do
-        before { pending; subject.create!('fromImage' => 'base') }
+        let(:json) { subject.json }
+        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
 
-        it 'waits for the command to finish', :vcr do
-          pending
-          subject.json
+        it 'returns additional information about image image', :vcr do
+          json.should be_a Hash
+          json['id'].should start_with subject.id
+          json['comment'].should == 'Imported from -'
         end
       end
     end
@@ -298,11 +297,13 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 200' do
-        before { pending; subject.create!('fromImage' => 'base') }
+        let(:history) { subject.history }
+        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
 
-        it 'waits for the command to finish', :vcr do
-          pending
-          subject.history
+        it 'returns the history of the Image', :vcr do
+          history.should be_a Array
+          history.length.should_not be_zero
+          history.should be_all { |elem| elem.is_a? Hash }
         end
       end
     end
@@ -321,14 +322,14 @@ describe Docker::Image do
       end
     end
 
-    context 'when the HTTP response is a 200' do
+    context 'when the HTTP response is a 200', :current do
+      let(:images) { subject.all(:all => true) }
+      before { subject.new.create!('fromRepo' => 'base', 'fromSrc' => '-') }
       it 'materializes each Container into a Docker::Container', :vcr do
-        pending
-        subject.new.create!('fromImage' => 'base')
-        subject.all(:all => true).should be_all { |image|
-          image.is_a?(described_class)
+        images.should be_all { |image|
+          !image.id.nil? && image.is_a?(described_class)
         }
-        subject.all(:all => true).length.should_not be_zero
+        images.length.should_not be_zero
       end
     end
   end
@@ -348,10 +349,9 @@ describe Docker::Image do
 
     context 'when the HTTP response is a 200' do
       it 'materializes each Container into a Docker::Container', :vcr do
-        pending
-        subject.new.create!('fromImage' => 'base')
+        subject.new.create!('fromRepo' => 'base', 'fromSrc' => '-')
         subject.search('term' => 'sshd').should be_all { |image|
-          image.is_a?(described_class)
+          !image.id.nil? && image.is_a?(described_class)
         }
       end
     end

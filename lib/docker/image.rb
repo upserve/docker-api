@@ -22,13 +22,13 @@ class Docker::Image
     when !body.is_a?(Hash)
       raise Docker::Error::ArgumentError, 'Expected a Hash'
     else
-      response = self.connection.post(
+      body = self.connection.post(
         :path    => '/images/create',
-        :headers => { 'Content-Type' => 'application/json' },
-        :body    => body.to_json,
-        :expects => 201
-      )
-      self.id = JSON.parse(response.body)['Id']
+        :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
+        :body    => hash_to_params(body),
+        :expects => 200
+      ).body
+      self.id = JSON.parse(body)['status']
       self
     end
   end
@@ -58,7 +58,7 @@ class Docker::Image
         :path    => "/images/#{self.id}/#{method}",
         :query   => query,
         :headers => { 'Content-Type' => 'application/json' },
-        :expects => [200, 204]
+        :expects => (200..204)
       ).body
       JSON.parse(body) unless body.nil? || body.empty?
     end
@@ -81,7 +81,8 @@ class Docker::Image
           :expects => 200
         ).body
         ((body.nil? || body.empty?) ? [] : JSON.parse(body)).map { |image_hash|
-          new(:id => image_hash['Id'], :connection => connection)
+          new(:id => image_hash['Id'] || image_hash['Name'],
+              :connection => connection)
         }
       end
     end
@@ -93,5 +94,9 @@ private
     unless created?
       raise Docker::Error::ImageError, 'This Image is not created.'
     end
+  end
+
+  def hash_to_params(hash)
+    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
   end
 end
