@@ -19,18 +19,18 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"69bc125313d2"}'
+      string: ! '{"status":"5adf4434ad5b"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
 - request:
     method: post
-    uri: http://localhost:4243/images/69bc125313d2/tag?force=true&repo=base2
+    uri: http://localhost:4243/images/5adf4434ad5b/tag?force=true&repo=base2
     body:
       encoding: US-ASCII
       string: ''
@@ -44,7 +44,7 @@ http_interactions:
     headers:
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -55,5 +55,5 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
 recorded_with: VCR 2.5.0

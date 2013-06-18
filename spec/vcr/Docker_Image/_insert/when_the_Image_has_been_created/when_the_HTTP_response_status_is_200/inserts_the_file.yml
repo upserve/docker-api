@@ -19,18 +19,18 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"08bce83791e6"}'
+      string: ! '{"status":"17c3631b2ef6"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
 - request:
     method: post
-    uri: http://localhost:4243/images/08bce83791e6/insert?path=/&url=lol
+    uri: http://localhost:4243/images/17c3631b2ef6/insert?path=/&url=lol
     body:
       encoding: US-ASCII
       string: ''
@@ -47,7 +47,7 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -55,5 +55,5 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"Id":""}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
 recorded_with: VCR 2.5.0

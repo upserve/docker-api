@@ -35,6 +35,7 @@ module Docker::Model
     "#{self.class.name} { :id => #{id}, :connection => #{connection} }"
   end
 
+  # This defines the DSL for the including Classes.
   module ClassMethods
     def resource_prefix(val = nil)
       val.nil? ? @resource_prefix : (@resource_prefix = val)

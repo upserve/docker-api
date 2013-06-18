@@ -82,7 +82,7 @@ describe Docker::Image do
 
       it 'raises an error' do
         expect { subject.create! }
-            .to raise_error(Docker::Error::ImageError)
+            .to raise_error(Docker::Error::StateError)
       end
     end
 
@@ -113,10 +113,10 @@ describe Docker::Image do
     end
   end
 
-  describe '#remove!' do
+  describe '#remove' do
     context 'when the Image has not been created' do
       it 'raises an error' do
-        expect { subject.remove! }.to raise_error Docker::Error::ImageError
+        expect { subject.remove }.to raise_error Docker::Error::StateError
       end
     end
 
@@ -129,7 +129,7 @@ describe Docker::Image do
         after { Excon.stubs.shift }
 
         it 'raises an error' do
-          expect { subject.remove! }
+          expect { subject.remove }
               .to raise_error(Excon::Errors::InternalServerError)
         end
       end
@@ -138,7 +138,7 @@ describe Docker::Image do
         before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
 
         it 'nils out the id', :vcr do
-          expect { subject.remove! }
+          expect { subject.remove }
               .to change { subject.id }
               .to nil
         end
@@ -149,7 +149,7 @@ describe Docker::Image do
   describe "#insert" do
     context 'when the Image has not been created' do
       it 'raises an error' do
-        expect { subject.insert }.to raise_error Docker::Error::ImageError
+        expect { subject.insert }.to raise_error Docker::Error::StateError
       end
     end
 
@@ -181,7 +181,7 @@ describe Docker::Image do
   describe "#push" do
     context 'when the Image has not been created' do
       it 'raises an error' do
-        expect { subject.push }.to raise_error Docker::Error::ImageError
+        expect { subject.push }.to raise_error Docker::Error::StateError
       end
     end
 
@@ -212,7 +212,7 @@ describe Docker::Image do
   describe "#tag" do
     context 'when the Image has not been created' do
       it 'raises an error' do
-        expect { subject.tag }.to raise_error Docker::Error::ImageError
+        expect { subject.tag }.to raise_error Docker::Error::StateError
       end
     end
 
@@ -244,7 +244,7 @@ describe Docker::Image do
   describe "#json" do
     context 'when the Image has not been created' do
       it 'raises an error' do
-        expect { subject.json }.to raise_error Docker::Error::ImageError
+        expect { subject.json }.to raise_error Docker::Error::StateError
       end
     end
 
@@ -278,7 +278,7 @@ describe Docker::Image do
   describe "#history" do
     context 'when the Image has not been created' do
       it 'raises an error' do
-        expect { subject.history }.to raise_error Docker::Error::ImageError
+        expect { subject.history }.to raise_error Docker::Error::StateError
       end
     end
 

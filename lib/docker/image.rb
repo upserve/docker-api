@@ -1,39 +1,26 @@
 # This class represents a Docker Image.
 class Docker::Image
-  attr_reader :id, :connection
+  include Docker::Model
+  resource_prefix '/images'
 
-  def initialize(options = {})
-    options[:connection] ||= Docker.connection
-    unless options[:connection].is_a?(Docker::Connection)
-      raise Docker::Error::ArgumentError, "Expected a Docker::Connection."
-    end
-    self.id = options[:id]
-    self.connection = options[:connection]
+  create_request do |options|
+    body = self.connection.post(
+      :path    => '/images/create',
+      :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
+      :body    => hash_to_params(options),
+      :expects => (200..204)
+    ).body
+    self.id = JSON.parse(body)['status']
+    self
   end
 
-  def created?
-    !!self.id
-  end
+  docker_request :tag, :post
+  docker_request :json, :get
+  docker_request :push, :post
+  docker_request :insert, :post
+  docker_request :history, :get
 
-  def create!(body = {})
-    case
-    when self.created?
-      raise Docker::Error::ImageError, 'This Image already exists!'
-    when !body.is_a?(Hash)
-      raise Docker::Error::ArgumentError, 'Expected a Hash'
-    else
-      body = self.connection.post(
-        :path    => '/images/create',
-        :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
-        :body    => hash_to_params(body),
-        :expects => (200..204)
-      ).body
-      self.id = JSON.parse(body)['status']
-      self
-    end
-  end
-
-  def remove!
+  def remove
     ensure_created!
     self.connection.delete(
       :path => "/images/#{self.id}",
@@ -42,30 +29,6 @@ class Docker::Image
     )
     self.id = nil
     true
-  end
-
-  {
-    :tag => :post,
-    :json => :get,
-    :push => :post,
-    :insert => :post,
-    :history => :get,
-  }.each do |method, http_method|
-    define_method(method) do |query = {}|
-      ensure_created!
-      body = connection.request(
-        :method  => http_method,
-        :path    => "/images/#{self.id}/#{method}",
-        :query   => query,
-        :headers => { 'Content-Type' => 'application/json' },
-        :expects => (200..204)
-      ).body
-      JSON.parse(body) unless body.nil? || body.empty?
-    end
-  end
-
-  def to_s
-    "Docker::Image { :id => #{self.id}, :connection => #{self.connection} }"
   end
 
   class << self
@@ -86,17 +49,5 @@ class Docker::Image
         }
       end
     end
-  end
-private
-  attr_writer :id, :connection
-
-  def ensure_created!
-    unless created?
-      raise Docker::Error::ImageError, 'This Image is not created.'
-    end
-  end
-
-  def hash_to_params(hash)
-    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
   end
 end

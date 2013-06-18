@@ -19,18 +19,18 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"8eef7935f777"}'
+      string: ! '{"status":"c6b018248415"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
 - request:
     method: get
-    uri: http://localhost:4243/images/8eef7935f777/json
+    uri: http://localhost:4243/images/c6b018248415/json
     body:
       encoding: US-ASCII
       string: ''
@@ -47,14 +47,14 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNDozOToxMiBHTVQ=
+        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"id":"8eef7935f777ee9e46132188654171b60f177f6515005b1bab0156a69e3363c9","comment":"Imported
-        from -","created":"2013-06-18T10:39:12.63802-04:00","container_config":{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":null,"Dns":null,"Image":"","Volumes":null,"VolumesFrom":""},"docker_version":"0.4.0","architecture":"x86_64"}'
+      string: ! '{"id":"c6b018248415a19289e7dec869b1501a8d9ca02526fc73e434e6d4e8910408b4","comment":"Imported
+        from -","created":"2013-06-18T12:04:39.343874-04:00","container_config":{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":null,"Dns":null,"Image":"","Volumes":null,"VolumesFrom":""},"docker_version":"0.4.0","architecture":"x86_64"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 14:39:12 GMT
+  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
 recorded_with: VCR 2.5.0
