@@ -469,6 +469,40 @@ describe Docker::Container do
     end
   end
 
+  describe '#commit' do
+    context 'when the Container has not been created' do
+      it 'raises an error' do
+        expect { subject.commit }.to raise_error Docker::Error::StateError
+      end
+    end
+
+    context 'when the Container has been created' do
+      context 'when the HTTP response status is not 200' do
+        before do
+          subject.stub(:id).and_return('abc')
+          Excon.stub({ :method => :post }, { :status => 500 })
+        end
+        after { Excon.stubs.shift }
+
+        it 'raises an error' do
+          expect { subject.commit }
+              .to raise_error(Docker::Error::ServerError)
+        end
+      end
+
+      context 'when the HTTP response status is 200' do
+        let(:image) { subject.commit }
+        before { subject.create!('Cmd' => %w[ls], 'Image' => 'base') }
+
+        it 'creates a new Image from the  Container\'s changes', :vcr do
+          subject.start
+          image.should be_a Docker::Image
+          image.id.should_not be_nil
+        end
+      end
+    end
+  end
+
   describe '.all' do
     subject { described_class }
 

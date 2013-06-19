@@ -25,4 +25,11 @@ class Docker::Container
   docker_request :stop, :post
   docker_request :kill, :post
   docker_request :restart, :post
+
+  def commit(options = {})
+    ensure_created!
+    options.merge!('container' => self.id[0..7])
+    hash = self.connection.json_request(:post, '/commit', options)
+    Docker::Image.new(:id => hash['Id'], :connection => self.connection)
+  end
 end

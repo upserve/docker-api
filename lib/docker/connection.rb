@@ -1,6 +1,8 @@
 # This class represents a Connection to a Docker server. The Connection is
 # immutable in that once the url and options is set they cannot be changed.
 class Docker::Connection
+  include Docker::Error
+
   attr_reader :url, :options
 
   # Create a new Connection. By default, the Connection points to localhost at
@@ -24,9 +26,9 @@ class Docker::Connection
       begin
         self.resource.public_send(method, *args, &block)
       rescue Excon::Errors::BadRequest => ex
-        raise Docker::Error::ClientError, ex.message
+        raise ClientError, ex.message
       rescue Excon::Errors::InternalServerError => ex
-        raise Docker::Error::ServerError, ex.message
+        raise ServerError, ex.message
       end
     end
   end

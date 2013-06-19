@@ -84,9 +84,4 @@ private
       raise Docker::Error::StateError, "This #{self.class.name} is not created."
     end
   end
-
-  # Create a query string from a Hash.
-  def hash_to_params(hash)
-    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
-  end
 end
