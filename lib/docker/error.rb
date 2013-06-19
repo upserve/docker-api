@@ -17,4 +17,7 @@ module Docker::Error
 
   # Raised when a request returns a 500.
   class ServerError < DockerError; end
+
+  # Raised when there is an unexpected response code / body.
+  class UnexpectedResponseError < DockerError; end
 end

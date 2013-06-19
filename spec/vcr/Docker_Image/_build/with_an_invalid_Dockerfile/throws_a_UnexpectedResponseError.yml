@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/build
+    body:
+      encoding: US-ASCII
+      string: ! "-------------RubyMultipartPost\r\nContent-Disposition: form-data;
+        name=\"Dockerfile\"; filename=\"Dockerfile\"\r\nContent-Length: 8\r\nContent-Type:
+        application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\nlololol\n\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '248'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Wed, 19 Jun 2013 17:11:52 GMT
+      Transfer-Encoding:
+      - chunked
+      Content-Type:
+      - text/plain; charset=utf-8
+    body:
+      encoding: US-ASCII
+      string: ! 'Error build: Invalid Dockerfile format
+
+'
+    http_version: 
+  recorded_at: Wed, 19 Jun 2013 17:11:52 GMT
+recorded_with: VCR 2.5.0
