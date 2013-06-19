@@ -33,19 +33,16 @@ class Docker::Image
 
   class << self
     include Docker::Error
+    include Docker::Multipart
 
     def build(commands, connection = Docker.connection)
-      host = URI.parse(connection.url).host
-      res = Net::HTTP.start(host, connection.options[:port]) { |http|
-        req = build_multipart_post('/build', "#{commands}\n",
-                                   'application/octet-stream', 'Dockerfile')
-        http.request(req)
-      }
-      if res.code == '200'
-        self.new(:id => extract_id(res.body), :connection => connection)
-      else
-        raise UnexpectedResponseError, "Got status #{res.code}"
-      end
+      body = multipart_request(
+        '/build',
+        'Dockerfile',
+        StringIO.new("#{commands}\n"),
+        connection
+      )
+      new(:id => extract_id(body), :connection => connection)
     end
 
     def search(query = {}, connection = Docker.connection)
@@ -61,11 +58,6 @@ class Docker::Image
     end
 
   private
-    def build_multipart_post(path, body, content_type, file_name)
-      io = UploadIO.new(StringIO.new(body), content_type, file_name)
-      Net::HTTP::Post::Multipart.new(path, file_name => io)
-    end
-
     def extract_id(body)
       if match = body.lines.to_a[-1].match(/^===> ([a-f0-9]+)$/)
         match[1]
