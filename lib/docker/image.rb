@@ -22,18 +22,25 @@ class Docker::Image
 
   def remove
     ensure_created!
-    self.connection.delete(
-      :path => "/images/#{self.id}",
-      :headers => { 'Content-Type' => 'application/json' },
-      :expects => (200..204)
-    )
+    self.connection.json_request(:delete, "/images/#{self.id}", nil)
     self.id = nil
     true
   end
 
+  # Create a query string from a Hash.
+  def hash_to_params(hash)
+    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
+  end
+  private :hash_to_params
+
   class << self
     include Docker::Error
     include Docker::Multipart
+
+    def search(query = {}, connection = Docker.connection)
+      hashes = connection.json_request(:get, '/images/search', query) || []
+      hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
+    end
 
     def build(commands, connection = Docker.connection)
       body = multipart_request(
@@ -43,18 +50,6 @@ class Docker::Image
         connection
       )
       new(:id => extract_id(body), :connection => connection)
-    end
-
-    def search(query = {}, connection = Docker.connection)
-      body = connection.get(
-        :path    => "/images/search",
-        :headers => { 'Content-Type' =>  'application/json' },
-        :query   => query,
-        :expects => (200..204)
-      ).body
-      (body.nil? || body.empty? ? [] : JSON.parse(body)).map { |hash|
-        new(:id => hash['Name'], :connection => connection)
-      }
     end
 
   private

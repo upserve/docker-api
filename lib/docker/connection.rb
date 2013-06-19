@@ -31,10 +31,29 @@ class Docker::Connection
     end
   end
 
+  def json_request(method, path, query = {}, &block)
+    params = compile_request_params(method, path, query, &block)
+    body = self.request(params).body
+    JSON.parse(body) unless (body.nil? || body.empty? || (body == 'null'))
+  end
+
   def to_s
     "Docker::Connection { :url => #{self.url}, :options => #{self.options} }"
   end
 
 private
   attr_writer :url, :options
+
+  # Given a name, http_method, query, and optional block, returns the
+  # corresponding request parameters.
+  def compile_request_params(http_method, path, query, &block)
+    {
+      :method  => http_method,
+      :path    => path,
+      :query   => query,
+      :headers => { 'Content-Type' => 'application/json' },
+      :expects => (200..204),
+      :response_block => block
+    }.reject { |_, v| v.nil? }
+  end
 end
