@@ -32,6 +32,19 @@ module Docker
     def reset_connection!
       @connection = nil
     end
+
+    def version
+      connection.json_request(:get, '/version')
+    end
+
+    def info
+      connection.json_request(:get, '/info')
+    end
+
+    def authenticate!(options = {})
+      connection.post(:path => '/auth', :body => options)
+      true
+    end
   end
 end
 
