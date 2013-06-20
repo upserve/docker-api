@@ -50,7 +50,7 @@ describe Docker do
     end
   end
 
-  describe '#auth' do
+  describe '#authenticate!' do
     it 'logs in' do
       pending
     end

@@ -107,6 +107,11 @@ image.json
 image.history
 # => [{"Id"=>"67859327bf22", "Created"=>1371681778}]
 
+# Push the Image to the Docker registry. Note that you have to login using
+# `Docker.authenticate!` and tag the Image first.
+image.push
+# => true
+
 # Remove the Image from the server.
 image.remove
 # => true
