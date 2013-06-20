@@ -52,7 +52,7 @@ Two things to note here. The first is that this gem uses [excon](http://www.gith
 
 ## Global calls
 
-All of the following examples require a connection to a Docker server. See the <a href="starting up">Starting up</a> section above for more information.
+All of the following examples require a connection to a Docker server. See the <a href="#starting-up">Starting up</a> section above for more information.
 
 ```ruby
 require 'docker'
