@@ -14,32 +14,60 @@ class Docker::Image
     self
   end
 
+  # Tag the Image.
   docker_request :tag, :post
+  # Get more information about the Image.
   docker_request :json, :get
+  # Push the Image to the Docker registry.
   docker_request :push, :post
+  # Insert a file into the Image.
   docker_request :insert, :post
+  # Get the history of the Image.
   docker_request :history, :get
 
+  # Remove the Image from the server.
   def remove
     ensure_created!
-    self.connection.delete(
-      :path => "/images/#{self.id}",
-      :headers => { 'Content-Type' => 'application/json' },
-      :expects => (200..204)
-    )
+    self.connection.json_request(:delete, "/images/#{self.id}", nil)
     self.id = nil
     true
   end
 
-  def self.search(query = {}, connection = Docker.connection)
-    body = connection.get(
-      :path    => "/images/search",
-      :headers => { 'Content-Type' =>  'application/json' },
-      :query   => query,
-      :expects => (200..204)
-    ).body
-    (body.nil? || body.empty? ? [] : JSON.parse(body)).map { |hash|
-      new(:id => hash['Name'], :connection => connection)
-    }
+  # Create a query string from a Hash.
+  def hash_to_params(hash)
+    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
+  end
+  private :hash_to_params
+
+  class << self
+    include Docker::Error
+    include Docker::Multipart
+
+    # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
+    # a corresponiding Image.
+    def search(query = {}, connection = Docker.connection)
+      hashes = connection.json_request(:get, '/images/search', query) || []
+      hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
+    end
+
+    # Given a Dockerfile as a string, builds an Image.
+    def build(commands, connection = Docker.connection)
+      body = multipart_request(
+        '/build',
+        'Dockerfile',
+        StringIO.new("#{commands}\n"),
+        connection
+      )
+      new(:id => extract_id(body), :connection => connection)
+    end
+
+  private
+    def extract_id(body)
+      if match = body.lines.to_a[-1].match(/^===> ([a-f0-9]+)$/)
+        match[1]
+      else
+        raise UnexpectedResponseError, "Couldn't find id: #{body}"
+      end
+    end
   end
 end

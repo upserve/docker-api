@@ -1,6 +1,7 @@
 require 'cgi'
 require 'json'
 require 'excon'
+require 'net/http/post/multipart'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
@@ -31,6 +32,22 @@ module Docker
     def reset_connection!
       @connection = nil
     end
+
+    # Get the version of Go, Docker, and optionally the Git commit.
+    def version
+      connection.json_request(:get, '/version')
+    end
+
+    # Get more information about the Docker server.
+    def info
+      connection.json_request(:get, '/info')
+    end
+
+    # Login to the Docker registry.
+    def authenticate!(options = {})
+      connection.post(:path => '/auth', :body => options)
+      true
+    end
   end
 end
 
@@ -38,5 +55,6 @@ require 'docker/version'
 require 'docker/error'
 require 'docker/connection'
 require 'docker/model'
+require 'docker/multipart'
 require 'docker/container'
 require 'docker/image'

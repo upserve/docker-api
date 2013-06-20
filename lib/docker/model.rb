@@ -60,25 +60,17 @@ module Docker::Model
     def docker_request(action, method, &outer_block)
       define_method(action) do |query = nil, &block|
         ensure_created!
-        params = compile_request_params(action, method, query, &block)
-        body = self.connection.request(params).body
-        unless body.nil? || body.empty? || (body == 'null')
-          body = JSON.parse(body)
-        end
+        path = "#{self.class.resource_prefix}/#{self.id}/#{action}"
+        body = self.connection.json_request(method, path, query, &block)
         outer_block.nil? ? body : instance_exec(body, &outer_block)
       end
     end
 
+    # Retrieve every Instance of a model for the given server.
     def all(options = {}, connection = Docker.connection)
-      body = connection.get(
-        :path    => "#{self.resource_prefix}/json",
-        :headers => { 'Content-Type' =>  'application/json' },
-        :query   => options,
-        :expects => (200..204)
-      ).body
-      (body.nil? || body.empty? ? [] : JSON.parse(body)).map { |hash|
-        new(:id => hash['Id'], :connection => connection)
-      }
+      path = "#{self.resource_prefix}/json"
+      hashes = connection.json_request(:get, path, options) || []
+      hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
     end
 
   private
@@ -92,23 +84,5 @@ private
     unless created?
       raise Docker::Error::StateError, "This #{self.class.name} is not created."
     end
-  end
-
-  # Create a query string from a Hash.
-  def hash_to_params(hash)
-    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
-  end
-
-  # Given a name, http_method, query, and optional block, returns the
-  # corresponding request parameters.
-  def compile_request_params(name, http_method, query, &block)
-    {
-      :method  => http_method,
-      :path    => "#{self.class.resource_prefix}/#{self.id}/#{name}",
-      :query   => query,
-      :headers => { 'Content-Type' => 'application/json' },
-      :expects => (200..204),
-      :response_block => block
-    }.reject { |_, v| v.nil? }
   end
 end

@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["ls"],"Image":"base"}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOSBKdW4gMjAxMyAyMDo0Mjo0OSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"8629440938d1"}'
+    http_version: 
+  recorded_at: Wed, 19 Jun 2013 20:42:49 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/8629440938d1/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOSBKdW4gMjAxMyAyMDo0Mjo0OSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Wed, 19 Jun 2013 20:42:49 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/commit?container=86294409
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOSBKdW4gMjAxMyAyMDo0Mjo0OSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"39033946ad29"}'
+    http_version: 
+  recorded_at: Wed, 19 Jun 2013 20:42:49 GMT
+recorded_with: VCR 2.5.0

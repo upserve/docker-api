@@ -199,7 +199,7 @@ describe Docker::Image do
         end
       end
 
-      context 'when the HTTP response status is 200', :current do
+      context 'when the HTTP response status is 200' do
         it 'pushes the Image', :vcr do
           pending 'I don\'t want to push the Image to the Docker Registry'
           subject.create!('fromRepo' => 'base', 'fromSrc' => '-')
@@ -322,7 +322,7 @@ describe Docker::Image do
       end
     end
 
-    context 'when the HTTP response is a 200', :current do
+    context 'when the HTTP response is a 200' do
       let(:images) { subject.all(:all => true) }
       before { subject.new.create!('fromRepo' => 'base', 'fromSrc' => '-') }
       it 'materializes each Container into a Docker::Container', :vcr do
@@ -353,6 +353,26 @@ describe Docker::Image do
         subject.search('term' => 'sshd').should be_all { |image|
           !image.id.nil? && image.is_a?(described_class)
         }
+      end
+    end
+  end
+
+  describe '.build' do
+    subject { described_class }
+    context 'with an invalid Dockerfile' do
+      it 'throws a UnexpectedResponseError', :vcr do
+        expect { subject.build('lololol') }
+            .to raise_error(Docker::Error::UnexpectedResponseError)
+      end
+    end
+
+    context 'with a valid Dockerfile', :vcr do
+      let(:image) { subject.build("from base\n") }
+
+      it 'builds an image' do
+        image.should be_a Docker::Image
+        image.id.should_not be_nil
+        image.connection.should be_a Docker::Connection
       end
     end
   end
