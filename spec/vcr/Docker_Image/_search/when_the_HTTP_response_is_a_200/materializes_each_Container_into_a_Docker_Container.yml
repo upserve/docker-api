@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create
+    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
     body:
       encoding: US-ASCII
-      string: fromRepo=base&fromSrc=-
+      string: ''
     headers:
       Content-Type:
-      - application/x-www-form-urlencoded
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
   response:
     status:
       code: 200
@@ -17,17 +19,17 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"status":"a778271ce47f"}'
+      string: ! '{"status":"4ff9261ea6bd"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 - request:
     method: get
     uri: http://localhost:4243/images/search?term=sshd
@@ -45,20 +47,29 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTU2Ng==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MiBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '[{"Name":"cespare/sshd","Description":""},{"Name":"johnfuller/sshd","Description":""},{"Name":"dhrp/mongodb-sshd","Description":""},{"Name":"rayang2004/sshd","Description":""},{"Name":"dhrp/sshd","Description":"SSH
-        Daemon created in the ssh daemon docum..."},{"Name":"toorop/daemontools-sshd","Description":"sshd
-        daemon supervised by DJB daemontools ..."},{"Name":"toorop/daemontools-sshd-nginx","Description":"sshd
-        daemon & Nginx supervised by DJB daem..."},{"Name":"toorop/daemontools-sshd-nginx-php-fpm","Description":""},{"Name":"mbkan/lamp","Description":"centos
-        with ssh, LAMP, PHPMyAdmin(root pas..."},{"Name":"toorop/golang","Description":"A
-        container for Go developers - Go 1.1 + G..."},{"Name":"wma55/u1210sshd","Description":""},{"Name":"jdswinbank/sshd","Description":""},{"Name":"vgauthier/sshd","Description":""}]'
+        Daemon created in the ssh daemon documentation example"},{"Name":"toorop/daemontools-sshd","Description":"sshd
+        daemon supervised by DJB daemontools - run cmd :\r\ndocker run -d -p 22 toorop/daemontools-sshd
+        /usr/bin/svscanboot - \r\n\r\nDefault root password : demo - \r\n\r\nSSHD
+        logs location : /var/log/sshd\r\n\r\n"},{"Name":"toorop/daemontools-sshd-nginx","Description":"sshd
+        daemon & Nginx supervised by DJB daemontools - run cmd : docker run -d -p
+        22 -p 80 toorop/daemontools-sshd-nginx /usr/bin/svscanboot - Default root
+        password : demo - SSHD logs location : /var/log/sshd"},{"Name":"toorop/daemontools-sshd-nginx-php-fpm","Description":""},{"Name":"mbkan/lamp","Description":"centos
+        with ssh, LAMP, PHPMyAdmin(root password ''toor'' and MySQL root password
+        ''sysadmin''). Auto starts sshd, MySQL and Apache. Just launch using ''docker
+        run -d mbkan/lamp''. "},{"Name":"toorop/golang","Description":"A container
+        for Go developers - Go 1.1 + Git + sshd - run with \"docker run -d -p 22 -h
+        toorop/golang /usr/bin/svscanboot\"  - connect throw SSH  \"ssh root@localhost
+        -pSSHD_PORT\" default password is \"demo\" - add users : \"adduser USERNAME\"
+        this will also configure USER $HOME directory - Start coding. Enjoy ;)"},{"Name":"wma55/u1210sshd","Description":""},{"Name":"jdswinbank/sshd","Description":""},{"Name":"vgauthier/sshd","Description":""}]'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:42 GMT
 recorded_with: VCR 2.5.0

@@ -317,6 +317,41 @@ describe Docker::Image do
     end
   end
 
+  describe '#create_from_file' do
+    context 'when the file does not exist' do
+      let(:file) { '/lol/not/a/file' }
+
+      it 'raises an error' do
+        expect { subject.create_from_file(file) }
+            .to raise_error Errno::ENOENT
+      end
+    end
+
+    context 'when the file does exist' do
+      let(:fixtures_dir) do
+        File.join(File.dirname(__FILE__), '..', 'fixtures')
+      end
+      let(:file) { File.join(fixtures_dir, 'docker-export.tar') }
+
+      context 'when the Image has already been created' do
+        before { subject.stub(:created?).and_return(true) }
+
+        it 'raises an error' do
+          expect { subject.create_from_file(file) }
+              .to raise_error Docker::Error::StateError
+        end
+      end
+
+      context 'when the Image has not been created' do
+        it 'creates the Image', :vcr do
+          expect { subject.create_from_file(file) }
+              .to change { subject.id  }
+              .from nil
+        end
+      end
+    end
+  end
+
   describe '.all' do
     subject { described_class }
 
