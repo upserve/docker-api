@@ -53,11 +53,12 @@ private
   # corresponding request parameters.
   def compile_request_params(http_method, path, query, &block)
     {
-      :method  => http_method,
-      :path    => path,
-      :query   => query,
-      :headers => { 'Content-Type' => 'application/json' },
-      :expects => (200..204),
+      :method         => http_method,
+      :path           => path,
+      :query          => query,
+      :headers        => { 'Content-Type' => 'application/json' },
+      :expects        => (200..204),
+      :idempotent     => http_method == :get,
       :response_block => block
     }.reject { |_, v| v.nil? }
   end
