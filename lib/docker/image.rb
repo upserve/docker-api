@@ -14,12 +14,18 @@ class Docker::Image
     self
   end
 
+  # Tag the Image.
   docker_request :tag, :post
+  # Get more information about the Image.
   docker_request :json, :get
+  # Push the Image to the Docker registry.
   docker_request :push, :post
+  # Insert a file into the Image.
   docker_request :insert, :post
+  # Get the history of the Image.
   docker_request :history, :get
 
+  # Remove the Image from the server.
   def remove
     ensure_created!
     self.connection.json_request(:delete, "/images/#{self.id}", nil)
@@ -37,11 +43,14 @@ class Docker::Image
     include Docker::Error
     include Docker::Multipart
 
+    # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
+    # a corresponiding Image.
     def search(query = {}, connection = Docker.connection)
       hashes = connection.json_request(:get, '/images/search', query) || []
       hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
     end
 
+    # Given a Dockerfile as a string, builds an Image.
     def build(commands, connection = Docker.connection)
       body = multipart_request(
         '/build',

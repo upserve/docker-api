@@ -33,6 +33,7 @@ class Docker::Connection
     end
   end
 
+  # Send a request to the server and then parse it into a Hash.
   def json_request(method, path, query = {}, &block)
     params = compile_request_params(method, path, query, &block)
     body = self.request(params).body
@@ -48,7 +49,7 @@ class Docker::Connection
 private
   attr_writer :url, :options
 
-  # Given a name, http_method, query, and optional block, returns the
+  # Given an http_method, path, query, and optional block, returns the
   # corresponding request parameters.
   def compile_request_params(http_method, path, query, &block)
     {
