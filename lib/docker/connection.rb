@@ -37,6 +37,8 @@ class Docker::Connection
     params = compile_request_params(method, path, query, &block)
     body = self.request(params).body
     JSON.parse(body) unless (body.nil? || body.empty? || (body == 'null'))
+  rescue JSON::ParserError => ex
+    raise UnexpectedResponseError, ex.message
   end
 
   def to_s
