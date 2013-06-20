@@ -168,11 +168,19 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
+        subject { described_class.build('from base') }
+        let(:new_image) { subject.insert(:path => '/stallman',
+                                         :url => 'http://stallman.org') }
+        let(:container) { Docker::Container.new }
+        let(:ls_output) do
+          container.tap(&:start)
+                   .attach(:stream => true, :stdout => true)
+                   .split("\n")
+        end
+        before { container.create!('Image' => new_image.id, 'Cmd' => %w[ls /]) }
 
-        it 'inserts the file', :vcr do
-          expect { subject.insert('path' => '/', 'url' => 'lol') }
-              .to_not raise_error
+        it 'inserts the url\'s file into a new Image', :vcr do
+          ls_output.should include('stallman')
         end
       end
     end
