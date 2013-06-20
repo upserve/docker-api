@@ -16,13 +16,39 @@ class Docker::Container
     self
   end
 
+  # Export the Container as a .tgz.
   docker_request :export, :get
-  docker_request :attach, :post
+  # Get more information about the Container.
   docker_request :json, :get
+  # Wait for the current command to finish executing.
   docker_request :wait, :post
+  # Start the Container.
   docker_request :start, :post
+  # Inspect the Container's changes to the filesysetem
   docker_request :changes, :get
+  # Stop the Container.
   docker_request :stop, :post
+  # Kill the Container.
   docker_request :kill, :post
+  # Restart the Container
   docker_request :restart, :post
+
+  # Attach to a container's standard streams / logs.
+  def attach(options = {})
+    ensure_created!
+    self.connection.request(
+      :method  => :post,
+      :path    => "/containers/#{self.id}/attach",
+      :query   => options,
+      :expects => (200..204)
+    ).body
+  end
+
+  # Create an Image from a Container's change.s
+  def commit(options = {})
+    ensure_created!
+    options.merge!('container' => self.id[0..7])
+    hash = self.connection.json_request(:post, '/commit', options)
+    Docker::Image.new(:id => hash['Id'], :connection => self.connection)
+  end
 end

@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'excon', '>= 0.22.0'
   gem.add_dependency 'json'
   gem.add_dependency 'i18n'
+  gem.add_dependency 'multipart-post'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cane'

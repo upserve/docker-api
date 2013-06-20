@@ -1,6 +1,8 @@
 # This class represents a Connection to a Docker server. The Connection is
 # immutable in that once the url and options is set they cannot be changed.
 class Docker::Connection
+  include Docker::Error
+
   attr_reader :url, :options
 
   # Create a new Connection. By default, the Connection points to localhost at
@@ -24,11 +26,20 @@ class Docker::Connection
       begin
         self.resource.public_send(method, *args, &block)
       rescue Excon::Errors::BadRequest => ex
-        raise Docker::Error::ClientError, ex.message
+        raise ClientError, ex.message
       rescue Excon::Errors::InternalServerError => ex
-        raise Docker::Error::ServerError, ex.message
+        raise ServerError, ex.message
       end
     end
+  end
+
+  # Send a request to the server and then parse it into a Hash.
+  def json_request(method, path, query = {}, &block)
+    params = compile_request_params(method, path, query, &block)
+    body = self.request(params).body
+    JSON.parse(body) unless (body.nil? || body.empty? || (body == 'null'))
+  rescue JSON::ParserError => ex
+    raise UnexpectedResponseError, ex.message
   end
 
   def to_s
@@ -37,4 +48,18 @@ class Docker::Connection
 
 private
   attr_writer :url, :options
+
+  # Given an http_method, path, query, and optional block, returns the
+  # corresponding request parameters.
+  def compile_request_params(http_method, path, query, &block)
+    {
+      :method         => http_method,
+      :path           => path,
+      :query          => query,
+      :headers        => { 'Content-Type' => 'application/json' },
+      :expects        => (200..204),
+      :idempotent     => http_method == :get,
+      :response_block => block
+    }.reject { |_, v| v.nil? }
+  end
 end

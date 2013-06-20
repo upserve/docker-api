@@ -19,10 +19,40 @@ describe Docker do
 
   [:options=, :url=].each do |method|
     describe "##{method}" do
+      after(:all) do
+        subject.options = { :port => 4243 }
+        subject.url = 'http://localhost'
+      end
       it 'calls #reset_connection!' do
         subject.should_receive(:reset_connection!)
         subject.public_send(method, {})
       end
+    end
+  end
+
+  describe '#version' do
+    let(:version) { subject.version }
+    it 'returns the version as a Hash', :vcr do
+      version.should be_a Hash
+      version.keys.sort.should == %w[GoVersion Version]
+    end
+  end
+
+  describe '#info' do
+    let(:info) { subject.info }
+    let(:keys) do
+      ["Containers", "Debug", "Images", "MemoryLimit", "NFd", "NGoroutines"]
+    end
+
+    it 'returns the info as a Hash', :vcr do
+      info.should be_a Hash
+      info.keys.sort.should == keys
+    end
+  end
+
+  describe '#auth' do
+    it 'logs in' do
+      pending
     end
   end
 end
