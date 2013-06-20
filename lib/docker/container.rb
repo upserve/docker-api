@@ -17,7 +17,6 @@ class Docker::Container
   end
 
   docker_request :export, :get
-  docker_request :attach, :post
   docker_request :json, :get
   docker_request :wait, :post
   docker_request :start, :post
@@ -25,6 +24,16 @@ class Docker::Container
   docker_request :stop, :post
   docker_request :kill, :post
   docker_request :restart, :post
+
+  def attach(options = {})
+    ensure_created!
+    self.connection.request(
+      :method  => :post,
+      :path    => "/containers/#{self.id}/attach",
+      :query   => options,
+      :expects => (200..204)
+    ).body
+  end
 
   def commit(options = {})
     ensure_created!
