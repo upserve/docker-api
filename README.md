@@ -85,7 +85,7 @@ image.created?
 # => false
 
 # Create the Image.
-image.create!('fromRepo' => 'base', 'fromSrc' => '-')
+image.create!('fromRepo' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 image.created?
@@ -118,6 +118,10 @@ image.remove
 
 image.created?
 # => false
+
+# Given a Container's export, creates a new Image.
+image.create_from_file('some-export.tar')
+# => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Load all Images on your Docker server.
 Docker::Image.all
