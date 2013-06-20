@@ -90,9 +90,9 @@ image.create!('fromRepo' => 'base', 'fromSrc' => '-')
 image.created?
 # => true
 
-# Insert a file into an Image.
-image.insert('path' => '/usr', 'url' => '/home/user/.vimrc')
-# => { 'Id' => '' }
+# Insert a file into an Image. Returns a new Image that contains that file.
+image.insert('path' => '/google', 'url' => 'http://google.com')
+# => Docker::Image { :id => 11ef6c882, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Tag an Image.
 image.tag('repo' => 'base2', 'force' => true)
