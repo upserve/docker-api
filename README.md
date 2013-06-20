@@ -175,7 +175,7 @@ container.kill
 
 # Export a Container. Since an export is typically at least 300M, chunks of the
 # export are yielded instead of just returning the whole thing.
-File.open('export.tar.gz', 'w') do |f|
+File.open('export.tar', 'w') do |f|
   container.export { |chunk| file.write(chunk) }
 end
 # => nil
