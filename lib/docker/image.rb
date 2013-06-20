@@ -19,10 +19,21 @@ class Docker::Image
   docker_request :tag, :post
   # Get more information about the Image.
   docker_request :json, :get
-  # Push the Image to the Docker registry.
-  docker_request :push, :post
   # Get the history of the Image.
   docker_request :history, :get
+
+  # Push the Image to the Docker registry.
+  def push(options = {})
+    ensure_created!
+    self.connection.post(
+      :path    => "/images/#{self.id}/push",
+      :headers => { 'Content-Type' => 'application/json' },
+      :query   => options,
+      :body    => Docker.creds,
+      :expects => (200..204)
+    )
+    true
+  end
 
   # Insert a file into the Image, returns a new Image that has that file.
   def insert(query = {})
