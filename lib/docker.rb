@@ -6,48 +6,51 @@ require 'net/http/post/multipart'
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
-  class << self
-    def url
-      @url ||= 'http://localhost'
-    end
+  extend self
 
-    def options
-      @options ||= { :port => 4243 }
-    end
+  attr_reader :creds
 
-    def url=(new_url)
-      @url = new_url
-      reset_connection!
-    end
+  def url
+    @url ||= 'http://localhost'
+  end
 
-    def options=(new_options)
-      @options = { :port => 4243 }.merge(new_options)
-      reset_connection!
-    end
+  def options
+    @options ||= { :port => 4243 }
+  end
 
-    def connection
-      @connection ||= Connection.new(url, options)
-    end
+  def url=(new_url)
+    @url = new_url
+    reset_connection!
+  end
 
-    def reset_connection!
-      @connection = nil
-    end
+  def options=(new_options)
+    @options = { :port => 4243 }.merge(new_options)
+    reset_connection!
+  end
 
-    # Get the version of Go, Docker, and optionally the Git commit.
-    def version
-      connection.json_request(:get, '/version')
-    end
+  def connection
+    @connection ||= Connection.new(url, options)
+  end
 
-    # Get more information about the Docker server.
-    def info
-      connection.json_request(:get, '/info')
-    end
+  def reset_connection!
+    @connection = nil
+  end
 
-    # Login to the Docker registry.
-    def authenticate!(options = {})
-      connection.post(:path => '/auth', :body => options)
-      true
-    end
+  # Get the version of Go, Docker, and optionally the Git commit.
+  def version
+    connection.json_request(:get, '/version')
+  end
+
+  # Get more information about the Docker server.
+  def info
+    connection.json_request(:get, '/info')
+  end
+
+  # Login to the Docker registry.
+  def authenticate!(options = {})
+    connection.post(:path => '/auth', :body => options)
+    @creds = options.to_json
+    true
   end
 end
 

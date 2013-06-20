@@ -1,5 +1,6 @@
 docker-api
 ==========
+[![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api)
 
 This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.4.0.
 
@@ -105,6 +106,11 @@ image.json
 # View the history of the Image.
 image.history
 # => [{"Id"=>"67859327bf22", "Created"=>1371681778}]
+
+# Push the Image to the Docker registry. Note that you have to login using
+# `Docker.authenticate!` and tag the Image first.
+image.push
+# => true
 
 # Remove the Image from the server.
 image.remove
