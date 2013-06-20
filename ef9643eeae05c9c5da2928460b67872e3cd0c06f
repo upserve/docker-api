@@ -1,11 +1,11 @@
 {
   "built_on": "master",
-  "duration": 38.034,
-  "full_display_name": "gem.docker-api #45 - master",
-  "id": "2013-06-20_12-10-13",
-  "number": 45,
+  "duration": 18.326,
+  "full_display_name": "gem.docker-api #47 - master",
+  "id": "2013-06-20_12-53-09",
+  "number": 47,
   "result": "SUCCESS",
   "status_message": "?",
-  "time": "2013-06-20 12:10:13 -0400",
-  "url": "job/gem.docker-api/45/"
+  "time": "2013-06-20 12:53:09 -0400",
+  "url": "job/gem.docker-api/47/"
 }
