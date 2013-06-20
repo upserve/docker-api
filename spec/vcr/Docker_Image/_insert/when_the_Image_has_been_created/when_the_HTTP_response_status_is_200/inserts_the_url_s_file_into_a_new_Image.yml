@@ -1,0 +1,198 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/build
+    body:
+      encoding: US-ASCII
+      string: ! "-------------RubyMultipartPost\r\nContent-Disposition: form-data;
+        name=\"Dockerfile\"; filename=\"Dockerfile\"\r\nContent-Length: 10\r\nContent-Type:
+        application/octet-stream\r\nContent-Transfer-Encoding: binary\r\n\r\nfrom
+        base\n\r\n-------------RubyMultipartPost--\r\n\r\n"
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '251'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Thu, 20 Jun 2013 18:06:06 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: US-ASCII
+      string: ! 'FROM base ()
+
+        ===> b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
+
+        Build successful.
+
+        ===> b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
+
+'
+    http_version: 
+  recorded_at: Thu, 20 Jun 2013 18:06:06 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/images/b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc/insert?path=/stallman&url=http://stallman.org
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VGh1LCAyMCBKdW4gMjAxMyAxODowNjowNyBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"Downloading","progress":"6700/93351 (7%)"}{"status":"Downloading","progress":"12252/93351
+        (13%)"}{"status":"Downloading","progress":"16416/93351 (18%)"}{"status":"Downloading","progress":"23356/93351
+        (25%)"}{"status":"Downloading","progress":"27520/93351 (29%)"}{"status":"Downloading","progress":"33072/93351
+        (35%)"}{"status":"Downloading","progress":"37236/93351 (40%)"}{"status":"Downloading","progress":"44176/93351
+        (47%)"}{"status":"Downloading","progress":"49728/93351 (53%)"}{"status":"Downloading","progress":"53892/93351
+        (58%)"}{"status":"Downloading","progress":"58056/93351 (62%)"}{"status":"Downloading","progress":"62220/93351
+        (67%)"}{"status":"Downloading","progress":"66384/93351 (71%)"}{"status":"Downloading","progress":"71936/93351
+        (77%)"}{"status":"Downloading","progress":"77488/93351 (83%)"}{"status":"Downloading","progress":"81652/93351
+        (87%)"}{"status":"Downloading","progress":"87204/93351 (93%)"}{"status":"Downloading","progress":"91368/93351
+        (98%)"}{"status":"Downloading","progress":"93351/93351 (100%)"}{}{"status":"30c8d2ff0f6b646177231f6b5df651b231be1600b8fbe648f7c10092f394b759"}{"Id":"30c8d2ff0f6b"}'
+    http_version: 
+  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"30c8d2ff0f6b","Cmd":["ls","/"]}'
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VGh1LCAyMCBKdW4gMjAxMyAxODowNjowOCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"153265f2e682"}'
+    http_version: 
+  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/153265f2e682/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VGh1LCAyMCBKdW4gMjAxMyAxODowNjowOCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/153265f2e682/attach?stdout=true&stream=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers: {}
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
+    body:
+      encoding: US-ASCII
+      string: ! 'bin
+
+        boot
+
+        dev
+
+        etc
+
+        home
+
+        lib
+
+        lib64
+
+        media
+
+        mnt
+
+        opt
+
+        proc
+
+        root
+
+        run
+
+        sbin
+
+        selinux
+
+        srv
+
+        stallman
+
+        sys
+
+        tmp
+
+        usr
+
+        var
+
+'
+    http_version: 
+  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+recorded_with: VCR 2.5.0

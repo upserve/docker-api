@@ -1,6 +1,7 @@
 # This class represents a Docker Image.
 class Docker::Image
   include Docker::Model
+  include Docker::Error
   resource_prefix '/images'
 
   create_request do |options|
@@ -20,10 +21,23 @@ class Docker::Image
   docker_request :json, :get
   # Push the Image to the Docker registry.
   docker_request :push, :post
-  # Insert a file into the Image.
-  docker_request :insert, :post
   # Get the history of the Image.
   docker_request :history, :get
+
+  # Insert a file into the Image, returns a new Image that has that file.
+  def insert(query = {})
+    ensure_created!
+    body = self.connection.post(
+      :path    => "/images/#{self.id}/insert",
+      :query   => query,
+      :expects => (200..204)
+    ).body
+    if (id = body.match(/{"Id":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
+      raise UnexpectedResponseError, "Could not find Id in '#{body}'"
+    else
+      Docker::Image.new(:id => id[1], :connection => self.connection)
+    end
+  end
 
   # Remove the Image from the server.
   def remove
