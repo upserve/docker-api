@@ -164,7 +164,7 @@ describe Docker::Container do
 
         it 'returns the description as a Hash', :vcr do
           description.should be_a(Hash)
-          description['Id'].should start_with(subject.id)
+          description['ID'].should start_with(subject.id)
         end
       end
     end

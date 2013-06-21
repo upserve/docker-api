@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create
+    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
     body:
       encoding: US-ASCII
-      string: fromRepo=base&fromSrc=-
+      string: ''
     headers:
       Content-Type:
-      - application/x-www-form-urlencoded
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
   response:
     status:
       code: 200
@@ -17,20 +19,20 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"status":"88102eea99bc"}'
+      string: ! '{"status":"473235b50a21"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 - request:
     method: get
-    uri: http://localhost:4243/images/88102eea99bc/history
+    uri: http://localhost:4243/images/473235b50a21/history
     body:
       encoding: US-ASCII
       string: ''
@@ -45,15 +47,15 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NDQ=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"88102eea99bc","Created":1371571479}]'
+      string: ! '[{"Id":"473235b50a21","Created":1371770501}]'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 recorded_with: VCR 2.5.0

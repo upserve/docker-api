@@ -26,7 +26,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Thu, 20 Jun 2013 18:06:06 GMT
+      - Thu, 20 Jun 2013 23:21:38 GMT
       Transfer-Encoding:
       - chunked
     body:
@@ -41,7 +41,7 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 18:06:06 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:38 GMT
 - request:
     method: post
     uri: http://localhost:4243/images/b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc/insert?path=/stallman&url=http://stallman.org
@@ -59,33 +59,34 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAxODowNjowNyBHTVQ=
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"Downloading","progress":"6700/93351 (7%)"}{"status":"Downloading","progress":"12252/93351
-        (13%)"}{"status":"Downloading","progress":"16416/93351 (18%)"}{"status":"Downloading","progress":"23356/93351
-        (25%)"}{"status":"Downloading","progress":"27520/93351 (29%)"}{"status":"Downloading","progress":"33072/93351
-        (35%)"}{"status":"Downloading","progress":"37236/93351 (40%)"}{"status":"Downloading","progress":"44176/93351
-        (47%)"}{"status":"Downloading","progress":"49728/93351 (53%)"}{"status":"Downloading","progress":"53892/93351
-        (58%)"}{"status":"Downloading","progress":"58056/93351 (62%)"}{"status":"Downloading","progress":"62220/93351
-        (67%)"}{"status":"Downloading","progress":"66384/93351 (71%)"}{"status":"Downloading","progress":"71936/93351
-        (77%)"}{"status":"Downloading","progress":"77488/93351 (83%)"}{"status":"Downloading","progress":"81652/93351
-        (87%)"}{"status":"Downloading","progress":"87204/93351 (93%)"}{"status":"Downloading","progress":"91368/93351
-        (98%)"}{"status":"Downloading","progress":"93351/93351 (100%)"}{}{"status":"30c8d2ff0f6b646177231f6b5df651b231be1600b8fbe648f7c10092f394b759"}{"Id":"30c8d2ff0f6b"}'
+      string: ! '{"status":"Downloading","progress":"9671/93351 (10%)"}{"status":"Downloading","progress":"14655/93351
+        (16%)"}{"status":"Downloading","progress":"20527/93351 (22%)"}{"status":"Downloading","progress":"25855/93351
+        (28%)"}{"status":"Downloading","progress":"30295/93351 (32%)"}{"status":"Downloading","progress":"38287/93351
+        (41%)"}{"status":"Downloading","progress":"46279/93351 (50%)"}{"status":"Downloading","progress":"50719/93351
+        (54%)"}{"status":"Downloading","progress":"56935/93351 (61%)"}{"status":"Downloading","progress":"64039/93351
+        (69%)"}{"status":"Downloading","progress":"69367/93351 (74%)"}{"status":"Downloading","progress":"73807/93351
+        (79%)"}{"status":"Downloading","progress":"80023/93351 (86%)"}{"status":"Downloading","progress":"84463/93351
+        (90%)"}{"status":"Downloading","progress":"92455/93351 (99%)"}{"status":"Downloading","progress":"93351/93351
+        (100%)"}{}{"status":"cab8bcd815f21803b7352b4bf6f97d35dd55c03a97b59a2154f0e4e0a46975fd"}{"Id":"cab8bcd815f2"}'
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 - request:
     method: post
     uri: http://localhost:4243/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"30c8d2ff0f6b","Cmd":["ls","/"]}'
+      string: ! '{"Image":"cab8bcd815f2","Cmd":["ls","/"]}'
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
   response:
     status:
       code: 201
@@ -99,15 +100,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAxODowNjowOCBHTVQ=
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"153265f2e682"}'
+      string: ! '{"Id":"f2be5fdab8fd"}'
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/153265f2e682/start
+    uri: http://localhost:4243/containers/f2be5fdab8fd/start
     body:
       encoding: US-ASCII
       string: ''
@@ -127,15 +128,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAxODowNjowOCBHTVQ=
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/153265f2e682/attach?stdout=true&stream=true
+    uri: http://localhost:4243/containers/f2be5fdab8fd/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -194,5 +195,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 18:06:08 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 recorded_with: VCR 2.5.0

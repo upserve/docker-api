@@ -23,14 +23,14 @@ module Docker::Model
   # if the model already exists, and a Docker::Error::ArgumentError if the
   # argument is not a Hash. Otherwise, instances exec the Class's
   # #create_request method with the single argument.
-  def create!(options = {})
+  def create!(options = {}, excon_options = {})
     case
     when self.created?
       raise Docker::Error::StateError, "This #{self.class.name} already exists!"
     when !options.is_a?(Hash)
       raise Docker::Error::ArgumentError, 'Expected a Hash'
     else
-      instance_exec(options, &self.class.create_request)
+      instance_exec(options, excon_options, &self.class.create_request)
     end
   end
 

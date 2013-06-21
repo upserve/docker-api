@@ -23,12 +23,12 @@ http_interactions:
       code: 200
       message: OK
     headers:
-      Date:
-      - Wed, 19 Jun 2013 17:11:52 GMT
-      Transfer-Encoding:
-      - chunked
       Content-Type:
       - text/plain; charset=utf-8
+      Date:
+      - Thu, 20 Jun 2013 23:21:42 GMT
+      Transfer-Encoding:
+      - chunked
     body:
       encoding: US-ASCII
       string: ! 'FROM base ()
@@ -41,5 +41,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Wed, 19 Jun 2013 17:11:52 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:42 GMT
 recorded_with: VCR 2.5.0
