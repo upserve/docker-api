@@ -131,9 +131,13 @@ Docker::Image.all
 Docker::Image.search('term' => 'sshd')
 # => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
 
-# Create an Image from a Dockerfile.
+# Create an Image from a Dockerfile as a String.
 Docker::Image.build("from base\nrun touch /test")
 # => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# Create an Image from a Dockerfile.
+Dockerfile::Image.build_from_file(File.new('Dockerfile'))
+# => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 ```
 
 ## Containers
