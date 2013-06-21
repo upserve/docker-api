@@ -56,7 +56,8 @@ private
       :method         => http_method,
       :path           => path,
       :query          => query,
-      :headers        => { 'Content-Type' => 'application/json' },
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :expects        => (200..204),
       :idempotent     => http_method == :get,
       :response_block => block

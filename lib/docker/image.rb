@@ -2,15 +2,19 @@
 class Docker::Image
   include Docker::Model
   include Docker::Error
+  include Docker::Multipart
+
   resource_prefix '/images'
 
-  create_request do |options|
-    body = self.connection.post(
+  create_request do |options, excon_options|
+    options['fromSrc'] ||= '-'
+    body = self.connection.post(excon_options.merge(
       :path    => '/images/create',
-      :headers => { 'Content-Type' => 'application/x-www-form-urlencoded' },
-      :body    => hash_to_params(options),
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
+      :query   => options,
       :expects => (200..204)
-    ).body
+    )).body
     self.id = JSON.parse(body)['status']
     self
   end
@@ -27,7 +31,8 @@ class Docker::Image
     ensure_created!
     self.connection.post(
       :path    => "/images/#{self.id}/push",
-      :headers => { 'Content-Type' => 'application/json' },
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :query   => options,
       :body    => Docker.creds,
       :expects => (200..204)
@@ -40,6 +45,8 @@ class Docker::Image
     ensure_created!
     body = self.connection.post(
       :path    => "/images/#{self.id}/insert",
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :query   => query,
       :expects => (200..204)
     ).body
@@ -58,11 +65,13 @@ class Docker::Image
     true
   end
 
-  # Create a query string from a Hash.
-  def hash_to_params(hash)
-    hash.map { |k, v| "#{CGI.escape(k.to_s)}=#{CGI.escape(v.to_s)}" }.join('&')
+  # Given a Docker export and optional Hash of options, creates a new Image.
+  def create_from_file(file, options = {})
+    File.open(file, 'r') do |f|
+      read_chunked = lambda { f.read(Excon.defaults[:chunk_size]).to_s }
+      self.create!(options, :request_block => read_chunked)
+    end
   end
-  private :hash_to_params
 
   class << self
     include Docker::Error

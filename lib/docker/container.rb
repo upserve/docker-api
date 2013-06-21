@@ -8,7 +8,8 @@ class Docker::Container
   create_request do |body|
     response = self.connection.post(
       :path    => '/containers/create',
-      :headers => { 'Content-Type' => 'application/json' },
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :body    => body.to_json,
       :expects => (200..204)
     )
@@ -36,9 +37,10 @@ class Docker::Container
   # Attach to a container's standard streams / logs.
   def attach(options = {})
     ensure_created!
-    self.connection.request(
-      :method  => :post,
+    self.connection.post(
       :path    => "/containers/#{self.id}/attach",
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :query   => options,
       :expects => (200..204)
     ).body

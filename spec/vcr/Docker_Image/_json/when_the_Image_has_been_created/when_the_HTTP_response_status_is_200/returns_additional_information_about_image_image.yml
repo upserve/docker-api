@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create
+    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
     body:
       encoding: US-ASCII
-      string: fromRepo=base&fromSrc=-
+      string: ''
     headers:
       Content-Type:
-      - application/x-www-form-urlencoded
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
   response:
     status:
       code: 200
@@ -17,20 +19,20 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"status":"c6b018248415"}'
+      string: ! '{"status":"7e1c3b2823b1"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 - request:
     method: get
-    uri: http://localhost:4243/images/c6b018248415/json
+    uri: http://localhost:4243/images/7e1c3b2823b1/json
     body:
       encoding: US-ASCII
       string: ''
@@ -45,16 +47,16 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NDk4
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"id":"c6b018248415a19289e7dec869b1501a8d9ca02526fc73e434e6d4e8910408b4","comment":"Imported
-        from -","created":"2013-06-18T12:04:39.343874-04:00","container_config":{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":null,"Dns":null,"Image":"","Volumes":null,"VolumesFrom":""},"docker_version":"0.4.0","architecture":"x86_64"}'
+      string: ! '{"id":"7e1c3b2823b1c03cf80c7f57dad26f1d8c9339724c5ecd2b4d0d2c7594557495","comment":"Imported
+        from -","created":"2013-06-20T19:21:41.492935224-04:00","container_config":{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":null,"Dns":null,"Image":"","Volumes":null,"VolumesFrom":""},"docker_version":"0.4.2","architecture":"x86_64","Size":4096}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 recorded_with: VCR 2.5.0

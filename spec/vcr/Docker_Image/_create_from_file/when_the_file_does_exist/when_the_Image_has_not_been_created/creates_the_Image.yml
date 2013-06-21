@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
+    uri: http://localhost:4243/images/create?fromSrc=-
     body:
       encoding: US-ASCII
       string: ''
@@ -24,10 +24,10 @@ http_interactions:
         MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTozOCBHTVQ=
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"status":"89602abcbe98"}'
+      string: ! '{"status":"343805d2d486"}'
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 23:21:38 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
 recorded_with: VCR 2.5.0

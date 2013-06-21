@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create
+    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
     body:
       encoding: US-ASCII
-      string: fromRepo=base&fromSrc=-
+      string: ''
     headers:
       Content-Type:
-      - application/x-www-form-urlencoded
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
   response:
     status:
       code: 200
@@ -17,20 +19,20 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTozOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"status":"159e1184dae8"}'
+      string: ! '{"status":"a6945313be06"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:38 GMT
 - request:
     method: delete
-    uri: http://localhost:4243/images/159e1184dae8
+    uri: http://localhost:4243/images/a6945313be06
     body:
       encoding: US-ASCII
       string: ''
@@ -39,21 +41,21 @@ http_interactions:
       - application/json
   response:
     status:
-      code: 204
+      code: 200
       message: ''
     headers:
-      !binary "RGF0ZQ==":
-      - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjowNDozOSBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Mjg=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTozOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ''
+      string: ! '[{"Deleted":"a6945313be06"}]'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:04:39 GMT
+  recorded_at: Thu, 20 Jun 2013 23:21:38 GMT
 recorded_with: VCR 2.5.0
