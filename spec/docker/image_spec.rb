@@ -328,23 +328,23 @@ describe Docker::Image do
     end
 
     context 'when the file does exist' do
-      let(:fixtures_dir) do
-        File.join(File.dirname(__FILE__), '..', 'fixtures')
-      end
-      let(:file) { File.join(fixtures_dir, 'docker-export.tar') }
+      let(:filename) { 'docker-export.tar' }
+      let(:mock_file) { mock(:file) }
+      before { File.stub(:open).with(filename, 'r').and_yield(mock_file) }
 
       context 'when the Image has already been created' do
         before { subject.stub(:created?).and_return(true) }
 
         it 'raises an error' do
-          expect { subject.create_from_file(file) }
+          expect { subject.create_from_file(filename) }
               .to raise_error Docker::Error::StateError
         end
       end
 
       context 'when the Image has not been created' do
         it 'creates the Image', :vcr do
-          expect { subject.create_from_file(file) }
+          mock_file.stub(:read).and_return('.')
+          expect { subject.create_from_file(filename) }
               .to change { subject.id  }
               .from nil
         end
