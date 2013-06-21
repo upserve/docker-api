@@ -409,13 +409,35 @@ describe Docker::Image do
       end
     end
 
-    context 'with a valid Dockerfile', :vcr do
+    context 'with a valid Dockerfile' do
       let(:image) { subject.build("from base\n") }
 
-      it 'builds an image' do
+      it 'builds an image', :vcr do
         image.should be_a Docker::Image
         image.id.should_not be_nil
         image.connection.should be_a Docker::Connection
+      end
+    end
+  end
+
+  describe '.build_from_file' do
+    subject { described_class }
+
+    context 'with a valid Dockerfile' do
+      let(:file_name) do
+        File.join(File.dirname(__FILE__), '..', 'fixtures', 'Dockerfile')
+      end
+      let(:docker_file) { File.new(file_name) }
+      let(:image) { subject.build_from_file(docker_file) }
+      let(:container) do
+        Docker::Container.new.create!('Image' => image.id,
+                                      'Cmd' => %w[cat /Dockerfile])
+      end
+      let(:output) { container.tap(&:start)
+                              .attach(:stream => true, :stdout => true) }
+
+      it 'builds the image', :vcr do
+        output.should == docker_file.read
       end
     end
   end

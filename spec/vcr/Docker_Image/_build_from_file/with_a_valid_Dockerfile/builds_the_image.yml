@@ -1,0 +1,179 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/build
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        LS0tLS0tLS0tLS0tLVJ1YnlNdWx0aXBhcnRQb3N0DQpDb250ZW50LURpc3Bv
+        c2l0aW9uOiBmb3JtLWRhdGE7IG5hbWU9IkRvY2tlcmZpbGUiOyBmaWxlbmFt
+        ZT0iRG9ja2VyZmlsZSINCkNvbnRlbnQtTGVuZ3RoOiAyNw0KQ29udGVudC1U
+        eXBlOiB0ZXh0L3BsYWluDQpDb250ZW50LVRyYW5zZmVyLUVuY29kaW5nOiBi
+        aW5hcnkNCg0KZnJvbSBiYXNlCmFkZCAvIERvY2tlcmZpbGUKDQotLS0tLS0t
+        LS0tLS0tUnVieU11bHRpcGFydFBvc3QNCkNvbnRlbnQtRGlzcG9zaXRpb246
+        IGZvcm0tZGF0YTsgbmFtZT0iQ29udGV4dCI7IGZpbGVuYW1lPSJkaXIudGFy
+        Lmd6Ig0KQ29udGVudC1MZW5ndGg6IDE3MjENCkNvbnRlbnQtVHlwZTogYXBw
+        bGljYXRpb24vb2N0ZXQtc3RyZWFtDQpDb250ZW50LVRyYW5zZmVyLUVuY29k
+        aW5nOiBiaW5hcnkNCg0KH4sIANOfxFEAA+3dDVAUVRwA8MWaUQ/xIyEUnWGR
+        9EDgdvfu4OD00DRRVBQcQE2TFm6BlYM77vZAEKUsNBE10zQHyBQlYCIEjRBR
+        bAQNP/MrNUEtIPwgJYKID712T84PHAPETsv/b+bNu/14b9/u293ZN7f/WSxU
+        GU5hTKhWQYeSEZgmmlZRihhMrgwKo9ROpIrGNCoqCAumFzFaNaVBngaOi3GJ
+        xJnNcULijD+cGyCEkHAhCMJZLGLnExKCkCCo81NtrZu0GoZUs00xxrZeQFj3
+        +h8TvKVfEkwrKIEmWtWlbeAEjrvg+BP6X/Ro/3PzhUJcJEZQo/TJS97/gbi/
+        pxcqEYi4iYEIMiS5xKfClEHOoghiOCs6q4NSkHQE1fm2lnb9NHtwlvV4DwEA
+        95ghIiGhv9XZjrBBB7/m97wbBAAAAAAAADAiRmWCxLN5r/ZpQ27SIQcAAAAA
+        AAAAAMB/FylHkO8GIEg1m7j//w3j/z8N8wAAAAAAAAAAAPCCIOVyFEOfGMtx
+        b/FD79QHq5XhaCCpobof/8FQGkagDuxy8AfSHv8hFncl/gN3Ibj4D0IklkD8
+        hzF0jP9I+rjE5wzvucd/tJ9lPd49AMB9EP8BAAAAAADAy6xj/Idpew7xHwAA
+        AAAAAAAAwP8HF/+RbYYgjWzi/v83jP8vD0CQCjYVsknFJgGbavojSDKb3mST
+        BZua2ss1mD3PPQAAAAAAAAAA8ERLEBRVaRkNGsowKoGaitRSGsaOze0FgUp5
+        DDKDYqTSKb6+3gLu5XjGjq9QBpGKUKWG4TuiYqFYZI8uRuO4wnEIWwqVofdL
+        SKXe7GpSqZdWwdAqtrAggoq242OBWlohZ0vzJyojGGoRw0dl7iitZGc8CEvQ
+        z1MyoZQ6gFbaI4ZfbPV+KoWSlHvO1FfmwX17Ql/rQ0Xt2Zq4ejEV9zI6/9F6
+        7ZHHa+EWsGuRKpWCDiIZWhmBKYMYinHSMGqKDOdqMLyNLmAPgiAklq3GFu3Z
+        7nI19LwpgbFCti1cKbamB0fj8eZynaOl1RTKj6AYjOsvTMU2Fws3tJbf7fiP
+        p/kwgz7+w+VJ8R9cCIjo0e+/CAl2AuI/jOF+JBCvY5AQ73k3DRhBd6//DjeZ
+        Lm2jk+ufEOOG6x+XuIgJ7vs/hMQFrn9jsF7VB9m6tsQHeeW3CpnyzPghveu+
+        /KisT+K7crdrVz22uRe/kW+e6VgUZbd71tHElKqsOa65uScXmjrd6VU3ck7z
+        QEcLB1OHOJOo4FsTyid4D8sq2nBaN1Oa+kn5xbWakGk+t07NTRl1wn/ZF+lh
+        /IyLxT+OVM8/HD38Us6erNRK33e2zAmv3zrIYk8/0aEp+atcF66oSPvJrLUt
+        Ka9Ai9Hulhc9zE0drkznq/rLDuwPtybuXr5dedttYdu5ur0ltX1L6ldo3O+a
+        tV4/LTR1nFlcMHX33ah4beu27Sdrb2NzS8izFgdPNhaORU9K0nxLLhWdS441
+        Ja1+H2vhtX9QeNmIwW7jUtbbBtggbczmseevy/xrIirk53Oyt0SN1x8WfJIw
+        davML+BaseDm5vet2g/Wia93TmqI2HgtbXSLTlffpGuql7Uv+Wvyh9mvVyZ9
+        u37N1cNOefF20n3OjcPmniZX45ZS3cTE+W/PDZpQZs3ktQ04fKrZesHxpnU6
+        wuyDZuumK7U5SwuZG83Wd9zc6qtNDphUxesrTAlhl3oUe9ztfW8DB3QTa+LL
+        CyY0TLe4o4tvbtXddDxl6eeeMSvjl8x6r29ico58Ppq82L7ye6Gbhkwz3bwr
+        f0PmpystE76vLspy8Lelw88E2dxsnBwW5rBxwXKs5rgrvTxyTNmOmGS/iqzZ
+        ZM6FNbeKJmZZzpP3lt1otDj31YIAQeDQHVm7zlkk/zFKae5TPmvf8b2esxOd
+        6LzSMY5TR5uPzGqNteKTYdc9c3JPJHibHRSvTgu2S9t+dH26udpm0+Y+Y1rQ
+        6kRmWkKI84LC4IRfL2SsO5YbWbptcaat7Ifk6IYZsQWRy1p846lJG/oGRyVU
+        tcyrykzcEH1kvFde+s6z+zfpfp69tlxXmiNd0Wydf1lXalZuVT8unbzWj0gK
+        qvmMyN+jSIoLGFqZKD/rOqPOV7RmibvV3kN1NsNXOidk+y+v0EVd7V+rq/JL
+        RZp04uHyXlb8YzYpDSWv6o9QbqvJFKuAFmSRka6zF1V37/9PE5jZ2f0fJ+4/
+        /7GPfux6Qlzs4gz3f2PodITA43U+0OA9s1ENr8cjLN6zGerxnuHok/evjZF5
+        3Rip8/5xzM9bAs/7AADwMvkbF0sKYAB6AAANCi0tLS0tLS0tLS0tLS1SdWJ5
+        TXVsdGlwYXJ0UG9zdC0tDQoNCg==
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - multipart/form-data; boundary=-----------RubyMultipartPost
+      Content-Length:
+      - '2179'
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Fri, 21 Jun 2013 18:47:47 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: US-ASCII
+      string: ! 'FROM base ()
+
+        ===> b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
+
+        ADD / Dockerfile (b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc)
+
+        ===> e495b94e01c093c92998c1d181fcedf53e3ff6d40887b640f9ea14600bd69a06
+
+        Build successful.
+
+        ===> e495b94e01c093c92998c1d181fcedf53e3ff6d40887b640f9ea14600bd69a06
+
+'
+    http_version: 
+  recorded_at: Fri, 21 Jun 2013 18:47:47 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"e495b94e01c093c92998c1d181fcedf53e3ff6d40887b640f9ea14600bd69a06","Cmd":["cat","/Dockerfile"]}'
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyMSBKdW4gMjAxMyAxODo0Nzo0NyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"4fce10ce5469"}'
+    http_version: 
+  recorded_at: Fri, 21 Jun 2013 18:47:47 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/4fce10ce5469/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyMSBKdW4gMjAxMyAxODo0Nzo0NyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Fri, 21 Jun 2013 18:47:47 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/containers/4fce10ce5469/attach?stdout=true&stream=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/1.2
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Fri, 21 Jun 2013 18:47:48 GMT
+recorded_with: VCR 2.5.0

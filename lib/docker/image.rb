@@ -86,12 +86,34 @@ class Docker::Image
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, connection = Docker.connection)
-      body = multipart_request(
+      req = build_multipart_post('/build', :io => StringIO.new("#{commands}\n"),
+                                           :name => 'Dockerfile',
+                                           :file_name => 'Dockerfile',
+                                           :content_type => 'text/plain')
+      body = multipart_request(connection, req)
+      new(:id => extract_id(body), :connection => connection)
+    end
+
+    def build_from_file(file, connection = Docker.connection)
+      path = File.dirname(File.absolute_path(file.to_path))
+      context_io = create_tar_gz(path)
+      req = build_multipart_post(
         '/build',
-        'Dockerfile',
-        StringIO.new("#{commands}\n"),
-        connection
+        {
+          :io => file,
+          :name => 'Dockerfile',
+          :file_name => 'Dockerfile',
+          :content_type => 'text/plain'
+        },
+        {
+          :io =>  context_io,
+          :name => 'Context',
+          :file_name => 'dir.tar.gz',
+          :content_type => 'application/octet-stream'
+        }
       )
+      body = multipart_request(connection, req)
+      context_io.close
       new(:id => extract_id(body), :connection => connection)
     end
 
@@ -102,6 +124,13 @@ class Docker::Image
       else
         raise UnexpectedResponseError, "Couldn't find id: #{body}"
       end
+    end
+
+    def create_tar_gz(directory)
+      tempfile = Tempfile.new('output')
+      zlb = Zlib::GzipWriter.new(tempfile)
+      Archive::Tar::Minitar.pack(directory, zlb)
+      File.new(tempfile.path, 'r')
     end
   end
 end
