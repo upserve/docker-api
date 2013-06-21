@@ -39,6 +39,8 @@ class Docker::Container
     ensure_created!
     self.connection.post(
       :path    => "/containers/#{self.id}/attach",
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :query   => options,
       :expects => (200..204)
     ).body

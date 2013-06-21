@@ -31,7 +31,8 @@ class Docker::Image
     ensure_created!
     self.connection.post(
       :path    => "/images/#{self.id}/push",
-      :headers => { 'Content-Type' => 'application/json' },
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :query   => options,
       :body    => Docker.creds,
       :expects => (200..204)
@@ -44,6 +45,8 @@ class Docker::Image
     ensure_created!
     body = self.connection.post(
       :path    => "/images/#{self.id}/insert",
+      :headers => { 'Content-Type' => 'text/plain',
+                    'User-Agent' => "Docker-Client/1.2" },
       :query   => query,
       :expects => (200..204)
     ).body
