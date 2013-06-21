@@ -1,6 +1,9 @@
 require 'cgi'
 require 'json'
+require 'zlib'
 require 'excon'
+require 'tempfile'
+require 'archive/tar/minitar'
 require 'net/http/post/multipart'
 
 # The top-level module for this gem. It's purpose is to hold global

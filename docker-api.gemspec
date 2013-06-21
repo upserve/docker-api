@@ -18,6 +18,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'json'
   gem.add_dependency 'i18n'
   gem.add_dependency 'multipart-post'
+  gem.add_dependency 'archive-tar-minitar'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cane'
