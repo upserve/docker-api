@@ -9,7 +9,7 @@ class Docker::Container
     response = self.connection.post(
       :path    => '/containers/create',
       :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/1.2" },
+                    'User-Agent' => "Docker-Client/0.4.6" },
       :body    => body.to_json,
       :expects => (200..204)
     )
@@ -40,7 +40,7 @@ class Docker::Container
     self.connection.post(
       :path    => "/containers/#{self.id}/attach",
       :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/1.2" },
+                    'User-Agent' => "Docker-Client/0.4.6" },
       :query   => options,
       :expects => (200..204)
     ).body

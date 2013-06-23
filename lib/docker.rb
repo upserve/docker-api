@@ -1,10 +1,8 @@
 require 'cgi'
 require 'json'
-require 'zlib'
 require 'excon'
 require 'tempfile'
 require 'archive/tar/minitar'
-require 'net/http/post/multipart'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
@@ -61,6 +59,5 @@ require 'docker/version'
 require 'docker/error'
 require 'docker/connection'
 require 'docker/model'
-require 'docker/multipart'
 require 'docker/container'
 require 'docker/image'

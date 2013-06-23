@@ -57,7 +57,7 @@ private
       :path           => path,
       :query          => query,
       :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/1.2" },
+                    'User-Agent' => "Docker-Client/0.4.6" },
       :expects        => (200..204),
       :idempotent     => http_method == :get,
       :response_block => block
