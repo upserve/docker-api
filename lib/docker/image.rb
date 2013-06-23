@@ -2,20 +2,19 @@
 class Docker::Image
   include Docker::Model
   include Docker::Error
-  include Docker::Multipart
 
   resource_prefix '/images'
 
   create_request do |options, excon_options|
-    options['fromSrc'] ||= '-'
     body = self.connection.post(excon_options.merge(
-      :path    => '/images/create',
-      :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/1.2" },
+      :path    => '/v1.3/images/create',
+      :headers => { 'User-Agent' => 'Docker-Client/0.4.6' },
       :query   => options,
       :expects => (200..204)
     )).body
-    self.id = JSON.parse(body)['status']
+    @id = JSON.parse(body)['status'] rescue nil
+    @id ||= options['fromImage']
+    @id ||= "#{options['repo']}/#{options['tag']}"
     self
   end
 
@@ -32,7 +31,7 @@ class Docker::Image
     self.connection.post(
       :path    => "/images/#{self.id}/push",
       :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/1.2" },
+                    'User-Agent' => 'Docker-Client/0.4.6' },
       :query   => options,
       :body    => Docker.creds,
       :expects => (200..204)
@@ -46,7 +45,7 @@ class Docker::Image
     body = self.connection.post(
       :path    => "/images/#{self.id}/insert",
       :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/1.2" },
+                    'User-Agent' => "Docker-Client/0.4.6" },
       :query   => query,
       :expects => (200..204)
     ).body
@@ -65,17 +64,8 @@ class Docker::Image
     true
   end
 
-  # Given a Docker export and optional Hash of options, creates a new Image.
-  def create_from_file(file, options = {})
-    File.open(file, 'r') do |f|
-      read_chunked = lambda { f.read(Excon.defaults[:chunk_size]).to_s }
-      self.create!(options, :request_block => read_chunked)
-    end
-  end
-
   class << self
     include Docker::Error
-    include Docker::Multipart
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponiding Image.
@@ -84,53 +74,71 @@ class Docker::Image
       hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
     end
 
+    def import(file, options = {}, connection = Docker.connection)
+      File.open(file, 'r') do |io|
+        read_chunked = proc { io.read(Excon.defaults[:chunk_size]).to_s }
+        self.new(:connection => connection)
+            .create!(options.merge('fromSrc' => '-'),
+                     :request_block => read_chunked)
+      end
+    end
+
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, connection = Docker.connection)
-      req = build_multipart_post('/build', :io => StringIO.new("#{commands}\n"),
-                                           :name => 'Dockerfile',
-                                           :file_name => 'Dockerfile',
-                                           :content_type => 'text/plain')
-      body = multipart_request(connection, req)
+      body = connection.post(
+        :path => '/v1.3/build',
+        :body => create_tar(commands),
+        :expects => (200..204)
+      ).body
       new(:id => extract_id(body), :connection => connection)
     end
 
-    def build_from_file(file, connection = Docker.connection)
-      path = File.dirname(File.absolute_path(file.to_path))
-      context_io = create_tar_gz(path)
-      req = build_multipart_post(
-        '/build',
-        {
-          :io => file,
-          :name => 'Dockerfile',
-          :file_name => 'Dockerfile',
-          :content_type => 'text/plain'
-        },
-        {
-          :io =>  context_io,
-          :name => 'Context',
-          :file_name => 'dir.tar.gz',
-          :content_type => 'application/octet-stream'
-        }
-      )
-      body = multipart_request(connection, req)
-      context_io.close
+    def build_from_dir(dir, connection = Docker.connection)
+      cwd = FileUtils.pwd
+      FileUtils.cd(dir)
+      tar = create_dir_tar('.')
+      body = connection.post(
+        :path => '/v1.3/build',
+        :headers => { 'Content-Type' => 'application/tar',
+                      'Transfer-Encoding' => 'chunked' },
+        :request_block => proc { tar.read(Excon.defaults[:chunk_size]).to_s },
+        :expects => (200..204),
+      ).body
       new(:id => extract_id(body), :connection => connection)
+    ensure
+      tar.close
+      FileUtils.cd(cwd)
     end
 
   private
     def extract_id(body)
-      if match = body.lines.to_a[-1].match(/^===> ([a-f0-9]+)$/)
+      if match = body.lines.to_a[-1].match(/^Successfully built ([a-f0-9]+)$/)
         match[1]
       else
         raise UnexpectedResponseError, "Couldn't find id: #{body}"
       end
     end
 
-    def create_tar_gz(directory)
-      tempfile = Tempfile.new('output')
-      zlb = Zlib::GzipWriter.new(tempfile)
-      Archive::Tar::Minitar.pack(directory, zlb)
-      File.new(tempfile.path, 'r')
+    def create_tar(input)
+      cwd = FileUtils.pwd
+      path = "/tmp/docker/tar-#{rand(10000)}"
+      string = StringIO.new
+      tar = Archive::Tar::Minitar::Output.new(string)
+      FileUtils.mkdir_p(path)
+      FileUtils.cd(path)
+      file = File.new('Dockerfile', 'w')
+      file.write(input)
+      file.close
+      Archive::Tar::Minitar.pack_file("#{path}/Dockerfile", tar)
+      FileUtils.cd(cwd)
+      FileUtils.rm_rf(path)
+      string.tap(&:rewind)
+    end
+
+    def create_dir_tar(directory)
+      tempfile = File.new('/tmp/out', 'w')
+      Archive::Tar::Minitar.pack(directory, tempfile)
+      File.new('/tmp/out', 'r')
     end
   end
 end

@@ -2,15 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
+    uri: http://localhost:4243/v1.3/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Docker-Client/1.2
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -19,17 +17,19 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
+        U3VuLCAyMyBKdW4gMjAxMyAxOTo0Mzo1MSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"4ff9261ea6bd"}'
+      string: ! '{"status":"Pulling repository base from https://index.docker.io/v1"}{"status":"Pulling
+        image 27cf784147099545 () from base"}{"status":"Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
+        (ubuntu-quantl) from base"}'
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
+  recorded_at: Sun, 23 Jun 2013 19:43:53 GMT
 - request:
     method: get
     uri: http://localhost:4243/images/search?term=sshd
@@ -38,7 +38,9 @@ http_interactions:
       string: ''
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -52,7 +54,7 @@ http_interactions:
         MTU2Ng==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MiBHTVQ=
+        U3VuLCAyMyBKdW4gMjAxMyAxOTo0Mzo1MyBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '[{"Name":"cespare/sshd","Description":""},{"Name":"johnfuller/sshd","Description":""},{"Name":"dhrp/mongodb-sshd","Description":""},{"Name":"rayang2004/sshd","Description":""},{"Name":"dhrp/sshd","Description":"SSH
@@ -71,5 +73,5 @@ http_interactions:
         -pSSHD_PORT\" default password is \"demo\" - add users : \"adduser USERNAME\"
         this will also configure USER $HOME directory - Start coding. Enjoy ;)"},{"Name":"wma55/u1210sshd","Description":""},{"Name":"jdswinbank/sshd","Description":""},{"Name":"vgauthier/sshd","Description":""}]'
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 23:21:42 GMT
+  recorded_at: Sun, 23 Jun 2013 19:43:53 GMT
 recorded_with: VCR 2.5.0

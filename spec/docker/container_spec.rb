@@ -244,7 +244,7 @@ describe Docker::Container do
             first = chunk
             break
           end
-          first[257..262].should == "ustar\000" # Make sure the export is a tar.
+          first[257..261].should == "ustar" # Make sure the export is a tar.
         end
       end
     end

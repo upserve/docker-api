@@ -105,7 +105,7 @@ describe Docker::Image do
 
       context 'when the HTTP request returns a 200' do
         it 'sets the id', :vcr do
-          expect { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
+          expect { subject.create!('fromImage' => 'base') }
               .to change { subject.id }
               .from(nil)
         end
@@ -135,7 +135,7 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 204' do
-        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
+        before { subject.create!('fromImage' => 'base') }
 
         it 'nils out the id', :vcr do
           expect { subject.remove }
@@ -210,7 +210,7 @@ describe Docker::Image do
       context 'when the HTTP response status is 200' do
         it 'pushes the Image', :vcr do
           pending 'I don\'t want to push the Image to the Docker Registry'
-          subject.create!('fromRepo' => 'base', 'fromSrc' => '-')
+          subject.create!('fromImage' => 'base')
           subject.push
         end
       end
@@ -239,7 +239,7 @@ describe Docker::Image do
       end
 
       context 'when the HTTP response status is 200' do
-        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
+        before { subject.create!('fromImage' => 'base') }
 
         it 'tags the image with the repo name', :vcr do
           expect { subject.tag(:repo => 'base2', :force => true) }
@@ -272,12 +272,11 @@ describe Docker::Image do
 
       context 'when the HTTP response status is 200' do
         let(:json) { subject.json }
-        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
+        before { subject.create!('fromImage' => 'base') }
 
         it 'returns additional information about image image', :vcr do
           json.should be_a Hash
-          json['id'].should start_with subject.id
-          json['comment'].should == 'Imported from -'
+          json.length.should_not be_zero
         end
       end
     end
@@ -306,7 +305,7 @@ describe Docker::Image do
 
       context 'when the HTTP response status is 200' do
         let(:history) { subject.history }
-        before { subject.create!('fromRepo' => 'base', 'fromSrc' => '-') }
+        before { subject.create!('fromImage' => 'base') }
 
         it 'returns the history of the Image', :vcr do
           history.should be_a Array
@@ -317,37 +316,30 @@ describe Docker::Image do
     end
   end
 
-  describe '#create_from_file' do
+  describe '.import' do
+    subject { described_class }
+
     context 'when the file does not exist' do
       let(:file) { '/lol/not/a/file' }
 
       it 'raises an error' do
-        expect { subject.create_from_file(file) }
+        expect { subject.import(file) }
             .to raise_error Errno::ENOENT
       end
     end
 
     context 'when the file does exist' do
-      let(:filename) { 'docker-export.tar' }
-      let(:mock_file) { mock(:file) }
-      before { File.stub(:open).with(filename, 'r').and_yield(mock_file) }
+      let(:file) { 'spec/fixtures/export.tar' }
 
-      context 'when the Image has already been created' do
-        before { subject.stub(:created?).and_return(true) }
+      before { File.stub(:open).with(file, 'r').and_yield(mock(:read => '')) }
 
-        it 'raises an error' do
-          expect { subject.create_from_file(filename) }
-              .to raise_error Docker::Error::StateError
-        end
-      end
-
-      context 'when the Image has not been created' do
-        it 'creates the Image', :vcr do
-          mock_file.stub(:read).and_return('.')
-          expect { subject.create_from_file(filename) }
-              .to change { subject.id  }
-              .from nil
-        end
+      # WARNING if you delete this VCR, make sure you set VCR to hook into
+      # :excon instead of :webmock, run only this spec, and then switch the
+      # hooks # back to :webmock.
+      it 'creates the Image', :vcr do
+        import = subject.import(file)
+        import.should be_a Docker::Image
+        import.id.should_not be_nil
       end
     end
   end
@@ -367,8 +359,8 @@ describe Docker::Image do
 
     context 'when the HTTP response is a 200' do
       let(:images) { subject.all(:all => true) }
-      before { subject.new.create!('fromRepo' => 'base', 'fromSrc' => '-') }
-      it 'materializes each Container into a Docker::Container', :vcr do
+      before { subject.new.create!('fromImage' => 'base') }
+      it 'materializes each Image into a Docker::Image', :vcr do
         images.should be_all { |image|
           !image.id.nil? && image.is_a?(described_class)
         }
@@ -391,8 +383,8 @@ describe Docker::Image do
     end
 
     context 'when the HTTP response is a 200' do
-      it 'materializes each Container into a Docker::Container', :vcr do
-        subject.new.create!('fromRepo' => 'base', 'fromSrc' => '-')
+      it 'materializes each Image into a Docker::Image', :vcr do
+        subject.new.create!('fromImage' => 'base')
         subject.search('term' => 'sshd').should be_all { |image|
           !image.id.nil? && image.is_a?(described_class)
         }
@@ -420,24 +412,24 @@ describe Docker::Image do
     end
   end
 
-  describe '.build_from_file' do
+  describe '.build_from_dir', :current do
     subject { described_class }
 
     context 'with a valid Dockerfile' do
-      let(:file_name) do
-        File.join(File.dirname(__FILE__), '..', 'fixtures', 'Dockerfile')
-      end
-      let(:docker_file) { File.new(file_name) }
-      let(:image) { subject.build_from_file(docker_file) }
+      let(:dir) { File.join(File.dirname(__FILE__), '..', 'fixtures') }
+      let(:docker_file) { File.new("#{dir}/Dockerfile") }
+      let(:image) { subject.build_from_dir(dir) }
       let(:container) do
         Docker::Container.new.create!('Image' => image.id,
                                       'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
-                              .attach(:stream => true, :stdout => true) }
+                              .attach(:stream => true,
+                                      :stdout => true,
+                                      :stderr => true) }
 
       it 'builds the image', :vcr do
-        output.should == docker_file.read
+        output.should == docker_file.tap(&:rewind).read
       end
     end
   end
