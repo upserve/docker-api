@@ -49,8 +49,8 @@ module Docker
 
   # Login to the Docker registry.
   def authenticate!(options = {})
-    connection.post(:path => '/auth', :body => options)
     @creds = options.to_json
+    connection.post(:path => '/auth', :body => @creds)
     true
   end
 end
