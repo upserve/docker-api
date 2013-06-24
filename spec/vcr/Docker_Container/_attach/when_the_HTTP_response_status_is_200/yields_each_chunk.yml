@@ -2,41 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/build
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Content-Type:
-      - application/tar
-      Transfer-Encoding:
-      - chunked
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAyMDoxMzowMyBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
-    body:
-      encoding: US-ASCII
-      string: ! "Step 1 : FROM base\n ---> b750fe79269d\nStep 2 : ADD / /\n ---> a4ddfd594d60\nSuccessfully
-        built a4ddfd594d60\n"
-    http_version: 
-  recorded_at: Mon, 24 Jun 2013 20:13:04 GMT
-- request:
-    method: post
     uri: http://localhost:4243/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"a4ddfd594d60","Cmd":["cat","/Dockerfile"]}'
+      string: ! '{"Cmd":["uname","-r"],"Image":"base"}'
     headers:
       Content-Type:
       - text/plain
@@ -45,7 +14,7 @@ http_interactions:
   response:
     status:
       code: 201
-      message: 
+      message: ''
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -55,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAyMDoxMzowNCBHTVQ=
+        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MToxMiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"42132e652d3c"}'
+      string: ! '{"Id":"f1b6a203102c"}'
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 20:13:04 GMT
+  recorded_at: Mon, 24 Jun 2013 19:41:12 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/42132e652d3c/start
+    uri: http://localhost:4243/containers/f1b6a203102c/start
     body:
       encoding: US-ASCII
       string: ''
@@ -75,7 +44,7 @@ http_interactions:
   response:
     status:
       code: 204
-      message: 
+      message: ''
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -85,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAyMDoxMzowNCBHTVQ=
+        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MToxMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 20:13:04 GMT
+  recorded_at: Mon, 24 Jun 2013 19:41:12 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/42132e652d3c/attach?stream=true&stdout=true&stderr=true
+    uri: http://localhost:4243/containers/f1b6a203102c/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -105,18 +74,16 @@ http_interactions:
   response:
     status:
       code: 200
-      message: 
+      message: ''
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ! 'from base
-
-        add / /
+      string: ! '3.8.0-25-generic
 
 '
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 20:13:04 GMT
+  recorded_at: Mon, 24 Jun 2013 19:41:12 GMT
 recorded_with: VCR 2.5.0
