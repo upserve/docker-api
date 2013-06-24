@@ -201,6 +201,7 @@ container.wait
 # => {'StatusCode'=>0}
 
 # Attach to the Container. Currently, the below options are the only valid ones.
+# By default, :stream and :stdout are set.
 container.attach(:stream => true, :stdout => true, :stderr => true, :logs => true)
 # => "bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar"
 

@@ -33,6 +33,7 @@ class Docker::Image
     cmd = cmd.split(/\s+/) if cmd.is_a?(String)
     Docker::Container.new(:connection => self.connection)
                      .create!('Image' => self.id, 'Cmd' => cmd)
+                     .tap(&:start)
   end
 
   # Push the Image to the Docker registry.

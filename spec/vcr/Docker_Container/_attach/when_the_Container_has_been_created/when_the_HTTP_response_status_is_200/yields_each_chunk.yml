@@ -8,63 +8,69 @@ http_interactions:
       string: ! '{"Cmd":["uname","-r"],"Image":"base"}'
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 201
       message: ''
     headers:
-      !binary "RGF0ZQ==":
-      - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1NyBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAyNCBKdW4gMjAxMyAxODoyMToyNCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"c4cde19ef35d"}'
+      string: ! '{"Id":"aaebcc6047fb"}'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:23:57 GMT
+  recorded_at: Mon, 24 Jun 2013 18:21:24 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/c4cde19ef35d/start
+    uri: http://localhost:4243/containers/aaebcc6047fb/start
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 204
       message: ''
     headers:
-      !binary "RGF0ZQ==":
-      - !binary |-
-        VHVlLCAxOCBKdW4gMjAxMyAxNjoyMzo1NyBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAyNCBKdW4gMjAxMyAxODoyMToyNCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:23:57 GMT
+  recorded_at: Mon, 24 Jun 2013 18:21:24 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/c4cde19ef35d/attach
+    uri: http://localhost:4243/containers/aaebcc6047fb/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -75,7 +81,9 @@ http_interactions:
         YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ''
+      string: ! '3.8.0-25-generic
+
+'
     http_version: 
-  recorded_at: Tue, 18 Jun 2013 16:23:57 GMT
+  recorded_at: Mon, 24 Jun 2013 18:21:24 GMT
 recorded_with: VCR 2.5.0

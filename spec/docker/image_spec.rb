@@ -146,7 +146,7 @@ describe Docker::Image do
     end
   end
 
-  describe "#insert" do
+  describe '#insert' do
     context 'when the Image has not been created' do
       it 'raises an error' do
         expect { subject.insert }.to raise_error Docker::Error::StateError
@@ -173,8 +173,7 @@ describe Docker::Image do
                                          :url => 'http://stallman.org') }
         let(:ls_output) do
           new_image.run('ls /')
-                   .tap(&:start)
-                   .attach(:stream => true, :stdout => true)
+                   .attach
                    .split("\n")
         end
 
@@ -315,7 +314,7 @@ describe Docker::Image do
     end
   end
 
-  describe '#run', :current do
+  describe '#run' do
     context 'when the Image has not been created' do
       before { subject.stub(:created?).and_return(false) }
 
@@ -327,7 +326,7 @@ describe Docker::Image do
     context 'when the Image has been created' do
       before { subject.create!('fromImage' => 'base') }
       let(:output) do
-        subject.run(cmd).tap(&:start).attach(:stream => true, :stdout => true)
+        subject.run(cmd).attach
       end
 
       context 'when the argument is a String', :vcr do
@@ -455,9 +454,7 @@ describe Docker::Image do
                                       'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
-                              .attach(:stream => true,
-                                      :stdout => true,
-                                      :stderr => true) }
+                              .attach(:stderr => true) }
 
       it 'builds the image', :vcr do
         pending 'webmock / vcr issue'
