@@ -18,21 +18,21 @@ class Docker::Container
   end
 
   # Export the Container as a .tgz.
-  docker_request :export, :get
+  get :export
   # Get more information about the Container.
-  docker_request :json, :get
+  get :json
   # Wait for the current command to finish executing.
-  docker_request :wait, :post
+  post :wait
   # Start the Container.
-  docker_request :start, :post
+  post :start
   # Inspect the Container's changes to the filesysetem
-  docker_request :changes, :get
+  get :changes
   # Stop the Container.
-  docker_request :stop, :post
+  post :stop
   # Kill the Container.
-  docker_request :kill, :post
+  post :kill
   # Restart the Container
-  docker_request :restart, :post
+  post :restart
 
   # Attach to a container's standard streams / logs.
   def attach(options = {})

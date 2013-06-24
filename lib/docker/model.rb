@@ -8,8 +8,8 @@ module Docker::Model
   def self.included(base)
     base.class_eval do
       extend ClassMethods
-      private_class_method :new, :docker_request, :create_request,
-                           :resource_prefix
+      private_class_method :new, :request, :get, :put, :post, :delete,
+                           :create_request, :resource_prefix
     end
   end
 
@@ -46,12 +46,17 @@ module Docker::Model
 
     # Define a method named `action` that sends an http `method` request to the
     # Docker Server.
-    def docker_request(action, method, &outer_block)
+    def request(method, action, opts = {}, &outer_block)
       define_method(action) do |query = nil, &block|
-        path = "#{self.class.send(:resource_prefix)}/#{self.id}/#{action}"
+        path = opts[:path]
+        path ||= "#{self.class.send(:resource_prefix)}/#{self.id}/#{action}"
         body = self.connection.json_request(method, path, query, &block)
         outer_block.nil? ? body : instance_exec(body, &outer_block)
       end
+    end
+
+    [:get, :put, :post, :delete].each do |method|
+      define_method(method) { |*args, &block| request(method, *args, &block) }
     end
 
     # Create a Model with the specified body. Raises a
