@@ -70,26 +70,15 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 ```
 
 ## Images
-Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method.
+Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
 # => true
 
-# Instantiate a new Image. Note that this does NOT create the Image.
-image = Docker::Image.new
-# => Docker::Image { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
-# Test if the Image is created.
-image.created?
-# => false
-
-# Create the Image.
-image.create!('fromRepo' => 'base')
+# Create an Image.
+Docker::Image.create('fromRepo' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
-image.created?
-# => true
 
 # Insert a file into an Image. Returns a new Image that contains that file.
 image.insert('path' => '/google', 'url' => 'http://google.com')
@@ -120,20 +109,9 @@ image.run('ls -l')
 image.remove
 # => true
 
-image.created?
-# => false
-
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
-# Load all Images on your Docker server.
-Docker::Image.all
-# => [Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
-
-# Search the Docker registry.
-Docker::Image.search('term' => 'sshd')
-# => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
 
 # Create an Image from a Dockerfile as a String.
 Docker::Image.build("from base\nrun touch /test")
@@ -142,28 +120,25 @@ Docker::Image.build("from base\nrun touch /test")
 # Create an Image from a Dockerfile.
 Dockerfile::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# Load all Images on your Docker server.
+Docker::Image.all
+# => [Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
+
+# Search the Docker registry.
+Docker::Image.search('term' => 'sshd')
+# => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
 ```
 
 ## Containers
-Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#containers) section of the API.
+Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
 
 ```ruby
 require 'docker'
 
-# Instantiate a new Container.
-container = Docker::Container.new
-# => Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
-# Test if the has been created.
-container.created?
-# => false
-
-# Create the Container. 
-container.create!('Cmd' => ['ls'], 'Image' => 'base')
+# Create a Container. 
+Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
-container.created?
-# => true
 
 # Get more information about the Container.
 container.json
@@ -216,19 +191,12 @@ Docker::Container.all(:all => true)
 
 ## Connecting to Multiple Servers
 
-By default, each object connects to the connection specified by `Docker.connection`. If you need to connect to multiple servers, you can do so by specifying the connection on `#new` or in the utilizing class method. Examples:
+By default, each object connects to the connection specified by `Docker.connection`. If you need to connect to multiple servers, you can do so by specifying the connection on `#new` or in the utilizing class method. For example:
 
 ```ruby
 require 'docker'
 
-Docker::Container.new(:connection => Docker::Connection.new(:url => 'http://example.com'))
 Docker::Container.all({}, Docker::Connection.new(:url => 'http://example.com'))
-
-Docker::Image.new(:connection => Docker::Connection.new(:url => 'http://example.com'))
-Docker::Image.all({}, Docker::Connection.new(:url => 'http://example.com'))
-Docker::Image.build('from base', Docker::Connection.new(:url => 'http://example.com'))
-Docker::Image.build_from_dir('.', Docker::Connection.new(:url => 'http://example.com'))
-Docker::Image.search({ :term => 'sshd' }, Docker::Connection.new(:url => 'http://example.com'))
 ```
 
 ## Known Issues
