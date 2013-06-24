@@ -2,15 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create?fromRepo=base&fromSrc=-
+    uri: http://localhost:4243/v1.3/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Docker-Client/1.2
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -19,26 +17,30 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
+        U3VuLCAyMyBKdW4gMjAxMyAxOTo0Mzo0NSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"3badbda684c3"}'
+      string: ! '{"status":"Pulling repository base from https://index.docker.io/v1"}{"status":"Pulling
+        image 27cf784147099545 () from base"}{"status":"Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
+        (ubuntu-quantl) from base"}'
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
+  recorded_at: Sun, 23 Jun 2013 19:43:46 GMT
 - request:
     method: post
-    uri: http://localhost:4243/images/3badbda684c3/tag?force=true&repo=base2
+    uri: http://localhost:4243/images/base/tag?force=true&repo=base2
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 201
@@ -52,10 +54,10 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyMCBKdW4gMjAxMyAyMzoyMTo0MSBHTVQ=
+        U3VuLCAyMyBKdW4gMjAxMyAxOTo0Mzo0NiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Thu, 20 Jun 2013 23:21:41 GMT
+  recorded_at: Sun, 23 Jun 2013 19:43:46 GMT
 recorded_with: VCR 2.5.0

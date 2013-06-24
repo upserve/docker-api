@@ -2,7 +2,7 @@ docker-api
 ==========
 [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.4.0.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.4.6.
 
 Installation
 ------------
@@ -136,7 +136,7 @@ Docker::Image.build("from base\nrun touch /test")
 # => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Create an Image from a Dockerfile.
-Dockerfile::Image.build_from_file(File.new('Dockerfile'))
+Dockerfile::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 ```
 
@@ -222,7 +222,8 @@ Docker::Container.all({}, Docker::Connection.new(:url => 'http://example.com'))
 Docker::Image.new(:connection => Docker::Connection.new(:url => 'http://example.com'))
 Docker::Image.all({}, Docker::Connection.new(:url => 'http://example.com'))
 Docker::Image.build('from base', Docker::Connection.new(:url => 'http://example.com'))
-Docker::Image.build({ :term => 'sshd' }, Docker::Connection.new(:url => 'http://example.com'))
+Docker::Image.build_from_dir('.', Docker::Connection.new(:url => 'http://example.com'))
+Docker::Image.search({ :term => 'sshd' }, Docker::Connection.new(:url => 'http://example.com'))
 ```
 
 ## Known Issues
