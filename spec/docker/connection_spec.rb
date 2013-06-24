@@ -45,8 +45,9 @@ describe Docker::Connection do
   [:get, :put, :post, :delete].each do |method|
     describe "##{method}" do
       it 'is delegated to #resource' do
-        subject.resource.should_receive(method)
-        subject.public_send(method)
+        subject.should_receive(:reset!)
+        subject.stub_chain(:resource, :public_send).and_return(:lol)
+        subject.public_send(method).should == :lol
       end
     end
   end

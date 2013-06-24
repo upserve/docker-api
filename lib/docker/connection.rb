@@ -20,10 +20,17 @@ class Docker::Connection
     @resource ||= Excon.new(self.url, self.options)
   end
 
+  # Nil out the connection. This now happens on every request to prevent socket
+  # errors.
+  def reset!
+    @resource = nil
+  end
+
   # Delegate all HTTP methods to the resource.
   [:get, :put, :post, :delete, :request].each do |method|
     define_method(method) do |*args, &block|
       begin
+        self.reset!
         self.resource.public_send(method, *args, &block)
       rescue Excon::Errors::BadRequest => ex
         raise ClientError, ex.message
@@ -37,7 +44,7 @@ class Docker::Connection
   def json_request(method, path, query = {}, &block)
     params = compile_request_params(method, path, query, &block)
     body = self.request(params).body
-    JSON.parse(body) unless (body.nil? || body.empty? || (body == 'null'))
+    JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
   rescue JSON::ParserError => ex
     raise UnexpectedResponseError, ex.message
   end

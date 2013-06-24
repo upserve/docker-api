@@ -37,6 +37,7 @@ class Docker::Container
   # Attach to a container's standard streams / logs.
   def attach(options = {})
     ensure_created!
+    options = { :stream => true, :stdout => true }.merge(options)
     self.connection.post(
       :path    => "/containers/#{self.id}/attach",
       :headers => { 'Content-Type' => 'text/plain',

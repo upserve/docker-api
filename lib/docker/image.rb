@@ -25,6 +25,17 @@ class Docker::Image
   # Get the history of the Image.
   docker_request :history, :get
 
+  # Given a command and optional list of streams to attach to, run a command on
+  # an Image. This will not modify the Image, but rather create a new Container
+  # to run the Image.
+  def run(cmd)
+    ensure_created!
+    cmd = cmd.split(/\s+/) if cmd.is_a?(String)
+    Docker::Container.new(:connection => self.connection)
+                     .create!('Image' => self.id, 'Cmd' => cmd)
+                     .tap(&:start)
+  end
+
   # Push the Image to the Docker registry.
   def push(options = {})
     ensure_created!
@@ -74,6 +85,7 @@ class Docker::Image
       hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
     end
 
+    # Import an Image from the output of Docker::Container#export.
     def import(file, options = {}, connection = Docker.connection)
       File.open(file, 'r') do |io|
         read_chunked = proc { io.read(Excon.defaults[:chunk_size]).to_s }
@@ -93,6 +105,7 @@ class Docker::Image
       new(:id => extract_id(body), :connection => connection)
     end
 
+    # Given a directory that contains a Dockerfile, builds an Image.
     def build_from_dir(dir, connection = Docker.connection)
       cwd = FileUtils.pwd
       FileUtils.cd(dir)
@@ -112,8 +125,9 @@ class Docker::Image
 
   private
     def extract_id(body)
-      if match = body.lines.to_a[-1].match(/^Successfully built ([a-f0-9]+)$/)
-        match[1]
+      line = body.lines.to_a[-1]
+      if (id = line.match(/^Successfully built ([a-f0-9]+)$/)) && !id[1].empty?
+        id[1]
       else
         raise UnexpectedResponseError, "Couldn't find id: #{body}"
       end
@@ -129,7 +143,7 @@ class Docker::Image
       file = File.new('Dockerfile', 'w')
       file.write(input)
       file.close
-      Archive::Tar::Minitar.pack_file("#{path}/Dockerfile", tar)
+      Archive::Tar::Minitar.pack_file("Dockerfile", tar)
       FileUtils.cd(cwd)
       FileUtils.rm_rf(path)
       string.tap(&:rewind)
