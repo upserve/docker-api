@@ -171,13 +171,12 @@ describe Docker::Image do
         subject { described_class.build('from base') }
         let(:new_image) { subject.insert(:path => '/stallman',
                                          :url => 'http://stallman.org') }
-        let(:container) { Docker::Container.new }
         let(:ls_output) do
-          container.tap(&:start)
+          new_image.run('ls /')
+                   .tap(&:start)
                    .attach(:stream => true, :stdout => true)
                    .split("\n")
         end
-        before { container.create!('Image' => new_image.id, 'Cmd' => %w[ls /]) }
 
         it 'inserts the url\'s file into a new Image', :vcr do
           ls_output.should include('stallman')

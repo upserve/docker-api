@@ -142,7 +142,7 @@ class Docker::Image
       file = File.new('Dockerfile', 'w')
       file.write(input)
       file.close
-      Archive::Tar::Minitar.pack_file("#{path}/Dockerfile", tar)
+      Archive::Tar::Minitar.pack_file("Dockerfile", tar)
       FileUtils.cd(cwd)
       FileUtils.rm_rf(path)
       string.tap(&:rewind)
