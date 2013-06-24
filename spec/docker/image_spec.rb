@@ -412,7 +412,7 @@ describe Docker::Image do
     end
   end
 
-  describe '.build_from_dir', :current do
+  describe '.build_from_dir' do
     subject { described_class }
 
     context 'with a valid Dockerfile' do
