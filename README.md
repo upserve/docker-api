@@ -112,6 +112,10 @@ image.history
 image.push
 # => true
 
+# Given a command, create a new Container to run that command in the Image.
+image.run('ls -l')
+# => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
 # Remove the Image from the server.
 image.remove
 # => true
@@ -120,7 +124,7 @@ image.created?
 # => false
 
 # Given a Container's export, creates a new Image.
-image.create_from_file('some-export.tar')
+Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Load all Images on your Docker server.

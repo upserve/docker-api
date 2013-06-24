@@ -316,6 +316,38 @@ describe Docker::Image do
     end
   end
 
+  describe '#run', :current do
+    context 'when the Image has not been created' do
+      before { subject.stub(:created?).and_return(false) }
+
+      it 'raises an error' do
+        expect { subject.run('ls') }.to raise_error(Docker::Error::StateError)
+      end
+    end
+
+    context 'when the Image has been created' do
+      before { subject.create!('fromImage' => 'base') }
+      let(:output) do
+        subject.run(cmd).tap(&:start).attach(:stream => true, :stdout => true)
+      end
+
+      context 'when the argument is a String', :vcr do
+        let(:cmd) { 'ls /lib64/' }
+        it 'splits the String by spaces and creates a new Container' do
+          output.should == "ld-linux-x86-64.so.2\n"
+        end
+      end
+
+      context 'when the argument is an Array' do
+        let(:cmd) { %[which pwd] }
+
+        it 'creates a new Container', :vcr do
+          output.should == "/bin/pwd\n"
+        end
+      end
+    end
+  end
+
   describe '.import' do
     subject { described_class }
 
