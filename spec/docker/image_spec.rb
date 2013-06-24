@@ -146,7 +146,7 @@ describe Docker::Image do
     end
   end
 
-  describe "#insert" do
+  describe '#insert' do
     context 'when the Image has not been created' do
       it 'raises an error' do
         expect { subject.insert }.to raise_error Docker::Error::StateError
@@ -171,13 +171,11 @@ describe Docker::Image do
         subject { described_class.build('from base') }
         let(:new_image) { subject.insert(:path => '/stallman',
                                          :url => 'http://stallman.org') }
-        let(:container) { Docker::Container.new }
         let(:ls_output) do
-          container.tap(&:start)
-                   .attach(:stream => true, :stdout => true)
+          new_image.run('ls /')
+                   .attach
                    .split("\n")
         end
-        before { container.create!('Image' => new_image.id, 'Cmd' => %w[ls /]) }
 
         it 'inserts the url\'s file into a new Image', :vcr do
           ls_output.should include('stallman')
@@ -316,6 +314,38 @@ describe Docker::Image do
     end
   end
 
+  describe '#run' do
+    context 'when the Image has not been created' do
+      before { subject.stub(:created?).and_return(false) }
+
+      it 'raises an error' do
+        expect { subject.run('ls') }.to raise_error(Docker::Error::StateError)
+      end
+    end
+
+    context 'when the Image has been created' do
+      before { subject.create!('fromImage' => 'base') }
+      let(:output) do
+        subject.run(cmd).attach
+      end
+
+      context 'when the argument is a String', :vcr do
+        let(:cmd) { 'ls /lib64/' }
+        it 'splits the String by spaces and creates a new Container' do
+          output.should == "ld-linux-x86-64.so.2\n"
+        end
+      end
+
+      context 'when the argument is an Array' do
+        let(:cmd) { %[which pwd] }
+
+        it 'creates a new Container', :vcr do
+          output.should == "/bin/pwd\n"
+        end
+      end
+    end
+  end
+
   describe '.import' do
     subject { described_class }
 
@@ -412,7 +442,7 @@ describe Docker::Image do
     end
   end
 
-  describe '.build_from_dir', :current do
+  describe '.build_from_dir' do
     subject { described_class }
 
     context 'with a valid Dockerfile' do
@@ -424,9 +454,7 @@ describe Docker::Image do
                                       'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
-                              .attach(:stream => true,
-                                      :stdout => true,
-                                      :stderr => true) }
+                              .attach(:stderr => true) }
 
       it 'builds the image', :vcr do
         pending 'webmock / vcr issue'

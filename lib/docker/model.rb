@@ -72,8 +72,6 @@ module Docker::Model
       hashes = connection.json_request(:get, path, options) || []
       hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
     end
-
-  private
   end
 
 private
