@@ -1,10 +1,16 @@
 # This module is intended to be used as a Mixin for all objects exposed by the
 # Remote API. Currently, these are limited to Containers and Images.
 module Docker::Model
+  include Docker::Error
+
   attr_reader :id, :connection
 
   def self.included(base)
-    base.extend(ClassMethods)
+    base.class_eval do
+      extend ClassMethods
+      private_class_method :new, :request, :get, :put, :post, :delete,
+                           :create_request, :resource_prefix
+    end
   end
 
   # Creates a new Model with the specified id and Connection. If a Connection
@@ -12,31 +18,12 @@ module Docker::Model
   # Docker::Error::ArgumentError is raised.
   def initialize(options = {})
     options[:connection] ||= Docker.connection
-    unless options[:connection].is_a?(Docker::Connection)
-      raise Docker::Error::ArgumentError, "Expected a Docker::Connection."
-    end
-    self.id = options[:id]
-    self.connection = options[:connection]
-  end
-
-  # Create a Model with the specified body. Raises A Docker::Error::StateError
-  # if the model already exists, and a Docker::Error::ArgumentError if the
-  # argument is not a Hash. Otherwise, instances exec the Class's
-  # #create_request method with the single argument.
-  def create!(options = {}, excon_options = {})
-    case
-    when self.created?
-      raise Docker::Error::StateError, "This #{self.class.name} already exists!"
-    when !options.is_a?(Hash)
-      raise Docker::Error::ArgumentError, 'Expected a Hash'
+    if !options[:connection].is_a?(Docker::Connection)
+      raise ArgumentError, 'Expected a Docker::Connection.'
     else
-      instance_exec(options, excon_options, &self.class.create_request)
+      @id = options[:id]
+      @connection = options[:connection]
     end
-  end
-
-  # Returns true if the Container has been created, false otherwise.
-  def created?
-    !!self.id
   end
 
   def to_s
@@ -45,6 +32,8 @@ module Docker::Model
 
   # This defines the DSL for the including Classes.
   module ClassMethods
+    include Docker::Error
+
     # Define the Model's prefix for all requests.
     def resource_prefix(val = nil)
       val.nil? ? @resource_prefix : (@resource_prefix = val)
@@ -57,30 +46,33 @@ module Docker::Model
 
     # Define a method named `action` that sends an http `method` request to the
     # Docker Server.
-    def docker_request(action, method, &outer_block)
+    def request(method, action, opts = {}, &outer_block)
       define_method(action) do |query = nil, &block|
-        ensure_created!
-        path = "#{self.class.resource_prefix}/#{self.id}/#{action}"
+        path = opts[:path]
+        path ||= "#{self.class.send(:resource_prefix)}/#{self.id}/#{action}"
         body = self.connection.json_request(method, path, query, &block)
         outer_block.nil? ? body : instance_exec(body, &outer_block)
       end
     end
 
+    [:get, :put, :post, :delete].each do |method|
+      define_method(method) { |*args, &block| request(method, *args, &block) }
+    end
+
+    # Create a Model with the specified body. Raises a
+    # Docker::Error::ArgumentError if the argument is not a Hash. Otherwise,
+    # instances execs the Class's #create_request method with the single
+    # argument.
+    def create(opts = {}, conn = Docker.connection)
+      raise Docker::Error::ArgumentError, 'Expected a Hash' if !opts.is_a?(Hash)
+      new(:connection => conn).instance_exec(opts, &create_request)
+    end
+
     # Retrieve every Instance of a model for the given server.
     def all(options = {}, connection = Docker.connection)
-      path = "#{self.resource_prefix}/json"
+      path = "#{resource_prefix}/json"
       hashes = connection.json_request(:get, path, options) || []
       hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
-    end
-  end
-
-private
-  attr_writer :id, :connection
-
-  # Raises an error unless the Model is created.
-  def ensure_created!
-    unless created?
-      raise Docker::Error::StateError, "This #{self.class.name} is not created."
     end
   end
 end
