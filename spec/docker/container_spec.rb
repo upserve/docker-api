@@ -3,94 +3,287 @@ require 'spec_helper'
 # WARNING if you're re-recording any of these VCRs, you must be running the
 # Docker daemon and have the base Image pulled.
 describe Docker::Container do
-  describe '#initialize' do
-    subject { described_class }
-
-    context 'with no argument' do
-      let(:container) { subject.new }
-
-      it 'sets the id to nil' do
-        container.id.should be_nil
-      end
-
-      it 'keeps the default Connection' do
-        container.connection.should == Docker.connection
-      end
-    end
-
-    context 'with an argument' do
-      let(:id) { 'a7c2ee4' }
-      let(:container) { subject.new(:id => id) }
-
-      it 'sets the id to the argument' do
-        container.id.should == id
-      end
-
-      it 'keeps the default Connection' do
-        container.connection.should == Docker.connection
-      end
-    end
-
-    context 'with two arguments' do
-      context 'when the second argument is not a Docker::Connection' do
-        let(:id) { 'abc123f' }
-        let(:connection) { :not_a_connection }
-        let(:container) { subject.new(:id => id, :connection => connection) }
-
-        it 'raises an error' do
-          expect { container }.to raise_error(Docker::Error::ArgumentError)
-        end
-      end
-
-      context 'when the second argument is a Docker::Connection' do
-        let(:id) { 'cb3f14a' }
-        let(:connection) { Docker::Connection.new }
-        let(:container) { subject.new(:id => id, :connection => connection) }
-
-        it 'initializes the Container' do
-          container.id.should == id
-          container.connection.should == connection
-        end
-      end
-    end
-  end
+  subject { described_class.send(:new, :id => rand(10000).to_s) }
 
   describe '#to_s' do
     let(:id) { 'bf119e2' }
     let(:connection) { Docker::Connection.new }
-    let(:expected_string) do
+    let(:expected_string) {
       "Docker::Container { :id => #{id}, :connection => #{connection} }"
+    }
+    before do
+      {
+        :@id => id,
+        :@connection => connection
+      }.each { |k, v| subject.instance_variable_set(k, v) }
     end
-    subject { described_class.new(:id => id, :connection => connection)  }
 
     its(:to_s) { should == expected_string }
   end
 
-  describe '#created?' do
-    context 'when the id is nil' do
-      its(:created?) { should be_false }
-    end
-
-    context 'when the id is present' do
-      subject { described_class.new(:id => 'a732ebf') }
-
-      its(:created?) { should be_true }
-    end
-  end
-
-  describe '#create!' do
-    context 'when the Container has already been created' do
-      subject { described_class.new(:id => '5e88b2a') }
+  describe '#json' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :get }, { :status => 500 }) }
+      after { Excon.stubs.shift }
 
       it 'raises an error' do
-        expect { subject.create! }
-            .to raise_error(Docker::Error::StateError)
+        expect { subject.json }
+            .to raise_error(Docker::Error::ServerError)
       end
     end
 
+    context 'when the HTTP response status is 200' do
+      subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+      let(:description) { subject.json }
+
+      it 'returns the description as a Hash', :vcr do
+        description.should be_a(Hash)
+        description['ID'].should start_with(subject.id)
+      end
+    end
+  end
+
+  describe '#changes' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :get }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.changes }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 200' do
+      subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+      let(:changes) { subject.changes }
+
+      before { subject.tap(&:start).tap(&:wait) }
+
+      it 'returns the changes as an array', :vcr do
+        changes.should be_a Array
+        changes.should be_all { |change| change.is_a?(Hash) }
+        changes.length.should_not be_zero
+      end
+    end
+  end
+
+  describe '#export' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :get }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.export { } }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 200' do
+      subject {
+        Docker::Container.create('Cmd' => %w[rm -rf / --no-preserve-root],
+                                 'Image' => 'base')
+      }
+      before { subject.start }
+
+      it 'yields each chunk', :vcr do
+        first = nil
+        subject.export do |chunk|
+          first = chunk
+          break
+        end
+        first[257..261].should == "ustar" # Make sure the export is a tar.
+      end
+    end
+  end
+
+  describe '#attach' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.attach { } }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 200' do
+      subject { described_class.create('Cmd' => %w[uname -r],
+                                       'Image' => 'base') }
+
+      it 'yields each chunk', :vcr do
+        subject.tap(&:start).attach { |chunk|
+          chunk.should == "3.8.0-25-generic\n"
+        }
+      end
+    end
+  end
+
+  describe '#start' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.start }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 200' do
+      subject {
+        described_class.create('Cmd' => %w[true], 'Image' => 'base')
+      }
+
+      it 'starts the container', :vcr do
+        subject.start
+        described_class.all.map(&:id).should be_any { |id|
+          id.start_with?(subject.id)
+        }
+      end
+    end
+  end
+
+  describe '#stop' do
+    context 'when the HTTP response status is not 204' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.stop }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 204' do
+      subject { described_class.create('Cmd' => %w[ls], 'Image' => 'base') }
+
+      it 'stops the container', :vcr do
+        subject.tap(&:start).stop
+        described_class.all(:all => true).map(&:id).should be_any { |id|
+          id.start_with?(subject.id)
+        }
+        described_class.all.map(&:id).should be_none { |id|
+          id.start_with?(subject.id)
+        }
+      end
+    end
+  end
+
+  describe '#kill' do
+    context 'when the HTTP response status is not 204' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.kill }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 204' do
+      subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+
+      it 'kills the container', :vcr do
+        subject.kill
+        described_class.all.map(&:id).should be_none { |id|
+          id.start_with?(subject.id)
+        }
+        described_class.all(:all => true).map(&:id).should be_any { |id|
+          id.start_with?(subject.id)
+        }
+      end
+    end
+  end
+
+  describe '#restart' do
+    context 'when the HTTP response status is not 204' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.restart }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 204' do
+      subject {
+        described_class.create('Cmd' => %w[/usr/bin/sleep 50],
+                               'Image' => 'base')
+      }
+
+      it 'restarts the container', :vcr do
+        subject.start
+        described_class.all.map(&:id).should be_any { |id|
+          id.start_with?(subject.id)
+        }
+        subject.stop
+        described_class.all.map(&:id).should be_none { |id|
+          id.start_with?(subject.id)
+        }
+        subject.restart
+        described_class.all.map(&:id).should be_any { |id|
+          id.start_with?(subject.id)
+        }
+      end
+    end
+  end
+
+  describe '#wait' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.wait }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 200' do
+      subject {
+        described_class.create('Cmd' => %w[tar nonsense],
+                               'Image' => 'base') }
+
+      it 'waits for the command to finish', :vcr do
+        subject.start
+        subject.wait['StatusCode'].should == 64
+      end
+    end
+  end
+
+  describe '#commit' do
+    context 'when the HTTP response status is not 200' do
+      before { Excon.stub({ :method => :post }, { :status => 500 }) }
+      after { Excon.stubs.shift }
+
+      it 'raises an error' do
+        expect { subject.commit }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response status is 200' do
+      let(:image) { subject.commit }
+      subject { described_class.create('Cmd' => %w[ls], 'Image' => 'base') }
+
+      before { subject.start }
+
+      it 'creates a new Image from the  Container\'s changes', :vcr do
+        image.should be_a Docker::Image
+        image.id.should_not be_nil
+      end
+    end
+  end
+
+  describe '.create' do
+    subject { described_class }
+
     context 'when the body is not a Hash' do
       it 'raises an error' do
-        expect { subject.create!(:not_a_hash) }
+        expect { subject.create(:not_a_hash) }
             .to raise_error(Docker::Error::ArgumentError)
       end
     end
@@ -101,7 +294,7 @@ describe Docker::Container do
         after { Excon.stubs.shift }
 
         it 'raises an error' do
-          expect { subject.create! }.to raise_error(Docker::Error::ClientError)
+          expect { subject.create }.to raise_error(Docker::Error::ClientError)
         end
       end
 
@@ -127,377 +320,12 @@ describe Docker::Container do
             "VolumesFrom"  => ""
           }
         end
+        let(:container) { subject.create(options) }
 
         it 'sets the id', :vcr do
-          expect { subject.create!(options) }
-              .to change { subject.id }
-              .from(nil)
-        end
-      end
-    end
-  end
-
-  describe '#json' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.json }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :get }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.json }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        let(:description) { subject.json }
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
-
-        it 'returns the description as a Hash', :vcr do
-          description.should be_a(Hash)
-          description['ID'].should start_with(subject.id)
-        end
-      end
-    end
-  end
-
-  describe '#changes' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.changes }
-            .to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :get }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.changes }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        let(:changes) { subject.changes }
-        before do
-          subject.create!('Cmd' => ['ls'], 'Image' => 'base')
-          subject.start
-          subject.wait
-        end
-
-        it 'returns the changes as an array', :vcr do
-          changes.should be_a Array
-          changes.should be_all { |change| change.is_a?(Hash) }
-          changes.length.should_not be_zero
-        end
-      end
-    end
-  end
-
-  describe '#export' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.export { } }
-            .to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :get }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.export { } }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before do
-          subject.create!('Cmd' => %w[rm -rf / --no-preserve-root],
-                          'Image' => 'base')
-          subject.start
-        end
-
-        it 'yields each chunk', :vcr do
-          first = nil
-          subject.export do |chunk|
-            first = chunk
-            break
-          end
-          first[257..261].should == "ustar" # Make sure the export is a tar.
-        end
-      end
-    end
-  end
-
-  describe '#attach' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.attach { } }
-            .to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.attach { } }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => %w[uname -r], 'Image' => 'base') }
-
-        it 'yields each chunk', :vcr do
-          subject.tap(&:start).attach { |chunk|
-            chunk.should == "3.8.0-25-generic\n"
-          }
-        end
-      end
-    end
-  end
-
-  describe '#start' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.start }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.start }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => ['/usr/bin/sleep 10'],
-                                 'Image' => 'base') }
-
-        it 'starts the container', :vcr do
-          subject.start
-          described_class.all.map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#stop' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.stop }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 204' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.stop }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
-
-        it 'stops the container', :vcr do
-          subject.tap(&:start).stop
-          described_class.all(:all => true).map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-          described_class.all.map(&:id).should be_none { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#kill' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.kill }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 204' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.kill }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
-
-        it 'kills the container', :vcr do
-          subject.kill
-          described_class.all.map(&:id).should be_none { |id|
-            id.start_with?(subject.id)
-          }
-          described_class.all(:all => true).map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#restart' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.restart }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 204' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.restart }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['/usr/bin/sleep 50'],
-                                 'Image' => 'base') }
-
-        it 'restarts the container', :vcr do
-          subject.start
-          described_class.all.map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-          subject.stop
-          described_class.all.map(&:id).should be_none { |id|
-            id.start_with?(subject.id)
-          }
-          subject.restart
-          described_class.all.map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#wait' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.wait }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.wait }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => %w[tar nonsense],
-                                 'Image' => 'base') }
-
-        it 'waits for the command to finish', :vcr do
-          subject.start
-          subject.wait['StatusCode'].should == 64
-        end
-      end
-    end
-  end
-
-  describe '#commit' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.commit }.to raise_error Docker::Error::StateError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:id).and_return('abc')
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.commit }
-              .to raise_error(Docker::Error::ServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        let(:image) { subject.commit }
-        before { subject.create!('Cmd' => %w[ls], 'Image' => 'base') }
-
-        it 'creates a new Image from the  Container\'s changes', :vcr do
-          subject.start
-          image.should be_a Docker::Image
-          image.id.should_not be_nil
+          container.should be_a Docker::Container
+          container.id.should_not be_nil
+          container.connection.should_not be_nil
         end
       end
     end
@@ -517,8 +345,9 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
+      before { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+
       it 'materializes each Container into a Docker::Container', :vcr do
-        subject.new.create!('Cmd' => ['ls'], 'Image' => 'base')
         subject.all(:all => true).should be_all { |container|
           container.is_a?(Docker::Container)
         }

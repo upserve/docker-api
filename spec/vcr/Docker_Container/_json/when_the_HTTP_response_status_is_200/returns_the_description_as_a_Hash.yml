@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["true"],"Image":"base"}'
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MTowMCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"d90fd373b91a"}'
+    http_version: 
+  recorded_at: Mon, 24 Jun 2013 19:41:00 GMT
+- request:
+    method: get
+    uri: http://localhost:4243/containers/d90fd373b91a/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        ODc5
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MTowMCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"ID":"d90fd373b91a26382b2c467a0dec93f600c46414c9cf0de57a894c5a23f801d4","Created":"2013-06-24T15:41:00.329072644-04:00","Path":"true","Args":[],"Config":{"Hostname":"d90fd373b91a","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":""},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/var/lib/docker/containers/d90fd373b91a26382b2c467a0dec93f600c46414c9cf0de57a894c5a23f801d4/resolv.conf","Volumes":null}'
+    http_version: 
+  recorded_at: Mon, 24 Jun 2013 19:41:00 GMT
+recorded_with: VCR 2.5.0
