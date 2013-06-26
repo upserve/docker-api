@@ -57,6 +57,7 @@ end
 
 require 'docker/version'
 require 'docker/error'
+require 'docker/util'
 require 'docker/connection'
 require 'docker/model'
 require 'docker/container'
