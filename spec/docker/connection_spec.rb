@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Docker::Connection, :current do
+describe Docker::Connection do
   subject { described_class.new('http://localhost', :port => 4243) }
 
   describe '#initialize' do

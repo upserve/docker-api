@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/containers/create
+    uri: http://localhost:4243/v1.3/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["true"],"Image":"base"}'
+      string: ! '{"Cmd":["uname","-r"],"Image":"base"}'
     headers:
       Content-Type:
       - text/plain
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MToxMiBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo1MCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"25a8aad8a972"}'
+      string: ! '{"Id":"81398655b7a2"}'
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:41:12 GMT
+  recorded_at: Wed, 26 Jun 2013 18:09:50 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/25a8aad8a972/start
+    uri: http://localhost:4243/v1.3/containers/81398655b7a2/start
     body:
       encoding: US-ASCII
       string: ''
@@ -54,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MToxMiBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo1MCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:41:12 GMT
+  recorded_at: Wed, 26 Jun 2013 18:09:50 GMT
 - request:
-    method: get
-    uri: http://localhost:4243/containers/json
+    method: post
+    uri: http://localhost:4243/v1.3/containers/81398655b7a2/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -78,17 +78,12 @@ http_interactions:
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjA3
-      !binary "RGF0ZQ==":
-      - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MToxMyBHTVQ=
+        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"25a8aad8a972af3041238725eee008f6ae37838ca68a070325e5f80a7131bcd6","Image":"base2:latest","Command":"true
-        ","Created":1372102872,"Status":"Up Less than a second","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      string: ! '3.8.0-25-generic
+
+'
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:41:13 GMT
+  recorded_at: Wed, 26 Jun 2013 18:09:51 GMT
 recorded_with: VCR 2.5.0
