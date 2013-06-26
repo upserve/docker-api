@@ -7,6 +7,8 @@ http_interactions:
       encoding: US-ASCII
       string: ''
     headers:
+      Content-Type:
+      - text/plain
       User-Agent:
       - Docker-Client/0.4.6
   response:
@@ -19,7 +21,7 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAyMyBKdW4gMjAxMyAxOTo0Mzo0NyBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAyMToxOTozNCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -29,10 +31,10 @@ http_interactions:
         image 27cf784147099545 () from base"}{"status":"Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
         (ubuntu-quantl) from base"}'
     http_version: 
-  recorded_at: Sun, 23 Jun 2013 19:43:48 GMT
+  recorded_at: Wed, 26 Jun 2013 21:19:35 GMT
 - request:
     method: get
-    uri: http://localhost:4243/images/base/json
+    uri: http://localhost:4243/v1.3/images/base/history
     body:
       encoding: US-ASCII
       string: ''
@@ -51,13 +53,13 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NTM3
+        MjQ0
       !binary "RGF0ZQ==":
       - !binary |-
-        U3VuLCAyMyBKdW4gMjAxMyAxOTo0Mzo0OCBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAyMToxOTozNSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","parent":"27cf784147099545","created":"2013-03-23T22:24:18.818426-07:00","container":"3d67245a8d72ecf13f33dffac9f79dcdf70f75acb84d308770391510e0c23ad0","container_config":{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":true,"OpenStdin":true,"StdinOnce":false,"Env":null,"Cmd":["/bin/bash"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":""},"Size":24653}'
+      string: ! '[{"Id":"b750fe79269d","Tags":["base:latest","base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl","base2:latest","ubuntu:12.10","ubuntu:quantal"],"Created":1364102658,"CreatedBy":"/bin/bash"},{"Id":"27cf78414709","Created":1364068391}]'
     http_version: 
-  recorded_at: Sun, 23 Jun 2013 19:43:48 GMT
+  recorded_at: Wed, 26 Jun 2013 21:19:35 GMT
 recorded_with: VCR 2.5.0

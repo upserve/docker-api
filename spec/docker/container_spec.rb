@@ -2,7 +2,7 @@ require 'spec_helper'
 
 # WARNING if you're re-recording any of these VCRs, you must be running the
 # Docker daemon and have the base Image pulled.
-describe Docker::Container, :current do
+describe Docker::Container do
   describe '#to_s' do
     subject { described_class.send(:new, :id => rand(10000).to_s) }
 
