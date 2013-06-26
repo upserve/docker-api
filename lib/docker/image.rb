@@ -86,7 +86,7 @@ class Docker::Image
       body = connection.post(
         '/build', {},
         :headers => { 'Content-Type'      => 'application/tar',
-                      'Transfer-Encoding' => 'chunked' } 
+                      'Transfer-Encoding' => 'chunked' }
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
       new(:id => extract_id(body), :connection => connection)
     ensure

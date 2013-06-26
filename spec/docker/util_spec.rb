@@ -17,7 +17,7 @@ describe Docker::Util do
 
       it { should be_nil }
     end
-    
+
     context 'when the argument is \'null\'' do
       let(:arg) { 'null' }
 

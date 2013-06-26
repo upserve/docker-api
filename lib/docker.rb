@@ -39,12 +39,12 @@ module Docker
 
   # Get the version of Go, Docker, and optionally the Git commit.
   def version
-    connection.json_request(:get, '/version')
+    Util.parse_json(connection.request(:get, '/version'))
   end
 
   # Get more information about the Docker server.
   def info
-    connection.json_request(:get, '/info')
+    Util.parse_json(connection.request(:get, '/info'))
   end
 
   # Login to the Docker registry.

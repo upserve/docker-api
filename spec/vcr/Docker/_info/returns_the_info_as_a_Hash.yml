@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:4243/info
+    uri: http://localhost:4243/v1.3/info
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -17,15 +19,15 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        OTI=
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAxOSBKdW4gMjAxMyAyMDo1OToxMiBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        V2VkLCAyNiBKdW4gMjAxMyAyMToyNjoxMSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Debug":false,"Containers":187,"Images":196,"NFd":10,"NGoroutines":9,"MemoryLimit":true}'
+      string: ! '{"Debug":false,"Containers":1577,"Images":797,"NFd":51,"NGoroutines":240,"MemoryLimit":true}'
     http_version: 
-  recorded_at: Wed, 19 Jun 2013 20:59:12 GMT
+  recorded_at: Wed, 26 Jun 2013 21:26:11 GMT
 recorded_with: VCR 2.5.0

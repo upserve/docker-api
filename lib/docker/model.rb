@@ -74,7 +74,7 @@ module Docker::Model
     # Retrieve every Instance of a model for the given server.
     def all(options = {}, connection = Docker.connection)
       path = "#{resource_prefix}/json"
-      hashes = Docker::Util.parse_json(connection.request(:get, path, options)) || []
+      hashes = Docker::Util.parse_json(connection.get(path, options)) || []
       hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
     end
   end

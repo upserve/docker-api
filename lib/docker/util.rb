@@ -1,3 +1,5 @@
+# This module holds shared logic that doesn't really belong anywhere else in the
+# gem.
 module Docker::Util
   extend self
   include Docker::Error
