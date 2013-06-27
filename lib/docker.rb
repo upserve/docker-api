@@ -53,6 +53,15 @@ module Docker
     connection.post(:path => '/auth', :body => @creds)
     true
   end
+
+  # When the correct version of Docker is installed, returns true. Otherwise,
+  # raises a VersionError.
+  def validate_version!
+    Docker.info
+    true
+  rescue Docker::Error::DockerError
+    raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
+  end
 end
 
 require 'docker/version'

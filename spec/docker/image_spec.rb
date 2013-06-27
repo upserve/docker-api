@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Docker::Image, :current do
+describe Docker::Image do
   describe '#to_s' do
     subject { described_class.send(:new, :id => rand(10000).to_s) }
 

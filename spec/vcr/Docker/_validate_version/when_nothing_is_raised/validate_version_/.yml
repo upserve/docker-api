@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://localhost:4243/v1.3/info
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        OTI=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VGh1LCAyNyBKdW4gMjAxMyAwMzowNzo1MCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Debug":false,"Containers":1577,"Images":797,"NFd":51,"NGoroutines":240,"MemoryLimit":true}'
+    http_version: 
+  recorded_at: Thu, 27 Jun 2013 03:07:50 GMT
+recorded_with: VCR 2.5.0
