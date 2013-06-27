@@ -14,11 +14,11 @@ class Docker::Image
   end
 
   # Tag the Image.
-  post :tag
+  request :post, :tag
   # Get more information about the Image.
-  get :json
+  request :get, :json
   # Get the history of the Image.
-  get :history
+  request :get, :history
 
   # Given a command and optional list of streams to attach to, run a command on
   # an Image. This will not modify the Image, but rather create a new Container
