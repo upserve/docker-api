@@ -51,6 +51,8 @@ Docker.options = { :port => 5422 }
 
 Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are alse valid for `Docker.options`. Second, by default Docker runs on port 4243. The gem will assume you want to connnect to port 4243 unless you specify otherwise.
 
+Before doing anything else, ensure you have the correct version of the Docker API. To do this, run `Docker.validate_version!`. If your installed version is not supported, a `Docker::Error::VersionError` is raised.
+
 ## Global calls
 
 All of the following examples require a connection to a Docker server. See the <a href="#starting-up">Starting up</a> section above for more information.

@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Docker::Image do
-  subject { described_class.send(:new, :id => rand(10000).to_s) }
-
   describe '#to_s' do
+    subject { described_class.send(:new, :id => rand(10000).to_s) }
+
     let(:id) { 'bf119e2' }
-    let(:connection) { Docker::Connection.new }
+    let(:connection) { Docker.connection }
     let(:expected_string) do
       "Docker::Image { :id => #{id}, :connection => #{connection} }"
     end
@@ -20,137 +20,62 @@ describe Docker::Image do
   end
 
   describe '#remove' do
-    context 'when the HTTP response status is not 204' do
-      before { Excon.stub({ :method => :delete }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+    let(:id) { subject.id }
+    subject { described_class.create('fromImage' => 'base') }
 
-      it 'raises an error' do
-        expect { subject.remove }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response status is 204' do
-      let(:id) { subject.id }
-      subject { described_class.create('fromImage' => 'base') }
-
-      it 'removes the Image', :vcr do
-        subject.remove
-        Docker::Image.all.map(&:id).should_not include(id)
-      end
+    it 'removes the Image', :vcr do
+      subject.remove
+      Docker::Image.all.map(&:id).should_not include(id)
     end
   end
 
   describe '#insert' do
-    context 'when the HTTP response status is not 200' do
-      before { Excon.stub({ :method => :post }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+    subject { described_class.build('from base') }
+    let(:new_image) { subject.insert(:path => '/stallman',
+                                     :url => 'http://stallman.org') }
+    let(:ls_output) { new_image.run('ls /').attach.split("\n") }
 
-      it 'raises an error' do
-        expect { subject.insert }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response status is 200' do
-      subject { described_class.build('from base') }
-      let(:new_image) { subject.insert(:path => '/stallman',
-                                       :url => 'http://stallman.org') }
-      let(:ls_output) { new_image.run('ls /').attach.split("\n") }
-
-      it 'inserts the url\'s file into a new Image', :vcr do
-        ls_output.should include('stallman')
-      end
+    it 'inserts the url\'s file into a new Image', :vcr do
+      ls_output.should include('stallman')
     end
   end
 
   describe '#push' do
-    context 'when the HTTP response status is not 200' do
-      before { Excon.stub({ :method => :post }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+    subject { described_class.create('fromImage' => 'base') }
 
-      it 'raises an error' do
-        expect { subject.push }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response status is 200' do
-      subject { described_class.create('fromImage' => 'base') }
-
-      it 'pushes the Image', :vcr do
-        pending 'I don\'t want to push the Image to the Docker Registry'
-        subject.push
-      end
+    it 'pushes the Image', :vcr do
+      pending 'I don\'t want to push the Image to the Docker Registry'
+      subject.push
     end
   end
 
   describe '#tag' do
-    context 'when the HTTP response status is not 200' do
-      before { Excon.stub({ :method => :post }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+    subject { described_class.create('fromImage' => 'base') }
 
-      it 'raises an error' do
-        expect { subject.tag }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response status is 200' do
-      subject { described_class.create('fromImage' => 'base') }
-
-      it 'tags the image with the repo name', :vcr do
-        expect { subject.tag(:repo => 'base2', :force => true) }
-            .to_not raise_error
-      end
+    it 'tags the image with the repo name', :vcr do
+      expect { subject.tag(:repo => 'base2', :force => true) }
+          .to_not raise_error
     end
   end
 
   describe '#json' do
-    context 'when the HTTP response status is not 200' do
-      before do
-        subject.stub(:created?).and_return(true)
-        Excon.stub({ :method => :get }, { :status => 500 })
-      end
-      after { Excon.stubs.shift }
+    subject { described_class.create('fromImage' => 'base') }
+    let(:json) { subject.json }
 
-      it 'raises an error' do
-        expect { subject.json }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response status is 200' do
-      subject { described_class.create('fromImage' => 'base') }
-      let(:json) { subject.json }
-
-      it 'returns additional information about image image', :vcr do
-        json.should be_a Hash
-        json.length.should_not be_zero
-      end
+    it 'returns additional information about image image', :vcr do
+      json.should be_a Hash
+      json.length.should_not be_zero
     end
   end
 
   describe '#history' do
-    context 'when the HTTP response status is not 200' do
-      before { Excon.stub({ :method => :get }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+    subject { described_class.create('fromImage' => 'base') }
+    let(:history) { subject.history }
 
-      it 'raises an error' do
-        expect { subject.history }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response status is 200' do
-      subject { described_class.create('fromImage' => 'base') }
-      let(:history) { subject.history }
-
-      it 'returns the history of the Image', :vcr do
-        history.should be_a Array
-        history.length.should_not be_zero
-        history.should be_all { |elem| elem.is_a? Hash }
-      end
+    it 'returns the history of the Image', :vcr do
+      history.should be_a Array
+      history.length.should_not be_zero
+      history.should be_all { |elem| elem.is_a? Hash }
     end
   end
 
@@ -185,21 +110,11 @@ describe Docker::Image do
     end
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      context 'when the HTTP request does not return a 200' do
-        before { Excon.stub({ :method => :post }, { :status => 400 }) }
-        after { Excon.stubs.shift }
+      let(:image) { subject.create('fromImage' => 'base') }
 
-        it 'raises an error' do
-          expect { subject.create }.to raise_error(Docker::Error::ClientError)
-        end
-      end
-
-      context 'when the HTTP request returns a 200' do
-        let(:image) { subject.create('fromImage' => 'base') }
-        it 'sets the id', :vcr do
-          image.should be_a Docker::Image
-          image.id.should_not be_nil
-        end
+      it 'sets the id', :vcr do
+        image.should be_a Docker::Image
+        image.id.should_not be_nil
       end
     end
   end
@@ -235,48 +150,24 @@ describe Docker::Image do
   describe '.all' do
     subject { described_class }
 
-    context 'when the HTTP response is not a 200' do
-      before { Excon.stub({ :method => :get }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+    let(:images) { subject.all(:all => true) }
+    before { subject.create('fromImage' => 'base') }
 
-      it 'raises an error' do
-        expect { subject.all }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response is a 200' do
-      let(:images) { subject.all(:all => true) }
-      before { subject.create('fromImage' => 'base') }
-
-      it 'materializes each Image into a Docker::Image', :vcr do
-        images.should be_all { |image|
-          !image.id.nil? && image.is_a?(described_class)
-        }
-        images.length.should_not be_zero
-      end
+    it 'materializes each Image into a Docker::Image', :vcr do
+      images.should be_all { |image|
+        !image.id.nil? && image.is_a?(described_class)
+      }
+      images.length.should_not be_zero
     end
   end
 
   describe '.search' do
     subject { described_class }
 
-    context 'when the HTTP response is not a 200' do
-      before { Excon.stub({ :method => :get }, { :status => 500 }) }
-      after { Excon.stubs.shift }
-
-      it 'raises an error' do
-        expect { subject.search }
-            .to raise_error(Docker::Error::ServerError)
-      end
-    end
-
-    context 'when the HTTP response is a 200' do
-      it 'materializes each Image into a Docker::Image', :vcr do
-        subject.search('term' => 'sshd').should be_all { |image|
-          !image.id.nil? && image.is_a?(described_class)
-        }
-      end
+    it 'materializes each Image into a Docker::Image', :vcr do
+      subject.search('term' => 'sshd').should be_all { |image|
+        !image.id.nil? && image.is_a?(described_class)
+      }
     end
   end
 

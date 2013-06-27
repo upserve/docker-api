@@ -9,7 +9,7 @@ module Docker::Model
     base.class_eval do
       extend ClassMethods
       private_class_method :new, :request, :get, :put, :post, :delete,
-                           :create_request, :resource_prefix
+                           :set_create_request, :set_resource_prefix
     end
   end
 
@@ -17,12 +17,10 @@ module Docker::Model
   # is specified and it is not a Docker::Connection, a
   # Docker::Error::ArgumentError is raised.
   def initialize(options = {})
-    options[:connection] ||= Docker.connection
-    if !options[:connection].is_a?(Docker::Connection)
-      raise ArgumentError, 'Expected a Docker::Connection.'
+    if (options[:connection] ||= Docker.connection).is_a?(Docker::Connection)
+      @id, @connection = options[:id], options[:connection]
     else
-      @id = options[:id]
-      @connection = options[:connection]
+      raise ArgumentError, 'Expected a Docker::Connection.'
     end
   end
 
@@ -33,24 +31,29 @@ module Docker::Model
   # This defines the DSL for the including Classes.
   module ClassMethods
     include Docker::Error
+    attr_reader :resource_prefix, :create_request
 
     # Define the Model's prefix for all requests.
-    def resource_prefix(val = nil)
-      val.nil? ? @resource_prefix : (@resource_prefix = val)
+    def set_resource_prefix(val)
+      @resource_prefix = val
     end
 
     # Define how the Model should send a create request to the server.
-    def create_request(&block)
-      block.nil? ? @create_request : (@create_request = block)
+    def set_create_request(&block)
+      @create_request = block
     end
 
     # Define a method named `action` that sends an http `method` request to the
     # Docker Server.
     def request(method, action, opts = {}, &outer_block)
       define_method(action) do |query = nil, &block|
-        path = opts[:path]
-        path ||= "#{self.class.send(:resource_prefix)}/#{self.id}/#{action}"
-        body = self.connection.json_request(method, path, query, &block)
+        new_opts = {
+          :path => "#{self.class.resource_prefix}/#{self.id}/#{action}",
+          :json => true
+        }.merge(opts)
+        body = connection.request(method, new_opts[:path], query,
+                                  new_opts[:excon], &block)
+        body = Docker::Util.parse_json(body) if new_opts[:json]
         outer_block.nil? ? body : instance_exec(body, &outer_block)
       end
     end
@@ -71,7 +74,7 @@ module Docker::Model
     # Retrieve every Instance of a model for the given server.
     def all(options = {}, connection = Docker.connection)
       path = "#{resource_prefix}/json"
-      hashes = connection.json_request(:get, path, options) || []
+      hashes = Docker::Util.parse_json(connection.get(path, options)) || []
       hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
     end
   end

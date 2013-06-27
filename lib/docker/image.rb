@@ -3,16 +3,11 @@ class Docker::Image
   include Docker::Model
   include Docker::Error
 
-  resource_prefix '/images'
+  set_resource_prefix '/images'
 
-  create_request do |options|
-    body = self.connection.post(
-      :path    => '/images/create',
-      :headers => { 'User-Agent' => 'Docker-Client/0.4.6' },
-      :query   => options,
-      :expects => (200..204)
-    ).body
-    @id = JSON.parse(body)['status'] rescue nil
+  set_create_request do |options|
+    body = connection.post('/images/create', options)
+    @id = Docker::Util.parse_json(body)['status'] rescue nil
     @id ||= options['fromImage']
     @id ||= "#{options['repo']}/#{options['tag']}"
     self
@@ -30,33 +25,19 @@ class Docker::Image
   # to run the Image.
   def run(cmd)
     cmd = cmd.split(/\s+/) if cmd.is_a?(String)
-    Docker::Container.create({ 'Image' => self.id, 'Cmd' => cmd },
-                             self.connection)
+    Docker::Container.create({ 'Image' => self.id, 'Cmd' => cmd }, connection)
                      .tap(&:start)
   end
 
   # Push the Image to the Docker registry.
   def push(options = {})
-    self.connection.post(
-      :path    => "/images/#{self.id}/push",
-      :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => 'Docker-Client/0.4.6' },
-      :query   => options,
-      :body    => Docker.creds,
-      :expects => (200..204)
-    )
+    connection.post("/images/#{self.id}/push", options, :body => Docker.creds)
     true
   end
 
   # Insert a file into the Image, returns a new Image that has that file.
   def insert(query = {})
-    body = self.connection.post(
-      :path    => "/images/#{self.id}/insert",
-      :headers => { 'Content-Type' => 'text/plain',
-                    'User-Agent' => "Docker-Client/0.4.6" },
-      :query   => query,
-      :expects => (200..204)
-    ).body
+    body = connection.post("/images/#{self.id}/insert", query)
     if (id = body.match(/{"Id":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
       raise UnexpectedResponseError, "Could not find Id in '#{body}'"
     else
@@ -66,7 +47,7 @@ class Docker::Image
 
   # Remove the Image from the server.
   def remove
-    self.connection.json_request(:delete, "/images/#{self.id}", nil)
+    connection.request(:delete, "/images/#{self.id}", nil)
   end
 
   class << self
@@ -75,7 +56,8 @@ class Docker::Image
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponiding Image.
     def search(query = {}, connection = Docker.connection)
-      hashes = connection.json_request(:get, '/images/search', query) || []
+      body = connection.request(:get, '/images/search', query)
+      hashes = Docker::Util.parse_json(body) || []
       hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
     end
 
@@ -83,24 +65,18 @@ class Docker::Image
     def import(file, options = {}, connection = Docker.connection)
       File.open(file, 'r') do |io|
         body = connection.post(
-          :path          => '/images/create',
-          :headers       => { 'User-Agent' => 'Docker-Client/0.4.6',
-                              'Transfer-Encoding' => 'chunked' },
-          :query         => options.merge('fromSrc' => '-'),
-          :request_block => proc { io.read(Excon.defaults[:chunk_size]).to_s },
-          :expects       => (200..204)
-        ).body
-        new(:id => JSON.parse(body)['status'], :connection => connection)
+          '/images/create',
+           options.merge('fromSrc' => '-'),
+           :headers => { 'Transfer-Encoding' => 'chunked' }
+        ) { io.read(Excon.defaults[:chunk_size]).to_s }
+        new(:id => Docker::Util.parse_json(body)['status'],
+            :connection => connection)
       end
     end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, connection = Docker.connection)
-      body = connection.post(
-        :path => '/build',
-        :body => create_tar(commands),
-        :expects => (200..204)
-      ).body
+      body = connection.post('/build', {}, :body => create_tar(commands))
       new(:id => extract_id(body), :connection => connection)
     end
 
@@ -108,12 +84,10 @@ class Docker::Image
     def build_from_dir(dir, connection = Docker.connection)
       tar = create_dir_tar(dir)
       body = connection.post(
-        :path          => '/build',
-        :headers       => { 'Content-Type'      => 'application/tar',
-                            'Transfer-Encoding' => 'chunked' },
-        :request_block => proc { tar.read(Excon.defaults[:chunk_size]).to_s },
-        :expects       => (200..204),
-      ).body
+        '/build', {},
+        :headers => { 'Content-Type'      => 'application/tar',
+                      'Transfer-Encoding' => 'chunked' }
+      ) { tar.read(Excon.defaults[:chunk_size]).to_s }
       new(:id => extract_id(body), :connection => connection)
     ensure
       tar.close

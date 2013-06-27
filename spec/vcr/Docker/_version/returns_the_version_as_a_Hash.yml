@@ -2,13 +2,15 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:4243/version
+    uri: http://localhost:4243/v1.3/version
     body:
       encoding: US-ASCII
       string: ''
     headers:
       Content-Type:
-      - application/json
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -17,15 +19,15 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Mzk=
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAxOSBKdW4gMjAxMyAyMTowMDowMyBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+        V2VkLCAyNiBKdW4gMjAxMyAyMToyNjoxMCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Version":"0.4.0","GoVersion":"go1.0.3"}'
+      string: ! '{"Version":"0.4.6","GoVersion":"go1.1"}'
     http_version: 
-  recorded_at: Wed, 19 Jun 2013 21:00:03 GMT
+  recorded_at: Wed, 26 Jun 2013 21:26:10 GMT
 recorded_with: VCR 2.5.0

@@ -16,4 +16,7 @@ module Docker::Error
 
   # Raised when there is an unexpected response code / body.
   class UnexpectedResponseError < DockerError; end
+
+  # Raised when there is an incompatible version of Docker.
+  class VersionError < DockerError; end
 end
