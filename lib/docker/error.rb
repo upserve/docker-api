@@ -19,4 +19,7 @@ module Docker::Error
 
   # Raised when there is an incompatible version of Docker.
   class VersionError < DockerError; end
+
+  # Raised when a request times out.
+  class TimeoutError < DockerError; end
 end
