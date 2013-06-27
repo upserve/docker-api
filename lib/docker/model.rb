@@ -8,8 +8,8 @@ module Docker::Model
   def self.included(base)
     base.class_eval do
       extend ClassMethods
-      private_class_method :new, :request, :get, :put, :post, :delete,
-                           :set_create_request, :set_resource_prefix
+      private_class_method :new, :request, :set_create_request,
+                           :set_resource_prefix
     end
   end
 
@@ -56,10 +56,6 @@ module Docker::Model
         body = Docker::Util.parse_json(body) if new_opts[:json]
         outer_block.nil? ? body : instance_exec(body, &outer_block)
       end
-    end
-
-    [:get, :put, :post, :delete].each do |method|
-      define_method(method) { |*args, &block| request(method, *args, &block) }
     end
 
     # Create a Model with the specified body. Raises a
