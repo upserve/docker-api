@@ -12,19 +12,19 @@ class Docker::Container
   end
 
   # Get more information about the Container.
-  get :json
+  request :get, :json
   # Wait for the current command to finish executing.
-  post :wait
+  request :post, :wait
   # Start the Container.
-  post :start
+  request :post, :start
   # Inspect the Container's changes to the filesysetem
-  get :changes
+  request :get, :changes
   # Stop the Container.
-  post :stop
+  request :post, :stop
   # Kill the Container.
-  post :kill
+  request :post, :kill
   # Restart the Container
-  post :restart
+  request :post, :restart
 
   # Export the Container as a tar.
   def export(&block)

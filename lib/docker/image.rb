@@ -14,11 +14,11 @@ class Docker::Image
   end
 
   # Tag the Image.
-  post :tag
+  request :post, :tag
   # Get more information about the Image.
-  get :json
+  request :get, :json
   # Get the history of the Image.
-  get :history
+  request :get, :history
 
   # Given a command and optional list of streams to attach to, run a command on
   # an Image. This will not modify the Image, but rather create a new Container
@@ -104,19 +104,11 @@ class Docker::Image
     end
 
     def create_tar(input)
-      cwd = FileUtils.pwd
-      path = "/tmp/docker/tar-#{rand(10000)}"
-      string = StringIO.new
-      tar = Archive::Tar::Minitar::Output.new(string)
-      FileUtils.mkdir_p(path)
-      FileUtils.cd(path)
-      file = File.new('Dockerfile', 'w')
-      file.write(input)
-      file.close
-      Archive::Tar::Minitar.pack_file("Dockerfile", tar)
-      FileUtils.cd(cwd)
-      FileUtils.rm_rf(path)
-      string.tap(&:rewind)
+      output = StringIO.new
+      Gem::Package::TarWriter.new(output) do |tar|
+        tar.add_file('Dockerfile', '640') { |tar_file| tar_file.write(input) }
+      end
+      output.tap(&:rewind)
     end
 
     def create_dir_tar(directory)
