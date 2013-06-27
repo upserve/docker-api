@@ -2,6 +2,7 @@
 # is cached so that the information is always up to date.
 class Docker::Container
   include Docker::Model
+  include Docker::Error
 
   set_resource_prefix '/containers'
 
@@ -13,8 +14,6 @@ class Docker::Container
 
   # Get more information about the Container.
   request :get, :json
-  # Wait for the current command to finish executing.
-  request :post, :wait
   # Start the Container.
   request :post, :start
   # Inspect the Container's changes to the filesysetem
@@ -25,6 +24,14 @@ class Docker::Container
   request :post, :kill
   # Restart the Container
   request :post, :restart
+
+  # Wait for the current command to finish executing.
+  def wait(time = 60)
+    resp = connection.post("/containers/#{id}/wait", nil, :read_timeout => time)
+    Docker::Util.parse_json(resp)
+  rescue Excon::Errors::Timeout
+    raise ServerError, "The Container ran for more than #{time} seconds."
+  end
 
   # Export the Container as a tar.
   def export(&block)

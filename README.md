@@ -173,8 +173,9 @@ end
 container.changes
 # => [{'Path'=>'/dev', 'Kind'=>0}, {'Path'=>'/dev/kmsg', 'Kind'=>1}]
 
-# Wait for the current command to finish executing.
-container.wait
+# Wait for the current command to finish executing. If an argument is given,
+# will timeout after that number of seconds. The default is one minute.
+container.wait(15)
 # => {'StatusCode'=>0}
 
 # Attach to the Container. Currently, the below options are the only valid ones.

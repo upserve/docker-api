@@ -144,6 +144,22 @@ describe Docker::Container do
     it 'waits for the command to finish', :vcr do
       subject.wait['StatusCode'].should == 64
     end
+
+    context 'when an argument is given' do
+      subject { described_class.create('Cmd' => %w[sleep 5],
+                                       'Image' => 'base') }
+
+      it 'sets the :read_timeout to that amount of time', :vcr do
+        subject.wait(6)['StatusCode'].should be_zero
+      end
+
+      context 'and a command runs for too long' do
+        it 'raises a ServerError', :vcr do
+          pending "VCR doesn't like to record errors"
+          expect { subject.wait(4) }.to raise_error(Docker::Error::ServerError)
+        end
+      end
+    end
   end
 
   describe '#commit' do
