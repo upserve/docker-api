@@ -2,42 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/images/create?fromImage=base
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Content-Type:
-      - text/plain
-      User-Agent:
-      - Docker-Client/0.4.6
-  response:
-    status:
-      code: 200
-      message: ''
-    headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAyMToxOToxMyBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
-    body:
-      encoding: US-ASCII
-      string: ! '{"status":"Pulling repository base from https://index.docker.io/v1"}{"status":"Pulling
-        image 27cf784147099545 () from base"}{"status":"Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
-        (ubuntu-quantl) from base"}'
-    http_version: 
-  recorded_at: Wed, 26 Jun 2013 21:19:15 GMT
-- request:
-    method: post
     uri: http://localhost:4243/v1.3/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"base","Cmd":["ls","/lib64/"]}'
+      string: ! '{"Cmd":["uname","-r"],"Image":"base"}'
     headers:
       Content-Type:
       - text/plain
@@ -56,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAyMToxOToxNSBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo1MCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"88de35709299"}'
+      string: ! '{"Id":"81398655b7a2"}'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 21:19:15 GMT
+  recorded_at: Wed, 26 Jun 2013 18:09:50 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/88de35709299/start
+    uri: http://localhost:4243/v1.3/containers/81398655b7a2/start
     body:
       encoding: US-ASCII
       string: ''
@@ -86,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAyMToxOToxNSBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo1MCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 21:19:15 GMT
+  recorded_at: Wed, 26 Jun 2013 18:09:50 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/88de35709299/attach?stdout=true&stream=true
+    uri: http://localhost:4243/v1.3/containers/81398655b7a2/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -113,9 +81,9 @@ http_interactions:
         YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ! 'ld-linux-x86-64.so.2
+      string: ! '3.8.0-25-generic
 
 '
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 21:19:15 GMT
+  recorded_at: Wed, 26 Jun 2013 18:09:51 GMT
 recorded_with: VCR 2.5.0

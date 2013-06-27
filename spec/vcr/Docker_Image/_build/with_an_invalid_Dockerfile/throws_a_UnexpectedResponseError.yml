@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/build
+    uri: http://localhost:4243/v1.3/build
     body:
       encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAxMDA2NjQAMDAwMTc1MAAwMDAxNzUwADAwMDAwMDAwMDA3
-        ADEyMTYyMTIzNzQyADAxMDAzMAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMTYyNjUxMjYwADAxMDAzMQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -29,7 +29,11 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
-    headers: {}
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
   response:
     status:
       code: 200
@@ -43,7 +47,7 @@ http_interactions:
         NjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAyMDoxMToxNCBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAyMDo0NDozMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ! 'Error build: Invalid Dockerfile format
@@ -52,5 +56,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 20:11:14 GMT
+  recorded_at: Wed, 26 Jun 2013 20:44:32 GMT
 recorded_with: VCR 2.5.0

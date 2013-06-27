@@ -55,4 +55,19 @@ describe Docker do
       pending
     end
   end
+
+  describe '#validate_version' do
+    context 'when a Docker Error is raised' do
+      before { Docker.stub(:info).and_raise(Docker::Error::ClientError) }
+
+      it 'raises a Version Error' do
+        expect { subject.validate_version! }
+            .to raise_error(Docker::Error::VersionError)
+      end
+    end
+
+    context 'when nothing is raised', :vcr do
+      its(:validate_version!) { should be_true }
+    end
+  end
 end

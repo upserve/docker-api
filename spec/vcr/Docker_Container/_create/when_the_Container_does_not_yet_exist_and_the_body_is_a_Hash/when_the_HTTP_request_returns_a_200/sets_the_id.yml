@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/containers/create
+    uri: http://localhost:4243/v1.3/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
@@ -24,10 +24,10 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo0MToxNiBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAxODoxMDowNyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"a233fce67287"}'
+      string: ! '{"Id":"cb24f1c8b1f9"}'
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:41:16 GMT
+  recorded_at: Wed, 26 Jun 2013 18:10:07 GMT
 recorded_with: VCR 2.5.0

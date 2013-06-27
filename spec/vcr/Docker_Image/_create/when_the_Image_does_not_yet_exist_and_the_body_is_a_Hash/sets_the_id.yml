@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/images/create?fromImage=base
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAyNiBKdW4gMjAxMyAxOTo0NDo1NSBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"Pulling repository base from https://index.docker.io/v1"}{"status":"Pulling
+        image 27cf784147099545 () from base"}{"status":"Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
+        (ubuntu-quantl) from base"}'
+    http_version: 
+  recorded_at: Wed, 26 Jun 2013 19:44:56 GMT
+recorded_with: VCR 2.5.0

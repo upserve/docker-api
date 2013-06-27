@@ -1,0 +1,111 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["rm","-rf","/","--no-preserve-root"],"Image":"base"}'
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0OCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"0c87cfe6ea62"}'
+    http_version: 
+  recorded_at: Wed, 26 Jun 2013 18:09:48 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/0c87cfe6ea62/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0OCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Wed, 26 Jun 2013 18:09:48 GMT
+- request:
+    method: get
+    uri: http://localhost:4243/v1.3/containers/0c87cfe6ea62/export
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vb2N0ZXQtc3RyZWFt
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0OCBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        Li8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAADAwMDA3NTUAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDAw
+        ADEyMTYyNjI3MTU0ADAwNzcxNwAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAHJvb3QA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAcm9vdAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAuL2V0Yy8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDc1NQAwMDAwMDAwADAw
+        MDAwMDAAMDAwMDAwMDAwMDAAMTIxMDA0MDU2NTYAMDEwNDYzACA1AAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAHVzdGFyICAAcm9vdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABy
+    http_version: 
+  recorded_at: Wed, 26 Jun 2013 18:09:50 GMT
+recorded_with: VCR 2.5.0

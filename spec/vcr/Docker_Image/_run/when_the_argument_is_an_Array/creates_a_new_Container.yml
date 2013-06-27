@@ -2,11 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/images/create?fromImage=base
+    uri: http://localhost:4243/v1.3/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      Content-Type:
+      - text/plain
       User-Agent:
       - Docker-Client/0.4.6
   response:
@@ -19,7 +21,7 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo1MjoxNSBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAyMToxOToxNSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -29,10 +31,10 @@ http_interactions:
         image 27cf784147099545 () from base"}{"status":"Pulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
         (ubuntu-quantl) from base"}'
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:52:17 GMT
+  recorded_at: Wed, 26 Jun 2013 21:19:17 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/create
+    uri: http://localhost:4243/v1.3/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Image":"base","Cmd":["which","pwd"]}'
@@ -54,15 +56,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo1MjoxNyBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAyMToxOToxNyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"261efbfe6c33"}'
+      string: ! '{"Id":"a09234600933"}'
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:52:17 GMT
+  recorded_at: Wed, 26 Jun 2013 21:19:17 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/261efbfe6c33/start
+    uri: http://localhost:4243/v1.3/containers/a09234600933/start
     body:
       encoding: US-ASCII
       string: ''
@@ -84,15 +86,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAyNCBKdW4gMjAxMyAxOTo1MjoxNyBHTVQ=
+        V2VkLCAyNiBKdW4gMjAxMyAyMToxOToxNyBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:52:17 GMT
+  recorded_at: Wed, 26 Jun 2013 21:19:17 GMT
 - request:
     method: post
-    uri: http://localhost:4243/containers/261efbfe6c33/attach?stdout=true&stream=true
+    uri: http://localhost:4243/v1.3/containers/a09234600933/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -115,5 +117,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Mon, 24 Jun 2013 19:52:17 GMT
+  recorded_at: Wed, 26 Jun 2013 21:19:17 GMT
 recorded_with: VCR 2.5.0
