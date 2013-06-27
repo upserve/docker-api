@@ -156,7 +156,7 @@ describe Docker::Container do
       context 'and a command runs for too long' do
         it 'raises a ServerError', :vcr do
           pending "VCR doesn't like to record errors"
-          expect { subject.wait(4) }.to raise_error(Docker::Error::ServerError)
+          expect { subject.wait(4) }.to raise_error(Docker::Error::TimeoutError)
         end
       end
     end

@@ -33,6 +33,8 @@ class Docker::Connection
     raise ClientError, ex.message
   rescue Excon::Errors::InternalServerError => ex
     raise ServerError, ex.message
+  rescue Excon::Errors::Timeout => ex
+    raise TimeoutError, ex.message
   end
 
   # Delegate all HTTP methods to the #request.

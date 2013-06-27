@@ -29,8 +29,6 @@ class Docker::Container
   def wait(time = 60)
     resp = connection.post("/containers/#{id}/wait", nil, :read_timeout => time)
     Docker::Util.parse_json(resp)
-  rescue Excon::Errors::Timeout
-    raise ServerError, "The Container ran for more than #{time} seconds."
   end
 
   # Export the Container as a tar.
