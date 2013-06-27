@@ -2,6 +2,7 @@ require 'cgi'
 require 'json'
 require 'excon'
 require 'tempfile'
+require 'rubygems/package'
 require 'archive/tar/minitar'
 
 # The top-level module for this gem. It's purpose is to hold global
