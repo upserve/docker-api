@@ -1,0 +1,246 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["pwd"],"Image":"base"}'
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"92e4950e0b05"}'
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/92e4950e0b05/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/92e4950e0b05/wait
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTY=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"StatusCode":0}'
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/commit?container=92e4950e
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"6ae8d5f26636"}'
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"6ae8d5f26636","Cmd":["ls"]}'
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"fd4be0998e51"}'
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/fd4be0998e51/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/fd4be0998e51/start
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 500
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTM4
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! 'Error starting container fd4be0998e51: The container fd4be0998e511070f4c5d3ce6906210f758d900c56d88169dbe37f21a9fafed7
+        is already running.
+
+'
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.3/containers/fd4be0998e51/wait
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Docker-Client/0.4.6
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTY=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxOCBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"StatusCode":0}'
+    http_version: 
+  recorded_at: Fri, 28 Jun 2013 16:55:18 GMT
+recorded_with: VCR 2.5.0

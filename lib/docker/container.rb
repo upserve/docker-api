@@ -31,6 +31,26 @@ class Docker::Container
     Docker::Util.parse_json(resp)
   end
 
+  # For each method, `m`, define a method called `m`? that attempts the method,
+  # but catches all Server errors.
+  [:stop, :start, :kill, :restart].each do |method|
+    define_method :"#{method}?" do |*args|
+      begin; public_send(method, *args); rescue ServerError; end
+    end
+  end
+
+  # Given a command and an optional number of seconds to wait for the currently
+  # executing command, creates a new Container to run the specified command. If
+  # the command that is currently executing does not return a 0 status code, an
+  # UnexpectedResponseError is raised.
+  def run(cmd, time = 1000)
+    if (code = tap(&:start?).wait(time)['StatusCode']).zero?
+      commit.run(cmd).tap(&:start?)
+    else
+      raise UnexpectedResponseError, "Command returned status code #{code}."
+    end
+  end
+
   # Export the Container as a tar.
   def export(&block)
     connection.get("/containers/#{id}/export", nil, :response_block => block)

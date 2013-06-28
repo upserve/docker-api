@@ -187,6 +187,10 @@ container.attach(:stream => true, :stdout => true, :stderr => true, :logs => tru
 container.commit
 # => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
+# Commit the Container and run a new command. This allows for some pretty cool Container chaining.
+container.run('pwd')
+# => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
