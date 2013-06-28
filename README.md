@@ -120,7 +120,7 @@ Docker::Image.build("from base\nrun touch /test")
 # => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Create an Image from a Dockerfile.
-Dockerfile::Image.build_from_dir('.')
+Docker::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Load all Images on your Docker server.
