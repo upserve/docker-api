@@ -58,9 +58,10 @@ class Docker::Container
   end
 
   # Attach to a container's standard streams / logs.
-  def attach(options = {})
+  def attach(options = {}, &block)
     options = { :stream => true, :stdout => true }.merge(options)
-    connection.post("/containers/#{id}/attach", options)
+    connection.post("/containers/#{id}/attach", options,
+                    :response_block => block)
   end
 
   # Create an Image from a Container's change.s

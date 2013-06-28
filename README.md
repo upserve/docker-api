@@ -183,6 +183,11 @@ container.wait(15)
 container.attach(:stream => true, :stdout => true, :stderr => true, :logs => true)
 # => "bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar"
 
+# If you wish to stream the attach method, a block may be supplied.
+container = Docker::Container.create('Image' => 'base', 'Cmd' => %[find / -name *])
+container.tap(&:start).attach { |chunk| puts chunk }
+# => nil
+
 # Create an Image from a Container's changes.
 container.commit
 # => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
