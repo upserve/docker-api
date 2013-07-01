@@ -4,11 +4,14 @@ class Docker::Container
   include Docker::Model
   include Docker::Error
 
+  VALID_OPTIONS = [:id, :image, :command, :created, :status, :ports, :size_rw, :size_root_fs]
+  attr_reader *VALID_OPTIONS
+
   set_resource_prefix '/containers'
 
   set_create_request do |body|
     response = connection.post('/containers/create', nil, :body => body.to_json)
-    @id = Docker::Util.parse_json(response)['Id']
+    @id = Docker::Util.parse_json(response)[:id]
     self
   end
 

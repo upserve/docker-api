@@ -33,10 +33,20 @@ describe Docker::Util do
     end
 
     context 'when the argument is valid JSON' do
-      let(:arg) { '{"yolo":"swag"}' }
+      context 'as a hash' do
+        let(:arg) { '{"yolo":"swag"}' }
 
-      it 'parses the JSON into a Hash' do
-        subject.should == { 'yolo' => 'swag' }
+        it 'parses the JSON into a Hash' do
+          subject.should == { :yolo => 'swag' }
+        end
+      end
+
+      context 'as an array' do
+        let(:arg) { '[{"yolo":"swag"}]' }
+
+        it 'parses the JSON into a Hash' do
+          subject.should == [{ :yolo => 'swag' }]
+        end
       end
     end
   end

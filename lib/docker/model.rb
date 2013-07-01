@@ -18,7 +18,7 @@ module Docker::Model
   # Docker::Error::ArgumentError is raised.
   def initialize(options = {})
     if (options[:connection] ||= Docker.connection).is_a?(Docker::Connection)
-      @id, @connection = options[:id], options[:connection]
+      options.each { |k, v| instance_variable_set("@#{k}", v) }
     else
       raise ArgumentError, 'Expected a Docker::Connection.'
     end
@@ -48,7 +48,7 @@ module Docker::Model
     def request(method, action, opts = {}, &outer_block)
       define_method(action) do |query = nil, &block|
         new_opts = {
-          :path => "#{self.class.resource_prefix}/#{self.id}/#{action}",
+          :path => "#{self.class.resource_prefix}/#{self.id}/#{action.to_s.gsub("!", "")}",
           :json => true
         }.merge(opts)
         body = connection.request(method, new_opts[:path], query,
@@ -71,7 +71,7 @@ module Docker::Model
     def all(options = {}, connection = Docker.connection)
       path = "#{resource_prefix}/json"
       hashes = Docker::Util.parse_json(connection.get(path, options)) || []
-      hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
+      hashes.map { |hash| new(hash.merge(:connection => connection)) }
     end
   end
 end

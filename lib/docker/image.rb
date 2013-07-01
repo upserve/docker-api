@@ -3,6 +3,9 @@ class Docker::Image
   include Docker::Model
   include Docker::Error
 
+  VALID_OPTIONS = [:id, :repository, :tag, :created, :size, :virtual_size]
+  attr_reader *VALID_OPTIONS
+
   set_resource_prefix '/images'
 
   set_create_request do |options|
@@ -14,7 +17,7 @@ class Docker::Image
   end
 
   # Tag the Image.
-  request :post, :tag
+  request :post, :tag!
   # Get more information about the Image.
   request :get, :json
   # Get the history of the Image.
@@ -58,7 +61,7 @@ class Docker::Image
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
-      hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
+      hashes.map { |hash| new(:id => hash[:name], :connection => connection) }
     end
 
     # Import an Image from the output of Docker::Container#export.
@@ -69,7 +72,7 @@ class Docker::Image
            options.merge('fromSrc' => '-'),
            :headers => { 'Transfer-Encoding' => 'chunked' }
         ) { io.read(Excon.defaults[:chunk_size]).to_s }
-        new(:id => Docker::Util.parse_json(body)['status'],
+        new(:id => Docker::Util.parse_json(body)[:status],
             :connection => connection)
       end
     end

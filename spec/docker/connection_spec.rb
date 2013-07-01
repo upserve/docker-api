@@ -52,7 +52,7 @@ describe Docker::Connection do
         :path    => "/v#{Docker::API_VERSION}#{path}",
         :query   => query,
         :headers => { 'Content-Type' => 'text/plain',
-                      'User-Agent'   => 'Docker-Client/0.4.6' },
+                      'User-Agent'   => "Docker-Client/#{Docker::VERSION}" },
         :expects => 201,
         :idempotent => true,
         :lol => true

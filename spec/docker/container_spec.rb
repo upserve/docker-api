@@ -27,7 +27,7 @@ describe Docker::Container do
 
     it 'returns the description as a Hash', :vcr do
       description.should be_a(Hash)
-      description['ID'].should start_with(subject.id)
+      description[:id].should start_with(subject.id)
     end
   end
 
@@ -142,7 +142,7 @@ describe Docker::Container do
     before { subject.start }
 
     it 'waits for the command to finish', :vcr do
-      subject.wait['StatusCode'].should == 64
+      subject.wait[:status_code].should == 64
     end
 
     context 'when an argument is given' do
@@ -150,7 +150,7 @@ describe Docker::Container do
                                        'Image' => 'base') }
 
       it 'sets the :read_timeout to that amount of time', :vcr do
-        subject.wait(6)['StatusCode'].should be_zero
+        subject.wait(6)[:status_code].should be_zero
       end
 
       context 'and a command runs for too long' do

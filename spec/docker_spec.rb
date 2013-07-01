@@ -34,14 +34,14 @@ describe Docker do
     let(:version) { subject.version }
     it 'returns the version as a Hash', :vcr do
       version.should be_a Hash
-      version.keys.sort.should == %w[GoVersion Version]
+      version.keys.sort.should == [:go_version, :version]
     end
   end
 
   describe '#info' do
     let(:info) { subject.info }
     let(:keys) do
-      ["Containers", "Debug", "Images", "MemoryLimit", "NFd", "NGoroutines"]
+      [:containers, :debug, :images, :memory_limit, :n_fd, :n_goroutines]
     end
 
     it 'returns the info as a Hash', :vcr do

@@ -58,7 +58,7 @@ private
       :path          => "/v#{Docker::API_VERSION}#{path}",
       :query         => query,
       :headers       => { 'Content-Type' => 'text/plain',
-                          'User-Agent'   => 'Docker-Client/0.4.6'
+                          'User-Agent'   => "Docker-Client/#{Docker::VERSION}"
                         }.merge(headers),
       :expects       => (200..204),
       :idempotent    => http_method == :get,
