@@ -47,7 +47,7 @@ class Docker::Image
 
   # Remove the Image from the server.
   def remove
-    connection.request(:delete, "/images/#{self.id}", nil)
+    connection.delete("/images/#{self.id}")
   end
 
   class << self
@@ -106,7 +106,7 @@ class Docker::Image
     def create_tar(input)
       output = StringIO.new
       Gem::Package::TarWriter.new(output) do |tar|
-        tar.add_file('Dockerfile', '640') { |tar_file| tar_file.write(input) }
+        tar.add_file('Dockerfile', 0640) { |tar_file| tar_file.write(input) }
       end
       output.tap(&:rewind)
     end
