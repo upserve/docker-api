@@ -67,7 +67,7 @@ class Docker::Container
   # Create an Image from a Container's change.s
   def commit(options = {})
     options.merge!('container' => self.id[0..7])
-    hash = JSON.parse(connection.request(:post, '/commit', options))
+    hash = Docker::Util.parse_json(connection.post('/commit', options))
     Docker::Image.send(:new, :id => hash['Id'], :connection => self.connection)
   end
 end

@@ -56,7 +56,7 @@ class Docker::Image
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponiding Image.
     def search(query = {}, connection = Docker.connection)
-      body = connection.request(:get, '/images/search', query)
+      body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
       hashes.map { |hash| new(:id => hash['Name'], :connection => connection) }
     end
