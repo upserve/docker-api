@@ -25,12 +25,6 @@ class Docker::Container
   # Restart the Container
   request :post, :restart
 
-  # Wait for the current command to finish executing.
-  def wait(time = 60)
-    resp = connection.post("/containers/#{id}/wait", nil, :read_timeout => time)
-    Docker::Util.parse_json(resp)
-  end
-
   # For each method, `m`, define a method called `m`? that attempts the method,
   # but catches all Server errors.
   [:stop, :start, :kill, :restart].each do |method|
@@ -39,11 +33,17 @@ class Docker::Container
     end
   end
 
+  # Wait for the current command to finish executing.
+  def wait(time = 60)
+    resp = connection.post("/containers/#{id}/wait", nil, :read_timeout => time)
+    Docker::Util.parse_json(resp)
+  end
+
   # Given a command and an optional number of seconds to wait for the currently
   # executing command, creates a new Container to run the specified command. If
   # the command that is currently executing does not return a 0 status code, an
   # UnexpectedResponseError is raised.
-  def run(cmd, time = 1000)
+  def run(cmd, time)
     if (code = tap(&:start?).wait(time)['StatusCode']).zero?
       commit.run(cmd).tap(&:start?)
     else

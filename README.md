@@ -192,8 +192,9 @@ container.tap(&:start).attach { |chunk| puts chunk }
 container.commit
 # => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
-# Commit the Container and run a new command. This allows for some pretty cool Container chaining.
-container.run('pwd')
+# Commit the Container and run a new command. The second argument is the number
+# of seconds the Container should wait before stopping its current command.
+container.run('pwd', 10)
 # => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Request all of the Containers. By default, will only return the running Containers.
