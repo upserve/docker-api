@@ -120,7 +120,7 @@ Docker::Image.build("from base\nrun touch /test")
 # => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Create an Image from a Dockerfile.
-Dockerfile::Image.build_from_dir('.')
+Docker::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Load all Images on your Docker server.
@@ -183,9 +183,19 @@ container.wait(15)
 container.attach(:stream => true, :stdout => true, :stderr => true, :logs => true)
 # => "bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar"
 
+# If you wish to stream the attach method, a block may be supplied.
+container = Docker::Container.create('Image' => 'base', 'Cmd' => %[find / -name *])
+container.tap(&:start).attach { |chunk| puts chunk }
+# => nil
+
 # Create an Image from a Container's changes.
 container.commit
 # => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# Commit the Container and run a new command. The second argument is the number
+# of seconds the Container should wait before stopping its current command.
+container.run('pwd', 10)
+# => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)

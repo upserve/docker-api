@@ -162,6 +162,28 @@ describe Docker::Container do
     end
   end
 
+  describe '#run' do
+    let(:run_command) { subject.run('ls') }
+    context 'when the Container\'s command does not return status code of 0' do
+      subject { described_class.create('Cmd' => %w[lol not a real command],
+                                       'Image' => 'base') }
+
+      it 'raises an error', :vcr do
+        expect { run_command }
+            .to raise_error(Docker::Error::UnexpectedResponseError)
+      end
+    end
+
+    context 'when the Container\'s command returns a status code of 0' do
+      subject { described_class.create('Cmd' => %w[pwd],
+                                       'Image' => 'base') }
+
+      it 'creates a new container to run the specified command', :vcr do
+        run_command.wait['StatusCode'].should be_zero
+      end
+    end
+  end
+
   describe '#commit' do
     subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
     let(:image) { subject.commit }
