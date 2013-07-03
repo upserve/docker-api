@@ -43,7 +43,7 @@ class Docker::Container
   # executing command, creates a new Container to run the specified command. If
   # the command that is currently executing does not return a 0 status code, an
   # UnexpectedResponseError is raised.
-  def run(cmd, time)
+  def run(cmd, time = 1000)
     if (code = tap(&:start?).wait(time)['StatusCode']).zero?
       commit.run(cmd).tap(&:start?)
     else

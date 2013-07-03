@@ -163,7 +163,7 @@ describe Docker::Container do
   end
 
   describe '#run' do
-    let(:run_command) { subject.run('ls', 60) }
+    let(:run_command) { subject.run('ls') }
     context 'when the Container\'s command does not return status code of 0' do
       subject { described_class.create('Cmd' => %w[lol not a real command],
                                        'Image' => 'base') }
