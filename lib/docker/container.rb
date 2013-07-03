@@ -25,7 +25,7 @@ class Docker::Container
   # Restart the Container
   request :post, :restart
 
-  # For each method, `m`, define a method called `m`? that attempts the method,
+  # For each method, `m`, define a method called `m?` that attempts the method,
   # but catches all Server errors.
   [:stop, :start, :kill, :restart].each do |method|
     define_method :"#{method}?" do |*args|
