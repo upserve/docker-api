@@ -53,12 +53,13 @@ private
     query ||= {}
     opts ||= {}
     headers = opts.delete(:headers) || {}
+    user_agent = "Swipely/Docker-API #{Docker::VERSION}"
     {
       :method        => http_method,
       :path          => "/v#{Docker::API_VERSION}#{path}",
       :query         => query,
       :headers       => { 'Content-Type' => 'text/plain',
-                          'User-Agent'   => 'Docker-Client/0.4.6'
+                          'User-Agent'   => user_agent,
                         }.merge(headers),
       :expects       => (200..204),
       :idempotent    => http_method == :get,
