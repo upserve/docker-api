@@ -20,9 +20,19 @@ module Docker::Util
   end
 
   def transform_keys(obj, &block)
-    return obj.inject({}) { |res, (k, v)| res[yield(k)] = transform_keys(v, &block); res } if obj.is_a? Hash
-    return obj.inject([]) { |res,     v | res          << transform_keys(v, &block); res } if obj.is_a? Array
-    return obj
+    if obj.is_a? Hash
+      return obj.inject({}) do |res, (k, v)|
+        res[yield(k)] = transform_keys(v, &block)
+        res
+      end
+    elsif obj.is_a? Array
+      return obj.inject([]) do |res,     v |
+        res << transform_keys(v, &block)
+        res
+      end
+    else
+      return obj
+    end
   end
 
   def underscore_symbolize_keys(obj)
@@ -37,7 +47,7 @@ module Docker::Util
     if mode == :lower
       str.first + camelize(str)[1..-1]
     else
-      str.to_s.gsub(/\/(.?)/) { "::" + $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
+      str.to_s.gsub(/\/(.?)/) { $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
     end
   end
 end

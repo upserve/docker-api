@@ -78,20 +78,20 @@ class Docker::Image
     end
 
     # Given a Dockerfile as a string, builds an Image.
-    def build(commands, connection = Docker.connection)
-      body = connection.post('/build', {}, :body => create_tar(commands))
-      new(:id => extract_id(body), :connection => connection)
+    def build(commands, connection = Docker.connection, &block)
+      build_request(connection, :body => create_tar(commands), &block)
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
-    def build_from_dir(dir, connection = Docker.connection)
+    def build_from_dir(dir, connection = Docker.connection, &block)
       tar = create_dir_tar(dir)
-      body = connection.post(
-        '/build', {},
+      build_request(
+        connection,
         :headers => { 'Content-Type'      => 'application/tar',
-                      'Transfer-Encoding' => 'chunked' }
-      ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(:id => extract_id(body), :connection => connection)
+                      'Transfer-Encoding' => 'chunked' },
+        :request_block => lambda { tar.read(Excon.defaults[:chunk_size]).to_s },
+        &block
+      )
     ensure
       tar.close
     end
@@ -102,7 +102,7 @@ class Docker::Image
       if (id = line.match(/^Successfully built ([a-f0-9]+)$/)) && !id[1].empty?
         id[1]
       else
-        raise UnexpectedResponseError, "Couldn't find id: #{body}"
+        nil
       end
     end
 
@@ -122,6 +122,19 @@ class Docker::Image
       File.new('/tmp/out', 'r')
     ensure
       FileUtils.cd(cwd)
+    end
+
+    def build_request(connection, opts = {}, &block)
+      image = nil
+      response_block = lambda do |line, _, _|
+        if extract_id(line)
+          image = new(:id => extract_id(line), :connection => connection)
+        end
+        yield(line) if block_given?
+      end
+      opts[:response_block] = response_block
+      connection.post('/build', {}, opts, &opts[:request_block])
+      image
     end
   end
 end

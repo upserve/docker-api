@@ -174,9 +174,10 @@ describe Docker::Image do
   describe '.build' do
     subject { described_class }
     context 'with an invalid Dockerfile' do
-      it 'throws a UnexpectedResponseError', :vcr do
-        expect { subject.build('lololol') }
-            .to raise_error(Docker::Error::UnexpectedResponseError)
+      let(:image) { subject.build('lololol') }
+
+      it 'returns nil', :vcr do
+        image.should be_nil
       end
     end
 
@@ -187,6 +188,15 @@ describe Docker::Image do
         image.should be_a Docker::Image
         image.id.should_not be_nil
         image.connection.should be_a Docker::Connection
+      end
+    end
+
+    context 'with a valid Dockerfile and a response block' do
+      let(:id) { "b750fe79269d" } # no easier way tthan to hardcode
+
+      it 'calls the response block', :vcr do
+        msg = "Step 1 : FROM base\n ---> #{id}\nSuccessfully built #{id}\n"
+        expect { |b| subject.build("from base\n", &b) }.to yield_with_args msg
       end
     end
   end

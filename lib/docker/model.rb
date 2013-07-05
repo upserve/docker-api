@@ -46,9 +46,10 @@ module Docker::Model
     # Define a method named `action` that sends an http `method` request to the
     # Docker Server.
     def request(method, action, opts = {}, &outer_block)
+      action_url = action.to_s.gsub("!", "")
       define_method(action) do |query = nil, &block|
         new_opts = {
-          :path => "#{self.class.resource_prefix}/#{self.id}/#{action.to_s.gsub("!", "")}",
+          :path => "#{self.class.resource_prefix}/#{self.id}/#{action_url}",
           :json => true
         }.merge(opts)
         body = connection.request(method, new_opts[:path], query,

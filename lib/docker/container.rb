@@ -4,7 +4,8 @@ class Docker::Container
   include Docker::Model
   include Docker::Error
 
-  VALID_OPTIONS = [:id, :image, :command, :created, :status, :ports, :size_rw, :size_root_fs]
+  VALID_OPTIONS = [:id, :image, :command, :created, :status, :ports, :size_rw,
+                   :size_root_fs]
   attr_reader *VALID_OPTIONS
 
   set_resource_prefix '/containers'
