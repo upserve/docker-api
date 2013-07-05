@@ -28,7 +28,6 @@ describe Docker::Container do
     it 'returns the description as a Hash', :vcr do
       description.should be_a(Hash)
       description[:id].should start_with(subject.id)
-      puts description
       description[:config][:cmd].should == %w[true]
       description[:config][:image].should == 'base'
     end
@@ -267,9 +266,13 @@ describe Docker::Container do
       before { described_class.create(cmd: ['ls'], image: 'base') }
 
       it 'materializes each Container into a Docker::Container', :vcr do
-        subject.all(all: true).should be_all { |container|
-          container.is_a?(Docker::Container)
-        }
+        subject.all(all: true).each do |container|
+          container.should be_a(Docker::Container)
+          container.id.should_not be_nil
+          container.created.should be > 0
+          container.command.should_not be_empty
+          container.image.should_not be_empty
+        end
         subject.all(all: true).length.should_not be_zero
       end
     end
