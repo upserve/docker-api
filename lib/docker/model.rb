@@ -18,7 +18,7 @@ module Docker::Model
   # Docker::Error::ArgumentError is raised.
   def initialize(options = {})
     if (options[:connection] ||= Docker.connection).is_a?(Docker::Connection)
-      @id, @connection = options[:id], options[:connection]
+      options.each { |k, v| instance_variable_set("@#{k}", v) }
     else
       raise ArgumentError, 'Expected a Docker::Connection.'
     end
@@ -46,10 +46,11 @@ module Docker::Model
     # Define a method named `action` that sends an http `method` request to the
     # Docker Server.
     def request(method, action, opts = {}, &outer_block)
+      action_url = action.to_s.gsub("!", "")
       define_method(action) do |query = nil, &block|
         new_opts = {
-          :path => "#{self.class.resource_prefix}/#{self.id}/#{action}",
-          :json => true
+          path: "#{self.class.resource_prefix}/#{self.id}/#{action_url}",
+          json: true
         }.merge(opts)
         body = connection.request(method, new_opts[:path], query,
                                   new_opts[:excon], &block)
@@ -64,14 +65,14 @@ module Docker::Model
     # argument.
     def create(opts = {}, conn = Docker.connection)
       raise Docker::Error::ArgumentError, 'Expected a Hash' if !opts.is_a?(Hash)
-      new(:connection => conn).instance_exec(opts, &create_request)
+      new(connection: conn).instance_exec(opts, &create_request)
     end
 
     # Retrieve every Instance of a model for the given server.
     def all(options = {}, connection = Docker.connection)
       path = "#{resource_prefix}/json"
       hashes = Docker::Util.parse_json(connection.get(path, options)) || []
-      hashes.map { |hash| new(:id => hash['Id'], :connection => connection) }
+      hashes.map { |hash| new(hash.merge(connection: connection)) }
     end
   end
 end

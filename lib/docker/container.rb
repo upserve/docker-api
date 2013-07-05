@@ -4,11 +4,15 @@ class Docker::Container
   include Docker::Model
   include Docker::Error
 
+  VALID_OPTIONS = [:id, :image, :command, :created, :status, :ports, :size_rw,
+                   :size_root_fs]
+  attr_reader *VALID_OPTIONS
+
   set_resource_prefix '/containers'
 
   set_create_request do |body|
-    response = connection.post('/containers/create', nil, :body => body.to_json)
-    @id = Docker::Util.parse_json(response)['Id']
+    response = connection.post('/containers/create', nil, body: body.to_json)
+    @id = Docker::Util.parse_json(response)[:id]
     self
   end
 
@@ -35,7 +39,7 @@ class Docker::Container
 
   # Wait for the current command to finish executing.
   def wait(time = 60)
-    resp = connection.post("/containers/#{id}/wait", nil, :read_timeout => time)
+    resp = connection.post("/containers/#{id}/wait", nil, read_timeout: time)
     Docker::Util.parse_json(resp)
   end
 
@@ -44,7 +48,7 @@ class Docker::Container
   # the command that is currently executing does not return a 0 status code, an
   # UnexpectedResponseError is raised.
   def run(cmd, time = 1000)
-    if (code = tap(&:start?).wait(time)['StatusCode']).zero?
+    if (code = tap(&:start?).wait(time)[:status_code]).zero?
       commit.run(cmd).tap(&:start?)
     else
       raise UnexpectedResponseError, "Command returned status code #{code}."
@@ -53,21 +57,20 @@ class Docker::Container
 
   # Export the Container as a tar.
   def export(&block)
-    connection.get("/containers/#{id}/export", nil, :response_block => block)
+    connection.get("/containers/#{id}/export", nil, response_block: block)
     true
   end
 
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
-    options = { :stream => true, :stdout => true }.merge(options)
-    connection.post("/containers/#{id}/attach", options,
-                    :response_block => block)
+    options = { stream: true, stdout: true }.merge(options)
+    connection.post("/containers/#{id}/attach", options, response_block: block)
   end
 
   # Create an Image from a Container's change.s
   def commit(options = {})
-    options.merge!('container' => self.id[0..7])
+    options.merge!(container: self.id[0..7])
     hash = Docker::Util.parse_json(connection.post('/commit', options))
-    Docker::Image.send(:new, :id => hash['Id'], :connection => self.connection)
+    Docker::Image.send(:new, id: hash[:id], connection: self.connection)
   end
 end

@@ -4,7 +4,7 @@ describe Docker do
   subject { Docker }
 
   it { should be_a Module }
-  its(:options) { should == { :port => 4243 } }
+  its(:options) { should == { port: 4243 } }
   its(:url) { should == 'http://localhost' }
   its(:connection) { should be_a Docker::Connection }
 
@@ -20,7 +20,7 @@ describe Docker do
   [:options=, :url=].each do |method|
     describe "##{method}" do
       after(:all) do
-        subject.options = { :port => 4243 }
+        subject.options = { port: 4243 }
         subject.url = 'http://localhost'
       end
       it 'calls #reset_connection!' do
@@ -34,14 +34,14 @@ describe Docker do
     let(:version) { subject.version }
     it 'returns the version as a Hash', :vcr do
       version.should be_a Hash
-      version.keys.sort.should == %w[GoVersion Version]
+      version.keys.sort.should == [:go_version, :version]
     end
   end
 
   describe '#info' do
     let(:info) { subject.info }
     let(:keys) do
-      ["Containers", "Debug", "Images", "MemoryLimit", "NFd", "NGoroutines"]
+      [:containers, :debug, :images, :memory_limit, :n_fd, :n_goroutines]
     end
 
     it 'returns the info as a Hash', :vcr do
