@@ -12,11 +12,12 @@ module Docker::Util
   end
 
   def underscore(str)
-    str.gsub(/::/, '/').
-    gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
-    gsub(/([a-z\d])([A-Z])/,'\1_\2').
-    tr("-", "_").
-    downcase
+    return unless str
+    str.to_s.gsub(/::/, '/').
+             gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+             gsub(/([a-z\d])([A-Z])/,'\1_\2').
+             tr("-", "_").
+             downcase
   end
 
   def transform_keys(obj, &block)
@@ -39,15 +40,17 @@ module Docker::Util
     transform_keys(obj) { |key| underscore(key).to_sym rescue key }
   end
 
-  def camelize_keys(obj)
-    transform_keys(obj) { |key| camelize(key, )}
+  def camelize_keys(obj, mode = :lower)
+    transform_keys(obj) { |key| camelize(key, mode) }
   end
 
   def camelize(str, mode = :upper)
-    if mode == :lower
-      str.first + camelize(str)[1..-1]
-    else
-      str.to_s.gsub(/\/(.?)/) { $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
-    end
+    return str unless str && !str.to_s.empty?
+    s = if mode == :lower
+          str.to_s[0].downcase + camelize(str)[1..-1]
+        else
+          str.to_s.gsub(/\/(.?)/) { $1.upcase }.gsub(/(^|_)(.)/) { $2.upcase }
+        end
+    s.to_sym rescue s
   end
 end

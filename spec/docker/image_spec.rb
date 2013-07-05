@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Docker::Image do
   describe '#to_s' do
-    subject { described_class.send(:new, :id => rand(10000).to_s) }
+    subject { described_class.send(:new, id: rand(10000).to_s) }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
@@ -21,7 +21,7 @@ describe Docker::Image do
 
   describe '#remove' do
     let(:id) { subject.id }
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(from_image: 'base') }
 
     it 'removes the Image', :vcr do
       subject.remove
@@ -31,8 +31,8 @@ describe Docker::Image do
 
   describe '#insert' do
     subject { described_class.build('from base') }
-    let(:new_image) { subject.insert(:path => '/stallman',
-                                     :url => 'http://stallman.org') }
+    let(:new_image) { subject.insert(path: '/stallman',
+                                     url: 'http://stallman.org') }
     let(:ls_output) { new_image.run('ls /').attach.split("\n") }
 
     it 'inserts the url\'s file into a new Image', :vcr do
@@ -41,7 +41,7 @@ describe Docker::Image do
   end
 
   describe '#push' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(from_image: 'base') }
 
     it 'pushes the Image', :vcr do
       pending 'I don\'t want to push the Image to the Docker Registry'
@@ -50,16 +50,16 @@ describe Docker::Image do
   end
 
   describe '#tag' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(from_image: 'base')}
 
     it 'tags the image with the repo name', :vcr do
-      expect { subject.tag!(:repo => 'base2', :force => true) }
+      expect { subject.tag!(repo: 'base2', force: true) }
           .to_not raise_error
     end
   end
 
   describe '#json' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(from_image: 'base') }
     let(:json) { subject.json }
 
     it 'returns additional information about image image', :vcr do
@@ -69,7 +69,7 @@ describe Docker::Image do
   end
 
   describe '#history' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(from_image: 'base') }
     let(:history) { subject.history }
 
     it 'returns the history of the Image', :vcr do
@@ -80,7 +80,7 @@ describe Docker::Image do
   end
 
   describe '#run' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(from_image: 'base') }
     let(:output) { subject.run(cmd).attach }
 
     context 'when the argument is a String', :vcr do
@@ -110,7 +110,7 @@ describe Docker::Image do
     end
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'base') }
+      let(:image) { subject.create(from_image: 'base') }
 
       it 'sets the id', :vcr do
         image.should be_a Docker::Image
@@ -134,7 +134,7 @@ describe Docker::Image do
     context 'when the file does exist' do
       let(:file) { 'spec/fixtures/export.tar' }
 
-      before { File.stub(:open).with(file, 'r').and_yield(mock(:read => '')) }
+      before { File.stub(:open).with(file, 'r').and_yield(mock(read: '')) }
 
       # WARNING if you delete this VCR, make sure you set VCR to hook into
       # :excon instead of :webmock, run only this spec, and then switch the
@@ -150,8 +150,8 @@ describe Docker::Image do
   describe '.all' do
     subject { described_class }
 
-    let(:images) { subject.all(:all => true) }
-    before { subject.create('fromImage' => 'base') }
+    let(:images) { subject.all(all: true) }
+    before { subject.create(from_image: 'base') }
 
     it 'materializes each Image into a Docker::Image', :vcr do
       images.should be_all { |image|
@@ -165,7 +165,7 @@ describe Docker::Image do
     subject { described_class }
 
     it 'materializes each Image into a Docker::Image', :vcr do
-      subject.search('term' => 'sshd').should be_all { |image|
+      subject.search(term: 'sshd').should be_all { |image|
         !image.id.nil? && image.is_a?(described_class)
       }
     end
@@ -209,11 +209,11 @@ describe Docker::Image do
       let(:docker_file) { File.new("#{dir}/Dockerfile") }
       let(:image) { subject.build_from_dir(dir) }
       let(:container) do
-        Docker::Container.create('Image' => image.id,
-                                 'Cmd' => %w[cat /Dockerfile])
+        Docker::Container.create(image: image.id,
+                                 cmd: %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
-                              .attach(:stderr => true) }
+                              .attach(stderr: true) }
 
       it 'builds the image', :vcr do
         pending 'webmock / vcr issue'

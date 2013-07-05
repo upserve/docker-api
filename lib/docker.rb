@@ -17,7 +17,7 @@ module Docker
   end
 
   def options
-    @options ||= { :port => 4243 }
+    @options ||= { port: 4243 }
   end
 
   def url=(new_url)
@@ -26,7 +26,7 @@ module Docker
   end
 
   def options=(new_options)
-    @options = { :port => 4243 }.merge(new_options)
+    @options = { port: 4243 }.merge(new_options)
     reset_connection!
   end
 
@@ -51,7 +51,7 @@ module Docker
   # Login to the Docker registry.
   def authenticate!(options = {})
     @creds = options.to_json
-    connection.post(:path => '/auth', :body => @creds)
+    connection.post(path: '/auth', body: @creds)
     true
   end
 

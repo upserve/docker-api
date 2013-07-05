@@ -51,18 +51,19 @@ private
   # compiles a request.
   def compile_request_params(http_method, path, query = nil, opts = nil, &block)
     query ||= {}
+    query = Docker::Util.camelize_keys(query, :lower)
     opts ||= {}
     headers = opts.delete(:headers) || {}
     {
-      :method        => http_method,
-      :path          => "/v#{Docker::API_VERSION}#{path}",
-      :query         => query,
-      :headers       => { 'Content-Type' => 'text/plain',
-                          'User-Agent'   => "Docker-Client/#{Docker::VERSION}"
-                        }.merge(headers),
-      :expects       => (200..204),
-      :idempotent    => http_method == :get,
-      :request_block => block
+      method:        http_method,
+      path:          "/v#{Docker::API_VERSION}#{path}",
+      query:         query,
+      headers:       { 'Content-Type' => 'text/plain',
+                       'User-Agent'   => "Docker-Client/#{Docker::VERSION}"
+                     }.merge(headers),
+      expects:       (200..204),
+      idempotent:    http_method == :get,
+      request_block: block
     }.merge(opts).reject { |_, v| v.nil? }
   end
 end

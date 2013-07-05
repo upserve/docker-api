@@ -4,7 +4,7 @@ describe Docker do
   subject { Docker }
 
   it { should be_a Module }
-  its(:options) { should == { :port => 4243 } }
+  its(:options) { should == { port: 4243 } }
   its(:url) { should == 'http://localhost' }
   its(:connection) { should be_a Docker::Connection }
 
@@ -20,7 +20,7 @@ describe Docker do
   [:options=, :url=].each do |method|
     describe "##{method}" do
       after(:all) do
-        subject.options = { :port => 4243 }
+        subject.options = { port: 4243 }
         subject.url = 'http://localhost'
       end
       it 'calls #reset_connection!' do

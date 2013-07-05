@@ -10,9 +10,9 @@ class Docker::Image
 
   set_create_request do |options|
     body = connection.post('/images/create', options)
-    @id = Docker::Util.parse_json(body)['status'] rescue nil
-    @id ||= options['fromImage']
-    @id ||= "#{options['repo']}/#{options['tag']}"
+    @id = Docker::Util.parse_json(body)[:status] rescue nil
+    @id ||= options[:from_image]
+    @id ||= "#{options[:repo]}/#{options[:tag]}"
     self
   end
 
@@ -28,13 +28,13 @@ class Docker::Image
   # to run the Image.
   def run(cmd)
     cmd = cmd.split(/\s+/) if cmd.is_a?(String)
-    Docker::Container.create({ 'Image' => self.id, 'Cmd' => cmd }, connection)
+    Docker::Container.create({ image: self.id, cmd: cmd }, connection)
                      .tap(&:start)
   end
 
   # Push the Image to the Docker registry.
   def push(options = {})
-    connection.post("/images/#{self.id}/push", options, :body => Docker.creds)
+    connection.post("/images/#{self.id}/push", options, body: Docker.creds)
     true
   end
 
@@ -44,7 +44,7 @@ class Docker::Image
     if (id = body.match(/{"Id":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
       raise UnexpectedResponseError, "Could not find Id in '#{body}'"
     else
-      self.class.send(:new, :id => id[1], :connection => self.connection)
+      self.class.send(:new, id: id[1], connection: self.connection)
     end
   end
 
@@ -61,7 +61,7 @@ class Docker::Image
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
-      hashes.map { |hash| new(:id => hash[:name], :connection => connection) }
+      hashes.map { |hash| new(id: hash[:name], connection: connection) }
     end
 
     # Import an Image from the output of Docker::Container#export.
@@ -69,17 +69,17 @@ class Docker::Image
       File.open(file, 'r') do |io|
         body = connection.post(
           '/images/create',
-           options.merge('fromSrc' => '-'),
-           :headers => { 'Transfer-Encoding' => 'chunked' }
+           options.merge(from_src: '-'),
+           headers: { 'Transfer-Encoding' => 'chunked' }
         ) { io.read(Excon.defaults[:chunk_size]).to_s }
-        new(:id => Docker::Util.parse_json(body)[:status],
-            :connection => connection)
+        new(id: Docker::Util.parse_json(body)[:status],
+            connection: connection)
       end
     end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, connection = Docker.connection, &block)
-      build_request(connection, :body => create_tar(commands), &block)
+      build_request(connection, body: create_tar(commands), &block)
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
@@ -87,9 +87,9 @@ class Docker::Image
       tar = create_dir_tar(dir)
       build_request(
         connection,
-        :headers => { 'Content-Type'      => 'application/tar',
-                      'Transfer-Encoding' => 'chunked' },
-        :request_block => lambda { tar.read(Excon.defaults[:chunk_size]).to_s },
+        headers: { 'Content-Type'      => 'application/tar',
+                   'Transfer-Encoding' => 'chunked' },
+        request_block: lambda { tar.read(Excon.defaults[:chunk_size]).to_s },
         &block
       )
     ensure
@@ -128,7 +128,7 @@ class Docker::Image
       image = nil
       response_block = lambda do |line, _, _|
         if extract_id(line)
-          image = new(:id => extract_id(line), :connection => connection)
+          image = new(id: extract_id(line), connection: connection)
         end
         yield(line) if block_given?
       end

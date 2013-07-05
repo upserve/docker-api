@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Docker::Connection do
-  subject { described_class.new('http://localhost', :port => 4243) }
+  subject { described_class.new('http://localhost', port: 4243) }
 
   describe '#initialize' do
     let(:url) { 'http://localhost' }
-    let(:options) { { :port => 4243 } }
+    let(:options) { { port: 4243 } }
     subject { described_class.new(url, options) }
 
     context 'when the first argument is not a String' do
@@ -41,21 +41,21 @@ describe Docker::Connection do
   describe '#request' do
     let(:method) { :get }
     let(:path) { '/test' }
-    let(:query) { { :all => true } }
-    let(:options) { { :expects => 201, :lol => true } }
+    let(:query) { { all: true } }
+    let(:options) { { expects: 201, lol: true } }
     let(:body) { rand(10000000) }
     let(:resource) { mock(:resource) }
-    let(:response) { mock(:response, :body => body) }
+    let(:response) { mock(:response, body: body) }
     let(:expected_hash) {
       {
-        :method  => method,
-        :path    => "/v#{Docker::API_VERSION}#{path}",
-        :query   => query,
-        :headers => { 'Content-Type' => 'text/plain',
-                      'User-Agent'   => "Docker-Client/#{Docker::VERSION}" },
-        :expects => 201,
-        :idempotent => true,
-        :lol => true
+        method:  method,
+        path:    "/v#{Docker::API_VERSION}#{path}",
+        query:   query,
+        headers: { 'Content-Type' => 'text/plain',
+                   'User-Agent'   => "Docker-Client/#{Docker::VERSION}" },
+        expects: 201,
+        idempotent: true,
+        lol: true
       }
     }
 
@@ -81,7 +81,7 @@ describe Docker::Connection do
   describe '#to_s' do
     let(:url) { 'google.com' }
     let(:port) { 4000 }
-    let(:options) { { :port => port } }
+    let(:options) { { port: port } }
     let(:expected_string) {
       "Docker::Connection { :url => #{url}, :options => #{options} }"
     }
