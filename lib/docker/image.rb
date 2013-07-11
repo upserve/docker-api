@@ -113,7 +113,7 @@ class Docker::Image
 
     def create_dir_tar(directory)
       cwd = FileUtils.pwd
-      tempfile = File.new('/tmp/out', 'w')
+      tempfile = File.new('/tmp/out', 'wb')
       FileUtils.cd(directory)
       Archive::Tar::Minitar.pack('.', tempfile)
       File.new('/tmp/out', 'r')
