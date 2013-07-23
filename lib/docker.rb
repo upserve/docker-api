@@ -13,11 +13,12 @@ module Docker
   attr_reader :creds
 
   def url
-    @url ||= 'http://localhost'
+    @url ||= (ENV['DOCKER_URL'] || 'http://localhost')
   end
 
   def options
-    @options ||= { :port => 4243 }
+    port = (ENV['DOCKER_PORT'].nil? ? 4243 : ENV['DOCKER_PORT']).to_i
+    @options ||= { :port => port.to_i }
   end
 
   def url=(new_url)
