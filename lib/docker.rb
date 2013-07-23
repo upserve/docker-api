@@ -13,7 +13,7 @@ module Docker
   attr_reader :creds
 
   def url
-    @url ||= (ENV['DOCKER_URL'] || 'http://localhost')
+    @url ||= "http://#{ENV['DOCKER_HOST'] || 'localhost'}"
   end
 
   def options

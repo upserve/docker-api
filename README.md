@@ -54,7 +54,7 @@ Two things to note here. The first is that this gem uses [excon](http://www.gith
 Also, you may set the above variables via `ENV` variables. For example:
 
 ```shell
-$ DOCKER_URL=http://example.com DOCKER_PORT=1000 irb
+$ DOCKER_HOST=example.com DOCKER_PORT=1000 irb
 irb(main):001:0> require 'docker'
 => true
 irb(main):002:0> Docker.url

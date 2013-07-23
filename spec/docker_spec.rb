@@ -13,12 +13,13 @@ describe Docker do
   its(:url) { should == 'http://localhost' }
   its(:connection) { should be_a Docker::Connection }
 
-  context 'when the DOCKER_URL ENV variable is set' do
-    let(:url) { 'http://google.com' }
+  context 'when the DOCKER_HOST ENV variable is set' do
+    let(:host) { 'google.com' }
+    let(:url) { "http://#{host}" }
 
     before do
       Docker.instance_variable_set(:@url, nil)
-      ENV['DOCKER_URL'] = url
+      ENV['DOCKER_HOST'] = host
     end
 
     it 'sets Docker.url to that variable' do
