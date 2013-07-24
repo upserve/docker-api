@@ -3,10 +3,42 @@ require 'spec_helper'
 describe Docker do
   subject { Docker }
 
+  before do
+    ENV['DOCKER_HOST'] = nil
+    ENV['DOCKER_PORT'] = nil
+  end
+
   it { should be_a Module }
   its(:options) { should == { :port => 4243 } }
   its(:url) { should == 'http://localhost' }
   its(:connection) { should be_a Docker::Connection }
+
+  context 'when the DOCKER_HOST ENV variable is set' do
+    let(:host) { 'google.com' }
+    let(:url) { "http://#{host}" }
+
+    before do
+      Docker.instance_variable_set(:@url, nil)
+      ENV['DOCKER_HOST'] = host
+    end
+
+    it 'sets Docker.url to that variable' do
+      subject.url.should == url
+    end
+  end
+
+  context 'when the DOCKER_PORT ENV variable is set' do
+    let(:port) { 1234 }
+
+    before do
+      Docker.instance_variable_set(:@options, nil)
+      ENV['DOCKER_PORT'] = port.to_s
+    end
+
+    it 'sets Docker.options[:port] to that variable' do
+      subject.options[:port].should == port
+    end
+  end
 
   describe '#reset_connection!' do
     before { subject.connection }
