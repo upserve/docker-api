@@ -7,7 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{A simple REST client for the Docker Remote API}
   gem.summary       = %q{A simple REST client for the Docker Remote API}
   gem.homepage      = 'https://github.com/swipely/docker-api'
-
+  gem.license       = 'MIT'
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
