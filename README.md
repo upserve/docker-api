@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.4.6.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.5.1.
 
 Installation
 ------------
@@ -173,6 +173,10 @@ container.restart
 # Kill the command running in the Container.
 container.kill
 # => nil
+
+# Return the currently executing processes in a Container.
+container.top
+# => [{"PID"=>"4851", "TTY"=>"pts/0", "TIME"=>"00:00:00", "CMD"=>"lxc-start"}]
 
 # Export a Container. Since an export is typically at least 300M, chunks of the
 # export are yielded instead of just returning the whole thing.
