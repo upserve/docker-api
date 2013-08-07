@@ -2,37 +2,34 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/create
+    uri: http://localhost:4243/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["true"],"Image":"base"}'
+      string: '{"Cmd":["rm","-rf","/root"],"Image":"base"}'
     headers:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 201
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjE=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0NyBHTVQ=
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '21'
+      Date:
+      - Wed, 07 Aug 2013 16:51:12 GMT
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"0eefbdc27421"}'
+      encoding: UTF-8
+      string: '{"Id":"04f3e636c31d"}'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 18:09:47 GMT
+  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/0eefbdc27421/start
+    uri: http://localhost:4243/v1.4/containers/04f3e636c31d/start
     body:
       encoding: US-ASCII
       string: ''
@@ -40,29 +37,26 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 204
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0NyBHTVQ=
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 07 Aug 2013 16:51:12 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 18:09:47 GMT
+  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/0eefbdc27421/wait
+    uri: http://localhost:4243/v1.4/containers/04f3e636c31d/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -70,29 +64,26 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MTY=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0OCBHTVQ=
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '16'
+      Date:
+      - Wed, 07 Aug 2013 16:51:12 GMT
     body:
-      encoding: US-ASCII
-      string: ! '{"StatusCode":0}'
+      encoding: UTF-8
+      string: '{"StatusCode":0}'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 18:09:48 GMT
+  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.3/containers/0eefbdc27421/changes
+    uri: http://localhost:4243/v1.4/containers/04f3e636c31d/changes
     body:
       encoding: US-ASCII
       string: ''
@@ -100,24 +91,21 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        NTY=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAxODowOTo0OCBHTVQ=
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '27'
+      Date:
+      - Wed, 07 Aug 2013 16:51:12 GMT
     body:
-      encoding: US-ASCII
-      string: ! '[{"Path":"/dev","Kind":0},{"Path":"/dev/kmsg","Kind":1}]'
+      encoding: UTF-8
+      string: '[{"Path":"/root","Kind":2}]'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 18:09:48 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
+recorded_with: VCR 2.4.0

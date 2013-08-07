@@ -136,10 +136,8 @@ describe Docker::Image do
 
       before { File.stub(:open).with(file, 'r').and_yield(mock(:read => '')) }
 
-      # WARNING if you delete this VCR, make sure you set VCR to hook into
-      # :excon instead of :webmock, run only this spec, and then switch the
-      # hooks # back to :webmock.
       it 'creates the Image', :vcr do
+        pending 'This works, but recording a streaming request breaks VCR'
         import = subject.import(file)
         import.should be_a Docker::Image
         import.id.should_not be_nil
