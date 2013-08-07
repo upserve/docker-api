@@ -73,7 +73,8 @@ describe Docker do
   describe '#info' do
     let(:info) { subject.info }
     let(:keys) do
-      ["Containers", "Debug", "Images", "MemoryLimit", "NFd", "NGoroutines"]
+      %w(Containers Debug Images KernelVersion LXCVersion MemoryLimit
+         NEventsListener NFd NGoroutines)
     end
 
     it 'returns the info as a Hash', :vcr do

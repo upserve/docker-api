@@ -25,6 +25,13 @@ class Docker::Container
   # Restart the Container
   request :post, :restart
 
+  # Return a List of Hashes that represents the top running processes.
+  def top(opts = {})
+    resp = connection.get("/containers/#{id}/top", opts)
+    hash = Docker::Util.parse_json(resp)
+    hash['Processes'].map { |ary| Hash[hash['Titles'].zip(ary)] }
+  end
+
   # For each method, `m`, define a method called `m?` that attempts the method,
   # but catches all Server errors.
   [:stop, :start, :kill, :restart].each do |method|

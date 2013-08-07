@@ -2,37 +2,34 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/create
+    uri: http://localhost:4243/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["lol","not","a","real","command"],"Image":"base"}'
+      string: '{"Cmd":["lol","not","a","real","command"],"Image":"base"}'
     headers:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 201
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjE=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '21'
+      Date:
+      - Wed, 07 Aug 2013 16:51:30 GMT
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"054d9a6611f8"}'
+      encoding: UTF-8
+      string: '{"Id":"5dbc28c27062"}'
     http_version: 
-  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+  recorded_at: Wed, 07 Aug 2013 16:51:30 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/054d9a6611f8/start
+    uri: http://localhost:4243/v1.4/containers/5dbc28c27062/start
     body:
       encoding: US-ASCII
       string: ''
@@ -40,29 +37,26 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 204
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '0'
+      Date:
+      - Wed, 07 Aug 2013 16:51:30 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
+  recorded_at: Wed, 07 Aug 2013 16:51:30 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.3/containers/054d9a6611f8/wait
+    uri: http://localhost:4243/v1.4/containers/5dbc28c27062/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -70,24 +64,21 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MTg=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyOCBKdW4gMjAxMyAxNjo1NToxNyBHTVQ=
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '18'
+      Date:
+      - Wed, 07 Aug 2013 16:51:31 GMT
     body:
-      encoding: US-ASCII
-      string: ! '{"StatusCode":127}'
+      encoding: UTF-8
+      string: '{"StatusCode":127}'
     http_version: 
-  recorded_at: Fri, 28 Jun 2013 16:55:17 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Wed, 07 Aug 2013 16:51:31 GMT
+recorded_with: VCR 2.4.0
