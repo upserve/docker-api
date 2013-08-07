@@ -44,6 +44,21 @@ describe Docker::Container do
     end
   end
 
+  describe '#top' do
+    subject {
+      described_class.create('Cmd' => %w[find / -name '*'], 'Image' => 'base')
+    }
+    let(:top) { subject.top }
+
+    before { subject.start }
+
+    it 'returns the top commands as an Array', :vcr do
+      top.should be_a Array
+      top.should_not be_empty
+      top.first.keys.should == %w(PID TTY TIME CMD)
+    end
+  end
+
   describe '#export' do
     subject { described_class.create('Cmd' => %w[rm -rf / --no-preserve-root],
                                      'Image' => 'base') }
