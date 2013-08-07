@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:4243/v1.3/images/search?term=sshd
+    uri: http://localhost:4243/v1.4/images/search?term=sshd
     body:
       encoding: US-ASCII
       string: ''
@@ -10,24 +10,21 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
-      message: 
+      message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MTU2Ng==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAyMDozNjo0MiBHTVQ=
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '1798'
+      Date:
+      - Wed, 07 Aug 2013 16:52:53 GMT
     body:
-      encoding: US-ASCII
-      string: ! '[{"Name":"cespare/sshd","Description":""},{"Name":"johnfuller/sshd","Description":""},{"Name":"dhrp/mongodb-sshd","Description":""},{"Name":"rayang2004/sshd","Description":""},{"Name":"dhrp/sshd","Description":"SSH
+      encoding: UTF-8
+      string: '[{"Name":"cespare/sshd","Description":""},{"Name":"johnfuller/sshd","Description":""},{"Name":"dhrp/mongodb-sshd","Description":""},{"Name":"rayang2004/sshd","Description":""},{"Name":"dhrp/sshd","Description":"SSH
         Daemon created in the ssh daemon documentation example"},{"Name":"toorop/daemontools-sshd","Description":"sshd
         daemon supervised by DJB daemontools - run cmd :\r\ndocker run -d -p 22 toorop/daemontools-sshd
         /usr/bin/svscanboot - \r\n\r\nDefault root password : demo - \r\n\r\nSSHD
@@ -41,7 +38,8 @@ http_interactions:
         for Go developers - Go 1.1 + Git + sshd - run with \"docker run -d -p 22 -h
         toorop/golang /usr/bin/svscanboot\"  - connect throw SSH  \"ssh root@localhost
         -pSSHD_PORT\" default password is \"demo\" - add users : \"adduser USERNAME\"
-        this will also configure USER $HOME directory - Start coding. Enjoy ;)"},{"Name":"wma55/u1210sshd","Description":""},{"Name":"jdswinbank/sshd","Description":""},{"Name":"vgauthier/sshd","Description":""}]'
+        this will also configure USER $HOME directory - Start coding. Enjoy ;)"},{"Name":"wma55/u1210sshd","Description":""},{"Name":"jdswinbank/sshd","Description":""},{"Name":"vgauthier/sshd","Description":""},{"Name":"pshouse/sshd-pharo-core","Description":"Provides
+        access to pharo-core command line interface"},{"Name":"dongweiming/sshd","Description":""},{"Name":"kpelykh/sshd","Description":""},{"Name":"oss17888/sshd","Description":""}]'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 20:36:42 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Wed, 07 Aug 2013 16:52:53 GMT
+recorded_with: VCR 2.4.0

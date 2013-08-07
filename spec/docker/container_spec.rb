@@ -32,15 +32,30 @@ describe Docker::Container do
   end
 
   describe '#changes' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject {
+      described_class.create('Cmd' => %w[rm -rf /root], 'Image' => 'base')
+    }
     let(:changes) { subject.changes }
 
     before { subject.tap(&:start).tap(&:wait) }
 
     it 'returns the changes as an array', :vcr do
-      changes.should be_a Array
-      changes.should be_all { |change| change.is_a?(Hash) }
-      changes.length.should_not be_zero
+      changes.should == [{'Path' => '/root', 'Kind' => 2}]
+    end
+  end
+
+  describe '#top' do
+    subject {
+      described_class.create('Cmd' => %w[find / -name '*'], 'Image' => 'base')
+    }
+    let(:top) { subject.top }
+
+    before { subject.start }
+
+    it 'returns the top commands as an Array', :vcr do
+      top.should be_a Array
+      top.should_not be_empty
+      top.first.keys.should == %w(PID TTY TIME CMD)
     end
   end
 
@@ -63,13 +78,13 @@ describe Docker::Container do
   end
 
   describe '#attach' do
-    subject { described_class.create('Cmd' => %w[uname -r], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => %w[pwd], 'Image' => 'base') }
 
     before { subject.start }
 
     it 'yields each chunk', :vcr do
       subject.attach { |chunk|
-        chunk.should == "3.8.0-25-generic\n"
+        chunk.should == "/\n"
         break
       }
     end

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:4243/v1.3/info
+    uri: http://localhost:4243/v1.4/info
     body:
       encoding: US-ASCII
       string: ''
@@ -10,24 +10,21 @@ http_interactions:
       Content-Type:
       - text/plain
       User-Agent:
-      - Docker-Client/0.4.6
+      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        OTI=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyNiBKdW4gMjAxMyAyMToyNjoxMSBHTVQ=
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '166'
+      Date:
+      - Wed, 07 Aug 2013 16:52:53 GMT
     body:
-      encoding: US-ASCII
-      string: ! '{"Debug":false,"Containers":1577,"Images":797,"NFd":51,"NGoroutines":240,"MemoryLimit":true}'
+      encoding: UTF-8
+      string: '{"Debug":false,"Containers":87,"Images":15,"NFd":19,"NGoroutines":20,"MemoryLimit":true,"LXCVersion":"0.7.5","NEventsListener":182,"KernelVersion":"3.8.0-19-generic"}'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 21:26:11 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Wed, 07 Aug 2013 16:52:53 GMT
+recorded_with: VCR 2.4.0
