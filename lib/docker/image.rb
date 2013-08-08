@@ -117,7 +117,7 @@ class Docker::Image
         :headers => { 'Content-Type'      => 'application/tar',
                       'Transfer-Encoding' => 'chunked' }
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(:id => extract_id(body), :connection => connection)
+      new(connection, extract_id(body))
     ensure
       tar.close unless tar.nil?
     end
