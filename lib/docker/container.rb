@@ -75,9 +75,7 @@ class Docker::Container
   # same, but rescue from ServerErrors.
   [:start, :stop, :kill, :restart].each do |method|
     define_method(method) do |opts = {}|
-      connection.post(path_for(method), {},
-                      :body => opts.to_json,
-                      :headers => { 'Content-Type' => 'application/json' })
+      connection.post(path_for(method), {}, :body => opts.to_json)
       self
     end
 
@@ -89,9 +87,7 @@ class Docker::Container
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     instance = new(conn)
-    resp = conn.post('/containers/create', {},
-                     :headers => { 'Content-Type' => 'application/json' },
-                     :body => opts.to_json)
+    resp = conn.post('/containers/create', {}, :body => opts.to_json)
     if (instance.id = Docker::Util.parse_json(resp)['Id']).nil?
       raise UnexpectedResponseError, 'Create response did not contain an Id'
     else

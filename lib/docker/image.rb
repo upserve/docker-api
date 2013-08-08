@@ -96,10 +96,10 @@ class Docker::Image
         body = connection.post(
           '/images/create',
            options.merge('fromSrc' => '-'),
-           :headers => { 'Transfer-Encoding' => 'chunked' }
+           :headers => { 'Content-Type' => 'application/tar',
+                         'Transfer-Encoding' => 'chunked' }
         ) { io.read(Excon.defaults[:chunk_size]).to_s }
-        new(:id => Docker::Util.parse_json(body)['status'],
-            :connection => connection)
+        new(connection, Docker::Util.parse_json(body)['status'])
       end
     end
 
