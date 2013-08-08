@@ -14,8 +14,6 @@ class Docker::Container
 
   # Get more information about the Container.
   request :get, :json
-  # Start the Container.
-  request :post, :start
   # Inspect the Container's changes to the filesysetem
   request :get, :changes
   # Stop the Container.
@@ -24,6 +22,16 @@ class Docker::Container
   request :post, :kill
   # Restart the Container
   request :post, :restart
+
+  # Start the Container.
+  def start(body = {})
+    options = {
+      headers: {"Content-Type" => "application/json"},
+      body: body.to_json
+    }
+    connection.post("/containers/#{id}/start", nil, options)
+    self
+  end
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
