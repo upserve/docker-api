@@ -1,56 +1,28 @@
 # This class represents a Docker Container. It's important to note that nothing
 # is cached so that the information is always up to date.
 class Docker::Container
-  include Docker::Model
   include Docker::Error
 
-  set_resource_prefix '/containers'
+  attr_accessor :id, :connection
 
-  set_create_request do |body|
-    response = connection.post('/containers/create', nil, :body => body.to_json)
-    @id = Docker::Util.parse_json(response)['Id']
-    self
-  end
-
-  # Get more information about the Container.
-  request :get, :json
-  # Inspect the Container's changes to the filesysetem
-  request :get, :changes
-  # Stop the Container.
-  request :post, :stop
-  # Kill the Container.
-  request :post, :kill
-  # Restart the Container
-  request :post, :restart
-
-  # Start the Container.
-  def start(body = {})
-    options = {
-      headers: {"Content-Type" => "application/json"},
-      body: body.to_json
-    }
-    connection.post("/containers/#{id}/start", nil, options)
-    self
+  # The private new method accepts a connection and optional id.
+  def initialize(connection, id = nil)
+    if connection.is_a?(Docker::Connection)
+      @id, @connection = id, connection
+    else
+      raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
+    end
   end
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
-    resp = connection.get("/containers/#{id}/top", opts)
-    hash = Docker::Util.parse_json(resp)
-    hash['Processes'].map { |ary| Hash[hash['Titles'].zip(ary)] }
-  end
-
-  # For each method, `m`, define a method called `m?` that attempts the method,
-  # but catches all Server errors.
-  [:stop, :start, :kill, :restart].each do |method|
-    define_method :"#{method}?" do |*args|
-      begin; public_send(method, *args); rescue ServerError; end
-    end
+    resp = Docker::Util.parse_json(connection.get(path_for(:top), opts))
+    resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] }
   end
 
   # Wait for the current command to finish executing.
   def wait(time = 60)
-    resp = connection.post("/containers/#{id}/wait", nil, :read_timeout => time)
+    resp = connection.post(path_for(:wait), nil, :read_timeout => time)
     Docker::Util.parse_json(resp)
   end
 
@@ -68,15 +40,14 @@ class Docker::Container
 
   # Export the Container as a tar.
   def export(&block)
-    connection.get("/containers/#{id}/export", nil, :response_block => block)
-    true
+    connection.get(path_for(:export), {}, :response_block => block)
+    self
   end
 
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
-    options = { :stream => true, :stdout => true }.merge(options)
-    connection.post("/containers/#{id}/attach", options,
-                    :response_block => block)
+    opts = { :stream => true, :stdout => true }.merge(options)
+    connection.post(path_for(:attach), opts, :response_block => block)
   end
 
   # Create an Image from a Container's change.s
@@ -85,4 +56,58 @@ class Docker::Container
     hash = Docker::Util.parse_json(connection.post('/commit', options))
     Docker::Image.send(:new, :id => hash['Id'], :connection => self.connection)
   end
+
+  # Return a String represntation of the Container.
+  def to_s
+    "Docker::Container { :id => #{self.id}, :connection => #{self.connection} }"
+  end
+
+  # #json returns information about the Container, #changes returns a list of
+  # the changes the Container has made to the filesystem.
+  [:json, :changes].each do |method|
+    define_method(method) do |opts = {}|
+      Docker::Util.parse_json(connection.get(path_for(method), opts))
+    end
+  end
+
+  # #start, #stop, #kill, and #restart all perform the associated action and
+  # return the Container. #start?, #stop?, #kill?, and #restart? all do the
+  # same, but rescue from ServerErrors.
+  [:start, :stop, :kill, :restart].each do |method|
+    define_method(method) do |opts = {}|
+      connection.post(path_for(method), {},
+                      :body => opts.to_json,
+                      :headers => { 'Content-Type' => 'application/json' })
+      self
+    end
+
+    define_method :"#{method}?" do |*args|
+      begin; public_send(method, *args); rescue ServerError; self end
+    end
+  end
+
+  # Create a new Container.
+  def self.create(opts = {}, conn = Docker.connection)
+    instance = new(conn)
+    resp = conn.post('/containers/create', {}, :body => opts.to_json)
+    if (instance.id = Docker::Util.parse_json(resp)['Id']).nil?
+      raise UnexpectedResponseError, 'Create response did not contain an Id'
+    else
+      instance
+    end
+  end
+
+  # Return all of the Containers.
+  def self.all(opts = {}, conn = Docker.connection)
+    hashes = Docker::Util.parse_json(conn.get('/containers/json', opts)) || []
+    hashes.map { |hash| new(conn, hash['Id']) }
+  end
+
+  # Convenience method to return the path for a particular resource.
+  def path_for(resource)
+    "/containers/#{self.id}/#{resource}"
+  end
+
+  private :path_for
+  private_class_method :new
 end

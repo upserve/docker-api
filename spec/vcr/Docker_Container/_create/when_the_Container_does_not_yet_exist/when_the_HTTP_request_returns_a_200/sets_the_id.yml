@@ -1,0 +1,30 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/v1.4/containers/create
+    body:
+      encoding: UTF-8
+      string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
+    headers:
+      Content-Type:
+      - text/plain
+      User-Agent:
+      - Swipely/Docker-API 1.4.0
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '21'
+      Date:
+      - Thu, 08 Aug 2013 14:47:05 GMT
+    body:
+      encoding: UTF-8
+      string: '{"Id":"3e4587069eb0"}'
+    http_version: 
+  recorded_at: Thu, 08 Aug 2013 14:47:05 GMT
+recorded_with: VCR 2.4.0
