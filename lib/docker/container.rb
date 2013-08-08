@@ -54,7 +54,7 @@ class Docker::Container
   def commit(options = {})
     options.merge!('container' => self.id[0..7])
     hash = Docker::Util.parse_json(connection.post('/commit', options))
-    Docker::Image.send(:new, :id => hash['Id'], :connection => self.connection)
+    Docker::Image.send(:new, self.connection, hash['Id'])
   end
 
   # Return a String represntation of the Container.
@@ -89,7 +89,9 @@ class Docker::Container
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     instance = new(conn)
-    resp = conn.post('/containers/create', {}, :body => opts.to_json)
+    resp = conn.post('/containers/create', {},
+                     :headers => { 'Content-Type' => 'application/json' },
+                     :body => opts.to_json)
     if (instance.id = Docker::Util.parse_json(resp)['Id']).nil?
       raise UnexpectedResponseError, 'Create response did not contain an Id'
     else
