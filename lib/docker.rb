@@ -8,8 +8,6 @@ require 'archive/tar/minitar'
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
-  extend self
-
   attr_reader :creds
 
   def url
@@ -64,6 +62,10 @@ module Docker
   rescue Docker::Error::DockerError
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end
+
+  module_function :url, :url=, :options, :options=, :connection,
+                  :reset_connection!, :version, :info, :authenticate!,
+                  :validate_version!
 end
 
 require 'docker/version'
