@@ -8,7 +8,7 @@ class Docker::Container
   # The private new method accepts a connection and optional id.
   def initialize(connection, id = nil)
     if connection.is_a?(Docker::Connection)
-      @id, @connection = id, connection
+      @connection, @id = connection, id
     else
       raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
     end
