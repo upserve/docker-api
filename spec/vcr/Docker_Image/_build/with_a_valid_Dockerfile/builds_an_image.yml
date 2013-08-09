@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/build
+    uri: http://localhost:4243/v1.4/build?q=true
     body:
       encoding: UTF-8
       string: !binary |-

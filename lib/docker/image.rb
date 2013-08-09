@@ -2,12 +2,13 @@
 class Docker::Image
   include Docker::Error
 
-  attr_accessor :id, :connection
+  attr_accessor :id, :connection, :repository, :repotag, :created, :size, :virtual_size
 
   # The private new method accepts a connection and optional id.
-  def initialize(connection, id = nil)
+  def initialize(connection, id = nil, repository = nil, repotag = nil, created = nil, size = nil, virtual_size = nil)
     if connection.is_a?(Docker::Connection)
-      @connection, @id = connection, id
+      @repotag, @repository, @id, @connection = repotag, repository, id, connection
+      @created, @size, @virtual_size = created, size, virtual_size
     else
       raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
     end
@@ -30,7 +31,15 @@ class Docker::Image
 
   # Tag the Image.
   def tag(opts = {})
+    if opts[:repo].nil?
+      raise ArgumentError, "Expected a repository:tag as repo argument (i.e. ubuntu:latest)"
+    end
+
     Docker::Util.parse_json(connection.post(path_for(:tag), opts))
+
+    repo, repotag = Docker::Image.split_repo(opts[:repo])
+    self.repository = repo
+    self.repotag = repotag
   end
 
   # Insert a file into the Image, returns a new Image that has that file.
@@ -45,12 +54,25 @@ class Docker::Image
 
   # Remove the Image from the server.
   def remove
-    connection.delete("/images/#{self.id}")
+    param = self.id
+    unless self.repository.nil?
+      param = self.repository
+      unless self.repotag.nil?
+        param = "#{self.repository}:#{self.repotag}"
+      end
+    end
+    connection.delete("/images/#{param}")
   end
 
   # Return a String representation of the Image.
   def to_s
-    "Docker::Image { :id => #{self.id}, :connection => #{self.connection} }"
+    "Docker::Image { :id => #{self.id}, " +
+      (self.repository.nil?   ? "" : ":repository => #{self.repository}, "    ) +
+      (self.repotag.nil?      ? "" : ":repotag => #{self.repotag}, "          ) +
+      (self.created.nil?      ? "" : ":created => #{self.created}, "          ) +
+      (self.size.nil?         ? "" : ":size => #{self.size}, "                ) +
+      (self.virtual_size.nil? ? "" : ":virtual_size => #{self.virtual_size}, ") +
+    ":connection => #{self.connection} }"
   end
 
   # #json returns extra information about an Image, #history returns its
@@ -67,9 +89,19 @@ class Docker::Image
     # Create a new Image.
     def create(opts = {}, conn = Docker.connection)
       instance = new(conn)
-      conn.post('/images/create', opts)
-      id = opts['repo'] ? "#{opts['repo']}/#{opts['tag']}" : opts['fromImage']
-      if (instance.id = id).nil?
+      body = conn.post('/images/create', opts)
+      instance.id = extract_id_from_create(body)
+
+      if opts['fromImage']
+        split_image = opts['fromImage'].split(":")
+        instance.repository = split_image[0]
+        instance.repotag = split_image[1]
+      else
+        instance.repository = opts['repo']
+        instance.repotag = opts['tag']
+      end
+
+      if instance.id.nil?
         raise UnexpectedResponseError, 'Create response did not contain an Id'
       else
         instance
@@ -79,7 +111,9 @@ class Docker::Image
     # Return every Image.
     def all(opts = {}, conn = Docker.connection)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
-      hashes.map { |hash| new(conn, hash['Id']) }
+      hashes.map do |hash|
+        new(conn, hash['Id'], hash['Repository'], hash['Tag'], hash['Created'], hash['Size'], hash['VirtualSize'] )
+      end
     end
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
@@ -87,7 +121,7 @@ class Docker::Image
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
-      hashes.map { |hash| new(connection, hash['Name']) }
+      hashes.map { |hash| new(connection, nil, hash['Name']) }
     end
 
     # Import an Image from the output of Docker::Container#export.
@@ -99,30 +133,59 @@ class Docker::Image
            :headers => { 'Content-Type' => 'application/tar',
                          'Transfer-Encoding' => 'chunked' }
         ) { io.read(Excon.defaults[:chunk_size]).to_s }
+        # TODO repository/tag option
         new(connection, Docker::Util.parse_json(body)['status'])
       end
     end
 
     # Given a Dockerfile as a string, builds an Image.
-    def build(commands, connection = Docker.connection)
-      body = connection.post('/build', {}, :body => create_tar(commands))
-      new(connection, extract_id(body))
+    def build(commands, repository = nil, connection = Docker.connection)
+      params = {"q" => true}
+      repo = repotag = nil
+      if repository
+        params.merge!({"t" => repository})
+        repo, repotag = split_repo(repository)
+      end
+
+      body = connection.post("/build", params , :body => create_tar(commands))
+
+      new(connection, extract_id(body), repo, repotag)
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
-    def build_from_dir(dir, connection = Docker.connection)
+    def build_from_dir(dir, repository = nil, connection = Docker.connection)
+      params = {"q" => true}
+      repo = repotag = nil
+      if repository
+        params.merge!({"t" => repository})
+        repo, repotag = split_repo(repository)
+      end
       tar = create_dir_tar(dir)
       body = connection.post(
-        '/build', {},
+        '/build', params,
         :headers => { 'Content-Type'      => 'application/tar',
                       'Transfer-Encoding' => 'chunked' }
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(connection, extract_id(body))
+      new(connection, extract_id(body), repo, repotag)
     ensure
       tar.close unless tar.nil?
     end
 
+    def split_repo(repo)
+      return "", "" if repo.nil?
+      split = repo.split(":")
+      return split[0], split[1]
+    end
   private
+    def extract_id_from_create(body)
+      images = body.split("Pulling image ")
+      if images.length != 0
+        return images.last.split(" ").first
+      else
+        raise UnexpectedResponseError, "Couldn't find id: #{body}"
+      end
+    end
+
     def extract_id(body)
       line = body.lines.to_a[-1]
       if (id = line.match(/^Successfully built ([a-f0-9]+)$/)) && !id[1].empty?

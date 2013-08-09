@@ -30,7 +30,7 @@ http_interactions:
   recorded_at: Wed, 07 Aug 2013 16:51:39 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/images/base/tag?force=true&repo=base2
+    uri: http://localhost:4243/v1.4/images/b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc/tag?force=true&repo=base2
     body:
       encoding: US-ASCII
       string: ''
