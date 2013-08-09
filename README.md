@@ -160,19 +160,19 @@ container.json
 
 # Start running the Container.
 container.start
-# => nil
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Stop running the Container.
 container.stop
-# => nil
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Restart the Container.
 container.restart
-# => nil
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Kill the command running in the Container.
 container.kill
-# => nil
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Return the currently executing processes in a Container.
 container.top
