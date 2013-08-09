@@ -98,15 +98,13 @@ describe Docker::Container do
         'Volumes' => {'/foo' => {}}
       )
     }
+    let(:all) { Docker::Container.all }
+
+    before { subject.start('Binds' => ["/tmp:/foo"]) }
 
     it 'starts the container', :vcr do
-      subject.start('Binds' => ["/tmp:/foo"])
-      described_class.all.should be_any { |container|
-        container.id.start_with?(subject.id)
-      }
-      exit_status = subject.wait(10)
-      puts subject.attach(logs: true, stream: false, stdout: true, stderr: true)
-      exit_status["StatusCode"].should eq 0
+      all.map(&:id).should be_any { |id| id.start_with?(subject.id) }
+      subject.wait(10)['StatusCode'].should be_zero
     end
   end
 

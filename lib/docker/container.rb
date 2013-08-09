@@ -17,7 +17,11 @@ class Docker::Container
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
     resp = Docker::Util.parse_json(connection.get(path_for(:top), opts))
-    resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] }
+    if resp['Processes'].nil?
+      []
+    else
+      resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] }
+    end
   end
 
   # Wait for the current command to finish executing.
