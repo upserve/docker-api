@@ -91,13 +91,22 @@ describe Docker::Container do
   end
 
   describe '#start' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject {
+      described_class.create(
+        'Cmd' => %w[test -d /foo],
+        'Image' => 'base',
+        'Volumes' => {'/foo' => {}}
+      )
+    }
 
     it 'starts the container', :vcr do
-      subject.start
-      described_class.all.map(&:id).should be_any { |id|
-        id.start_with?(subject.id)
+      subject.start('Binds' => ["/tmp:/foo"])
+      described_class.all.should be_any { |container|
+        container.id.start_with?(subject.id)
       }
+      exit_status = subject.wait(10)
+      puts subject.attach(logs: true, stream: false, stdout: true, stderr: true)
+      exit_status["StatusCode"].should eq 0
     end
   end
 
