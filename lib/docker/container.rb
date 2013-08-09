@@ -31,8 +31,8 @@ class Docker::Container
   # the command that is currently executing does not return a 0 status code, an
   # UnexpectedResponseError is raised.
   def run(cmd, time = 1000)
-    if (code = tap(&:start?).wait(time)['StatusCode']).zero?
-      commit.run(cmd).tap(&:start?)
+    if (code = tap(&:start).wait(time)['StatusCode']).zero?
+      commit.run(cmd).tap(&:start)
     else
       raise UnexpectedResponseError, "Command returned status code #{code}."
     end
@@ -70,17 +70,17 @@ class Docker::Container
     end
   end
 
-  # #start, #stop, #kill, and #restart all perform the associated action and
-  # return the Container. #start?, #stop?, #kill?, and #restart? all do the
-  # same, but rescue from ServerErrors.
+  # #start!, #stop!, #kill!, and #restart! all perform the associated action and
+  # return the Container. #start, #stop, #kill, and #restart all do the same,
+  # but rescue from ServerErrors.
   [:start, :stop, :kill, :restart].each do |method|
-    define_method(method) do |opts = {}|
+    define_method(:"#{method}!") do |opts = {}|
       connection.post(path_for(method), {}, :body => opts.to_json)
       self
     end
 
-    define_method :"#{method}?" do |*args|
-      begin; public_send(method, *args); rescue ServerError; self end
+    define_method(method) do |*args|
+      begin; public_send(:"#{method}!", *args); rescue ServerError; self end
     end
   end
 
