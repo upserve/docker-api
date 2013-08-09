@@ -4,7 +4,7 @@ require 'spec_helper'
 # Docker daemon and have the base Image pulled.
 describe Docker::Container do
   describe '#to_s' do
-    subject { described_class.send(:new, :id => rand(10000).to_s) }
+    subject { described_class.send(:new, Docker.connection, rand(10000).to_s) }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
@@ -98,15 +98,13 @@ describe Docker::Container do
         'Volumes' => {'/foo' => {}}
       )
     }
+    let(:all) { Docker::Container.all }
+
+    before { subject.start('Binds' => ["/tmp:/foo"]) }
 
     it 'starts the container', :vcr do
-      subject.start('Binds' => ["/tmp:/foo"])
-      described_class.all.should be_any { |container|
-        container.id.start_with?(subject.id)
-      }
-      exit_status = subject.wait(10)
-      puts subject.attach(logs: true, stream: false, stdout: true, stderr: true)
-      exit_status["StatusCode"].should eq 0
+      all.map(&:id).should be_any { |id| id.start_with?(subject.id) }
+      subject.wait(10)['StatusCode'].should be_zero
     end
   end
 
@@ -223,14 +221,7 @@ describe Docker::Container do
   describe '.create' do
     subject { described_class }
 
-    context 'when the body is not a Hash' do
-      it 'raises an error' do
-        expect { subject.create(:not_a_hash) }
-            .to raise_error(Docker::Error::ArgumentError)
-      end
-    end
-
-    context 'when the Container does not yet exist and the body is a Hash' do
+    context 'when the Container does not yet exist' do
       context 'when the HTTP request does not return a 200' do
         before { Excon.stub({ :method => :post }, { :status => 400 }) }
         after { Excon.stubs.shift }

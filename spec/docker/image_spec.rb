@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Docker::Image do
   describe '#to_s' do
-    subject { described_class.send(:new, :id => rand(10000).to_s) }
+    subject { described_class.send(:new, Docker.connection, id) }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
@@ -101,13 +101,6 @@ describe Docker::Image do
 
   describe '.create' do
     subject { described_class }
-
-    context 'when the body is not a Hash' do
-      it 'raises an error' do
-        expect { subject.create(:not_a_hash) }
-            .to raise_error(Docker::Error::ArgumentError)
-      end
-    end
 
     context 'when the Image does not yet exist and the body is a Hash' do
       let(:image) { subject.create('fromImage' => 'base') }
