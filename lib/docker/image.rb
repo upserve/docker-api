@@ -30,16 +30,19 @@ class Docker::Image
   end
 
   # Tag the Image.
+  # Opts  :
+  #   "repo"
+  #   "tag"
   def tag(opts = {})
     if opts[:repo].nil?
-      raise ArgumentError, "Expected a repository:tag as repo argument (i.e. ubuntu:latest)"
+      raise ArgumentError,
+        "Expected a repository as repo argument (i.e. ubuntu)"
     end
 
     Docker::Util.parse_json(connection.post(path_for(:tag), opts))
 
-    repo, repotag = Docker::Image.split_repo(opts[:repo])
-    self.repository = repo
-    self.repotag = repotag
+    self.repository = opts[:repo]
+    self.repotag = opts[:tag]
   end
 
   # Insert a file into the Image, returns a new Image that has that file.
