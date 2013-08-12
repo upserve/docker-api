@@ -58,7 +58,7 @@ class Docker::Container
   def commit(options = {})
     options.merge!('container' => self.id[0..7])
     hash = Docker::Util.parse_json(connection.post('/commit', options))
-    Docker::Image.send(:new, self.connection, hash['Id'])
+    Docker::Image.send(:new, self.connection, hash['Id'], options["repo"], options["tag"])
   end
 
   # Return a String represntation of the Container.
