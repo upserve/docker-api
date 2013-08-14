@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Docker::VERSION
   gem.add_dependency 'excon', '>= 0.22.0'
   gem.add_dependency 'json'
+  gem.add_dependency 'activesupport'
   gem.add_dependency 'archive-tar-minitar'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
