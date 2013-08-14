@@ -9,5 +9,13 @@ module Docker::Util
     raise UnexpectedResponseError, ex.message
   end
 
-  module_function :parse_json
+  def camelize_keys!(hash)
+    hash.transform_keys! { |k| k.is_a?(Symbol) ? k.to_s.camelize : k }
+  end
+
+  def snakeify_keys!(hash)
+    hash.transform_keys! { |k| k.is_a?(String) ? k.underscore.to_sym : k }
+  end
+
+  module_function :parse_json, :camelize_keys!, :snakeify_keys!
 end

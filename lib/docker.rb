@@ -2,9 +2,9 @@ require 'cgi'
 require 'json'
 require 'excon'
 require 'tempfile'
-require 'active_support'
 require 'rubygems/package'
 require 'archive/tar/minitar'
+require 'active_support/core_ext'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
