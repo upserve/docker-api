@@ -11,6 +11,7 @@ require 'active_support/core_ext'
 module Docker
   autoload :Error, 'docker/error'
   autoload :Util, 'docker/util'
+  autoload :Middleware, 'docker/middleware'
   autoload :Connection, 'docker/connection'
   autoload :Container, 'docker/container'
   autoload :Image, 'docker/image'
