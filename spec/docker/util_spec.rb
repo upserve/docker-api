@@ -43,7 +43,7 @@ describe Docker::Util do
 
   describe '.camelize_keys!' do
     let(:hash) { { :hello_there => 'there', 'how' => 'are you' } }
-    let(:expected) { { 'HelloThere' => 'there', 'how' => 'are you' } }
+    let(:expected) { { 'helloThere' => 'there', 'how' => 'are you' } }
 
     before { subject.camelize_keys!(hash) }
 
@@ -53,7 +53,7 @@ describe Docker::Util do
   end
 
   describe '.snakeify_keys!' do
-    let(:hash) { { 'HelloThere' => 'there', :hOw => 'are you' } }
+    let(:hash) { { 'helloThere' => 'there', :hOw => 'are you' } }
     let(:expected) { { :hello_there => 'there', :hOw => 'are you' } }
 
     before { subject.snakeify_keys!(hash) }

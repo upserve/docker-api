@@ -10,7 +10,7 @@ module Docker::Util
   end
 
   def camelize_keys!(hash)
-    hash.transform_keys! { |k| k.is_a?(Symbol) ? k.to_s.camelize : k }
+    hash.transform_keys! { |k| k.is_a?(Symbol) ? k.to_s.camelize(:lower) : k }
   end
 
   def snakeify_keys!(hash)
