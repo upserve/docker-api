@@ -88,6 +88,11 @@ class Docker::Container
     end
   end
 
+  # delete container
+  def delete(options = {})
+    connection.delete("/containers/#{self.id}", options)
+  end
+
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     instance = new(conn)

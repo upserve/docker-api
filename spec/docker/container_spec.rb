@@ -137,6 +137,20 @@ describe Docker::Container do
     end
   end
 
+  describe '#delete' do
+    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+
+    it 'deletes the container', :vcr do
+      subject.delete
+      described_class.all.map(&:id).should be_none { |id|
+        id.start_with?(subject.id)
+      }
+      described_class.all(:all => true).map(&:id).should be_any { |id|
+        id.start_with?(subject.id)
+      }
+    end
+  end
+
   describe '#restart' do
     subject { described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base') }
 
