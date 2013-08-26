@@ -1,6 +1,6 @@
 # This class is used to transform Hashes into JSON on requests, and parse JSON
 # Strings into Hashes on responses.
-class Docker::Middleware::JSON < Excon::Middleware::Base
+class Docker::Middleware::JSON < Docker::Middleware::Base
 
   # Transform the datum[:body] if the 'Content-Type' is 'application/json' and
   # it is a Hash.
