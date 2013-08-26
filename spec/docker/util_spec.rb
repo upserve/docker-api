@@ -40,4 +40,26 @@ describe Docker::Util do
       end
     end
   end
+
+  describe '.camelize_keys!' do
+    let(:hash) { { :hello_there => 'there', 'how' => 'are you' } }
+    let(:expected) { { 'helloThere' => 'there', 'how' => 'are you' } }
+
+    before { subject.camelize_keys!(hash) }
+
+    it 'camelizes each Symbolic key, but does not modify String keys' do
+      hash.should == expected
+    end
+  end
+
+  describe '.snakeify_keys!' do
+    let(:hash) { { 'helloThere' => 'there', :hOw => 'are you' } }
+    let(:expected) { { :hello_there => 'there', :hOw => 'are you' } }
+
+    before { subject.snakeify_keys!(hash) }
+
+    it 'snakeifys each String key, but does not modify Symbolic keys' do
+      hash.should == expected
+    end
+  end
 end

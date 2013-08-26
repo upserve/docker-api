@@ -4,10 +4,18 @@ require 'excon'
 require 'tempfile'
 require 'rubygems/package'
 require 'archive/tar/minitar'
+require 'active_support/core_ext'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
+  autoload :Error, 'docker/error'
+  autoload :Util, 'docker/util'
+  autoload :Middleware, 'docker/middleware'
+  autoload :Connection, 'docker/connection'
+  autoload :Container, 'docker/container'
+  autoload :Image, 'docker/image'
+
   attr_reader :creds
 
   def url
@@ -67,10 +75,3 @@ module Docker
                   :reset_connection!, :version, :info, :authenticate!,
                   :validate_version!
 end
-
-require 'docker/version'
-require 'docker/error'
-require 'docker/util'
-require 'docker/connection'
-require 'docker/container'
-require 'docker/image'
