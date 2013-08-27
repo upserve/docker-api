@@ -20,12 +20,12 @@ describe Docker::Image do
   end
 
   describe '#remove' do
-    let(:id) { subject.id }
+    let(:repo) { subject.repository }
     subject { described_class.create('fromImage' => 'base') }
 
     it 'removes the Image', :vcr do
       subject.remove
-      Docker::Image.all.map(&:id).should_not include(id)
+      Docker::Image.all.map(&:repository).should_not include(repo)
     end
   end
 
@@ -157,7 +157,7 @@ describe Docker::Image do
 
     it 'materializes each Image into a Docker::Image', :vcr do
       subject.search('term' => 'sshd').should be_all { |image|
-        !image.id.nil? && image.is_a?(described_class)
+        !image.repository.nil? && image.is_a?(described_class)
       }
     end
   end

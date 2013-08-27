@@ -30,7 +30,7 @@ http_interactions:
   recorded_at: Wed, 07 Aug 2013 16:51:44 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/images/base/history
+    uri: http://localhost:4243/v1.4/images/b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc/history
     body:
       encoding: US-ASCII
       string: ''
