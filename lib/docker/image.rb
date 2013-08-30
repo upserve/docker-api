@@ -105,49 +105,24 @@ class Docker::Image
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, connection = Docker.connection)
-      body = connection.post('/build', {}, :body => create_tar(commands))
-      new(connection, extract_id(body))
+      body = connection.post(
+        '/build', {},
+        :body => Docker::Util.create_tar('Dockerfile' => commands)
+      )
+      new(connection, Docker::Util.extract_id(body))
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
     def build_from_dir(dir, connection = Docker.connection)
-      tar = create_dir_tar(dir)
+      tar = Docker::Util.create_dir_tar(dir)
       body = connection.post(
         '/build', {},
         :headers => { 'Content-Type'      => 'application/tar',
                       'Transfer-Encoding' => 'chunked' }
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(connection, extract_id(body))
+      new(connection, Docker::Util.extract_id(body))
     ensure
       tar.close unless tar.nil?
-    end
-
-  private
-    def extract_id(body)
-      line = body.lines.to_a[-1]
-      if (id = line.match(/^Successfully built ([a-f0-9]+)$/)) && !id[1].empty?
-        id[1]
-      else
-        raise UnexpectedResponseError, "Couldn't find id: #{body}"
-      end
-    end
-
-    def create_tar(input)
-      output = StringIO.new
-      Gem::Package::TarWriter.new(output) do |tar|
-        tar.add_file('Dockerfile', 0640) { |tar_file| tar_file.write(input) }
-      end
-      output.tap(&:rewind)
-    end
-
-    def create_dir_tar(directory)
-      cwd = FileUtils.pwd
-      tempfile = File.new('/tmp/out', 'wb')
-      FileUtils.cd(directory)
-      Archive::Tar::Minitar.pack('.', tempfile)
-      File.new('/tmp/out', 'r')
-    ensure
-      FileUtils.cd(cwd)
     end
   end
 
