@@ -93,9 +93,9 @@ class Docker::Container
     connection.delete("/containers/#{self.id}", options)
   end
 
-  def copy(file, &block)
+  def copy(path, &block)
     connection.post(path_for(:copy), {},
-      :body => { "Resource" => file }.to_json,
+      :body => { "Resource" => path }.to_json,
       :response_block => block
     )
     self
