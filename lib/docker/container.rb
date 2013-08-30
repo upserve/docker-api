@@ -91,6 +91,7 @@ class Docker::Container
   # delete container
   def delete(options = {})
     connection.delete("/containers/#{self.id}", options)
+    nil
   end
 
   def copy(path, &block)

@@ -227,6 +227,10 @@ container.commit
 container.run('pwd', 10)
 # => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
+# Delete a Container.
+container.delete
+# => nil
+
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
