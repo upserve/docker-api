@@ -1,0 +1,115 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://localhost:4243/v1.4/images/create?fromImage=base
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 21:12:49 GMT
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: '{"status":"Pulling repository base"}{"status":"Pulling","progress":"image
+        (ubuntu-quantl) from base","id":"b750fe79269d"}{"status":"Pulling","progress":"image
+        (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
+        layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 21:12:52 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.4/containers/create
+    body:
+      encoding: UTF-8
+      string: '{"Image":"base","Cmd":["ls"]}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '21'
+      Date:
+      - Thu, 29 Aug 2013 21:12:51 GMT
+    body:
+      encoding: UTF-8
+      string: '{"Id":"79e5b20fa15c"}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 21:12:52 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.4/containers/79e5b20fa15c/start
+    body:
+      encoding: UTF-8
+      string: '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '0'
+      Date:
+      - Thu, 29 Aug 2013 21:12:51 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 21:12:52 GMT
+- request:
+    method: post
+    uri: http://localhost:4243/v1.4/containers/79e5b20fa15c/copy
+    body:
+      encoding: UTF-8
+      string: '{"Resource":"/lol/not/a/real/file"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 500
+      message: ''
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Content-Length:
+      - '151'
+      Date:
+      - Thu, 29 Aug 2013 21:12:51 GMT
+    body:
+      encoding: UTF-8
+      string: |
+        stat /var/lib/docker/containers/79e5b20fa15ccb0e746665f6f12a87e8dbea736311d04c1230a5ae6368716be0/rootfs/lol/not/a/real/file: no such file or directory
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 21:12:52 GMT
+recorded_with: VCR 2.5.0
