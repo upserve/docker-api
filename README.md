@@ -189,6 +189,20 @@ end
 container.changes
 # => [{'Path'=>'/dev', 'Kind'=>0}, {'Path'=>'/dev/kmsg', 'Kind'=>1}]
 
+# Copy files/directories from the Container. Note that these are exported as tars.
+container.copy('/etc/hosts') { |chunk| puts chunk }
+
+hosts0000644000000000000000000000023412100405636007023 0ustar
+127.0.0.1       localhost
+::1             localhost ip6-localhost ip6-loopback
+fe00::0         ip6-localnet
+ff00::0         ip6-mcastprefix
+ff02::1         ip6-allnodes
+ff02::2         ip6-allrouters
+# => Docker::Container { :id => a1759f3e2873, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+
+
 # Wait for the current command to finish executing. If an argument is given,
 # will timeout after that number of seconds. The default is one minute.
 container.wait(15)
