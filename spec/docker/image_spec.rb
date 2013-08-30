@@ -43,7 +43,9 @@ describe Docker::Image do
   describe '#insert_local' do
     subject { described_class.build('from base') }
 
-    let(:new_image) { subject.insert_local(file, '/') }
+    let(:new_image) {
+      subject.insert_local('localPath' => file, 'outputPath' => '/')
+    }
 
     context 'when the local file does not exist' do
       let(:file) { '/lol/not/a/file' }
