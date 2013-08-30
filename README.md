@@ -94,9 +94,14 @@ require 'docker'
 Docker::Image.create('fromRepo' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
-# Insert a file into an Image. Returns a new Image that contains that file.
+# Insert a file into an Image from a url.
 image.insert('path' => '/google', 'url' => 'http://google.com')
 # => Docker::Image { :id => 11ef6c882, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# Insert a local file into an Image.
+image.insert_local('localPath' => 'Gemfile', 'outputPath' => '/')
+# => Docker::Image { :id => 682ea192f, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
 
 # Tag an Image.
 image.tag('repo' => 'base2', 'force' => true)

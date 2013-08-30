@@ -40,6 +40,33 @@ describe Docker::Image do
     end
   end
 
+  describe '#insert_local' do
+    subject { described_class.build('from base') }
+
+    let(:new_image) {
+      subject.insert_local('localPath' => file, 'outputPath' => '/')
+    }
+
+    context 'when the local file does not exist' do
+      let(:file) { '/lol/not/a/file' }
+
+      it 'raises an error', :vcr do
+        expect { new_image }.to raise_error(Docker::Error::ArgumentError)
+      end
+    end
+
+    context 'when the local file does exist' do
+      let(:file) { './Gemfile' }
+      let(:gemfile) { File.read('Gemfile') }
+
+      it 'creates a new Image that has that file', :vcr do
+        new_image.run('cat /Gemfile').start.attach { |chunk|
+          chunk.should == gemfile
+        }
+      end
+    end
+  end
+
   describe '#push' do
     subject { described_class.create('fromImage' => 'base') }
 
