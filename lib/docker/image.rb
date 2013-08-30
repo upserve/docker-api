@@ -43,6 +43,17 @@ class Docker::Image
     end
   end
 
+  def insert_local(path, output_path)
+    raise ArgumentError, "#{path} does not exist." unless File.exist?(path)
+    basename = File.basename(path)
+    tar = Docker::Util.create_tar(
+      basename => File.read(path),
+      'Dockerfile' => "from #{self.id}\nadd #{basename} #{output_path}"
+    )
+    body = connection.post('/build', {}, :body => tar)
+    self.class.send(:new, connection, Docker::Util.extract_id(body))
+  end
+
   # Remove the Image from the server.
   def remove
     connection.delete("/images/#{self.id}")
