@@ -46,19 +46,30 @@ class Docker::Image
   # Given a path of a local file and the path it should be inserted, creates
   # a new Image that has that file.
   def insert_local(opts = {})
-    local_path = opts.delete('localPath')
+    local_paths = opts.delete('localPath')
     output_path = opts.delete('outputPath')
-    if File.exist?(local_path)
-      basename = File.basename(local_path)
-      tar = Docker::Util.create_tar(
-        basename => File.read(local_path),
-        'Dockerfile' => "from #{self.id}\nadd #{basename} #{output_path}"
-      )
-      body = connection.post('/build', {}, :body => tar)
-      self.class.send(:new, connection, Docker::Util.extract_id(body))
-    else
-      raise ArgumentError, "#{local_path} does not exist."
+
+    local_paths = [ local_paths ] unless local_paths.is_a?(Array)
+
+    file_hash = {}
+    dockerfile = "from #{self.id}\n"
+
+    local_paths.each do |local_path|
+      if File.exist?(local_path)
+        basename = File.basename(local_path)
+
+        file_hash[basename] = File.read(local_path)
+        dockerfile << "add #{basename} #{output_path}\n"
+      else
+        raise ArgumentError, "#{local_path} does not exist."
+      end
     end
+
+    file_hash['Dockerfile'] = dockerfile
+
+    tar = Docker::Util.create_tar(file_hash)
+    body = connection.post('/build', {}, :body => tar)
+    self.class.send(:new, connection, Docker::Util.extract_id(body))
   end
 
   # Remove the Image from the server.
