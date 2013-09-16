@@ -51,21 +51,9 @@ class Docker::Image
 
     local_paths = [ local_paths ] unless local_paths.is_a?(Array)
 
-    file_hash = {}
-    dockerfile = "from #{self.id}\n"
+    file_hash = Docker::Util.file_hash_from_paths(local_paths)
 
-    local_paths.each do |local_path|
-      if File.exist?(local_path)
-        basename = File.basename(local_path)
-
-        file_hash[basename] = File.read(local_path)
-        dockerfile << "add #{basename} #{output_path}\n"
-      else
-        raise ArgumentError, "#{local_path} does not exist."
-      end
-    end
-
-    file_hash['Dockerfile'] = dockerfile
+    file_hash['Dockerfile'] = dockerfile_for(file_hash, output_path)
 
     tar = Docker::Util.create_tar(file_hash)
     body = connection.post('/build', {}, :body => tar)
@@ -155,10 +143,23 @@ class Docker::Image
     end
   end
 
+  private
+
   # Convenience method to return the path for a particular resource.
   def path_for(resource)
     "/images/#{self.id}/#{resource}"
   end
 
-  private :path_for
+
+  # Convience method to get the Dockerfile for a file hash and a path to
+  # output to.
+  def dockerfile_for(file_hash, output_path)
+    dockerfile = "from #{self.id}"
+
+    file_hash.keys.each do |basename|
+      dockerfile << "add #{basename} #{output_path}"
+    end
+
+    dockerfile
+  end
 end

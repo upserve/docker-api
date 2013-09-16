@@ -3,6 +3,8 @@
 module Docker::Util
   include Docker::Error
 
+  module_function
+
   def parse_json(body)
     JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
   rescue JSON::ParserError => ex
@@ -38,5 +40,21 @@ module Docker::Util
     end
   end
 
-  module_function :parse_json, :create_tar, :create_dir_tar, :extract_id
+  # Convenience method to get the file hash corresponding to an array of
+  # local paths.
+  def file_hash_from_paths(local_paths)
+    file_hash = {}
+
+    local_paths.each do |local_path|
+      if File.exist?(local_path)
+        basename = File.basename(local_path)
+
+        file_hash[basename] = File.read(local_path)
+      else
+        raise ArgumentError, "#{local_path} does not exist."
+      end
+    end
+
+    file_hash
+  end
 end
