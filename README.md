@@ -102,6 +102,10 @@ image.insert('path' => '/google', 'url' => 'http://google.com')
 image.insert_local('localPath' => 'Gemfile', 'outputPath' => '/')
 # => Docker::Image { :id => 682ea192f, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
+# Insert multiple local files into an Image.
+image.insert_local('localPath' => [ 'Gemfile', 'Rakefile' ], 'outputPath' => '/')
+# => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
 
 # Tag an Image.
 image.tag('repo' => 'base2', 'force' => true)

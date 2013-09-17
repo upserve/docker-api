@@ -65,6 +65,18 @@ describe Docker::Image do
         }
       end
     end
+
+    context 'when there are multiple files passed' do
+      let(:file) { ['./Gemfile', './Rakefile'] }
+      let(:gemfile) { File.read('Gemfile') }
+      let(:rakefile) { File.read('Rakefile') }
+
+      it 'creates a new Image that has each file', :vcr do
+        new_image.run('cat /Gemfile /Rakefile').start.attach do |chunk|
+          chunk.should == gemfile + rakefile
+        end
+      end
+    end
   end
 
   describe '#push' do
