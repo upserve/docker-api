@@ -46,19 +46,18 @@ class Docker::Image
   # Given a path of a local file and the path it should be inserted, creates
   # a new Image that has that file.
   def insert_local(opts = {})
-    local_path = opts.delete('localPath')
+    local_paths = opts.delete('localPath')
     output_path = opts.delete('outputPath')
-    if File.exist?(local_path)
-      basename = File.basename(local_path)
-      tar = Docker::Util.create_tar(
-        basename => File.read(local_path),
-        'Dockerfile' => "from #{self.id}\nadd #{basename} #{output_path}"
-      )
-      body = connection.post('/build', {}, :body => tar)
-      self.class.send(:new, connection, Docker::Util.extract_id(body))
-    else
-      raise ArgumentError, "#{local_path} does not exist."
-    end
+
+    local_paths = [ local_paths ] unless local_paths.is_a?(Array)
+
+    file_hash = Docker::Util.file_hash_from_paths(local_paths)
+
+    file_hash['Dockerfile'] = dockerfile_for(file_hash, output_path)
+
+    tar = Docker::Util.create_tar(file_hash)
+    body = connection.post('/build', {}, :body => tar)
+    self.class.send(:new, connection, Docker::Util.extract_id(body))
   end
 
   # Remove the Image from the server.
@@ -144,10 +143,23 @@ class Docker::Image
     end
   end
 
+  private
+
   # Convenience method to return the path for a particular resource.
   def path_for(resource)
     "/images/#{self.id}/#{resource}"
   end
 
-  private :path_for
+
+  # Convience method to get the Dockerfile for a file hash and a path to
+  # output to.
+  def dockerfile_for(file_hash, output_path)
+    dockerfile = "from #{self.id}"
+
+    file_hash.keys.each do |basename|
+      dockerfile << "add #{basename} #{output_path}"
+    end
+
+    dockerfile
+  end
 end
