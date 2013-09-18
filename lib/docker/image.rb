@@ -154,10 +154,10 @@ class Docker::Image
   # Convience method to get the Dockerfile for a file hash and a path to
   # output to.
   def dockerfile_for(file_hash, output_path)
-    dockerfile = "from #{self.id}"
+    dockerfile = "from #{self.id}\n"
 
     file_hash.keys.each do |basename|
-      dockerfile << "add #{basename} #{output_path}"
+      dockerfile << "add #{basename} #{output_path}\n"
     end
 
     dockerfile
