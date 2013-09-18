@@ -62,18 +62,20 @@ http_interactions:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Date:
-      - Sat, 14 Sep 2013 23:02:27 GMT
-      Transfer-Encoding:
-      - chunked
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOCBTZXAgMjAxMyAxNTozMzowOCBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
-      encoding: UTF-8
-      string: "Step 1 : FROM base\nPulling repository base\r\nPulling image b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc
-        (ubuntu-quantl) from base\r\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
+      encoding: US-ASCII
+      string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
     http_version: 
-  recorded_at: Sat, 14 Sep 2013 23:02:31 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 - request:
     method: post
     uri: http://localhost:4243/v1.4/build
@@ -182,30 +184,28 @@ http_interactions:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Date:
-      - Sat, 14 Sep 2013 23:02:31 GMT
-      Transfer-Encoding:
-      - chunked
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOCBTZXAgMjAxMyAxNTozMzowOCBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
-      encoding: UTF-8
-      string: |
-        Step 1 : FROM b750fe79269d
-         ---> b750fe79269d
-        Step 2 : ADD Gemfile /
-         ---> 8124a17c1581
-        Step 3 : ADD Rakefile /
-         ---> ed8565d07a24
-        Successfully built ed8565d07a24
+      encoding: US-ASCII
+      string: ! "Step 1 : FROM b750fe79269d\n ---> b750fe79269d\nStep 2 : ADD Gemfile
+        /\n ---> 9a8f51ecd54e\nStep 3 : ADD Rakefile /\n ---> f7f65708771f\nSuccessfully
+        built f7f65708771f\n"
     http_version: 
-  recorded_at: Sat, 14 Sep 2013 23:02:31 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 - request:
     method: post
     uri: http://localhost:4243/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: '{"Image":"ed8565d07a24","Cmd":["cat","/Gemfile","/Rakefile"]}'
+      string: ! '{"Image":"f7f65708771f","Cmd":["cat","/Gemfile","/Rakefile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.5.3
@@ -216,23 +216,26 @@ http_interactions:
       code: 201
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '21'
-      Date:
-      - Sat, 14 Sep 2013 23:02:31 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NjU=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOCBTZXAgMjAxMyAxNTozMzowOCBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"Id":"01b2292bf658"}'
+      encoding: US-ASCII
+      string: ! '{"Id":"9fb2f8702b1c","Warnings":["IPv4 forwarding is disabled."]}'
     http_version: 
-  recorded_at: Sat, 14 Sep 2013 23:02:31 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/01b2292bf658/start
+    uri: http://localhost:4243/v1.4/containers/9fb2f8702b1c/start
     body:
       encoding: UTF-8
-      string: '{}'
+      string: ! '{}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.5.3
@@ -243,23 +246,26 @@ http_interactions:
       code: 204
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '0'
-      Date:
-      - Sat, 14 Sep 2013 23:02:31 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOCBTZXAgMjAxMyAxNTozMzowOCBHTVQ=
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Sat, 14 Sep 2013 23:02:31 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/01b2292bf658/start
+    uri: http://localhost:4243/v1.4/containers/9fb2f8702b1c/start
     body:
       encoding: UTF-8
-      string: '{}'
+      string: ! '{}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.5.3
@@ -270,21 +276,26 @@ http_interactions:
       code: 500
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '138'
-      Date:
-      - Sat, 14 Sep 2013 23:02:31 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTM4
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOCBTZXAgMjAxMyAxNTozMzowOCBHTVQ=
     body:
-      encoding: UTF-8
-      string: |
-        Error starting container 01b2292bf658: The container 01b2292bf6589519cb88fd1fc85b51472a5813cbba49333567cc0a129c57026b is already running.
+      encoding: US-ASCII
+      string: ! 'Error starting container 9fb2f8702b1c: The container 9fb2f8702b1c32ef25aa0f83f833a223b71f98b4a9cd79d9f8a05e85b8ea8f73
+        is already running.
+
+'
     http_version: 
-  recorded_at: Sat, 14 Sep 2013 23:02:31 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/01b2292bf658/attach?stdout=true&stream=true
+    uri: http://localhost:4243/v1.4/containers/9fb2f8702b1c/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -298,30 +309,16 @@ http_interactions:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/vnd.docker.raw-stream
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
-      encoding: UTF-8
-      string: |
-        source 'http://rubygems.org'
-
-        gemspec
-        $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), 'lib'))
-
-        require 'rake'
-        require 'docker'
-        require 'rspec/core/rake_task'
-        require 'cane/rake_task'
-
-        task :default => [:spec, :quality]
-
-        RSpec::Core::RakeTask.new do |t|
-          t.pattern = 'spec/**/*_spec.rb'
-        end
-
-        Cane::RakeTask.new(:quality) do |cane|
-          cane.canefile = '.cane'
-        end
+      encoding: US-ASCII
+      string: ! "source 'http://rubygems.org'\n\ngemspec\n$LOAD_PATH.unshift(File.join(File.dirname(__FILE__),
+        'lib'))\n\nrequire 'rake'\nrequire 'docker'\nrequire 'rspec/core/rake_task'\nrequire
+        'cane/rake_task'\n\ntask :default => [:spec, :quality]\n\nRSpec::Core::RakeTask.new
+        do |t|\n  t.pattern = 'spec/**/*_spec.rb'\nend\n\nCane::RakeTask.new(:quality)
+        do |cane|\n  cane.canefile = '.cane'\nend\n"
     http_version: 
-  recorded_at: Sat, 14 Sep 2013 23:02:31 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 recorded_with: VCR 2.5.0
