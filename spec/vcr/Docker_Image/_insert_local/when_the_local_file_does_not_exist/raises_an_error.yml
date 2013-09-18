@@ -54,7 +54,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.1
+      - Swipely/Docker-API 1.5.3
       Content-Type:
       - application/json
   response:
@@ -62,18 +62,18 @@ http_interactions:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Date:
-      - Fri, 30 Aug 2013 18:43:13 GMT
-      Transfer-Encoding:
-      - chunked
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAxOCBTZXAgMjAxMyAxNTozMzowOCBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
-      encoding: UTF-8
-      string: |
-        Step 1 : FROM base
-         ---> b750fe79269d
-        Successfully built b750fe79269d
+      encoding: US-ASCII
+      string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
     http_version: 
-  recorded_at: Fri, 30 Aug 2013 18:43:14 GMT
+  recorded_at: Wed, 18 Sep 2013 15:35:33 GMT
 recorded_with: VCR 2.5.0
