@@ -2,12 +2,12 @@
 class Docker::Image
   include Docker::Error
 
-  attr_accessor :id, :connection
+  attr_accessor :id, :connection, :info
 
   # The private new method accepts a connection and optional id.
-  def initialize(connection, id = nil)
+  def initialize(connection, id = nil, info = {})
     if connection.is_a?(Docker::Connection)
-      @connection, @id = connection, id
+      @connection, @id, @info = connection, id, info
     else
       raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
     end
@@ -96,7 +96,7 @@ class Docker::Image
     # Return every Image.
     def all(opts = {}, conn = Docker.connection)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
-      hashes.map { |hash| new(conn, hash['Id']) }
+      hashes.map { |hash| new(conn, hash['Id'], hash) }
     end
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
