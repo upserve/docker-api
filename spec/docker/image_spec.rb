@@ -6,13 +6,15 @@ describe Docker::Image do
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
+    let(:info) { {"Repository" => "base", "Tag" => "latest", "Created" => 1364102658, "Size" => 24653, "VirtualSize" => 180116135}}
     let(:expected_string) do
-      "Docker::Image { :id => #{id}, :connection => #{connection} }"
+      "Docker::Image { :id => #{id}, :info => #{info.inspect}, :connection => #{connection} }"
     end
     before do
       {
         :@id => id,
-        :@connection => connection
+        :@connection => connection,
+        :@info => info
       }.each { |k, v| subject.instance_variable_set(k, v) }
     end
 
@@ -185,7 +187,8 @@ describe Docker::Image do
 
     it 'materializes each Image into a Docker::Image', :vcr do
       images.should be_all { |image|
-        !image.id.nil? && image.is_a?(described_class)
+        puts image
+        !image.id.nil? && image.is_a?(described_class) && !image.id.nil? && %q[Repository Tag Created Size VirtualSize].split(' ').all?{|k|puts k; image.info.has_key? k}
       }
       images.length.should_not be_zero
     end
