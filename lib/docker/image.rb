@@ -67,7 +67,7 @@ class Docker::Image
 
   # Return a String representation of the Image.
   def to_s
-    "Docker::Image { :id => #{self.id}, :connection => #{self.connection} }"
+    "Docker::Image { :id => #{self.id}, :info => #{self.info.inspect}, :connection => #{self.connection} }"
   end
 
   # #json returns extra information about an Image, #history returns its
@@ -96,7 +96,7 @@ class Docker::Image
     # Return every Image.
     def all(opts = {}, conn = Docker.connection)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
-      hashes.map { |hash| new(conn, hash['Id'], hash) }
+      hashes.map { |hash| new(conn, hash['Id'], hash.tap{|h| h.delete('Id')}) }
     end
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
