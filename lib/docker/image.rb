@@ -67,7 +67,8 @@ class Docker::Image
 
   # Return a String representation of the Image.
   def to_s
-    "Docker::Image { :id => #{self.id}, :info => #{self.info.inspect}, :connection => #{self.connection} }"
+    "Docker::Image { :id => #{self.id}, :info => #{self.info.inspect}, "\
+      ":connection => #{self.connection} }"
   end
 
   # #json returns extra information about an Image, #history returns its
