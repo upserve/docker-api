@@ -10,13 +10,47 @@ require 'archive/tar/minitar'
 module Docker
   attr_reader :creds
 
+  def with_socket(opts={})
+    env_socket = ENV['DOCKER_SOCKET']
+    opts_socket = opts.delete('socket')
+    default_socket = '/var/run/docker.sock'
+
+    socket = env_socket || opts_socket || default_socket
+
+    env_host = ENV['DOCKER_HOST']
+    opts_host = opts.delete('host')
+    default_host = 'unix:///'
+
+    self.url = env_host || opts_host || default_host
+    self.options = { :socket => socket }
+  end
+
+  def with_port(opts={})
+    env_host = ENV['DOCKER_HOST']
+    opts_host = opts.delete('host')
+    default_host = 'http://localhost'
+    
+    host = env_host || opts_host || default_host
+
+    env_port = ENV['DOCKER_PORT']
+    opts_port = opts.delete('port')
+    default_port = 4243
+
+    port = env_port || opts_port || default_port
+
+    self.url = host
+    self.options = { :port => port }
+  end
+
   def url
-    @url ||= "http://#{ENV['DOCKER_HOST'] || 'localhost'}"
+    @url ||= ENV['DOCKER_HOST'] || 'unix:///'
   end
 
   def options
-    port = (ENV['DOCKER_PORT'].nil? ? 4243 : ENV['DOCKER_PORT']).to_i
-    @options ||= { :port => port.to_i }
+    @options ||= {
+      :port => ENV['DOCKER_PORT'],
+      :socket => ENV['DOCKER_SOCKET'] || '/var/run/docker.sock'
+    }
   end
 
   def url=(new_url)
@@ -25,7 +59,7 @@ module Docker
   end
 
   def options=(new_options)
-    @options = { :port => 4243 }.merge(new_options)
+    @options = new_options
     reset_connection!
   end
 
@@ -63,7 +97,7 @@ module Docker
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end
 
-  module_function :url, :url=, :options, :options=, :connection,
+  module_function :with_socket, :with_port, :url, :url=, :options, :options=, :connection,
                   :reset_connection!, :version, :info, :authenticate!,
                   :validate_version!
 end
