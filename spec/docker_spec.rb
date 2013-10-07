@@ -12,15 +12,17 @@ describe Docker do
   it { should be_a Module }
   context 'without calling with_socket or with_port' do
     before do
-      Docker.instance_variable_set(:@url, nil)
-      Docker.instance_variable_set(:@options, nil)
+      subject.instance_variable_set(:@url, nil)
+      subject.instance_variable_set(:@options, nil)
     end
 
     context "when the DOCKER_* ENV variables aren't set" do
       before do
       end
 
-      its(:options) { should == { :port => nil, :socket => '/var/run/docker.sock' } }
+      its(:options) {
+        should == { :port => nil, :socket => '/var/run/docker.sock' }
+      }
       its(:url) { should == 'unix:///' }
       its(:connection) { should be_a Docker::Connection }
     end
@@ -32,7 +34,9 @@ describe Docker do
         ENV['DOCKER_SOCKET'] = '/var/run/not-docker.sock'
       end
 
-      its(:options) { should == { :port => "1234", :socket => '/var/run/not-docker.sock' } }
+      its(:options) {
+        should == { :port => "1234", :socket => '/var/run/not-docker.sock' }
+      }
       its(:url) { should == 'unixs:///' }
       its(:connection) { should be_a Docker::Connection }
     end
@@ -111,18 +115,31 @@ describe Docker do
   end
 
   describe '#version' do
+    before do
+      subject.instance_variable_set(:@url, nil)
+      subject.instance_variable_set(:@options, nil)
+      subject.reset_connection!
+    end
+
     let(:version) { subject.version }
     it 'returns the version as a Hash', :vcr do
       version.should be_a Hash
-      version.keys.sort.should == %w[GoVersion Version]
+      version.keys.sort.should == %w[GitCommit GoVersion Version]
     end
   end
 
   describe '#info' do
+    before do
+      subject.instance_variable_set(:@url, nil)
+      subject.instance_variable_set(:@options, nil)
+      subject.reset_connection!
+    end
+
     let(:info) { subject.info }
     let(:keys) do
-      %w(Containers Debug Images KernelVersion LXCVersion MemoryLimit
-         NEventsListener NFd NGoroutines)
+      %w(Containers Debug IPv4Forwarding Images IndexServerAddress
+         KernelVersion LXCVersion MemoryLimit NEventsListener NFd
+         NGoroutines)
     end
 
     it 'returns the info as a Hash', :vcr do
@@ -138,6 +155,12 @@ describe Docker do
   end
 
   describe '#validate_version' do
+    before do
+      subject.instance_variable_set(:@url, nil)
+      subject.instance_variable_set(:@options, nil)
+      subject.reset_connection!
+    end
+
     context 'when a Docker Error is raised' do
       before { Docker.stub(:info).and_raise(Docker::Error::ClientError) }
 

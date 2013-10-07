@@ -59,7 +59,10 @@ describe Docker::Container do
 
   describe '#top' do
     subject {
-      described_class.create('Cmd' => %w[while true; do; done;], 'Image' => 'base')
+      described_class.create(
+        'Cmd' => %w[while true; do; done;],
+        'Image' => 'base'
+      )
     }
     let(:top) { subject.top }
 
@@ -74,7 +77,11 @@ describe Docker::Container do
   end
 
   describe '#copy' do
-    subject { Docker::Image.create('fromImage' => 'base').run('touch /test') }
+    subject {
+      Docker::Image.create(
+        'fromImage' => 'base'
+      ).run('touch /test').tap { |c| c.start.wait }
+    }
 
     context 'when the file does not exist' do
       it 'raises an error', :vcr do
@@ -85,7 +92,10 @@ describe Docker::Container do
 
     context 'when the input is a file' do
       it 'yields each chunk of the tarred file', :vcr do
-        expect { subject.copy('/test') { |chunk| puts chunk } }.to_not raise_error
+        chunks = []
+        subject.copy('/test') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(chunks).to be_include('test')
       end
     end
 
@@ -183,9 +193,6 @@ describe Docker::Container do
     it 'deletes the container', :vcr do
       subject.delete
       described_class.all.map(&:id).should be_none { |id|
-        id.start_with?(subject.id)
-      }
-      described_class.all(:all => true).map(&:id).should be_any { |id|
         id.start_with?(subject.id)
       }
     end

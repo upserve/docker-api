@@ -29,7 +29,7 @@ module Docker
     env_host = ENV['DOCKER_HOST']
     opts_host = opts.delete('host')
     default_host = 'http://localhost'
-    
+
     host = env_host || opts_host || default_host
 
     env_port = ENV['DOCKER_PORT']
@@ -97,9 +97,9 @@ module Docker
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end
 
-  module_function :with_socket, :with_port, :url, :url=, :options, :options=, :connection,
-                  :reset_connection!, :version, :info, :authenticate!,
-                  :validate_version!
+  module_function :with_socket, :with_port, :url, :url=, :options,
+                  :options=, :connection, :reset_connection!, :version,
+                  :info, :authenticate!, :validate_version!
 end
 
 require 'docker/version'

@@ -21,7 +21,7 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo1OSBHTVQ=
+        TW9uLCAwNyBPY3QgMjAxMyAxNDo1NjozOCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -32,7 +32,7 @@ http_interactions:
         (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
         layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:48:01 GMT
+  recorded_at: Mon, 07 Oct 2013 14:56:39 GMT
 - request:
     method: get
     uri: http://unix/v1.4/images/json?all=true
@@ -54,13 +54,13 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MTY1Ng==
+        Nzc4
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0ODowMSBHTVQ=
+        TW9uLCAwNyBPY3QgMjAxMyAxNDo1NjozOSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"a1ed7a6a6c97ddf19f49cafcf3695faea376db21a0890e3d424dcdd9dc8fe64e","Created":1381106867,"Size":12326,"VirtualSize":180128461},{"Id":"4c8a4cbe7f8657dfc085aae6e3ad98487165cdd48597cf345afed74ffdd37bcb","Created":1381106867,"Size":12616,"VirtualSize":180141077},{"Id":"4c38b908954d89434f591c6eeebb002105e843a242509488794c0b5a91cb9203","Created":1381106867,"Size":12326,"VirtualSize":180128461},{"Id":"f6d3f4d8ef4ea2e27f81444c38bc242414e32ab1c5dc62640db0a824108ac2eb","Created":1381106866,"Size":105509,"VirtualSize":180221644},{"Repository":"jbgi/arch-base","Tag":"latest","Id":"a6d6d8eb77665a9181fd2cb0843e0a06c66811222bef446e722028e56dc865c4","Created":1365991689,"Size":322292918,"VirtualSize":322292918},{"Repository":"base","Tag":"latest","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base2","Tag":"latest","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-12.10","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantal","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantl","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Id":"27cf784147099545","Created":1364068391,"Size":180091482,"VirtualSize":180091482}]'
+      string: ! '[{"Repository":"base","Tag":"latest","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-12.10","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantal","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantl","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Id":"27cf784147099545","Created":1364068391,"Size":180091482,"VirtualSize":180091482}]'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:48:01 GMT
+  recorded_at: Mon, 07 Oct 2013 14:56:39 GMT
 recorded_with: VCR 2.6.0
