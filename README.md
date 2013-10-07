@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.5.*.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.6.*.
 
 Installation
 ------------
@@ -42,7 +42,13 @@ $ sudo docker -d
 
 This will daemonize Docker so that it can be used for the remote API calls.
 
-If you're running Docker locally, there is no setup to do in Ruby. If you're not, you'll have to point the gem to your server. For example:
+If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not, you'll have to point the gem to your local or remote port. For example:
+
+```ruby
+Docker.with_port('url' => 'http://example.com', 'port' => 5422)
+```
+
+or
 
 ```ruby
 Docker.url = 'http://example.com'
@@ -54,12 +60,24 @@ Two things to note here. The first is that this gem uses [excon](http://www.gith
 Also, you may set the above variables via `ENV` variables. For example:
 
 ```shell
-$ DOCKER_HOST=example.com DOCKER_PORT=1000 irb
+$ DOCKER_SOCKET=/var/docker.sock irb
 irb(main):001:0> require 'docker'
 => true
 irb(main):002:0> Docker.url
-=> http://example.com
+=> "unix:///"
 irb(main):003:0> Docker.options
+=> {:port=>nil, :socket=>"/var/docker.sock"}
+```
+
+```shell
+$ DOCKER_HOST=example.com DOCKER_PORT=1000 irb
+irb(main):001:0> require 'docker'
+=> true
+irb(main):002:0> Docker.with_port
+=> {:port=>1000}
+irb(main):003:0> Docker.url
+=> "http://example.com"
+irb(main):004:0> Docker.options
 => {:port=>1000}
 ```
 
@@ -91,7 +109,7 @@ require 'docker'
 # => true
 
 # Create an Image.
-Docker::Image.create('fromRepo' => 'base')
+Docker::Image.create('fromImage' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Insert a file into an Image from a url.
