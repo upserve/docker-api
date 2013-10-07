@@ -2,110 +2,122 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/create
+    uri: http://unix/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":["rm","-rf","/root"],"Image":"base"}'
+      string: ! '{"Cmd":["rm","-rf","/root"],"Image":"base"}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.3.1
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 201
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '21'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
-    body:
-      encoding: UTF-8
-      string: '{"Id":"04f3e636c31d"}'
-    http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
-- request:
-    method: post
-    uri: http://localhost:4243/v1.4/containers/04f3e636c31d/start
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NjU=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoxMyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ''
+      string: ! '{"Id":"3aecf08d8d31","Warnings":["IPv4 forwarding is disabled."]}'
+    http_version: 
+  recorded_at: Mon, 07 Oct 2013 00:47:13 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/3aecf08d8d31/start
+    body:
+      encoding: UTF-8
+      string: ! '{}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.3.1
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 204
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '0'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoxMyBHTVQ=
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
+  recorded_at: Mon, 07 Oct 2013 00:47:13 GMT
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/04f3e636c31d/wait
+    uri: http://unix/v1.4/containers/3aecf08d8d31/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '16'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTY=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoxMyBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"StatusCode":0}'
+      encoding: US-ASCII
+      string: ! '{"StatusCode":0}'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
+  recorded_at: Mon, 07 Oct 2013 00:47:13 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/containers/04f3e636c31d/changes
+    uri: http://unix/v1.4/containers/3aecf08d8d31/changes
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '27'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        ODI=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoxMyBHTVQ=
     body:
-      encoding: UTF-8
-      string: '[{"Path":"/root","Kind":2}]'
+      encoding: US-ASCII
+      string: ! '[{"Path":"/root","Kind":2},{"Path":"/dev","Kind":0},{"Path":"/dev/kmsg","Kind":1}]'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Mon, 07 Oct 2013 00:47:13 GMT
+recorded_with: VCR 2.6.0

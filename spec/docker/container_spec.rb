@@ -40,17 +40,31 @@ describe Docker::Container do
     before { subject.tap(&:start).tap(&:wait) }
 
     it 'returns the changes as an array', :vcr do
-      changes.should == [{'Path' => '/root', 'Kind' => 2}]
+      changes.should == [
+        {
+          "Path" => "/root",
+          "Kind" => 2
+        },
+        {
+          "Path" => "/dev",
+          "Kind" => 0
+        },
+        {
+          "Path" => "/dev/kmsg",
+          "Kind" => 1
+        }
+      ]
     end
   end
 
   describe '#top' do
     subject {
-      described_class.create('Cmd' => %w[find / -name '*'], 'Image' => 'base')
+      described_class.create('Cmd' => %w[while true; do; done;], 'Image' => 'base')
     }
     let(:top) { subject.top }
 
     before { subject.start }
+    after { subject.kill }
 
     it 'returns the top commands as an Array', :vcr do
       top.should be_a Array
@@ -60,7 +74,7 @@ describe Docker::Container do
   end
 
   describe '#copy' do
-    subject { Docker::Image.create('fromImage' => 'base').run('ls') }
+    subject { Docker::Image.create('fromImage' => 'base').run('touch /test') }
 
     context 'when the file does not exist' do
       it 'raises an error', :vcr do
@@ -71,9 +85,7 @@ describe Docker::Container do
 
     context 'when the input is a file' do
       it 'yields each chunk of the tarred file', :vcr do
-        chunks = []
-        subject.copy('/etc/hosts') { |chunk| chunks << chunk }
-        chunks.join("\n").should include('localhost')
+        expect { subject.copy('/test') { |chunk| puts chunk } }.to_not raise_error
       end
     end
 
