@@ -42,43 +42,48 @@ $ sudo docker -d
 
 This will daemonize Docker so that it can be used for the remote API calls.
 
-If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not, you'll have to point the gem to your local or remote port. For example:
+If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not or change the path of the socket, you'll have to point the gem to your socket or local/remote port. For example:
 
 ```ruby
-Docker.with_port('url' => 'http://example.com', 'port' => 5422)
+Docker.with_port
 ```
 
 or
 
 ```ruby
-Docker.url = 'http://example.com'
-Docker.options = { :port => 5422 }
+Docker.with_port('http://example.com:5422')
 ```
 
-Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are alse valid for `Docker.options`. Second, by default Docker runs on port 4243. The gem will assume you want to connnect to port 4243 unless you specify otherwise.
+or
+
+```ruby
+Docker.url = 'http://example.com:5422'
+```
+
+Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are alse valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connnect to the socket unless you specify otherwise.
 
 Also, you may set the above variables via `ENV` variables. For example:
 
 ```shell
-$ DOCKER_SOCKET=/var/docker.sock irb
+$ DOCKER_URL=unix:///var/docker.sock irb
 irb(main):001:0> require 'docker'
 => true
 irb(main):002:0> Docker.url
-=> "unix:///"
+=> "unix:///var/docker.sock"
 irb(main):003:0> Docker.options
-=> {:port=>nil, :socket=>"/var/docker.sock"}
+=> {}
 ```
 
 ```shell
-$ DOCKER_HOST=example.com DOCKER_PORT=1000 irb
+$ DOCKER_URL=http://example.com:1000 irb
 irb(main):001:0> require 'docker'
 => true
 irb(main):002:0> Docker.with_port
-=> {:port=>1000}
+=> true
 irb(main):003:0> Docker.url
-=> "http://example.com"
+=> "http://example.com:1000"
 irb(main):004:0> Docker.options
-=> {:port=>1000}
+=> {}
 ```
 
 Before doing anything else, ensure you have the correct version of the Docker API. To do this, run `Docker.validate_version!`. If your installed version is not supported, a `Docker::Error::VersionError` is raised.
