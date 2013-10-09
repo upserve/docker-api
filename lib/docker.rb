@@ -10,47 +10,36 @@ require 'archive/tar/minitar'
 module Docker
   attr_reader :creds
 
-  def with_socket(opts={})
-    env_socket = ENV['DOCKER_SOCKET']
-    opts_socket = opts.delete('socket')
-    default_socket = '/var/run/docker.sock'
-
-    socket = env_socket || opts_socket || default_socket
-
-    env_host = ENV['DOCKER_HOST']
-    opts_host = opts.delete('host')
-    default_host = 'unix:///'
-
-    self.url = env_host || opts_host || default_host
-    self.options = { :socket => socket }
+  def default_port_url
+    'http://localhost:4243'
   end
 
-  def with_port(opts={})
-    env_host = ENV['DOCKER_HOST']
-    opts_host = opts.delete('host')
-    default_host = 'http://localhost'
+  def default_socket_url
+    'unix:///var/run/docker.sock'
+  end
 
-    host = env_host || opts_host || default_host
+  def env_url
+    ENV['DOCKER_URL']
+  end
 
-    env_port = ENV['DOCKER_PORT']
-    opts_port = opts.delete('port')
-    default_port = 4243
+  def with_socket(url=nil)
+    self.url = env_url || url || default_socket_url
+    self.options = {}
+    true
+  end
 
-    port = env_port || opts_port || default_port
-
-    self.url = host
-    self.options = { :port => port }
+  def with_port(url=nil)
+    self.url = env_url || url || default_port_url
+    self.options = {}
+    true
   end
 
   def url
-    @url ||= ENV['DOCKER_HOST'] || 'unix:///'
+    @url ||= ENV['DOCKER_URL'] || default_socket_url
   end
 
   def options
-    @options ||= {
-      :port => ENV['DOCKER_PORT'],
-      :socket => ENV['DOCKER_SOCKET'] || '/var/run/docker.sock'
-    }
+    @options ||= {}
   end
 
   def url=(new_url)
@@ -97,7 +86,8 @@ module Docker
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end
 
-  module_function :with_socket, :with_port, :url, :url=, :options,
+  module_function :default_socket_url, :default_port_url, :env_url,
+                  :with_socket, :with_port, :url, :url=, :options,
                   :options=, :connection, :reset_connection!, :version,
                   :info, :authenticate!, :validate_version!
 end

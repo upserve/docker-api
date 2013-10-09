@@ -15,7 +15,12 @@ class Docker::Connection
     when !opts.is_a?(Hash)
       raise ArgumentError, "Expected a Hash, got: '#{opts}'"
     else
-      @url, @options = url, opts
+      uri = URI.parse(url)
+      if uri.scheme == "unix"
+        @url, @options = 'unix:///', opts.merge(:socket => uri.path)
+      else
+        @url, @options = url, opts
+      end
     end
   end
 

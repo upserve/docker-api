@@ -4,9 +4,7 @@ describe Docker do
   subject { Docker }
 
   before do
-    ENV['DOCKER_HOST'] = nil
-    ENV['DOCKER_PORT'] = nil
-    ENV['DOCKER_SOCKET'] = nil
+    ENV['DOCKER_URL'] = nil
   end
 
   it { should be_a Module }
@@ -20,74 +18,50 @@ describe Docker do
       before do
       end
 
-      its(:options) {
-        should == { :port => nil, :socket => '/var/run/docker.sock' }
-      }
-      its(:url) { should == 'unix:///' }
+      its(:options) { {} }
+      its(:url) { should == 'unix:///var/run/docker.sock' }
       its(:connection) { should be_a Docker::Connection }
     end
 
     context "when the DOCKER_* ENV variables are set" do
       before do
-        ENV['DOCKER_HOST'] = 'unixs:///'
-        ENV['DOCKER_PORT'] = '1234'
-        ENV['DOCKER_SOCKET'] = '/var/run/not-docker.sock'
+        ENV['DOCKER_URL'] = 'unixs:///var/run/not-docker.sock'
       end
 
-      its(:options) {
-        should == { :port => "1234", :socket => '/var/run/not-docker.sock' }
-      }
-      its(:url) { should == 'unixs:///' }
+      its(:options) { {} }
+      its(:url) { should == 'unixs:///var/run/not-docker.sock' }
       its(:connection) { should be_a Docker::Connection }
     end
   end
 
   context 'when Docker.with_socket is called' do
     context 'when the DOCKER_SOCKET ENV variable is set' do
-      let(:socket) { '/var/run/not-docker.sock' }
+      let(:socket) { 'unix:///var/run/not-docker.sock' }
       before do
         Docker.instance_variable_set(:@url, nil)
         Docker.instance_variable_set(:@options, nil)
-        ENV['DOCKER_SOCKET'] = socket
+        ENV['DOCKER_URL'] = socket
         Docker.with_socket
       end
 
-      it 'sets Docker.url to "unix:///"' do
-        expect(subject.url).to eq('unix:///')
-      end
-
-      it 'sets Docker.options[:socket] to that variable' do
-        expect(subject.options[:socket]).to eq(socket)
+      it 'sets Docker.url to "unix:///var/run/not-docker.sock"' do
+        expect(subject.url).to eq('unix:///var/run/not-docker.sock')
       end
     end
   end
 
   context 'when Docker.with_port is called' do
-    context 'when the DOCKER_HOST ENV variable is set' do
-      let(:host) { 'http://google.com' }
+    context 'when the DOCKER_URL ENV variable is set' do
+      let(:url) { 'http://google.com:4243' }
 
       before do
         Docker.instance_variable_set(:@url, nil)
-        ENV['DOCKER_HOST'] = host
+        ENV['DOCKER_URL'] = url
         Docker.with_port
       end
 
       it 'sets Docker.url to that variable' do
-        expect(subject.url).to eq(host)
-      end
-    end
-
-    context 'when the DOCKER_PORT ENV variable is set' do
-      let(:port) { 1234 }
-
-      before do
-        Docker.instance_variable_set(:@options, nil)
-        ENV['DOCKER_PORT'] = port.to_s
-        Docker.with_port
-      end
-
-      it 'sets Docker.options[:port] to that variable' do
-        expect(subject.options[:port]).to eq(port.to_s)
+        expect(subject.url).to eq(url)
       end
     end
   end
@@ -104,8 +78,8 @@ describe Docker do
   [:options=, :url=].each do |method|
     describe "##{method}" do
       after(:all) do
-        subject.options = { :port => 4243 }
-        subject.url = 'http://localhost'
+        subject.instance_variable_set(:@url, nil)
+        subject.instance_variable_set(:@options, nil)
       end
       it 'calls #reset_connection!' do
         subject.should_receive(:reset_connection!)
