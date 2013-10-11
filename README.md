@@ -261,7 +261,7 @@ By default, each object connects to the connection specified by `Docker.connecti
 ```ruby
 require 'docker'
 
-Docker::Container.all({}, Docker::Connection.new('http://example.com:4243'))
+Docker::Container.all({}, Docker::Connection.new('http://example.com:4243', {}))
 ```
 
 ## Known Issues
