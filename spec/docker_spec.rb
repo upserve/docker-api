@@ -4,39 +4,31 @@ describe Docker do
   subject { Docker }
 
   before do
-    ENV['DOCKER_HOST'] = nil
-    ENV['DOCKER_PORT'] = nil
+    ENV['DOCKER_URL'] = nil
   end
 
   it { should be_a Module }
-  its(:options) { should == { :port => 4243 } }
-  its(:url) { should == 'http://localhost' }
-  its(:connection) { should be_a Docker::Connection }
 
-  context 'when the DOCKER_HOST ENV variable is set' do
-    let(:host) { 'google.com' }
-    let(:url) { "http://#{host}" }
-
+  context 'default url and connection' do
     before do
-      Docker.instance_variable_set(:@url, nil)
-      ENV['DOCKER_HOST'] = host
+      Docker.url = nil
+      Docker.options = nil
     end
 
-    it 'sets Docker.url to that variable' do
-      subject.url.should == url
-    end
-  end
-
-  context 'when the DOCKER_PORT ENV variable is set' do
-    let(:port) { 1234 }
-
-    before do
-      Docker.instance_variable_set(:@options, nil)
-      ENV['DOCKER_PORT'] = port.to_s
+    context "when the DOCKER_* ENV variables aren't set" do
+      its(:options) { {} }
+      its(:url) { should == 'unix:///var/run/docker.sock' }
+      its(:connection) { should be_a Docker::Connection }
     end
 
-    it 'sets Docker.options[:port] to that variable' do
-      subject.options[:port].should == port
+    context "when the DOCKER_* ENV variables are set" do
+      before do
+        ENV['DOCKER_URL'] = 'unixs:///var/run/not-docker.sock'
+      end
+
+      its(:options) { {} }
+      its(:url) { should == 'unixs:///var/run/not-docker.sock' }
+      its(:connection) { should be_a Docker::Connection }
     end
   end
 
@@ -52,8 +44,8 @@ describe Docker do
   [:options=, :url=].each do |method|
     describe "##{method}" do
       after(:all) do
-        subject.options = { :port => 4243 }
-        subject.url = 'http://localhost'
+        subject.instance_variable_set(:@url, nil)
+        subject.instance_variable_set(:@options, nil)
       end
       it 'calls #reset_connection!' do
         subject.should_receive(:reset_connection!)
@@ -63,18 +55,29 @@ describe Docker do
   end
 
   describe '#version' do
+    before do
+      subject.url = nil
+      subject.options = nil
+    end
+
     let(:version) { subject.version }
     it 'returns the version as a Hash', :vcr do
       version.should be_a Hash
-      version.keys.sort.should == %w[GoVersion Version]
+      version.keys.sort.should == %w[GitCommit GoVersion Version]
     end
   end
 
   describe '#info' do
+    before do
+      subject.url = nil
+      subject.options = nil
+    end
+
     let(:info) { subject.info }
     let(:keys) do
-      %w(Containers Debug Images KernelVersion LXCVersion MemoryLimit
-         NEventsListener NFd NGoroutines)
+      %w(Containers Debug IPv4Forwarding Images IndexServerAddress
+         KernelVersion LXCVersion MemoryLimit NEventsListener NFd
+         NGoroutines)
     end
 
     it 'returns the info as a Hash', :vcr do
@@ -90,6 +93,11 @@ describe Docker do
   end
 
   describe '#validate_version' do
+    before do
+      subject.url = nil
+      subject.options = nil
+    end
+
     context 'when a Docker Error is raised' do
       before { Docker.stub(:info).and_raise(Docker::Error::ClientError) }
 

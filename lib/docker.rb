@@ -10,13 +10,20 @@ require 'archive/tar/minitar'
 module Docker
   attr_reader :creds
 
+  def default_socket_url
+    'unix:///var/run/docker.sock'
+  end
+
+  def env_url
+    ENV['DOCKER_URL']
+  end
+
   def url
-    @url ||= "http://#{ENV['DOCKER_HOST'] || 'localhost'}"
+    @url ||= ENV['DOCKER_URL'] || default_socket_url
   end
 
   def options
-    port = (ENV['DOCKER_PORT'].nil? ? 4243 : ENV['DOCKER_PORT']).to_i
-    @options ||= { :port => port.to_i }
+    @options ||= {}
   end
 
   def url=(new_url)
@@ -25,7 +32,7 @@ module Docker
   end
 
   def options=(new_options)
-    @options = { :port => 4243 }.merge(new_options)
+    @options = new_options
     reset_connection!
   end
 
@@ -63,9 +70,9 @@ module Docker
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end
 
-  module_function :url, :url=, :options, :options=, :connection,
-                  :reset_connection!, :version, :info, :authenticate!,
-                  :validate_version!
+  module_function :default_socket_url, :env_url, :url, :url=, :options,
+                  :options=, :connection, :reset_connection!, :version,
+                  :info, :authenticate!, :validate_version!
 end
 
 require 'docker/version'

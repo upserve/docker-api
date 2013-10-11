@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 describe Docker::Connection do
-  subject { described_class.new('http://localhost', :port => 4243) }
+  subject { described_class.new('http://localhost:4243', {}) }
 
   describe '#initialize' do
-    let(:url) { 'http://localhost' }
-    let(:options) { { :port => 4243 } }
+    let(:url) { 'http://localhost:4243' }
+    let(:options) { {} }
     subject { described_class.new(url, options) }
 
     context 'when the first argument is not a String' do
@@ -17,6 +17,15 @@ describe Docker::Connection do
     end
 
     context 'when the first argument is a String' do
+      context 'and the url is a unix socket' do
+        let(:url) { 'unix:///var/run/docker.sock' }
+
+        it 'sets the socket path in the options' do
+          expect(subject.url).to eq('unix:///')
+          expect(subject.options).to include(:socket => '/var/run/docker.sock')
+        end
+      end
+
       context 'but the second argument is not a Hash' do
         let(:options) { :lol_not_a_hash }
 
@@ -80,9 +89,8 @@ describe Docker::Connection do
   end
 
   describe '#to_s' do
-    let(:url) { 'google.com' }
-    let(:port) { 4000 }
-    let(:options) { { :port => port } }
+    let(:url) { 'http://google.com:4000' }
+    let(:options) { {} }
     let(:expected_string) {
       "Docker::Connection { :url => #{url}, :options => #{options} }"
     }

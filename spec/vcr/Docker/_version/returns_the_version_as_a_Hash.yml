@@ -2,29 +2,32 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/version
+    uri: http://unix/v1.4/version
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '39'
-      Date:
-      - Wed, 07 Aug 2013 16:52:53 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NjM=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAxNDo1ODo1OSBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"Version":"0.5.1","GoVersion":"go1.1"}'
+      encoding: US-ASCII
+      string: ! '{"Version":"0.6.3","GitCommit":"b0a49a3","GoVersion":"go1.1.2"}'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:52:53 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Mon, 07 Oct 2013 14:58:59 GMT
+recorded_with: VCR 2.6.0
