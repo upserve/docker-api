@@ -8,16 +8,14 @@ describe Docker do
   end
 
   it { should be_a Module }
-  context 'without calling with_socket or with_port' do
+
+  context 'default url and connection' do
     before do
-      subject.instance_variable_set(:@url, nil)
-      subject.instance_variable_set(:@options, nil)
+      Docker.url = nil
+      Docker.options = nil
     end
 
     context "when the DOCKER_* ENV variables aren't set" do
-      before do
-      end
-
       its(:options) { {} }
       its(:url) { should == 'unix:///var/run/docker.sock' }
       its(:connection) { should be_a Docker::Connection }
@@ -31,38 +29,6 @@ describe Docker do
       its(:options) { {} }
       its(:url) { should == 'unixs:///var/run/not-docker.sock' }
       its(:connection) { should be_a Docker::Connection }
-    end
-  end
-
-  context 'when Docker.with_socket is called' do
-    context 'when the DOCKER_SOCKET ENV variable is set' do
-      let(:socket) { 'unix:///var/run/not-docker.sock' }
-      before do
-        Docker.instance_variable_set(:@url, nil)
-        Docker.instance_variable_set(:@options, nil)
-        ENV['DOCKER_URL'] = socket
-        Docker.with_socket
-      end
-
-      it 'sets Docker.url to "unix:///var/run/not-docker.sock"' do
-        expect(subject.url).to eq('unix:///var/run/not-docker.sock')
-      end
-    end
-  end
-
-  context 'when Docker.with_port is called' do
-    context 'when the DOCKER_URL ENV variable is set' do
-      let(:url) { 'http://google.com:4243' }
-
-      before do
-        Docker.instance_variable_set(:@url, nil)
-        ENV['DOCKER_URL'] = url
-        Docker.with_port
-      end
-
-      it 'sets Docker.url to that variable' do
-        expect(subject.url).to eq(url)
-      end
     end
   end
 
@@ -90,9 +56,8 @@ describe Docker do
 
   describe '#version' do
     before do
-      subject.instance_variable_set(:@url, nil)
-      subject.instance_variable_set(:@options, nil)
-      subject.reset_connection!
+      subject.url = nil
+      subject.options = nil
     end
 
     let(:version) { subject.version }
@@ -104,9 +69,8 @@ describe Docker do
 
   describe '#info' do
     before do
-      subject.instance_variable_set(:@url, nil)
-      subject.instance_variable_set(:@options, nil)
-      subject.reset_connection!
+      subject.url = nil
+      subject.options = nil
     end
 
     let(:info) { subject.info }
@@ -130,9 +94,8 @@ describe Docker do
 
   describe '#validate_version' do
     before do
-      subject.instance_variable_set(:@url, nil)
-      subject.instance_variable_set(:@options, nil)
-      subject.reset_connection!
+      subject.url = nil
+      subject.options = nil
     end
 
     context 'when a Docker Error is raised' do
