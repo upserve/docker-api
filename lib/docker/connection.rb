@@ -17,7 +17,7 @@ class Docker::Connection
     else
       uri = URI.parse(url)
       if uri.scheme == "unix"
-        @url, @options = 'unix:///', opts.merge(:socket => uri.path)
+        @url, @options = 'unix:///', {:socket => uri.path}.merge(opts)
       else
         @url, @options = url, opts
       end

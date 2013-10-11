@@ -45,18 +45,6 @@ This will daemonize Docker so that it can be used for the remote API calls.
 If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not or change the path of the socket, you'll have to point the gem to your socket or local/remote port. For example:
 
 ```ruby
-Docker.with_port
-```
-
-or
-
-```ruby
-Docker.with_port('http://example.com:5422')
-```
-
-or
-
-```ruby
 Docker.url = 'http://example.com:5422'
 ```
 
@@ -77,8 +65,6 @@ irb(main):003:0> Docker.options
 ```shell
 $ DOCKER_URL=http://example.com:1000 irb
 irb(main):001:0> require 'docker'
-=> true
-irb(main):002:0> Docker.with_port
 => true
 irb(main):003:0> Docker.url
 => "http://example.com:1000"
@@ -275,7 +261,7 @@ By default, each object connects to the connection specified by `Docker.connecti
 ```ruby
 require 'docker'
 
-Docker::Container.all({}, Docker::Connection.new(:url => 'http://example.com'))
+Docker::Container.all({}, Docker::Connection.new('http://example.com:4243'))
 ```
 
 ## Known Issues
