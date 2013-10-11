@@ -200,7 +200,7 @@ describe Docker::Image do
 
         image.id.should_not be_nil
 
-        %w(Repository Tag Created Size VirtualSize).each do |key|
+        %w(Created Size VirtualSize).each do |key|
           image.info.should have_key(key)
         end
       end

@@ -2,56 +2,62 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/create
+    uri: http://unix/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":["true"],"Image":"base"}'
+      string: ! '{"Cmd":["true"],"Image":"base"}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.3.1
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 201
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '21'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NjU=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoxMyBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"Id":"ed9fe2fe70fa"}'
+      encoding: US-ASCII
+      string: ! '{"Id":"92c0a16f7ae5","Warnings":["IPv4 forwarding is disabled."]}'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
+  recorded_at: Mon, 07 Oct 2013 00:47:13 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/containers/ed9fe2fe70fa/json
+    uri: http://unix/v1.4/containers/92c0a16f7ae5/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '846'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTEzMg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoxMyBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"ID":"ed9fe2fe70fa397e2106bb33d90f07b8a8ea3adadf4fd63ff54152b655a63e88","Created":"2013-08-07T16:51:12.675088745Z","Path":"true","Args":[],"Config":{"Hostname":"ed9fe2fe70fa","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":"","Entrypoint":null,"NetworkDisabled":false},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","Volumes":null,"VolumesRW":null}'
+      encoding: US-ASCII
+      string: ! '{"ID":"92c0a16f7ae5b7e1bef65ae08370c88e90fb17071df512c3a6b2aaba79660a85","Created":"2013-10-06T20:47:13.006008207-04:00","Path":"true","Args":[],"Config":{"Hostname":"92c0a16f7ae5","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":"","WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"Privileged":false},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","HostnamePath":"/var/lib/docker/containers/92c0a16f7ae5b7e1bef65ae08370c88e90fb17071df512c3a6b2aaba79660a85/hostname","HostsPath":"/var/lib/docker/containers/92c0a16f7ae5b7e1bef65ae08370c88e90fb17071df512c3a6b2aaba79660a85/hosts","Volumes":null,"VolumesRW":null}'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Mon, 07 Oct 2013 00:47:13 GMT
+recorded_with: VCR 2.6.0

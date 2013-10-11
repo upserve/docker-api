@@ -2,115 +2,98 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/create
+    uri: http://unix/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":["rm","-rf","/","--no-preserve-root"],"Image":"base"}'
+      string: ! '{"Cmd":["rm","-rf","/","--no-preserve-root"],"Image":"base"}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.3.1
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 201
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '21'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
-    body:
-      encoding: UTF-8
-      string: '{"Id":"98607cce607e"}'
-    http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
-- request:
-    method: post
-    uri: http://localhost:4243/v1.4/containers/98607cce607e/start
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAwOCBPY3QgMjAxMyAxNDoxMTozNiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ''
+      string: ! '{"Id":"f96716ac239d"}'
+    http_version: 
+  recorded_at: Tue, 08 Oct 2013 14:11:36 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/f96716ac239d/start
+    body:
+      encoding: UTF-8
+      string: ! '{}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.3.1
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 204
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '0'
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAwOCBPY3QgMjAxMyAxNDoxMTozNiBHTVQ=
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:12 GMT
+  recorded_at: Tue, 08 Oct 2013 14:11:36 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/containers/98607cce607e/export
+    uri: http://unix/v1.4/containers/f96716ac239d/export
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/octet-stream
-      Date:
-      - Wed, 07 Aug 2013 16:51:12 GMT
-      Transfer-Encoding:
-      - chunked
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vb2N0ZXQtc3RyZWFt
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAwOCBPY3QgMjAxMyAxNDoxMTozNiBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         Li8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA3NTUAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDAw
-        ADEyMjAwNDc1NDAwADAwNjA3MwAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMjI1MDExMjMwADAwNjA2NQAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAuL2Rldi8AAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMDAwMDc1NQAwMDAwMDAwADAw
-        MDAwMDAAMDAwMDAwMDAwMDAAMTIxNzQ1MTc2NTYAMDA2Njc1ACA1AAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAHVzdGFyICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC4vZGV2L2ttc2cA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNzc3ADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDAwMAAxMjEyMzUwNjcz
-        MgAwMTExMjYAIDJjb25zb2xlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIgIAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:14 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Tue, 08 Oct 2013 14:11:37 GMT
+recorded_with: VCR 2.6.0

@@ -2,29 +2,32 @@
 http_interactions:
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/images/search?term=sshd
+    uri: http://unix/v1.4/images/search?term=sshd
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '1798'
-      Date:
-      - Wed, 07 Aug 2013 16:52:53 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0ODowMiBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
-      encoding: UTF-8
-      string: '[{"Name":"cespare/sshd","Description":""},{"Name":"johnfuller/sshd","Description":""},{"Name":"dhrp/mongodb-sshd","Description":""},{"Name":"rayang2004/sshd","Description":""},{"Name":"dhrp/sshd","Description":"SSH
+      encoding: US-ASCII
+      string: ! '[{"Name":"cespare/sshd","Description":""},{"Name":"johnfuller/sshd","Description":""},{"Name":"dhrp/mongodb-sshd","Description":""},{"Name":"rayang2004/sshd","Description":""},{"Name":"dhrp/sshd","Description":"SSH
         Daemon created in the ssh daemon documentation example"},{"Name":"toorop/daemontools-sshd","Description":"sshd
         daemon supervised by DJB daemontools - run cmd :\r\ndocker run -d -p 22 toorop/daemontools-sshd
         /usr/bin/svscanboot - \r\n\r\nDefault root password : demo - \r\n\r\nSSHD
@@ -39,7 +42,10 @@ http_interactions:
         toorop/golang /usr/bin/svscanboot\"  - connect throw SSH  \"ssh root@localhost
         -pSSHD_PORT\" default password is \"demo\" - add users : \"adduser USERNAME\"
         this will also configure USER $HOME directory - Start coding. Enjoy ;)"},{"Name":"wma55/u1210sshd","Description":""},{"Name":"jdswinbank/sshd","Description":""},{"Name":"vgauthier/sshd","Description":""},{"Name":"pshouse/sshd-pharo-core","Description":"Provides
-        access to pharo-core command line interface"},{"Name":"dongweiming/sshd","Description":""},{"Name":"kpelykh/sshd","Description":""},{"Name":"oss17888/sshd","Description":""}]'
+        access to pharo-core command line interface"},{"Name":"dongweiming/sshd","Description":""},{"Name":"kpelykh/sshd","Description":""},{"Name":"oss17888/sshd","Description":""},{"Name":"zefhemel/sshd","Description":"Runs
+        a SSHd server in daemon mode"},{"Name":"lorieri/daemontools-sshd-nginx","Description":""},{"Name":"onyxperidot/base_sshd","Description":""},{"Name":"tekknolagi/sshd","Description":""},{"Name":"realyze/ubuntu-node-sshd","Description":"Ubuntu
+        12.04\nNodeJS 0.10.18\nsshd"},{"Name":"hyao/sshd","Description":""},{"Name":"simoman/sshd","Description":"Base
+        + sshd + proxy + static ip addr."},{"Name":"blissdev/sshd","Description":""}]'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:52:53 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Mon, 07 Oct 2013 00:48:02 GMT
+recorded_with: VCR 2.6.0

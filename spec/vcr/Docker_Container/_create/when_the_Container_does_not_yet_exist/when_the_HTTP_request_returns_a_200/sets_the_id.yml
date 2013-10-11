@@ -2,29 +2,32 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/create
+    uri: http://unix/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
+      string: ! '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.4.0
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 201
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '21'
-      Date:
-      - Thu, 08 Aug 2013 14:47:05 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        NjU=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0MCBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"Id":"3e4587069eb0"}'
+      encoding: US-ASCII
+      string: ! '{"Id":"8f9ec1ca0aba","Warnings":["IPv4 forwarding is disabled."]}'
     http_version: 
-  recorded_at: Thu, 08 Aug 2013 14:47:05 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Mon, 07 Oct 2013 00:47:40 GMT
+recorded_with: VCR 2.6.0

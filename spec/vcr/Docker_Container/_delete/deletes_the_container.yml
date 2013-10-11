@@ -2,186 +2,122 @@
 http_interactions:
 - request:
     method: post
-    uri: http://localhost:4243/v1.4/containers/create
+    uri: http://unix/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":["ls"],"Image":"base"}'
+      string: ! '{"Cmd":["ls"],"Image":"base"}'
     headers:
-      Content-Type:
-      - text/plain
       User-Agent:
-      - Swipely/Docker-API 1.3.1
+      - Swipely/Docker-API 1.5.4
+      Content-Type:
+      - application/json
   response:
     status:
       code: 201
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '21'
-      Date:
-      - Wed, 07 Aug 2013 16:51:14 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAxNDoxMjowNSBHTVQ=
     body:
-      encoding: UTF-8
-      string: '{"Id":"537bb9f5d9eb"}'
+      encoding: US-ASCII
+      string: ! '{"Id":"4efb5152acc7"}'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:14 GMT
+  recorded_at: Mon, 07 Oct 2013 14:12:05 GMT
 - request:
     method: delete
-    uri: http://localhost:4243/v1.4/containers/537bb9f5d9eb
+    uri: http://unix/v1.4/containers/4efb5152acc7
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 204
       message: ''
     headers:
-      Content-Type:
-      - text/plain; charset=utf-8
-      Content-Length:
-      - '0'
-      Date:
-      - Wed, 07 Aug 2013 16:51:14 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAxNDoxMjowNSBHTVQ=
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:14 GMT
+  recorded_at: Mon, 07 Oct 2013 14:12:05 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/containers/json
+    uri: http://unix/v1.4/containers/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Content-Length:
-      - '2'
-      Date:
-      - Wed, 07 Aug 2013 16:51:14 GMT
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Mg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAxNDoxMjowNSBHTVQ=
     body:
-      encoding: UTF-8
-      string: '[]'
+      encoding: US-ASCII
+      string: ! '[]'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:14 GMT
+  recorded_at: Mon, 07 Oct 2013 14:12:05 GMT
 - request:
     method: get
-    uri: http://localhost:4243/v1.4/containers/json?all=true
+    uri: http://unix/v1.4/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
+      User-Agent:
+      - Swipely/Docker-API 1.5.4
       Content-Type:
       - text/plain
-      User-Agent:
-      - Swipely/Docker-API 1.3.1
   response:
     status:
       code: 200
       message: ''
     headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Wed, 07 Aug 2013 16:51:14 GMT
-      Transfer-Encoding:
-      - chunked
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Mg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAwNyBPY3QgMjAxMyAxNDoxMjowNSBHTVQ=
     body:
-      encoding: UTF-8
-      string: '[{"Id":"537bb9f5d9eb0ef4b5cb689f43b3c12f059ab124abe13eaaec09794633ea08e5","Image":"base2:latest","Command":"ls
-        ","Created":1375894274,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"2c33f140d30e9f9993c180969f46a83e9dc24d3e29e4e39b930583bb5a6a9ea9","Image":"base2:latest","Command":"true
-        ","Created":1375894274,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"006a81e3a9efb2d6b6b1bf7b25031f7c0ca972e731c4efeaaab30b75997d5804","Image":"base2:latest","Command":"true
-        ","Created":1375894274,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"fe03763be9b4bd2b01495f0e6bf7a10eb26842a7b40a5022fd7412a1d9eb0566","Image":"base2:latest","Command":"pwd
-        ","Created":1375894274,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"98607cce607e028051a81cf299a0d3f9b059ae83526e33990b7f2e455aeb079e","Image":"base2:latest","Command":"rm
-        -rf / --no-preserve-root","Created":1375894272,"Status":"Exit 1","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"04f3e636c31dce687eab604eaa686dca8aec5d1a2962e564c2dfd286ba80fbf3","Image":"base2:latest","Command":"rm
-        -rf /root","Created":1375894272,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"ed9fe2fe70fa397e2106bb33d90f07b8a8ea3adadf4fd63ff54152b655a63e88","Image":"base2:latest","Command":"true
-        ","Created":1375894272,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"06afcc6410930daf822789196f347c84259b571c318828ca1483ecec8fb02f01","Image":"base2:latest","Command":"which
-        pwd","Created":1375894181,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"77bbd7097c1c05be2049dddda4017b77301777647aa6255ecb69de9e714c5ed2","Image":"base2:latest","Command":"ls
-        /lib64/","Created":1375894178,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"2c11ad17d509bab7652e178612c476907d5623445bbf3f5d59e994e5986ca279","Image":"411834e14abb","Command":"ls
-        /","Created":1375894165,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"3a21d210b2f3cc3aba925005eb176709cda0e5ca021a6ba47a1e1a2c2443bf03","Image":"base2:latest","Command":"echo
-        insert http://stallman.org /stallman","Created":1375894164,"Status":"Exit
-        0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"12912e1d0631e90c3c6693c820fe8a29e41c4c74ec949d12e17e4909c26ee0ba","Image":"base2:latest","Command":"ls
-        ","Created":1375894158,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"3444bbae3b7d32a7cf60ea00a2af0093d04decab7a19e39f90a786d3e125ef27","Image":"base2:latest","Command":"date
-        ","Created":1375894158,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"68f2e43ee3912be5612bd2e290cd56aa936608abcc741944c9b17ef5c00608f9","Image":"base2:latest","Command":"true
-        ","Created":1375894158,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"57f6f441aa02055a5128c1d1aff5475ce7b518e660abdad8af912d52631623b6","Image":"8e9fb6b2aa34","Command":"ls
-        ","Created":1375894158,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"be8918b0aafcb0d227998149ab3687db6fed928927c6fa0b7fcefc132a152a7f","Image":"base2:latest","Command":"pwd
-        ","Created":1375894157,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"d5206a051f9cdc4c52f56ff3147f747efbbdc47467eb968c2c40447096d0bacc","Image":"base2:latest","Command":"lol
-        not a real command","Created":1375894157,"Status":"Exit 127","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"c8a4cf0f4b2ddc90ff2e49f3fb38eeb400297d417e74fbe97138a550938e6bdd","Image":"base2:latest","Command":"sleep
-        5","Created":1375894157,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"5cb82c1d32a021aedfe13845b40073094059c9af8b39fb3a334122d25d6bcd5f","Image":"base2:latest","Command":"sleep
-        5","Created":1375894151,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"0da1c4d80aa9498c498cc0c63281f458540b85b3b552a3091630a36104da7fae","Image":"base2:latest","Command":"tar
-        nonsense","Created":1375894151,"Status":"Exit 64","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"014c3c1928e3b323ed0c7831a7c0823bd4bed04849b5b457983dacc459ff1867","Image":"base2:latest","Command":"sleep
-        50","Created":1375894141,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"b3a9b7acf0b5fbf2bfee311e7dd63541122a8f32a3fbe1b6fd58e8f4614d3dbc","Image":"base2:latest","Command":"ls
-        ","Created":1375894141,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"317bb1ad354fe6fc3b654ae7d0a468284048a471dd22227da5cf8d3722d4e4c1","Image":"base2:latest","Command":"true
-        ","Created":1375894140,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"6abab24b6893eed8da2f3737ab2b1372a8690b85359c22e77fa01a37d20422e7","Image":"base2:latest","Command":"true
-        ","Created":1375894140,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"5b691c209673397731b198030f6ad177643cf73103e1ff91ff6ecba0570937ae","Image":"base2:latest","Command":"pwd
-        ","Created":1375894140,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"302c743e53e711c497c22d63d84730f9f4c9cfa09f4c453f6de15a603a87e2fa","Image":"base2:latest","Command":"rm
-        -rf / --no-preserve-root","Created":1375894139,"Status":"Exit 1","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"eb68e13fb678b59cc38c2bd5790b18ef6bf6ce78c0e41e27f215fe260cbaf38d","Image":"base2:latest","Command":"rm
-        -rf /root","Created":1375894139,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"4df1d1b90929f2f8cc37889afeb526a0d7d8e7ca74a599d2cd61fce19d8af6d8","Image":"base2:latest","Command":"true
-        ","Created":1375894139,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"3a3d259236331666e5713a3142a2827aeb03fea7c6cd9d675b216a75a6bb0dd1","Image":"base2:latest","Command":"rm
-        -rf /root","Created":1375891315,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"4767d6043328ad1b0e6f2a0ceb63c5bd78003a1ac9912fbf8ef976bd5dce6000","Image":"base2:latest","Command":"/bin/sh
-        -c rm -rf /root","Created":1375891241,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"e6733b0b48f8b9f5e2706bbafe56736fdf8d66c1f1946489c35a08a35d6e53f6","Image":"base2:latest","Command":"pwd
-        ","Created":1375890792,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"7df85ea5aa2995b3f92eb93768461cc10bbbd8f6ed34a4b3d517637ef2679485","Image":"base2:latest","Command":"which
-        pwd","Created":1375890059,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"d78de7d782e78be897fa99458fd00dc9ea473109fcd24a0693f9093735e7b41c","Image":"base2:latest","Command":"ls
-        /lib64/","Created":1375890057,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"79d4ae84d84a4d05eb74e40704f0a410ccd7c4ca854c659112af985f6604aec1","Image":"ea96e006d00c","Command":"ls
-        /","Created":1375890051,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"9828255e8e92561b85124acdc41a098b89af57b8c4d12eaf1b22c611c30eb9ed","Image":"base2:latest","Command":"echo
-        insert http://stallman.org /stallman","Created":1375890050,"Status":"Exit
-        0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"237478db500f2e2821ec2987160bce59b5d5eca4e0efe5cf4dcc6666bff7787f","Image":"base2:latest","Command":"ls
-        ","Created":1375890046,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"9613b519c6487f3d2775caa4a44d63388222bcdebdea26e027f9cb3262d302db","Image":"base2:latest","Command":"date
-        ","Created":1375890046,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"963140b97bb571bff5b64748af1ea3450e2440a36e11cb0b35a5071685a54e05","Image":"base2:latest","Command":"true
-        ","Created":1375890046,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"923fcaa31245e030d41a348d870342a152905f0b78547ddbe7a966fcfbfafe4a","Image":"3fdce89c662f","Command":"ls
-        ","Created":1375890046,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"6aa794eb15a6545a328e1d790124d91d26dc25ece6abd37c7cf3098544df2d55","Image":"base2:latest","Command":"pwd
-        ","Created":1375890045,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"4a2b95ad1d8f7e156deec8cbd19a3eee58d96fd9b2837e35b21c408edee07248","Image":"base2:latest","Command":"lol
-        not a real command","Created":1375890045,"Status":"Exit 127","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"151697f98ee848c55ef96173a27b3aafe337d09c6657b5fbb9bfaa03d48af15c","Image":"base2:latest","Command":"sleep
-        5","Created":1375890045,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"0ce91d722a264f25a18c3c340092d9f5db305d9fefe37c597104572100e34cde","Image":"base2:latest","Command":"sleep
-        5","Created":1375890040,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"88675033704ce895377364f7853afd2ee5956e44c295ef014b665f1b1e8c2814","Image":"base2:latest","Command":"tar
-        nonsense","Created":1375890039,"Status":"Exit 64","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"990e511b3a02b07b5dd6dd911fa411896d9e3ed924ade94706f2c938ff82ea39","Image":"base2:latest","Command":"sleep
-        50","Created":1375890029,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"4706f87c9f4f51bfbf455e21016a810a642fb695188411da9359ada779baee0c","Image":"base2:latest","Command":"ls
-        ","Created":1375890029,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"7e5674e2054db019ec8755e742d4d2a7a38c3a6f4f3914dcc31784c6df902e85","Image":"base2:latest","Command":"true
-        ","Created":1375890029,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"9c8c25bd6011a1edb9c19b0e0f21ea9c851b0750f34e474f4d7a12903231b2f0","Image":"base2:latest","Command":"true
-        ","Created":1375890029,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"480e6d7a543e91f31c43e34031bef39c48762f7f6243463688fe2e47b5e45a88","Image":"base2:latest","Command":"uname
-        -r","Created":1375890029,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"7f7e82d95bb4ec3ae4e3de3fc6ab2c55252f044baf3c3cd549be49e419a05ca5","Image":"base2:latest","Command":"rm
-        -rf / --no-preserve-root","Created":1375890027,"Status":"Exit 1","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"91928a69831d95021b2eb49f63003597771a18aebb82046ef0524e2669a9328e","Image":"base2:latest","Command":"true
-        ","Created":1375890027,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"6043a6dbce22ce06004a941a1dc9a1252dee6f35497bd0619f67f3230642b9ca","Image":"base2:latest","Command":"true
-        ","Created":1375890027,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"90201367dfc862df2cc20781ee6695a0c41780d72f93eb6d660ebc85c7e418eb","Image":"base2:latest","Command":"which
-        pwd","Created":1374855178,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"8f5a777b3d941ff04685a05a8742d8114248997cae6851b41c2d6ea583e07585","Image":"base2:latest","Command":"ls
-        /lib64/","Created":1374855177,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"e7aa11468936aa5c69cb075522490d6303a6bb902d495d7443a1448ea553346b","Image":"31cc782331e9","Command":"ls
-        /","Created":1374855171,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"1418f2e8b032b4c1565ecb071aafbb8f219e3ec852c3d1c9a7ca3961809716d5","Image":"base2:latest","Command":"echo
-        insert http://stallman.org /stallman","Created":1374855170,"Status":"Exit
-        0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"d5d71ea48805b02c3eae5e3c507ea7b478c668e2f2f33213f0e0d238d98ee330","Image":"base2:latest","Command":"ls
-        ","Created":1374855082,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"c1ad9ade3ee2e3945f3623341b1e1b4197d4ab7b1f1e6deb4a7be1ae67cb93e5","Image":"base2:latest","Command":"date
-        ","Created":1374855082,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"8365aaf7629a9d51fc831fe5ec9c04aeef0012411ae4653f3dc1be48edbb0725","Image":"base2:latest","Command":"true
-        ","Created":1374855082,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"3663ad5661d91fae12b67219de41fd8d9b607c75588568a93b3fd66434314a23","Image":"a7e4813cedd1","Command":"ls
-        ","Created":1374855082,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"f9679f5588f084b1df199573979fdf1bc03d1f14a0f225773b1a6e87f18136f8","Image":"base2:latest","Command":"pwd
-        ","Created":1374855082,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"c854d4cd92ca4db695209cc7015c84a609ef14429f2188ea9b5e3237d3c3a136","Image":"base2:latest","Command":"lol
-        not a real command","Created":1374855081,"Status":"Exit 127","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"2acbe41c2c3c9632a606427aa907e24af4b7ba15a3e50b9cf34ea28e1797458b","Image":"base2:latest","Command":"sleep
-        5","Created":1374855081,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"8f951f4e643899fb9ef75376961bffaea4bdffe7277bec99d4c08184790af264","Image":"base2:latest","Command":"sleep
-        5","Created":1374855076,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"ccc138464e03af407af017027a11697f4f3e55370d53d27062d530e39b85d5cb","Image":"base2:latest","Command":"tar
-        nonsense","Created":1374855075,"Status":"Exit 64","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"5086540c2501795c0b7cdb7b7bbacdeadd65b3f32df7a030a835c6e28bd329ff","Image":"base2:latest","Command":"sleep
-        50","Created":1374855065,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"348121471d9c3fbbb7f95a41d58184e8cfe316160544d8e9fd2cc54c09199c96","Image":"base2:latest","Command":"ls
-        ","Created":1374855065,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"bcd6004f227795922b875619bbbc0db53490ee3dac0487bc3d68fb3abb0a4943","Image":"base2:latest","Command":"true
-        ","Created":1374855065,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"9fd9abedfc616a79e590a93629167d7350aff8df06b6d0f88ccaf75da6dd482a","Image":"base2:latest","Command":"true
-        ","Created":1374855065,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"6cd83a35b3931071d198ef4c9f4c8a2db710a5143d847c562191904922855dcd","Image":"base2:latest","Command":"uname
-        -r","Created":1374855065,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"3b11b31217836ccf55b9df7ac666f5bf6cae2ba6a24116c9b7230fb69e45dbbf","Image":"base2:latest","Command":"rm
-        -rf / --no-preserve-root","Created":1374855062,"Status":"Exit 1","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"82879e0a9b1e718a0bb8b6bbad3574f01c0fa6c55e12f795a1dbcba812851b2c","Image":"base2:latest","Command":"true
-        ","Created":1374855061,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"714ae4978ddf85b1795471163e9d6595c098cc42417b6bcb34c190e5c5d268df","Image":"base2:latest","Command":"true
-        ","Created":1374855061,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      encoding: US-ASCII
+      string: ! '[]'
     http_version: 
-  recorded_at: Wed, 07 Aug 2013 16:51:14 GMT
-recorded_with: VCR 2.4.0
+  recorded_at: Mon, 07 Oct 2013 14:12:05 GMT
+recorded_with: VCR 2.6.0
