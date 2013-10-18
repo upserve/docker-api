@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Docker::Image do
   describe '#to_s' do
-    subject { described_class.send(:new, Docker.connection, id) }
+    subject { described_class.new(Docker.connection, id, info) }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
@@ -15,14 +15,6 @@ describe Docker::Image do
     let(:expected_string) do
       "Docker::Image { :id => #{id}, :info => #{info.inspect}, "\
         ":connection => #{connection} }"
-    end
-
-    before do
-      {
-        :@id => id,
-        :@connection => connection,
-        :@info => info
-      }.each { |k, v| subject.instance_variable_set(k, v) }
     end
 
     its(:to_s) { should == expected_string }
