@@ -254,7 +254,9 @@ describe Docker::Image do
     subject { described_class }
 
     context 'with a valid Dockerfile' do
-      let(:dir) { File.join(File.dirname(__FILE__), '..', 'fixtures') }
+      let(:dir) {
+        File.join(File.dirname(__FILE__), '..', 'fixtures', 'build_from_dir')
+      }
       let(:docker_file) { File.new("#{dir}/Dockerfile") }
       let(:image) { subject.build_from_dir(dir) }
       let(:container) do
@@ -265,7 +267,6 @@ describe Docker::Image do
                               .attach(:stderr => true) }
 
       it 'builds the image', :vcr do
-        pending 'webmock / vcr issue'
         output.should == docker_file.tap(&:rewind).read
       end
     end

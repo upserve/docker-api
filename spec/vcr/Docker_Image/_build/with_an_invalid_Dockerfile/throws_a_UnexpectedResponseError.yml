@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/build
+    uri: unix:///var/run/docker.sock/v1.4/build
     body:
       encoding: UTF-8
       string: !binary |-
@@ -54,13 +54,13 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -70,7 +70,7 @@ http_interactions:
         NjU=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0ODowMiBHTVQ=
+        V2VkLCAyMyBPY3QgMjAxMyAxODo0NjoyNiBHTVQ=
     body:
       encoding: US-ASCII
       string: ! 'Error build: Invalid Dockerfile format
@@ -79,5 +79,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:48:02 GMT
+  recorded_at: Wed, 23 Oct 2013 18:46:26 GMT
 recorded_with: VCR 2.6.0
