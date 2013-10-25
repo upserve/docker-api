@@ -36,6 +36,8 @@ class Docker::Connection
     resource.request(compile_request_params(*args, &block)).body
   rescue Excon::Errors::BadRequest => ex
     raise ClientError, ex.message
+  rescue Excon::Errors::Unauthorized => ex
+    raise UnauthorizedError, ex.message
   rescue Excon::Errors::InternalServerError => ex
     raise ServerError, ex.message
   rescue Excon::Errors::Timeout => ex

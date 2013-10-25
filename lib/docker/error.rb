@@ -11,6 +11,9 @@ module Docker::Error
   # Raised when a request returns a 400.
   class ClientError < DockerError; end
 
+  # Raised when a request returns a 401.
+  class UnauthorizedError < DockerError; end
+
   # Raised when a request returns a 500.
   class ServerError < DockerError; end
 
@@ -22,4 +25,7 @@ module Docker::Error
 
   # Raised when a request times out.
   class TimeoutError < DockerError; end
+
+  # Raised when login fails.
+  class AuthenticationError < DockerError; end
 end
