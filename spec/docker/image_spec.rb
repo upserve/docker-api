@@ -82,10 +82,26 @@ describe Docker::Image do
 
   describe '#push' do
     subject { described_class.create('fromImage' => 'base') }
+    let(:credentials) {
+      {
+        :username => 'test',
+        :password => 'test',
+        :auth     => '',
+        :email    => 'test@test.com'
+      }
+    }
+    let(:base_image) {
+      described_class.create('fromImage' => 'base')
+    }
+    let(:container) {
+      base_image.run('true')
+    }
+    let(:new_image) {
+      container.commit('repo' => 'test/base')
+    }
 
     it 'pushes the Image', :vcr do
-      pending 'I don\'t want to push the Image to the Docker Registry'
-      subject.push
+      new_image.push(credentials)
     end
   end
 

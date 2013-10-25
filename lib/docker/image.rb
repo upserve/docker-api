@@ -33,8 +33,14 @@ class Docker::Image
   end
 
   # Push the Image to the Docker registry.
-  def push(options = {})
-    connection.post(path_for(:push), options, :body => Docker.creds)
+  def push(creds = nil, options = {})
+    credentials = (creds.nil?) ? Docker.creds : creds.to_json
+    headers = Docker::Util.build_auth_header(credentials)
+    connection.post(
+      path_for(:push),
+      options,
+      :headers => headers
+    )
     self
   end
 
@@ -93,8 +99,14 @@ class Docker::Image
     include Docker::Error
 
     # Create a new Image.
-    def create(opts = {}, conn = Docker.connection)
-      instance = new(conn)
+    def create(opts = {}, creds = nil, conn = Docker.connection)
+      credentials = (creds.nil?) ? creds.to_json : Docker.creds
+      headers = if credentials.nil?
+        Docker::Util.build_auth_header(credentials)
+      else
+        {}
+      end
+      instance = new(conn, {}, :headers => headers)
       conn.post('/images/create', opts)
       id = opts['repo'] ? "#{opts['repo']}/#{opts['tag']}" : opts['fromImage']
       if (instance.id = id).nil?

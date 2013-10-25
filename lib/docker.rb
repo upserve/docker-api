@@ -2,6 +2,7 @@ require 'cgi'
 require 'json'
 require 'excon'
 require 'tempfile'
+require 'base64'
 require 'rubygems/package'
 require 'archive/tar/minitar'
 
