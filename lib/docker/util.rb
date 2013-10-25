@@ -18,7 +18,7 @@ module Docker::Util
         tar.add_file(file_name, 0640) { |tar_file| tar_file.write(input) }
       end
     end
-    output.tap(&:rewind)
+    output.tap(&:rewind).string
   end
 
   def create_dir_tar(directory)

@@ -67,7 +67,7 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAyMyBPY3QgMjAxMyAxODo0Njo1NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNDoxNDoyNiBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -75,7 +75,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
     http_version: 
-  recorded_at: Wed, 23 Oct 2013 18:46:55 GMT
+  recorded_at: Fri, 25 Oct 2013 14:14:26 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.4/build
@@ -166,22 +166,22 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAyMyBPY3QgMjAxMyAxODo0Njo1NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNDoxNDoyNiBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
       string: ! "Step 1 : FROM b750fe79269d\n ---> b750fe79269d\nStep 2 : ADD Gemfile
-        /\n ---> 090c78fc3afc\nSuccessfully built 090c78fc3afc\n"
+        /\n ---> 74eb2b7a89d5\nSuccessfully built 74eb2b7a89d5\n"
     http_version: 
-  recorded_at: Wed, 23 Oct 2013 18:46:55 GMT
+  recorded_at: Fri, 25 Oct 2013 14:14:26 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.4/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"090c78fc3afc","Cmd":["cat","/Gemfile"]}'
+      string: ! '{"Image":"74eb2b7a89d5","Cmd":["cat","/Gemfile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.6.0
@@ -200,15 +200,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAyMyBPY3QgMjAxMyAxODo0Njo1NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNDoxNDoyNiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"2e59a5ea2c00"}'
+      string: ! '{"Id":"332c982b95fc"}'
     http_version: 
-  recorded_at: Wed, 23 Oct 2013 18:46:55 GMT
+  recorded_at: Fri, 25 Oct 2013 14:14:26 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/2e59a5ea2c00/start
+    uri: unix:///var/run/docker.sock/v1.4/containers/332c982b95fc/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -230,48 +230,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAyMyBPY3QgMjAxMyAxODo0Njo1NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNDoxNDoyNiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 23 Oct 2013 18:46:55 GMT
+  recorded_at: Fri, 25 Oct 2013 14:14:26 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/2e59a5ea2c00/start
-    body:
-      encoding: UTF-8
-      string: ! '{}'
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.6.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 500
-      message: 
-    headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MTM4
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAyMyBPY3QgMjAxMyAxODo0Njo1NSBHTVQ=
-    body:
-      encoding: US-ASCII
-      string: ! 'Error starting container 2e59a5ea2c00: The container 2e59a5ea2c00c4039472f794a21269c468abfb07dadbc95a75da7e5354db05c1
-        is already running.
-
-'
-    http_version: 
-  recorded_at: Wed, 23 Oct 2013 18:46:55 GMT
-- request:
-    method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/2e59a5ea2c00/attach?stream=true&stdout=true
+    uri: unix:///var/run/docker.sock/v1.4/containers/332c982b95fc/attach?stream=true&stdout=true
     body:
       encoding: US-ASCII
       string: ''
@@ -302,5 +269,5 @@ http_interactions:
 
 '
     http_version: 
-  recorded_at: Wed, 23 Oct 2013 18:46:55 GMT
+  recorded_at: Fri, 25 Oct 2013 14:14:26 GMT
 recorded_with: VCR 2.6.0
