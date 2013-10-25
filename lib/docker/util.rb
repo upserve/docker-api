@@ -57,4 +57,9 @@ module Docker::Util
 
     file_hash
   end
+
+  def build_auth_header(credentials)
+    credentials = credentials.to_json if credentials.is_a?(Hash)
+    { 'X-Registry-Auth' => Base64.encode64(credentials).gsub(/\n/, '') }
+  end
 end

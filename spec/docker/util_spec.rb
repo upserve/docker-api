@@ -40,4 +40,33 @@ describe Docker::Util do
       end
     end
   end
+
+  describe '.build_auth_header' do
+    subject { described_class }
+
+    let(:credentials) {
+      {
+        :username      => 'test',
+        :password      => 'password',
+        :email         => 'test@example.com',
+        :serveraddress => 'https://registry.com/'
+      }
+    }
+    let(:credential_string) { credentials.to_json }
+    let(:x_registry_auth) { Base64.encode64(credential_string).gsub(/\n/, '') }
+    let(:expected_headers) { { 'X-Registry-Auth' => x_registry_auth } }
+
+
+    context 'given credentials as a Hash' do
+      it 'returns an X-Registry-Auth header encoded' do
+        expect(subject.build_auth_header(credentials)).to eq(expected_headers)
+      end
+    end
+
+    context 'given credentials as a String' do
+      it 'returns an X-Registry-Auth header encoded' do
+        expect(subject.build_auth_header(credential_string)).to eq(expected_headers)
+      end
+    end
+  end
 end
