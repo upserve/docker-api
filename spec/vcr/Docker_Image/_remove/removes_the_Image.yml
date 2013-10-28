@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.6/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTozMiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzoxMSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -32,10 +32,10 @@ http_interactions:
         (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
         layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:34 GMT
+  recorded_at: Fri, 25 Oct 2013 16:33:13 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.4/images/base
+    uri: unix:///var/run/docker.sock/v1.6/images/base
     body:
       encoding: US-ASCII
       string: ''
@@ -57,15 +57,15 @@ http_interactions:
         MTM3
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTozNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzoxMyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Untagged":"b750fe79269d"},{"Deleted":"643ff34f8a2c"},{"Deleted":"d17a7699d91e"},{"Deleted":"b750fe79269d"},{"Deleted":"27cf78414709"}]'
+      string: ! '[{"Untagged":"b750fe79269d"},{"Deleted":"ab6357d3e739"},{"Deleted":"e861b7367861"},{"Deleted":"b750fe79269d"},{"Deleted":"27cf78414709"}]'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:34 GMT
+  recorded_at: Fri, 25 Oct 2013 16:33:13 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/images/json
+    uri: unix:///var/run/docker.sock/v1.6/images/json
     body:
       encoding: US-ASCII
       string: ''
@@ -84,13 +84,13 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MTMz
+        Mg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTozNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzoxMyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"a94e7eb905def46eb728b2ae167d389275241fd3278c5f2a3708bca405a52733","Created":1382120046,"Size":16391,"VirtualSize":180132276}]'
+      string: ! '[]'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:34 GMT
+  recorded_at: Fri, 25 Oct 2013 16:33:13 GMT
 recorded_with: VCR 2.6.0

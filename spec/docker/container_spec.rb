@@ -78,7 +78,7 @@ describe Docker::Container do
     subject {
       Docker::Image.create(
         'fromImage' => 'base'
-      ).run('touch /test').tap { |c| c.start.wait }
+      ).run('touch /test').tap { |c| c.wait }
     }
 
     context 'when the file does not exist' do

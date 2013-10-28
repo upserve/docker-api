@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["ls"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo1NSBHTVQ=
+        TW9uLCAyOCBPY3QgMjAxMyAxNDozNTozNiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"d4fd3c224a07"}'
+      string: ! '{"Id":"86e7cfd11b94"}'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:55 GMT
+  recorded_at: Mon, 28 Oct 2013 14:35:36 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
@@ -51,23 +51,19 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        OTcy
+        MTkx
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo1NSBHTVQ=
+        TW9uLCAyOCBPY3QgMjAxMyAxNDozNTozNiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"d4fd3c224a07372e99adaaf9fadd7ad83b241cc69324edc81f7270417ac7fa37","Image":"base:latest","Command":"ls
-        ","Created":1382624215,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"940a21e6a3a3afbeacb2b9bf22ee0bc1c31c0b9104d9562c76aec0448453e68c","Image":"base:latest","Command":"sleep
-        50","Created":1382624205,"Status":"Up Less than a second","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"87483f6acd666c54dfc91d6eb714c11f858d9de58ffb2c690845d5019fae3f33","Image":"base:latest","Command":"ls
-        ","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"27d44bf6195c2200a0e8e5f24bf2ee6868ba431d92e4c8e7ec04006b8ea3f0ba","Image":"base:latest","Command":"true
-        ","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"f477c8ddc10135915af6f526e413385de468b0410d8fd7d0480676f712a87ba4","Image":"base:latest","Command":"test
-        -d /foo","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      string: ! '[{"Id":"86e7cfd11b94c982d011dc6b9f5414dae7f92065f8ad444ec5254fc92ed6ffd3","Image":"base:latest","Command":"ls
+        ","Created":1382970936,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0}]'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:55 GMT
+  recorded_at: Mon, 28 Oct 2013 14:35:36 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
@@ -86,18 +82,14 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        OTcy
+        MTkx
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo1NSBHTVQ=
+        TW9uLCAyOCBPY3QgMjAxMyAxNDozNTozNiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"d4fd3c224a07372e99adaaf9fadd7ad83b241cc69324edc81f7270417ac7fa37","Image":"base:latest","Command":"ls
-        ","Created":1382624215,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"940a21e6a3a3afbeacb2b9bf22ee0bc1c31c0b9104d9562c76aec0448453e68c","Image":"base:latest","Command":"sleep
-        50","Created":1382624205,"Status":"Up Less than a second","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"87483f6acd666c54dfc91d6eb714c11f858d9de58ffb2c690845d5019fae3f33","Image":"base:latest","Command":"ls
-        ","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"27d44bf6195c2200a0e8e5f24bf2ee6868ba431d92e4c8e7ec04006b8ea3f0ba","Image":"base:latest","Command":"true
-        ","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"f477c8ddc10135915af6f526e413385de468b0410d8fd7d0480676f712a87ba4","Image":"base:latest","Command":"test
-        -d /foo","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      string: ! '[{"Id":"86e7cfd11b94c982d011dc6b9f5414dae7f92065f8ad444ec5254fc92ed6ffd3","Image":"base:latest","Command":"ls
+        ","Created":1382970936,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0}]'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:55 GMT
+  recorded_at: Mon, 28 Oct 2013 14:35:36 GMT
 recorded_with: VCR 2.6.0

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["true"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODoyNzo1MiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1MyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"1db54c19526e"}'
+      string: ! '{"Id":"e817145430ed"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:27:52 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:53 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/1db54c19526e/json
+    uri: unix:///var/run/docker.sock/v1.6/containers/e817145430ed/json
     body:
       encoding: US-ASCII
       string: ''
@@ -51,13 +51,13 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MTEyNg==
+        MTE2Mw==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODoyNzo1MiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1MyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"ID":"1db54c19526e08948ff87ad5919f73bd88db0ffe441aada3078eb8c4a2df7f13","Created":"2013-10-22T18:27:52.82992128Z","Path":"true","Args":[],"Config":{"Hostname":"1db54c19526e","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":"","WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"Privileged":false},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","HostnamePath":"/var/lib/docker/containers/1db54c19526e08948ff87ad5919f73bd88db0ffe441aada3078eb8c4a2df7f13/hostname","HostsPath":"/var/lib/docker/containers/1db54c19526e08948ff87ad5919f73bd88db0ffe441aada3078eb8c4a2df7f13/hosts","Volumes":null,"VolumesRW":null}'
+      string: ! '{"ID":"e817145430ed2168bdbc548a1478ebbea02ace9564cdc02012fd9bab68ddf1b8","Created":"2013-10-25T16:28:53.132562792Z","Path":"true","Args":[],"Config":{"Hostname":"e817145430ed","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":"","WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"Privileged":false},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","FinishedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","HostnamePath":"/var/lib/docker/containers/e817145430ed2168bdbc548a1478ebbea02ace9564cdc02012fd9bab68ddf1b8/hostname","HostsPath":"/var/lib/docker/containers/e817145430ed2168bdbc548a1478ebbea02ace9564cdc02012fd9bab68ddf1b8/hosts","Volumes":null,"VolumesRW":null}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:27:52 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:53 GMT
 recorded_with: VCR 2.6.0

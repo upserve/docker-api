@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["rm","-rf","/root"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTowNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1MyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"db25b3db4fa5"}'
+      string: ! '{"Id":"1375718e85e4"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:04 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:53 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/db25b3db4fa5/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/1375718e85e4/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -54,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTowNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1MyBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:04 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:53 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/db25b3db4fa5/wait
+    uri: unix:///var/run/docker.sock/v1.6/containers/1375718e85e4/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -84,15 +84,15 @@ http_interactions:
         MTY=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTowNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1MyBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '{"StatusCode":0}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:04 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:53 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/db25b3db4fa5/changes
+    uri: unix:///var/run/docker.sock/v1.6/containers/1375718e85e4/changes
     body:
       encoding: US-ASCII
       string: ''
@@ -114,10 +114,10 @@ http_interactions:
         ODI=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTowNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1MyBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '[{"Path":"/root","Kind":2},{"Path":"/dev","Kind":0},{"Path":"/dev/kmsg","Kind":1}]'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:04 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:53 GMT
 recorded_with: VCR 2.6.0

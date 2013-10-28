@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["rm","-rf","/","--no-preserve-root"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxMjozNToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1OCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"3080ab4688a1"}'
+      string: ! '{"Id":"6262eddf6ea2"}'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 12:35:29 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:58 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/3080ab4688a1/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/6262eddf6ea2/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -54,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxMjozNToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1OCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 12:35:29 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:58 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/3080ab4688a1/export
+    uri: unix:///var/run/docker.sock/v1.6/containers/6262eddf6ea2/export
     body:
       encoding: US-ASCII
       string: ''
@@ -81,7 +81,7 @@ http_interactions:
         YXBwbGljYXRpb24vb2N0ZXQtc3RyZWFt
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxMjozNToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1OCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -91,7 +91,7 @@ http_interactions:
         Li8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA3NTUAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDAw
-        ADEyMjMyMjEyMDIxADAwNjA2NAAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMjMyNTE2MTEyADAwNjA3NAAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -102,5 +102,5 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAuL3Byb2MvAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 12:35:32 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:59 GMT
 recorded_with: VCR 2.6.0

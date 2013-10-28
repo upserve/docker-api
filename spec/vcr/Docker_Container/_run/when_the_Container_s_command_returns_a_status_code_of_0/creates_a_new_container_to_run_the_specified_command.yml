@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["pwd"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"37063945347d"}'
+      string: ! '{"Id":"e1c2ccad8149"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/37063945347d/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/e1c2ccad8149/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -54,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/37063945347d/wait
+    uri: unix:///var/run/docker.sock/v1.6/containers/e1c2ccad8149/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -84,15 +84,15 @@ http_interactions:
         MTY=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '{"StatusCode":0}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/commit?container=37063945
+    uri: unix:///var/run/docker.sock/v1.6/commit?container=e1c2ccad
     body:
       encoding: US-ASCII
       string: ''
@@ -114,18 +114,18 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"d17a7699d91e"}'
+      string: ! '{"Id":"4b92a6a2b057"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"d17a7699d91e","Cmd":["ls"]}'
+      string: ! '{"Image":"4b92a6a2b057","Cmd":["ls"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.6.0
@@ -144,15 +144,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"56fba03c76c1"}'
+      string: ! '{"Id":"f57f08bf4190"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/56fba03c76c1/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/f57f08bf4190/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -174,15 +174,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/56fba03c76c1/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/f57f08bf4190/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -204,18 +204,18 @@ http_interactions:
         MTM4
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! 'Error starting container 56fba03c76c1: The container 56fba03c76c1a8453a095d2b7c59e2245a8245869f865c108bc33651c2b14f08
+      string: ! 'Error starting container f57f08bf4190: The container f57f08bf4190b90d39d23135b0816f7a87d6cdd5bb4238c890394a87d1d40488
         is already running.
 
 '
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:29 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/56fba03c76c1/wait
+    uri: unix:///var/run/docker.sock/v1.6/containers/f57f08bf4190/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -237,10 +237,10 @@ http_interactions:
         MTY=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OTozMCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxODoxMzowOCBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '{"StatusCode":0}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:30 GMT
+  recorded_at: Fri, 25 Oct 2013 18:13:08 GMT
 recorded_with: VCR 2.6.0

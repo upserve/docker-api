@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/info
+    uri: unix:///var/run/docker.sock/v1.6/info
     body:
       encoding: US-ASCII
       string: ''
@@ -21,13 +21,13 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MjM4
+        MjM2
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxOTowMDo1MiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyNDo0NyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Debug":false,"Containers":81,"Images":4,"NFd":80,"NGoroutines":88,"MemoryLimit":true,"IPv4Forwarding":true,"LXCVersion":"0.9.0","NEventsListener":273,"KernelVersion":"3.8.0-27-generic","IndexServerAddress":"https://index.docker.io/v1/"}'
+      string: ! '{"Debug":false,"Containers":8,"Images":9,"NFd":10,"NGoroutines":13,"MemoryLimit":true,"IPv4Forwarding":true,"LXCVersion":"0.9.0","NEventsListener":12,"KernelVersion":"3.8.0-27-generic","IndexServerAddress":"https://index.docker.io/v1/"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 19:00:52 GMT
+  recorded_at: Fri, 25 Oct 2013 16:24:47 GMT
 recorded_with: VCR 2.6.0

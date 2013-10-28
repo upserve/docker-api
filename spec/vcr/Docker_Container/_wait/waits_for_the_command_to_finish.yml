@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["tar","nonsense"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyMyBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxMiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"de717c5f5183"}'
+      string: ! '{"Id":"49a0920f92f7"}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:23 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:12 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/de717c5f5183/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/49a0920f92f7/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -54,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyMyBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:23 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:12 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/de717c5f5183/wait
+    uri: unix:///var/run/docker.sock/v1.6/containers/49a0920f92f7/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -84,10 +84,10 @@ http_interactions:
         MTc=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyMiBPY3QgMjAxMyAxODo1OToyNCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxMyBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '{"StatusCode":64}'
     http_version: 
-  recorded_at: Tue, 22 Oct 2013 18:59:24 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:13 GMT
 recorded_with: VCR 2.6.0

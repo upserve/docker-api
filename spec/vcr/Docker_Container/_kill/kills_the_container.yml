@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["ls"],"Image":"base"}'
@@ -24,15 +24,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo0NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"87483f6acd66"}'
+      string: ! '{"Id":"11bab1009e09"}'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:45 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.4/containers/87483f6acd66/kill
+    uri: unix:///var/run/docker.sock/v1.6/containers/11bab1009e09/kill
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -54,15 +54,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo0NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:45 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/json
+    uri: unix:///var/run/docker.sock/v1.6/containers/json
     body:
       encoding: US-ASCII
       string: ''
@@ -84,15 +84,15 @@ http_interactions:
         Mg==
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo0NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '[]'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:45 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.4/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
@@ -109,18 +109,28 @@ http_interactions:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        NTc2
       !binary "RGF0ZQ==":
       - !binary |-
-        VGh1LCAyNCBPY3QgMjAxMyAxNDoxNjo0NSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"87483f6acd666c54dfc91d6eb714c11f858d9de58ffb2c690845d5019fae3f33","Image":"base:latest","Command":"ls
-        ","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"27d44bf6195c2200a0e8e5f24bf2ee6868ba431d92e4c8e7ec04006b8ea3f0ba","Image":"base:latest","Command":"true
-        ","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"f477c8ddc10135915af6f526e413385de468b0410d8fd7d0480676f712a87ba4","Image":"base:latest","Command":"test
-        -d /foo","Created":1382624205,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      string: ! '[{"Id":"11bab1009e09b171b74a1428ff624f6a188345345685d49c2fa4b83b95d7279c","Image":"base:latest","Command":"ls
+        ","Created":1382718542,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"6c5940e06b2f1131ddba8d809628ca4ca3357612624ebae9a24b5ada27f9e210","Image":"base:latest","Command":"true
+        ","Created":1382718542,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"62d216c3fb8a491d89fbc2a72ec7a39be464f77624740238be90b13502b66ab0","Image":"base:latest","Command":"test
+        -d /foo","Created":1382718541,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"a6fc66b03627541d764a70a5e33eaf0e704186f78e923c4ecdb8d3a8007c4d97","Image":"base:latest","Command":"pwd
+        ","Created":1382718541,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"6262eddf6ea23cae949bb0745f4a3812c0961fe78d5db64ac56a7d97cae1dad3","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1382718538,"Status":"Exit 1","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"5d6805e5ca5542a8ccf8f11bf3def474700c0699ca4144a824f11be784911314","Image":"base:latest","Command":"touch
+        /test","Created":1382718538,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"9ae257b241d59e4bd4994e448ed7075e358a987da5a4ae97022883859cefc82e","Image":"base:latest","Command":"touch
+        /test","Created":1382718537,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"968bce01b7167d4a90ac0bf84033e50f99dff1590048e45b6f73326c1f93c674","Image":"base:latest","Command":"touch
+        /test","Created":1382718536,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"aeb51665a4161d45974a853fb9c1a737e501eb8708fa749785401f8f95c5a8c3","Image":"a49d35b89848","Command":"/while
+        ","Created":1382718533,"Status":"Exit 137","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"511a99a9b924341e343b5cb9c830101c1db0054c1cd7867f19b65ef98576ffa4","Image":"base:latest","Command":"/bin/sh
+        -c printf ''#! /bin/sh\\nwhile true\\ndo\\ntrue\\ndone\\n'' \u003e /while
+        && chmod +x /while","Created":1382718533,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"1375718e85e4a4135bf9f16979edb3693c96e5854ad3b6d42bc2f664d38bd63a","Image":"base:latest","Command":"rm
+        -rf /root","Created":1382718533,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"e817145430ed2168bdbc548a1478ebbea02ace9564cdc02012fd9bab68ddf1b8","Image":"base:latest","Command":"true
+        ","Created":1382718533,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0}]'
     http_version: 
-  recorded_at: Thu, 24 Oct 2013 14:16:45 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 recorded_with: VCR 2.6.0
