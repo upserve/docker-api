@@ -34,10 +34,10 @@ describe Docker::Image do
     subject { described_class.build('from base') }
     let(:new_image) { subject.insert(:path => '/stallman',
                                      :url => 'http://stallman.org') }
-    let(:ls_output) { new_image.run('ls /').attach.split("\n") }
+    let(:ls_output) { new_image.run('ls /').attach }
 
     it 'inserts the url\'s file into a new Image', :vcr do
-      ls_output.should include('stallman')
+      expect(ls_output.first).to include('stallman')
     end
   end
 
@@ -61,9 +61,11 @@ describe Docker::Image do
       let(:gemfile) { File.read('Gemfile') }
 
       it 'creates a new Image that has that file', :vcr do
-        new_image.run('cat /Gemfile').start.attach { |chunk|
-          chunk.should == gemfile
+        chunk = nil
+        new_image.run('cat /Gemfile').attach { |c|
+          chunk ||= c
         }
+        expect(chunk).to eq(gemfile)
       end
     end
 
@@ -142,7 +144,7 @@ describe Docker::Image do
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
       it 'splits the String by spaces and creates a new Container' do
-        output.should == "ld-linux-x86-64.so.2\n"
+        expect(output).to eq(["ld-linux-x86-64.so.2\n"])
       end
     end
 
@@ -150,7 +152,7 @@ describe Docker::Image do
       let(:cmd) { %[which pwd] }
 
       it 'creates a new Container', :vcr do
-        output.should == "/bin/pwd\n"
+        expect(output).to eq(["/bin/pwd\n"])
       end
     end
 
@@ -283,7 +285,7 @@ describe Docker::Image do
                               .attach(:stderr => true) }
 
       it 'builds the image', :vcr do
-        output.should == docker_file.tap(&:rewind).read
+        expect(output).to eq([docker_file.read])
       end
     end
   end

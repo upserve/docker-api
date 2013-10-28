@@ -150,6 +150,8 @@ class Docker::Image
         :body => Docker::Util.create_tar('Dockerfile' => commands)
       )
       new(connection, Docker::Util.extract_id(body))
+    rescue Docker::Error::ServerError
+      raise Docker::Error::UnexpectedResponseError
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
