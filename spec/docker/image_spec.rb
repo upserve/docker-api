@@ -73,11 +73,12 @@ describe Docker::Image do
       let(:file) { ['./Gemfile', './Rakefile'] }
       let(:gemfile) { File.read('Gemfile') }
       let(:rakefile) { File.read('Rakefile') }
+      let(:response) { 
+        new_image.run('cat /Gemfile /Rakefile').attach
+      }
 
       it 'creates a new Image that has each file', :vcr do
-        new_image.run('cat /Gemfile /Rakefile').start.attach do |chunk|
-          chunk.should == gemfile + rakefile
-        end
+        expect(response).to eq([gemfile, rakefile])
       end
     end
   end

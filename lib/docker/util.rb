@@ -64,11 +64,13 @@ module Docker::Util
   end
 
   # Method to break apart application/vnd.docker.raw-stream headers
-  def decipher_messages(raw_text)
+  def decipher_messages(body)
+    raw_text = body.dup
     messages = []
     while !raw_text.empty?
       header = raw_text.slice!(0,8)
-      length = header[4..7].chars.map { |c| c.getbyte(0) }.inject(&:+)
+      lengths = header[4..7].chars.map { |c| c.getbyte(0) }
+      length = (2**24 * lengths[0]) + (2**16 * lengths[1]) + (2**8 * lengths[2]) + lengths[3]
       messages << raw_text.slice!(0,length)
     end
     messages
