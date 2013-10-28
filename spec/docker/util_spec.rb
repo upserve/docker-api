@@ -69,4 +69,26 @@ describe Docker::Util do
       end
     end
   end
+
+  describe '#decipher_messages' do
+    context 'given a single header' do
+      let(:raw_text) { "\x01\x00\x00\x00\x00\x00\x00\x01a" }
+      let(:expected_messages) { ["a"] }
+
+      it "returns a single message" do
+        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+      end
+    end
+
+    context 'given two headers' do
+      let(:raw_text) {
+        "\x01\x00\x00\x00\x00\x00\x00\x01a\x01\x00\x00\x00\x00\x00\x00\x01b"
+      }
+      let(:expected_messages) { ["a", "b"] }
+
+      it "returns both messages" do
+        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+      end
+    end
+  end
 end
