@@ -1,0 +1,181 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["true"],"Image":"base"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTM1
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMTo1OToyNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"96b3bf2d511e","Warnings":["Docker detected local DNS server
+        on resolv.conf. Using default external servers: [8.8.8.8 8.8.4.4]"]}'
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 21:59:26 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/96b3bf2d511e/start
+    body:
+      encoding: UTF-8
+      string: ! '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMTo1OToyNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 21:59:26 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/commit?container=96b3bf2d
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["pwd"]}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMTo1OToyNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"a10fab209e57"}'
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 21:59:26 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"a10fab209e57"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTM1
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMTo1OToyNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"459ab8af8f81","Warnings":["Docker detected local DNS server
+        on resolv.conf. Using default external servers: [8.8.8.8 8.8.4.4]"]}'
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 21:59:26 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/459ab8af8f81/start
+    body:
+      encoding: UTF-8
+      string: ! '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMTo1OToyNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 21:59:26 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/459ab8af8f81/attach?stdout=true&stream=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
+    body:
+      encoding: US-ASCII
+      string: ! '/
+
+'
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 21:59:26 GMT
+recorded_with: VCR 2.6.0

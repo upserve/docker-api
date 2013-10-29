@@ -1,0 +1,68 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://unix/v1.4/images/create?fromImage=base
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMTo1OTozMCBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"Pulling repository base"}{"error":"Get https://index.docker.io/v1/images/base/ancestry:
+        lookup index.docker.io: Temporary failure in name resolution","errorDetail":{"message":"Get
+        https://index.docker.io/v1/images/base/ancestry: lookup index.docker.io: Temporary
+        failure in name resolution"}}'
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
+- request:
+    method: post
+    uri: http://unix/v1.4/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"base"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 500
+      message: ''
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAyOSBPY3QgMjAxMyAyMjowMDozMyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! 'No command specified
+
+'
+    http_version:
+  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
+recorded_with: VCR 2.6.0

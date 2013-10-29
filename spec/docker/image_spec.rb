@@ -145,6 +145,25 @@ describe Docker::Image do
         output.should == "/bin/pwd\n"
       end
     end
+
+    context 'when the argument is nil', :vcr  do
+      let(:cmd) { nil }
+      context 'no command configured in image'do
+        it 'should raise an error if no command is specified' do
+          expect {output}.to raise_error(Docker::Error::ServerError,
+                                         "No command specified.")
+        end
+      end
+
+      context "command configured in image" do
+        let(:container) {Docker::Container.create('Cmd' => %w[true],
+                                                  'Image' => 'base')}
+        subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
+        it 'should normally show result if image has Cmd configured' do
+          output.should eql "/\n"
+        end
+      end
+    end
   end
 
   describe '.create' do
