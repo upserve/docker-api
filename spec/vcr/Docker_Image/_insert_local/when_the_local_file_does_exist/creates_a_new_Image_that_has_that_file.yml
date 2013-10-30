@@ -67,7 +67,7 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNDowNDo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -75,7 +75,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 14:04:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.6/build
@@ -166,22 +166,22 @@ http_interactions:
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNDowNDo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
       string: ! "Step 1 : FROM b750fe79269d\n ---> b750fe79269d\nStep 2 : ADD Gemfile
-        /\n ---> da9f3bd8bb16\nSuccessfully built da9f3bd8bb16\n"
+        /\n ---> f95d6ea397a2\nSuccessfully built f95d6ea397a2\n"
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 14:04:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"da9f3bd8bb16","Cmd":["cat","/Gemfile"]}'
+      string: ! '{"Image":"f95d6ea397a2","Cmd":["cat","/Gemfile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.6.0
@@ -200,15 +200,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNDowNDo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"a7bcb3530fe0"}'
+      string: ! '{"Id":"aeb0a140871c"}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 14:04:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/a7bcb3530fe0/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/aeb0a140871c/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -230,15 +230,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNDowNDo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 14:04:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/a7bcb3530fe0/attach?stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/aeb0a140871c/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -262,5 +262,5 @@ http_interactions:
         CgpnZW0gJ2V4Y29uJywgcGF0aDogJy9ob21lL3ZhZ3JhbnQvZXhjb24nCmdl
         bSAndmNyJywgcGF0aDogJy9ob21lL3ZhZ3JhbnQvdmNyJwo=
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 14:04:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 recorded_with: VCR 2.6.0

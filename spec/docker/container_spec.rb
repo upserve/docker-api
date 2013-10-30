@@ -131,7 +131,7 @@ describe Docker::Container do
 
     it 'yields each chunk', :vcr do
       chunk = nil
-      subject.attach do |c|
+      subject.attach do |stream, c|
         chunk ||= c
       end
       expect(chunk).to eq("/\n")

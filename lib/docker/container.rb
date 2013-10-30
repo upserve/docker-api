@@ -50,14 +50,21 @@ class Docker::Container
 
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
-    opts = { :stream => true, :stdout => true }.merge(options)
+    opts = {
+      :stream => true, :stdout => true, :stderr => true
+    }.merge(options)
     msgs = nil
     response_block = lambda do |c,r,t|
-      msgs = Docker::Util.decipher_messages(c)
+      stdout_msgs, stderr_msgs = msgs = Docker::Util.decipher_messages(c)
       
-      msgs.each do |msg|
-        block.call(msg)
-      end unless block.nil?
+      unless block.nil?
+        stdout_msgs.each do |msg|
+          block.call(:stdout, msg)
+        end
+        stderr_msgs.each do |msg|
+          block.call(:stderr, msg)
+        end
+      end
     end
 
     connection.post(

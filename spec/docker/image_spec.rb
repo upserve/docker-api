@@ -37,7 +37,7 @@ describe Docker::Image do
     let(:ls_output) { new_image.run('ls /').attach }
 
     it 'inserts the url\'s file into a new Image', :vcr do
-      expect(ls_output.first).to include('stallman')
+      expect(ls_output.first.first).to include('stallman')
     end
   end
 
@@ -62,7 +62,7 @@ describe Docker::Image do
 
       it 'creates a new Image that has that file', :vcr do
         chunk = nil
-        new_image.run('cat /Gemfile').attach { |c|
+        new_image.run('cat /Gemfile').attach { |stream, c|
           chunk ||= c
         }
         expect(chunk).to eq(gemfile)
@@ -78,7 +78,7 @@ describe Docker::Image do
       }
 
       it 'creates a new Image that has each file', :vcr do
-        expect(response).to eq([gemfile, rakefile])
+        expect(response).to eq([[gemfile, rakefile],[]])
       end
     end
   end
@@ -145,7 +145,7 @@ describe Docker::Image do
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
       it 'splits the String by spaces and creates a new Container' do
-        expect(output).to eq(["ld-linux-x86-64.so.2\n"])
+        expect(output).to eq([["ld-linux-x86-64.so.2\n"],[]])
       end
     end
 
@@ -153,7 +153,7 @@ describe Docker::Image do
       let(:cmd) { %[which pwd] }
 
       it 'creates a new Container', :vcr do
-        expect(output).to eq(["/bin/pwd\n"])
+        expect(output).to eq([["/bin/pwd\n"],[]])
       end
     end
 
@@ -303,14 +303,14 @@ describe Docker::Image do
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
-          expect(output).to eq([docker_file.read])
+          expect(output).to eq([[docker_file.read],[]])
         end
       end
 
       context 'with specifying a repo in the query parameters' do
         let(:opts) { { "t" => "swipely/base2" } }
         it 'builds the image and tags it', :vcr do
-          expect(output).to eq([docker_file.read])
+          expect(output).to eq([[docker_file.read],[]])
           expect(images.first.info["Repository"]).to eq("swipely/base2")
         end
       end

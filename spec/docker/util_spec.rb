@@ -71,9 +71,18 @@ describe Docker::Util do
   end
 
   describe '#decipher_messages' do
+    context 'given both standard out and standard error' do
+      let(:raw_text) { "\x01\x00\x00\x00\x00\x00\x00\x01a\x02\x00\x00\x00\x00\x00\x00\x01b" }
+      let(:expected_messages) { [["a"], ["b"]] }
+
+      it "returns a single message" do
+        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+      end
+    end
+
     context 'given a single header' do
       let(:raw_text) { "\x01\x00\x00\x00\x00\x00\x00\x01a" }
-      let(:expected_messages) { ["a"] }
+      let(:expected_messages) { [["a"], []] }
 
       it "returns a single message" do
         expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
@@ -84,7 +93,7 @@ describe Docker::Util do
       let(:raw_text) {
         "\x01\x00\x00\x00\x00\x00\x00\x01a\x01\x00\x00\x00\x00\x00\x00\x01b"
       }
-      let(:expected_messages) { ["a", "b"] }
+      let(:expected_messages) { [["a", "b"], []] }
 
       it "returns both messages" do
         expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
@@ -95,7 +104,7 @@ describe Docker::Util do
       let(:raw_text) {
         "\x01\x00\x00\x00\x00\x00\x01\x01" + ("a" * 257)
       }
-      let(:expected_messages) { [("a" * 257)] }
+      let(:expected_messages) { [[("a" * 257)], []] }
 
       it "returns both messages" do
         expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
