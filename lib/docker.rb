@@ -9,6 +9,10 @@ require 'archive/tar/minitar'
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
+  class << self
+    attr_accessor :creds
+  end
+
   def default_socket_url
     'unix:///var/run/docker.sock'
   end
@@ -53,14 +57,6 @@ module Docker
     Util.parse_json(connection.get('/info'))
   end
 
-  def creds
-    @creds
-  end
-
-  def creds=(creds)
-    @creds = creds
-  end
-
   # Login to the Docker registry.
   def authenticate!(options = {})
     creds = options.to_json
@@ -82,7 +78,7 @@ module Docker
 
   module_function :default_socket_url, :env_url, :url, :url=, :options,
                   :options=, :connection, :reset_connection!, :version,
-                  :info, :creds, :creds=, :authenticate!, :validate_version!
+                  :info, :authenticate!, :validate_version!
 end
 
 require 'docker/version'
