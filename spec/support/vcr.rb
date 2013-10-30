@@ -1,7 +1,4 @@
-require 'webmock'
 require 'vcr'
-
-WebMock.disable_net_connect!
 
 VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = false
