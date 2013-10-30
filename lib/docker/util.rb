@@ -69,8 +69,10 @@ module Docker::Util
     messages = []
     while !raw_text.empty?
       header = raw_text.slice!(0,8)
-      lengths = header[4..7].chars.map { |c| c.getbyte(0) }
-      length = (2**24 * lengths[0]) + (2**16 * lengths[1]) + (2**8 * lengths[2]) + lengths[3]
+      next if header.nil?
+      length = header[4..7].chars
+        .map { |c| c.getbyte(0) }
+        .inject(0) { |total, curr| (total << 8) + curr }
       messages << raw_text.slice!(0,length)
     end
     messages

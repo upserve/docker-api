@@ -90,5 +90,16 @@ describe Docker::Util do
         expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
       end
     end
+
+    context 'given a header for text longer then 255 characters' do
+      let(:raw_text) {
+        "\x01\x00\x00\x00\x00\x00\x01\x01" + ("a" * 257)
+      }
+      let(:expected_messages) { [("a" * 257)] }
+
+      it "returns both messages" do
+        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+      end
+    end
   end
 end
