@@ -291,16 +291,28 @@ describe Docker::Image do
         File.join(File.dirname(__FILE__), '..', 'fixtures', 'build_from_dir')
       }
       let(:docker_file) { File.new("#{dir}/Dockerfile") }
-      let(:image) { subject.build_from_dir(dir) }
+      let(:image) { subject.build_from_dir(dir, opts) }
+      let(:opts) { {} }
       let(:container) do
         Docker::Container.create('Image' => image.id,
                                  'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
                               .attach(:stderr => true) }
+      let(:images) { subject.all }
 
-      it 'builds the image', :vcr do
-        expect(output).to eq([docker_file.read])
+      context 'with no query parameters' do
+        it 'builds the image', :vcr do
+          expect(output).to eq([docker_file.read])
+        end
+      end
+
+      context 'with specifying a repo in the query parameters' do
+        let(:opts) { { "t" => "swipely/base2" } }
+        it 'builds the image and tags it', :vcr do
+          expect(output).to eq([docker_file.read])
+          expect(images.first.info["Repository"]).to eq("swipely/base2")
+        end
       end
     end
   end

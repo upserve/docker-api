@@ -155,10 +155,10 @@ class Docker::Image
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
-    def build_from_dir(dir, connection = Docker.connection)
+    def build_from_dir(dir, opts = {}, connection = Docker.connection)
       tar = Docker::Util.create_dir_tar(dir)
       body = connection.post(
-        '/build', {},
+        '/build', opts,
         :headers => { 'Content-Type'      => 'application/tar',
                       'Transfer-Encoding' => 'chunked' }
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
