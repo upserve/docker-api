@@ -277,6 +277,14 @@ describe Docker::Container do
       image.should be_a Docker::Image
       image.id.should_not be_nil
     end
+
+    context 'if run is passed, it saves the command in the image', :vcr do
+      let(:image) { subject.commit('run' => {"Cmd" => %w[pwd]}) }
+      it 'saves the command' do
+        image.run.attach.should eql "/\n"
+      end
+    end
+
   end
 
   describe '.create' do

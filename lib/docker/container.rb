@@ -57,7 +57,15 @@ class Docker::Container
   # Create an Image from a Container's change.s
   def commit(options = {})
     options.merge!('container' => self.id[0..7])
-    hash = Docker::Util.parse_json(connection.post('/commit', options))
+    # [code](https://github.com/dotcloud/docker/blob/v0.6.3/commands.go#L1115)
+    # Based on the link, the config passed as run, needs to be passed as the
+    # body of the post so capture it, remove from the options, and pass it via
+    # the post body
+    config = options.delete('run')
+    hash = Docker::Util.parse_json(connection.post('/commit',
+                                                   options,
+                                                   :body => config.to_json)
+                                  )
     Docker::Image.send(:new, self.connection, hash['Id'])
   end
 
