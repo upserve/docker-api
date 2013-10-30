@@ -21,7 +21,7 @@ http_interactions:
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo0OSBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNjowMyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -32,7 +32,7 @@ http_interactions:
         (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
         layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:33:50 GMT
+  recorded_at: Wed, 30 Oct 2013 14:06:04 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.6/containers/create
@@ -57,15 +57,15 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo1MCBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNjowNCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"f7acf9ee6604"}'
+      string: ! '{"Id":"b528cb5208b0"}'
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:33:50 GMT
+  recorded_at: Wed, 30 Oct 2013 14:06:04 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/f7acf9ee6604/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/b528cb5208b0/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -87,15 +87,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo1MCBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNjowNCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:33:50 GMT
+  recorded_at: Wed, 30 Oct 2013 14:06:04 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/f7acf9ee6604/attach?stream=true&stdout=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/b528cb5208b0/attach?stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -117,5 +117,5 @@ http_interactions:
       string: !binary |-
         AQAAAAAAABVsZC1saW51eC14ODYtNjQuc28uMgo=
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:33:50 GMT
+  recorded_at: Wed, 30 Oct 2013 14:06:05 GMT
 recorded_with: VCR 2.6.0
