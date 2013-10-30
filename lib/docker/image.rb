@@ -144,9 +144,9 @@ class Docker::Image
     end
 
     # Given a Dockerfile as a string, builds an Image.
-    def build(commands, connection = Docker.connection)
+    def build(commands, opts = {}, connection = Docker.connection)
       body = connection.post(
-        '/build', {},
+        '/build', opts,
         :body => Docker::Util.create_tar('Dockerfile' => commands)
       )
       new(connection, Docker::Util.extract_id(body))

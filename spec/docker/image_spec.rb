@@ -259,12 +259,26 @@ describe Docker::Image do
     end
 
     context 'with a valid Dockerfile' do
-      let(:image) { subject.build("from base\n") }
+      context 'without query parameters' do
+        let(:image) { subject.build("from base\n") }
 
-      it 'builds an image', :vcr do
-        image.should be_a Docker::Image
-        image.id.should_not be_nil
-        image.connection.should be_a Docker::Connection
+        it 'builds an image', :vcr do
+          expect(image).to be_a Docker::Image
+          expect(image.id).to_not be_nil
+          expect(image.connection).to be_a Docker::Connection
+        end
+      end
+
+      context 'with specifying a repo in the query parameters' do
+        let(:image) { subject.build("from base\nrun true\n", "t" => "swipely/base") }
+        let(:images) { subject.all }
+
+        it 'builds an image and tags it', :vcr do
+          expect(image).to be_a Docker::Image
+          expect(image.id).to_not be_nil
+          expect(image.connection).to be_a Docker::Connection
+          expect(images.first.info["Repository"]).to eq("swipely/base")
+        end
       end
     end
   end
