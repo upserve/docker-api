@@ -279,7 +279,7 @@ describe Docker::Container do
     context 'if run is passed, it saves the command in the image', :vcr do
       let(:image) { subject.commit('run' => {"Cmd" => %w[pwd]}) }
       it 'saves the command' do
-        image.run.attach.should eql "/\n"
+        expect(image.run.attach).to eql [["/\n"],[]]
       end
     end
 

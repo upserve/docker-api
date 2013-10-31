@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["true"],"Image":"base"}'
@@ -14,26 +14,25 @@ http_interactions:
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MTM1
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyOSBPY3QgMjAxMyAyMjowMDozMyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxODoxNzo0NyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"290845cce7ec","Warnings":["Docker detected local DNS server
-        on resolv.conf. Using default external servers: [8.8.8.8 8.8.4.4]"]}'
-    http_version:
-  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
+      string: ! '{"Id":"dc9e3ac95fc5"}'
+    http_version: 
+  recorded_at: Thu, 31 Oct 2013 18:17:47 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/commit?container=290845cc
+    uri: unix:///var/run/docker.sock/v1.6/commit?container=dc9e3ac9
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["pwd"]}'
@@ -45,7 +44,7 @@ http_interactions:
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -55,18 +54,18 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyOSBPY3QgMjAxMyAyMjowMDozMyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxODoxNzo0NyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"3d74951a6e7d"}'
-    http_version:
-  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
+      string: ! '{"Id":"3a83fe5e49bf"}'
+    http_version: 
+  recorded_at: Thu, 31 Oct 2013 18:17:47 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"3d74951a6e7d"}'
+      string: ! '{"Image":"3a83fe5e49bf"}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.6.0
@@ -75,26 +74,25 @@ http_interactions:
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MTM1
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyOSBPY3QgMjAxMyAyMjowMDozMyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxODoxNzo0NyBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"7a362a381f09","Warnings":["Docker detected local DNS server
-        on resolv.conf. Using default external servers: [8.8.8.8 8.8.4.4]"]}'
-    http_version:
-  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
+      string: ! '{"Id":"ac8e28bf5cb0"}'
+    http_version: 
+  recorded_at: Thu, 31 Oct 2013 18:17:47 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/7a362a381f09/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/ac8e28bf5cb0/start
     body:
       encoding: UTF-8
       string: ! '{}'
@@ -106,7 +104,7 @@ http_interactions:
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -116,15 +114,15 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAyOSBPY3QgMjAxMyAyMjowMDozMyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxODoxNzo0NyBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
-    http_version:
-  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
+    http_version: 
+  recorded_at: Thu, 31 Oct 2013 18:17:47 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/7a362a381f09/attach?stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/ac8e28bf5cb0/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
@@ -136,16 +134,15 @@ http_interactions:
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ! '/
-
-'
-    http_version:
-  recorded_at: Tue, 29 Oct 2013 22:00:33 GMT
-recorded_with: VCR 2.6.0
+      string: !binary |-
+        AQAAAAAAAAIvCg==
+    http_version: 
+  recorded_at: Thu, 31 Oct 2013 18:17:47 GMT
+recorded_with: VCR 2.7.0
