@@ -129,7 +129,9 @@ describe Docker do
 
       it "raises an error and doesn't set the creds", :vcr do
         pending "VCR won't record when Excon::Expects fail"
-        expect { authentication }.to raise_error(Docker::Error::AuthenticationError)
+        expect {
+          authentication
+        }.to raise_error(Docker::Error::AuthenticationError)
         expect(Docker.creds).to be_nil
       end
     end

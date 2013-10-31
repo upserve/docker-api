@@ -65,18 +65,24 @@ describe Docker::Util do
 
     context 'given credentials as a String' do
       it 'returns an X-Registry-Auth header encoded' do
-        expect(subject.build_auth_header(credential_string)).to eq(expected_headers)
+        expect(
+          subject.build_auth_header(credential_string)
+        ).to eq(expected_headers)
       end
     end
   end
 
   describe '#decipher_messages' do
     context 'given both standard out and standard error' do
-      let(:raw_text) { "\x01\x00\x00\x00\x00\x00\x00\x01a\x02\x00\x00\x00\x00\x00\x00\x01b" }
+      let(:raw_text) {
+        "\x01\x00\x00\x00\x00\x00\x00\x01a\x02\x00\x00\x00\x00\x00\x00\x01b"
+      }
       let(:expected_messages) { [["a"], ["b"]] }
 
       it "returns a single message" do
-        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+        expect(
+          Docker::Util.decipher_messages(raw_text)
+        ).to eq(expected_messages)
       end
     end
 
@@ -85,7 +91,9 @@ describe Docker::Util do
       let(:expected_messages) { [["a"], []] }
 
       it "returns a single message" do
-        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+        expect(
+          Docker::Util.decipher_messages(raw_text)
+        ).to eq(expected_messages)
       end
     end
 
@@ -96,7 +104,9 @@ describe Docker::Util do
       let(:expected_messages) { [["a", "b"], []] }
 
       it "returns both messages" do
-        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+        expect(
+          Docker::Util.decipher_messages(raw_text)
+        ).to eq(expected_messages)
       end
     end
 
@@ -107,7 +117,9 @@ describe Docker::Util do
       let(:expected_messages) { [[("a" * 257)], []] }
 
       it "returns both messages" do
-        expect(Docker::Util.decipher_messages(raw_text)).to eq(expected_messages)
+        expect(
+          Docker::Util.decipher_messages(raw_text)
+        ).to eq(expected_messages)
       end
     end
   end

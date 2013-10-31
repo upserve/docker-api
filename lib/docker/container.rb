@@ -53,24 +53,12 @@ class Docker::Container
     opts = {
       :stream => true, :stdout => true, :stderr => true
     }.merge(options)
-    msgs = nil
-    response_block = lambda do |c,r,t|
-      stdout_msgs, stderr_msgs = msgs = Docker::Util.decipher_messages(c)
-      
-      unless block.nil?
-        stdout_msgs.each do |msg|
-          block.call(:stdout, msg)
-        end
-        stderr_msgs.each do |msg|
-          block.call(:stderr, msg)
-        end
-      end
-    end
-
+    # Creates list to store stdout and stderr messages
+    msgs = [[],[]]
     connection.post(
       path_for(:attach),
       opts,
-      :response_block => response_block
+      :response_block => attach_for(block, msgs)
     )
     msgs
   end
@@ -153,6 +141,24 @@ class Docker::Container
     "/containers/#{self.id}/#{resource}"
   end
 
-  private :path_for
+  # Method that takes chunks and calls the attached block for each mux'd message
+  def attach_for(block, msg_stack)
+    lambda do |c,r,t|
+      stdout_msgs, stderr_msgs = Docker::Util.decipher_messages(c)
+      msg_stack[0] += stdout_msgs
+      msg_stack[1] += stderr_msgs
+
+      unless block.nil?
+        stdout_msgs.each do |msg|
+          block.call(:stdout, msg)
+        end
+        stderr_msgs.each do |msg|
+          block.call(:stderr, msg)
+        end
+      end
+    end
+  end
+
+  private :path_for, :attach_for
   private_class_method :new
 end

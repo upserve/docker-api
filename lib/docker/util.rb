@@ -78,7 +78,7 @@ module Docker::Util
       stdout_messages << message if header.getbyte(0) == 1
       stderr_messages << message if header.getbyte(0) == 2
     end
-    
+
     [stdout_messages, stderr_messages]
   end
 end

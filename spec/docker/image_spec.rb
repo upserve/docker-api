@@ -73,7 +73,7 @@ describe Docker::Image do
       let(:file) { ['./Gemfile', './Rakefile'] }
       let(:gemfile) { File.read('Gemfile') }
       let(:rakefile) { File.read('Rakefile') }
-      let(:response) { 
+      let(:response) {
         new_image.run('cat /Gemfile /Rakefile').attach
       }
 
@@ -270,7 +270,9 @@ describe Docker::Image do
       end
 
       context 'with specifying a repo in the query parameters' do
-        let(:image) { subject.build("from base\nrun true\n", "t" => "swipely/base") }
+        let(:image) {
+          subject.build("from base\nrun true\n", "t" => "swipely/base")
+        }
         let(:images) { subject.all }
 
         it 'builds an image and tags it', :vcr do
