@@ -14,13 +14,13 @@ Gem::Specification.new do |gem|
   gem.name          = "docker-api"
   gem.require_paths = %w{lib}
   gem.version       = Docker::VERSION
-  gem.add_dependency 'excon', '>= 0.27.3'
+  gem.add_dependency 'excon', '>= 0.28'
   gem.add_dependency 'json'
   gem.add_dependency 'archive-tar-minitar'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'cane'
   gem.add_development_dependency 'pry'
-  gem.add_development_dependency 'vcr', '>= 2.4.0'
+  gem.add_development_dependency 'vcr', '>= 2.7.0'
   gem.add_development_dependency 'simplecov'
 end
