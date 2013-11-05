@@ -1,0 +1,33 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/auth
+    body:
+      encoding: UTF-8
+      string: ! '{"username":"test","password":"account","email":"test@test.com","serveraddress":"https://index.docker.io/v1/"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        Mjg=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyMzo1NSBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Status":"Login Succeeded"}'
+    http_version: 
+  recorded_at: Fri, 25 Oct 2013 16:23:55 GMT
+recorded_with: VCR 2.6.0

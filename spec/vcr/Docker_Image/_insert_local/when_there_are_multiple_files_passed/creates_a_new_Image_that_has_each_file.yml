@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/build
+    uri: unix:///var/run/docker.sock/v1.6/build
     body:
       encoding: UTF-8
       string: !binary |-
@@ -54,20 +54,20 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxNjo0MzozMSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -75,10 +75,10 @@ http_interactions:
       encoding: US-ASCII
       string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
+  recorded_at: Thu, 31 Oct 2013 16:43:31 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/build
+    uri: unix:///var/run/docker.sock/v1.6/build
     body:
       encoding: UTF-8
       string: !binary |-
@@ -176,75 +176,75 @@ http_interactions:
         AA==
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxNjo0MzozMSBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
       string: ! "Step 1 : FROM b750fe79269d\n ---> b750fe79269d\nStep 2 : ADD Gemfile
-        /\n ---> a1ed7a6a6c97\nStep 3 : ADD Rakefile /\n ---> 4c8a4cbe7f86\nSuccessfully
-        built 4c8a4cbe7f86\n"
+        /\n ---> f2dbf5dd658f\nStep 3 : ADD Rakefile /\n ---> 01de8aa2ffa8\nSuccessfully
+        built 01de8aa2ffa8\n"
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
+  recorded_at: Thu, 31 Oct 2013 16:43:31 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"4c8a4cbe7f86","Cmd":["cat","/Gemfile","/Rakefile"]}'
+      string: ! '{"Image":"01de8aa2ffa8","Cmd":["cat","/Gemfile","/Rakefile"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NjU=
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxNjo0MzozMSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"95de9ef14b82","Warnings":["IPv4 forwarding is disabled."]}'
+      string: ! '{"Id":"29b6905af512"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
+  recorded_at: Thu, 31 Oct 2013 16:43:31 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/95de9ef14b82/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/29b6905af512/start
     body:
       encoding: UTF-8
       string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -254,71 +254,43 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NyBHTVQ=
+        VGh1LCAzMSBPY3QgMjAxMyAxNjo0MzozMSBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
+  recorded_at: Thu, 31 Oct 2013 16:43:31 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/95de9ef14b82/start
-    body:
-      encoding: UTF-8
-      string: ! '{}'
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.5.4
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 500
-      message: ''
-    headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MTM4
-      !binary "RGF0ZQ==":
-      - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NyBHTVQ=
-    body:
-      encoding: US-ASCII
-      string: ! 'Error starting container 95de9ef14b82: The container 95de9ef14b82bb279d854230a6f6bc2c851b5f223411fc9925db064ed34f44a4
-        is already running.
-
-'
-    http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
-- request:
-    method: post
-    uri: http://unix/v1.4/containers/95de9ef14b82/attach?stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/29b6905af512/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ! "source 'http://rubygems.org'\n\ngemspec\n$LOAD_PATH.unshift(File.join(File.dirname(__FILE__),
-        'lib'))\n\nrequire 'rake'\nrequire 'docker'\nrequire 'rspec/core/rake_task'\nrequire
-        'cane/rake_task'\n\ntask :default => [:spec, :quality]\n\nRSpec::Core::RakeTask.new
-        do |t|\n  t.pattern = 'spec/**/*_spec.rb'\nend\n\nCane::RakeTask.new(:quality)
-        do |cane|\n  cane.canefile = '.cane'\nend\n"
+      string: !binary |-
+        AQAAAAAAACZzb3VyY2UgJ2h0dHA6Ly9ydWJ5Z2Vtcy5vcmcnCgpnZW1zcGVj
+        CgEAAAAAAAFIJExPQURfUEFUSC51bnNoaWZ0KEZpbGUuam9pbihGaWxlLmRp
+        cm5hbWUoX19GSUxFX18pLCAnbGliJykpCgpyZXF1aXJlICdyYWtlJwpyZXF1
+        aXJlICdkb2NrZXInCnJlcXVpcmUgJ3JzcGVjL2NvcmUvcmFrZV90YXNrJwpy
+        ZXF1aXJlICdjYW5lL3Jha2VfdGFzaycKCnRhc2sgOmRlZmF1bHQgPT4gWzpz
+        cGVjLCA6cXVhbGl0eV0KClJTcGVjOjpDb3JlOjpSYWtlVGFzay5uZXcgZG8g
+        fHR8CiAgdC5wYXR0ZXJuID0gJ3NwZWMvKiovKl9zcGVjLnJiJwplbmQKCkNh
+        bmU6OlJha2VUYXNrLm5ldyg6cXVhbGl0eSkgZG8gfGNhbmV8CiAgY2FuZS5j
+        YW5lZmlsZSA9ICcuY2FuZScKZW5kCg==
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Thu, 31 Oct 2013 16:43:31 GMT
+recorded_with: VCR 2.7.0

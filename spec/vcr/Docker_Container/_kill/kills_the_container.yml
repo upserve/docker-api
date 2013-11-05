@@ -2,49 +2,49 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["ls"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NjU=
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"7bf405f5e6fb","Warnings":["IPv4 forwarding is disabled."]}'
+      string: ! '{"Id":"11bab1009e09"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:22 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/7bf405f5e6fb/kill
+    uri: unix:///var/run/docker.sock/v1.6/containers/11bab1009e09/kill
     body:
       encoding: UTF-8
       string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -54,27 +54,27 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:22 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 - request:
     method: get
-    uri: http://unix/v1.4/containers/json
+    uri: unix:///var/run/docker.sock/v1.6/containers/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -84,66 +84,53 @@ http_interactions:
         Mg==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '[]'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:22 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 - request:
     method: get
-    uri: http://unix/v1.4/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"7bf405f5e6fb22c495316077dc7d3b25fe89d508319b66a4a95e7307798dd84a","Image":"base:latest","Command":"ls
-        ","Created":1381106842,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"b5691a48ef64433160a6219e3347cd41ed6240b9a7e79bdc90d1b60e22b5310a","Image":"base:latest","Command":"true
-        ","Created":1381106841,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"4519385a528a788dce0728ed1baff4f929cc7fda10b77edeac22418b7ed4f0ad","Image":"base:latest","Command":"test
-        -d /foo","Created":1381106841,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"f401329d4fd9fdfea6a1f469f4520f5ce6c7a9e69c28f02fc43636a6290a37ed","Image":"base:latest","Command":"pwd
-        ","Created":1381106840,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"cfb96be8490d42fe733cdf0d8e9ff682170591b9f25f6629bc5817fcb3e18745","Image":"base:latest","Command":"rm
-        -rf / --no-preserve-root","Created":1381106839,"Status":"Exit 1","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"fb0f786f06056afb6dcb2cf5ece6e1b6a6544780b030619eb7b0f97b6156636b","Image":"base:latest","Command":"ls
-        ","Created":1381106839,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"6082b8bb44b4bb2a9156fdaf612c9e9c36cff44c3713ac9bb7c52cbae283d5a9","Image":"base:latest","Command":"ls
-        ","Created":1381106837,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"0b545bc9f0f0f207207b62f7f19ea1c3e3d93993aefa38e14c66f06ce5559279","Image":"base:latest","Command":"ls
-        ","Created":1381106835,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"a48a01e35c11a17d3554c2bba3cbda19058f36a057957c6349125bdc78f8a8a7","Image":"base:latest","Command":"find
-        / -name ''*''","Created":1381106833,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"3aecf08d8d31d3e0c39dea5406011006558f88150763cf60e1b8765af4cc0b60","Image":"base:latest","Command":"rm
-        -rf /root","Created":1381106833,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"92c0a16f7ae5b7e1bef65ae08370c88e90fb17071df512c3a6b2aaba79660a85","Image":"base:latest","Command":"true
-        ","Created":1381106833,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"549668c1c28b1ad827cc3404a675a3391123964c3fc802a11f1612c2eb9cec36","Image":"base:latest","Command":"true
-        ","Created":1381106696,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"d6649215449a197bbbc187a5e93790eaf170e4b379e28a0337feef8322d5a282","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ping tlunter.com","Created":1375557384,"Status":"Exit 2","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"69591ebe41657405c64a48a31d0a2df2cf1ff9ea1b1cf9714175d3e6cc67ea36","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ping tlunter.com","Created":1375557372,"Status":"Exit 255","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"704f0cb84b6eff28f052491552d3633c331a746f563cb5bb023bc282b160fb4d","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ping tlunter.com","Created":1375556720,"Status":"Exit 2","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"1b3a69caf5fca0fec4a379b03e0be9e80ba17070b723746378320a8008204651","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ping tlunter.com","Created":1375556426,"Status":"Exit 2","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"d505d659d2db270faafe0f0e95f7713aff64d3d453a28d6bc182821efd294227","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc which ping","Created":1375556419,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"f476389ebc0169584d7afd8eda7d5abd3b86b80dc2dab1964418289b38112c16","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ls && ping google.com","Created":1375556408,"Status":"Exit 2","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"c31d70d336b7604ef5ef50e731c6a66b2f8217ca80716cce0fe2402dd60030a5","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ls","Created":1375556402,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"5804cf327f8edc031eb0169ac3c436629a4bfd16a873991234705be03561ea7e","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ping google.com","Created":1375556382,"Status":"Exit 2","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"6ade424558f79beb13249a860cfeb6181ddc5c8c4a1c679ffcb97df80eca971d","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ip addr","Created":1375556375,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"dcab42058c9912fdf00152e560844c81633e22cd867866668566d9846e68ff7f","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc ip addr","Created":1375556346,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"d7ddbde44c7f39f0bd5d390fc3749deb1493496caabcb094f19c5d43505b3332","Image":"jbgi/arch-base:latest","Command":"/bin/sh
-        -lc pacman -Syu","Created":1375556330,"Status":"Exit -127","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"1617294e19c3b56f936165a44106550eba167585e95588ca53be18f13cc3871b","Image":"jbgi/arch-base:latest","Command":"/bin/bash
-        ","Created":1375556154,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"7bac043a74338151d1a3d991132687705d2a6cc8d1377ffbfeb92b04eb2201b0","Image":"jbgi/arch-base:latest","Command":"/bin/bash
-        ","Created":1375556101,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0},{"Id":"aba819a380a1e95ba68516d72c3c7483a316dbb180401595a9dadbb1322ef1b6","Image":"jbgi/arch-base:latest","Command":"/bin/bash
-        ","Created":1375556096,"Status":"Exit 0","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      string: ! '[{"Id":"11bab1009e09b171b74a1428ff624f6a188345345685d49c2fa4b83b95d7279c","Image":"base:latest","Command":"ls
+        ","Created":1382718542,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"6c5940e06b2f1131ddba8d809628ca4ca3357612624ebae9a24b5ada27f9e210","Image":"base:latest","Command":"true
+        ","Created":1382718542,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"62d216c3fb8a491d89fbc2a72ec7a39be464f77624740238be90b13502b66ab0","Image":"base:latest","Command":"test
+        -d /foo","Created":1382718541,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"a6fc66b03627541d764a70a5e33eaf0e704186f78e923c4ecdb8d3a8007c4d97","Image":"base:latest","Command":"pwd
+        ","Created":1382718541,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"6262eddf6ea23cae949bb0745f4a3812c0961fe78d5db64ac56a7d97cae1dad3","Image":"base:latest","Command":"rm
+        -rf / --no-preserve-root","Created":1382718538,"Status":"Exit 1","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"5d6805e5ca5542a8ccf8f11bf3def474700c0699ca4144a824f11be784911314","Image":"base:latest","Command":"touch
+        /test","Created":1382718538,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"9ae257b241d59e4bd4994e448ed7075e358a987da5a4ae97022883859cefc82e","Image":"base:latest","Command":"touch
+        /test","Created":1382718537,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"968bce01b7167d4a90ac0bf84033e50f99dff1590048e45b6f73326c1f93c674","Image":"base:latest","Command":"touch
+        /test","Created":1382718536,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"aeb51665a4161d45974a853fb9c1a737e501eb8708fa749785401f8f95c5a8c3","Image":"a49d35b89848","Command":"/while
+        ","Created":1382718533,"Status":"Exit 137","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"511a99a9b924341e343b5cb9c830101c1db0054c1cd7867f19b65ef98576ffa4","Image":"base:latest","Command":"/bin/sh
+        -c printf ''#! /bin/sh\\nwhile true\\ndo\\ntrue\\ndone\\n'' \u003e /while
+        && chmod +x /while","Created":1382718533,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"1375718e85e4a4135bf9f16979edb3693c96e5854ad3b6d42bc2f664d38bd63a","Image":"base:latest","Command":"rm
+        -rf /root","Created":1382718533,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0},{"Id":"e817145430ed2168bdbc548a1478ebbea02ace9564cdc02012fd9bab68ddf1b8","Image":"base:latest","Command":"true
+        ","Created":1382718533,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0}]'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:22 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 recorded_with: VCR 2.6.0

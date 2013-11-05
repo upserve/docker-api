@@ -2,32 +2,32 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NjU=
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0MCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxOSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"8f9ec1ca0aba","Warnings":["IPv4 forwarding is disabled."]}'
+      string: ! '{"Id":"925b54010170"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:40 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:19 GMT
 recorded_with: VCR 2.6.0

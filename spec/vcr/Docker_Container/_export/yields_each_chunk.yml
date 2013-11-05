@@ -2,19 +2,19 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["rm","-rf","/","--no-preserve-root"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -24,27 +24,27 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAwOCBPY3QgMjAxMyAxNDoxMTozNiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1OCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"f96716ac239d"}'
+      string: ! '{"Id":"6262eddf6ea2"}'
     http_version: 
-  recorded_at: Tue, 08 Oct 2013 14:11:36 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:58 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/f96716ac239d/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/6262eddf6ea2/start
     body:
       encoding: UTF-8
       string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -54,34 +54,34 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAwOCBPY3QgMjAxMyAxNDoxMTozNiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1OCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Tue, 08 Oct 2013 14:11:36 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:58 GMT
 - request:
     method: get
-    uri: http://unix/v1.4/containers/f96716ac239d/export
+    uri: unix:///var/run/docker.sock/v1.6/containers/6262eddf6ea2/export
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vb2N0ZXQtc3RyZWFt
       !binary "RGF0ZQ==":
       - !binary |-
-        VHVlLCAwOCBPY3QgMjAxMyAxNDoxMTozNiBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyODo1OCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -91,9 +91,16 @@ http_interactions:
         Li8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA3NTUAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDAw
-        ADEyMjI1MDExMjMwADAwNjA2NQAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMjMyNTE2MTEyADAwNjA3NAAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhciAgAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAuL3Byb2MvAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     http_version: 
-  recorded_at: Tue, 08 Oct 2013 14:11:37 GMT
+  recorded_at: Fri, 25 Oct 2013 16:28:59 GMT
 recorded_with: VCR 2.6.0

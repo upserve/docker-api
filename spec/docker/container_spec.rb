@@ -58,16 +58,14 @@ describe Docker::Container do
   end
 
   describe '#top' do
-    subject {
-      described_class.create(
-        'Cmd' => %w[while true; do; done;],
-        'Image' => 'base'
-      )
+    let(:dir) {
+      File.join(File.dirname(__FILE__), '..', 'fixtures', 'top')
     }
-    let(:top) { subject.top }
+    let(:image) { Docker::Image.build_from_dir(dir) }
+    let(:top) { sleep 1; container.top }
+    let!(:container) { image.run('/while') }
 
-    before { subject.start }
-    after { subject.kill }
+    after { container.kill; image.remove }
 
     it 'returns the top commands as an Array', :vcr do
       top.should be_a Array
@@ -80,7 +78,7 @@ describe Docker::Container do
     subject {
       Docker::Image.create(
         'fromImage' => 'base'
-      ).run('touch /test').tap { |c| c.start.wait }
+      ).run('touch /test').tap { |c| c.wait }
     }
 
     context 'when the file does not exist' do
@@ -120,8 +118,7 @@ describe Docker::Container do
     it 'yields each chunk', :vcr do
       first = nil
       subject.export do |chunk|
-        first = chunk
-        break
+        first ||= chunk
       end
       first[257..261].should == "ustar" # Make sure the export is a tar.
     end
@@ -133,10 +130,11 @@ describe Docker::Container do
     before { subject.start }
 
     it 'yields each chunk', :vcr do
-      subject.attach { |chunk|
-        chunk.should == "/\n"
-        break
-      }
+      chunk = nil
+      subject.attach do |stream, c|
+        chunk ||= c
+      end
+      expect(chunk).to eq("/\n")
     end
   end
 
@@ -281,7 +279,7 @@ describe Docker::Container do
     context 'if run is passed, it saves the command in the image', :vcr do
       let(:image) { subject.commit('run' => {"Cmd" => %w[pwd]}) }
       it 'saves the command' do
-        image.run.attach.should eql "/\n"
+        expect(image.run.attach).to eql [["/\n"],[]]
       end
     end
 
@@ -292,8 +290,14 @@ describe Docker::Container do
 
     context 'when the Container does not yet exist' do
       context 'when the HTTP request does not return a 200' do
-        before { Excon.stub({ :method => :post }, { :status => 400 }) }
-        after { Excon.stubs.shift }
+        before do
+          Docker.options = { :mock => true }
+          Excon.stub({ :method => :post }, { :status => 400 })
+        end
+        after do
+          Excon.stubs.shift
+          Docker.options = {}
+        end
 
         it 'raises an error' do
           expect { subject.create }.to raise_error(Docker::Error::ClientError)
@@ -337,8 +341,14 @@ describe Docker::Container do
     subject { described_class }
 
     context 'when the HTTP response is not a 200' do
-      before { Excon.stub({ :method => :get }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 500 })
+      end
+      after do
+        Excon.stubs.shift
+        Docker.options = {}
+      end
 
       it 'raises an error' do
         expect { subject.all }

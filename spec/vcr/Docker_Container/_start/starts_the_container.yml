@@ -2,49 +2,49 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["test","-d","/foo"],"Image":"base","Volumes":{"/foo":{}}}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NjU=
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"4519385a528a","Warnings":["IPv4 forwarding is disabled."]}'
+      string: ! '{"Id":"62d216c3fb8a"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:21 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:01 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/4519385a528a/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/62d216c3fb8a/start
     body:
       encoding: UTF-8
       string: ! '{"Binds":["/tmp:/foo"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -54,58 +54,58 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMSBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:21 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:01 GMT
 - request:
     method: get
-    uri: http://unix/v1.4/containers/json
+    uri: unix:///var/run/docker.sock/v1.6/containers/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        MjEz
+        MjE1
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Id":"4519385a528a788dce0728ed1baff4f929cc7fda10b77edeac22418b7ed4f0ad","Image":"base:latest","Command":"test
-        -d /foo","Created":1381106841,"Status":"Up Less than a second","Ports":"","SizeRw":0,"SizeRootFs":0}]'
+      string: ! '[{"Id":"62d216c3fb8a491d89fbc2a72ec7a39be464f77624740238be90b13502b66ab0","Image":"base:latest","Command":"test
+        -d /foo","Created":1382718541,"Status":"Up Less than a second","Ports":null,"SizeRw":0,"SizeRootFs":0}]'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:21 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:01 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/4519385a528a/wait
+    uri: unix:///var/run/docker.sock/v1.6/containers/62d216c3fb8a/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -115,10 +115,10 @@ http_interactions:
         MTY=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzoyMSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOTowMiBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '{"StatusCode":0}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:21 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:02 GMT
 recorded_with: VCR 2.6.0

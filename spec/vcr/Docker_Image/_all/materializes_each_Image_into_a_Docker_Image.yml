@@ -2,26 +2,26 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.6/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAxNDo1NjozOCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo1MyBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
@@ -32,35 +32,35 @@ http_interactions:
         (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
         layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 14:56:39 GMT
+  recorded_at: Fri, 25 Oct 2013 16:33:54 GMT
 - request:
     method: get
-    uri: http://unix/v1.4/images/json?all=true
+    uri: unix:///var/run/docker.sock/v1.6/images/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        Nzc4
+        MTY0Nw==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAxNDo1NjozOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo1NCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '[{"Repository":"base","Tag":"latest","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-12.10","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantal","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantl","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Id":"27cf784147099545","Created":1364068391,"Size":180091482,"VirtualSize":180091482}]'
+      string: ! '[{"Repository":"test/base","Tag":"latest","Id":"14d61fb79dfaddb7e1e9f7a2d172868380bbc50e5ca57ab4d6b37785093aaedb","Created":1382718826,"Size":16391,"VirtualSize":180132526},{"Id":"a36a841ba24ee3e7a0b677077f5313c192c153e8e2b583d3efad2a5e45b3d900","Created":1382718825,"Size":12405,"VirtualSize":180128540},{"Id":"97a93c0b0746dc2898ad29df53a6ff6840a0d7e76e5c8ba1dcdd461fb7b5df8d","Created":1382718825,"Size":12405,"VirtualSize":180128540},{"Id":"80470943bc285c02c97b15b490588ff28df499ea14e43d0499a1c40c84d30afd","Created":1382718825,"Size":12616,"VirtualSize":180141156},{"Id":"bba88fbf7e6361d952b13cfcbffde9ac879878abbb2d4897bbc4e4e5c040ab36","Created":1382718824,"Size":104350,"VirtualSize":180220485},{"Repository":"base2","Tag":"latest","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"latest","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-12.10","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantal","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Repository":"base","Tag":"ubuntu-quantl","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Created":1364102658,"Size":24653,"VirtualSize":180116135},{"Id":"27cf784147099545","Created":1364068391,"Size":180091482,"VirtualSize":180091482}]'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 14:56:39 GMT
+  recorded_at: Fri, 25 Oct 2013 16:33:54 GMT
 recorded_with: VCR 2.6.0

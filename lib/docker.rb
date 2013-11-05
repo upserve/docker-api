@@ -2,13 +2,14 @@ require 'cgi'
 require 'json'
 require 'excon'
 require 'tempfile'
+require 'base64'
 require 'rubygems/package'
 require 'archive/tar/minitar'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
-  attr_reader :creds
+  attr_accessor :creds
 
   def default_socket_url
     'unix:///var/run/docker.sock'
@@ -56,9 +57,12 @@ module Docker
 
   # Login to the Docker registry.
   def authenticate!(options = {})
-    @creds = options.to_json
-    connection.post(:path => '/auth', :body => @creds)
+    creds = options.to_json
+    connection.post('/auth', {}, :body => creds)
+    @creds = creds
     true
+  rescue Docker::Error::ServerError, Docker::Error::UnauthorizedError
+    raise Docker::Error::AuthenticationError
   end
 
   # When the correct version of Docker is installed, returns true. Otherwise,
@@ -71,8 +75,8 @@ module Docker
   end
 
   module_function :default_socket_url, :env_url, :url, :url=, :options,
-                  :options=, :connection, :reset_connection!, :version,
-                  :info, :authenticate!, :validate_version!
+                  :options=, :creds, :creds=, :connection, :reset_connection!,
+                  :version, :info, :authenticate!, :validate_version!
 end
 
 require 'docker/version'
@@ -81,3 +85,4 @@ require 'docker/util'
 require 'docker/connection'
 require 'docker/container'
 require 'docker/image'
+require 'docker/event'

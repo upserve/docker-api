@@ -33,8 +33,14 @@ class Docker::Image
   end
 
   # Push the Image to the Docker registry.
-  def push(options = {})
-    connection.post(path_for(:push), options, :body => Docker.creds)
+  def push(creds = nil, options = {})
+    credentials = (creds.nil?) ? Docker.creds : creds.to_json
+    headers = Docker::Util.build_auth_header(credentials)
+    connection.post(
+      path_for(:push),
+      options,
+      :headers => headers
+    )
     self
   end
 
@@ -93,8 +99,14 @@ class Docker::Image
     include Docker::Error
 
     # Create a new Image.
-    def create(opts = {}, conn = Docker.connection)
-      instance = new(conn)
+    def create(opts = {}, creds = nil, conn = Docker.connection)
+      credentials = (creds.nil?) ? creds.to_json : Docker.creds
+      headers = if credentials.nil?
+        Docker::Util.build_auth_header(credentials)
+      else
+        {}
+      end
+      instance = new(conn, {}, :headers => headers)
       conn.post('/images/create', opts)
       id = opts['repo'] ? "#{opts['repo']}/#{opts['tag']}" : opts['fromImage']
       if (instance.id = id).nil?
@@ -132,19 +144,21 @@ class Docker::Image
     end
 
     # Given a Dockerfile as a string, builds an Image.
-    def build(commands, connection = Docker.connection)
+    def build(commands, opts = {}, connection = Docker.connection)
       body = connection.post(
-        '/build', {},
+        '/build', opts,
         :body => Docker::Util.create_tar('Dockerfile' => commands)
       )
       new(connection, Docker::Util.extract_id(body))
+    rescue Docker::Error::ServerError
+      raise Docker::Error::UnexpectedResponseError
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
-    def build_from_dir(dir, connection = Docker.connection)
+    def build_from_dir(dir, opts = {}, connection = Docker.connection)
       tar = Docker::Util.create_dir_tar(dir)
       body = connection.post(
-        '/build', {},
+        '/build', opts,
         :headers => { 'Content-Type'      => 'application/tar',
                       'Transfer-Encoding' => 'chunked' }
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }

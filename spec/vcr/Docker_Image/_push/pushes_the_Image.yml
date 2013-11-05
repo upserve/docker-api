@@ -1,0 +1,161 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/images/create?fromImage=base
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNToyMiBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"Pulling repository base"}{"status":"Pulling","progress":"image
+        (ubuntu-quantl) from base","id":"b750fe79269d"}{"status":"Pulling","progress":"image
+        (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
+        layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 14:05:23 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"base","Cmd":["true"]}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNToyMyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"b03be3af7e3e"}'
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 14:05:23 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/b03be3af7e3e/start
+    body:
+      encoding: UTF-8
+      string: ! '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNToyMyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 14:05:23 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/commit?container=b03be3af&repo=test%2Fbase
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNToyMyBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"ccfa3226ea18"}'
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 14:05:23 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/images/ccfa3226ea18/push
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+      X-Registry-Auth:
+      - eyJ1c2VybmFtZSI6InRlc3QiLCJwYXNzd29yZCI6InRlc3QiLCJhdXRoIjoiIiwiZW1haWwiOiJ0ZXN0QHRlc3QuY29tIn0=
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNDowNToyMyBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"The push refers to an image: [ccfa3226ea18]"}{"status":"Pushing
+        ccfa3226ea183d5a53a19d66aa9b9eb0202f23f1a8850a3635894fbe60c74232"}{"error":"HTTP
+        code 404 while uploading metadata: unexpected end of JSON input","errorDetail":{"code":404,"message":"HTTP
+        code 404 while uploading metadata: unexpected end of JSON input"}}'
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 14:05:23 GMT
+recorded_with: VCR 2.6.0

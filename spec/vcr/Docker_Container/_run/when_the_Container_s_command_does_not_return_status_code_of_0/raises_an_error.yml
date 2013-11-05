@@ -2,49 +2,49 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
       string: ! '{"Cmd":["lol","not","a","real","command"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NjU=
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzozOCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxOCBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"bdf4626c3eba","Warnings":["IPv4 forwarding is disabled."]}'
+      string: ! '{"Id":"a5c13ba96ab3"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:38 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:18 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/bdf4626c3eba/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/a5c13ba96ab3/start
     body:
       encoding: UTF-8
       string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -54,27 +54,27 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzozOCBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxOCBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:38 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:18 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/bdf4626c3eba/wait
+    uri: unix:///var/run/docker.sock/v1.6/containers/a5c13ba96ab3/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -84,10 +84,10 @@ http_interactions:
         MTg=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0NzozOSBHTVQ=
+        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxOCBHTVQ=
     body:
       encoding: US-ASCII
       string: ! '{"StatusCode":127}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:39 GMT
+  recorded_at: Fri, 25 Oct 2013 16:29:18 GMT
 recorded_with: VCR 2.6.0

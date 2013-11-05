@@ -87,8 +87,53 @@ describe Docker do
   end
 
   describe '#authenticate!' do
-    it 'logs in' do
-      pending
+    subject { described_class }
+
+    let(:authentication) {
+      subject.authenticate!(credentials)
+    }
+
+    after do
+      Docker.creds = nil
+    end
+
+    context 'with valid credentials' do
+      # Used valid credentials to record VCR and then changed
+      # cassette to match these credentials
+      let(:credentials) {
+        {
+          :username      => 'test',
+          :password      => 'account',
+          :email         => 'test@test.com',
+          :serveraddress => 'https://index.docker.io/v1/'
+        }
+      }
+
+      it 'logs in and sets the creds', :vcr do
+        expect(authentication).to be_true
+        expect(Docker.creds).to eq(credentials.to_json)
+      end
+    end
+
+    context 'with invalid credentials' do
+      # Recorded the VCR with these credentials
+      # to purposely fail
+      let(:credentials) {
+        {
+          :username      => 'test',
+          :password      => 'password',
+          :email         => 'test@example.com',
+          :serveraddress => 'https://index.docker.io/v1/'
+        }
+      }
+
+      it "raises an error and doesn't set the creds", :vcr do
+        pending "VCR won't record when Excon::Expects fail"
+        expect {
+          authentication
+        }.to raise_error(Docker::Error::AuthenticationError)
+        expect(Docker.creds).to be_nil
+      end
     end
   end
 

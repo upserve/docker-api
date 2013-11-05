@@ -1,0 +1,121 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/build
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/tar
+      Transfer-Encoding:
+      - chunked
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNTozOTowMiBHTVQ=
+      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
+      - !binary |-
+        Y2h1bmtlZA==
+    body:
+      encoding: US-ASCII
+      string: ! "Step 1 : FROM base\n ---> b750fe79269d\nStep 2 : ADD / /\n ---> f26e15dad4bf\nSuccessfully
+        built f26e15dad4bf\n"
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 15:39:02 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Image":"f26e15dad4bf","Cmd":["cat","/Dockerfile"]}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNTozOTowMiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"28ddf1b5746b"}'
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 15:39:02 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/28ddf1b5746b/start
+    body:
+      encoding: UTF-8
+      string: ! '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MA==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        V2VkLCAzMCBPY3QgMjAxMyAxNTozOTowMiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 15:39:02 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/28ddf1b5746b/attach?stderr=true&stdout=true&stream=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
+    body:
+      encoding: US-ASCII
+      string: !binary |-
+        AQAAAAAAABJmcm9tIGJhc2UKYWRkIC8gLwo=
+    http_version: 
+  recorded_at: Wed, 30 Oct 2013 15:39:02 GMT
+recorded_with: VCR 2.6.0

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: http://unix/v1.4/build
+    uri: unix:///var/run/docker.sock/v1.6/build
     body:
       encoding: UTF-8
       string: !binary |-
@@ -54,140 +54,123 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0MiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! "Step 1 : FROM base\nPulling repository base\r\nPulling image (ubuntu-quantl)
-        from base\rPulling image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\rPulling
-        dependend layers\rPulling metadata\rPulling fs layer\rDownloading 4.096 kB/10.24
-        kB (40%)\rDownloading 10.13 kB/10.24 kB (99%)\rDownloading 10.24 kB/10.24
-        kB (100%)\rDownloading 10.24 kB/10.24 kB (100%)\rDownload complete\rDownload
-        complete\rDownload complete\r ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
+      string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:45 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:54 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/images/b750fe79269d/insert?path=/stallman&url=http://stallman.org
+    uri: unix:///var/run/docker.sock/v1.6/images/b750fe79269d/insert?path=%2Fstallman&url=http%3A%2F%2Fstallman.org
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NCBHTVQ=
       !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
       - !binary |-
         Y2h1bmtlZA==
     body:
       encoding: US-ASCII
-      string: ! '{"status":"Downloading","progress":"1.208 kB/93.22 kB (1%)"}{"status":"Downloading","progress":"4.104
-        kB/93.22 kB (4%)"}{"status":"Downloading","progress":"5.552 kB/93.22 kB (6%)"}{"status":"Downloading","progress":"    7
-        kB/93.22 kB (8%)"}{"status":"Downloading","progress":"8.448 kB/93.22 kB (9%)"}{"status":"Downloading","progress":"9.896
-        kB/93.22 kB (11%)"}{"status":"Downloading","progress":"11.34 kB/93.22 kB (12%)"}{"status":"Downloading","progress":"12.79
-        kB/93.22 kB (14%)"}{"status":"Downloading","progress":"14.24 kB/93.22 kB (15%)"}{"status":"Downloading","progress":"15.69
-        kB/93.22 kB (17%)"}{"status":"Downloading","progress":"17.14 kB/93.22 kB (18%)"}{"status":"Downloading","progress":"18.58
-        kB/93.22 kB (20%)"}{"status":"Downloading","progress":"20.03 kB/93.22 kB (21%)"}{"status":"Downloading","progress":"21.48
-        kB/93.22 kB (23%)"}{"status":"Downloading","progress":"22.93 kB/93.22 kB (25%)"}{"status":"Downloading","progress":"24.38
-        kB/93.22 kB (26%)"}{"status":"Downloading","progress":"25.82 kB/93.22 kB (28%)"}{"status":"Downloading","progress":"27.27
-        kB/93.22 kB (29%)"}{"status":"Downloading","progress":"28.72 kB/93.22 kB (31%)"}{"status":"Downloading","progress":"30.17
-        kB/93.22 kB (32%)"}{"status":"Downloading","progress":"31.62 kB/93.22 kB (34%)"}{"status":"Downloading","progress":"33.06
-        kB/93.22 kB (35%)"}{"status":"Downloading","progress":"34.51 kB/93.22 kB (37%)"}{"status":"Downloading","progress":"35.96
-        kB/93.22 kB (39%)"}{"status":"Downloading","progress":"37.41 kB/93.22 kB (40%)"}{"status":"Downloading","progress":"38.86
-        kB/93.22 kB (42%)"}{"status":"Downloading","progress":" 40.3 kB/93.22 kB (43%)"}{"status":"Downloading","progress":"41.75
-        kB/93.22 kB (45%)"}{"status":"Downloading","progress":" 43.2 kB/93.22 kB (46%)"}{"status":"Downloading","progress":"44.65
-        kB/93.22 kB (48%)"}{"status":"Downloading","progress":" 46.1 kB/93.22 kB (49%)"}{"status":"Downloading","progress":"47.54
-        kB/93.22 kB (51%)"}{"status":"Downloading","progress":"48.99 kB/93.22 kB (53%)"}{"status":"Downloading","progress":"50.44
-        kB/93.22 kB (54%)"}{"status":"Downloading","progress":"51.89 kB/93.22 kB (56%)"}{"status":"Downloading","progress":"53.34
-        kB/93.22 kB (57%)"}{"status":"Downloading","progress":"54.78 kB/93.22 kB (59%)"}{"status":"Downloading","progress":"56.23
-        kB/93.22 kB (60%)"}{"status":"Downloading","progress":"57.68 kB/93.22 kB (62%)"}{"status":"Downloading","progress":"59.13
-        kB/93.22 kB (63%)"}{"status":"Downloading","progress":"60.58 kB/93.22 kB (65%)"}{"status":"Downloading","progress":"62.02
-        kB/93.22 kB (67%)"}{"status":"Downloading","progress":"63.47 kB/93.22 kB (68%)"}{"status":"Downloading","progress":"64.92
-        kB/93.22 kB (70%)"}{"status":"Downloading","progress":"66.37 kB/93.22 kB (71%)"}{"status":"Downloading","progress":"67.82
-        kB/93.22 kB (73%)"}{"status":"Downloading","progress":"69.26 kB/93.22 kB (74%)"}{"status":"Downloading","progress":"70.71
-        kB/93.22 kB (76%)"}{"status":"Downloading","progress":"72.16 kB/93.22 kB (77%)"}{"status":"Downloading","progress":"73.61
-        kB/93.22 kB (79%)"}{"status":"Downloading","progress":"75.06 kB/93.22 kB (81%)"}{"status":"Downloading","progress":"
-        76.5 kB/93.22 kB (82%)"}{"status":"Downloading","progress":"77.95 kB/93.22
-        kB (84%)"}{"status":"Downloading","progress":" 79.4 kB/93.22 kB (85%)"}{"status":"Downloading","progress":"80.85
-        kB/93.22 kB (87%)"}{"status":"Downloading","progress":" 82.3 kB/93.22 kB (88%)"}{"status":"Downloading","progress":"83.74
-        kB/93.22 kB (90%)"}{"status":"Downloading","progress":"85.19 kB/93.22 kB (91%)"}{"status":"Downloading","progress":"86.64
-        kB/93.22 kB (93%)"}{"status":"Downloading","progress":"88.09 kB/93.22 kB (94%)"}{"status":"Downloading","progress":"89.54
-        kB/93.22 kB (96%)"}{"status":"Downloading","progress":"90.98 kB/93.22 kB (98%)"}{"status":"Downloading","progress":"92.43
-        kB/93.22 kB (99%)"}{"status":"Downloading","progress":"93.22 kB/93.22 kB (100%)"}{}{"status":"f6d3f4d8ef4ea2e27f81444c38bc242414e32ab1c5dc62640db0a824108ac2eb"}{"Id":"f6d3f4d8ef4e"}'
+      string: ! '{"status":"Downloading","progress":"1.208 kB/93.78 kB (1%)"}{"status":"Downloading","progress":"4.104
+        kB/93.78 kB (4%)"}{"status":"Downloading","progress":"5.552 kB/93.78 kB (6%)"}{"status":"Downloading","progress":"    7
+        kB/93.78 kB (7%)"}{"status":"Downloading","progress":"8.448 kB/93.78 kB (9%)"}{"status":"Downloading","progress":"9.896
+        kB/93.78 kB (11%)"}{"status":"Downloading","progress":"12.79 kB/93.78 kB (14%)"}{"status":"Downloading","progress":"15.69
+        kB/93.78 kB (17%)"}{"status":"Downloading","progress":"20.03 kB/93.78 kB (21%)"}{"status":"Downloading","progress":"22.93
+        kB/93.78 kB (24%)"}{"status":"Downloading","progress":"27.27 kB/93.78 kB (29%)"}{"status":"Downloading","progress":"31.62
+        kB/93.78 kB (34%)"}{"status":"Downloading","progress":"33.06 kB/93.78 kB (35%)"}{"status":"Downloading","progress":"37.41
+        kB/93.78 kB (40%)"}{"status":"Downloading","progress":"38.86 kB/93.78 kB (41%)"}{"status":"Downloading","progress":"
+        40.3 kB/93.78 kB (43%)"}{"status":"Downloading","progress":" 46.1 kB/93.78
+        kB (49%)"}{"status":"Downloading","progress":"50.44 kB/93.78 kB (54%)"}{"status":"Downloading","progress":"53.34
+        kB/93.78 kB (57%)"}{"status":"Downloading","progress":"57.68 kB/93.78 kB (62%)"}{"status":"Downloading","progress":"60.58
+        kB/93.78 kB (65%)"}{"status":"Downloading","progress":"62.02 kB/93.78 kB (66%)"}{"status":"Downloading","progress":"66.37
+        kB/93.78 kB (71%)"}{"status":"Downloading","progress":"67.82 kB/93.78 kB (72%)"}{"status":"Downloading","progress":"70.71
+        kB/93.78 kB (75%)"}{"status":"Downloading","progress":"72.16 kB/93.78 kB (77%)"}{"status":"Downloading","progress":"73.61
+        kB/93.78 kB (78%)"}{"status":"Downloading","progress":" 76.5 kB/93.78 kB (82%)"}{"status":"Downloading","progress":"77.95
+        kB/93.78 kB (83%)"}{"status":"Downloading","progress":" 79.4 kB/93.78 kB (85%)"}{"status":"Downloading","progress":"80.85
+        kB/93.78 kB (86%)"}{"status":"Downloading","progress":"83.74 kB/93.78 kB (89%)"}{"status":"Downloading","progress":"86.64
+        kB/93.78 kB (92%)"}{"status":"Downloading","progress":"89.54 kB/93.78 kB (95%)"}{"status":"Downloading","progress":"90.98
+        kB/93.78 kB (97%)"}{"status":"Downloading","progress":"92.43 kB/93.78 kB (99%)"}{"status":"Downloading","progress":"93.78
+        kB/93.78 kB (100%)"}{"status":"Downloading","progress":"93.78 kB/93.78 kB
+        (100%)"}{}{"status":"7c791b1c21969250800123515fe347db0b7c5abe1fa593897389e624e8f8dadd"}{"Id":"7c791b1c2196"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/create
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Image":"f6d3f4d8ef4e","Cmd":["ls","/"]}'
+      string: ! '{"Image":"7c791b1c2196","Cmd":["ls","/"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vanNvbg==
       !binary "Q29udGVudC1MZW5ndGg=":
       - !binary |-
-        NjU=
+        MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"88492144a1ec","Warnings":["IPv4 forwarding is disabled."]}'
+      string: ! '{"Id":"c6b1179991e7"}'
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/88492144a1ec/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/c6b1179991e7/start
     body:
       encoding: UTF-8
       string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
@@ -197,76 +180,37 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        TW9uLCAwNyBPY3QgMjAxMyAwMDo0Nzo0NiBHTVQ=
+        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:46 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 - request:
     method: post
-    uri: http://unix/v1.4/containers/88492144a1ec/attach?stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/c6b1179991e7/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.5.4
+      - Swipely/Docker-API 1.6.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message: ''
+      message: 
     headers:
       !binary "Q29udGVudC1UeXBl":
       - !binary |-
         YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
     body:
       encoding: US-ASCII
-      string: ! 'bin
-
-        boot
-
-        dev
-
-        etc
-
-        home
-
-        lib
-
-        lib64
-
-        media
-
-        mnt
-
-        opt
-
-        proc
-
-        root
-
-        run
-
-        sbin
-
-        selinux
-
-        srv
-
-        stallman
-
-        sys
-
-        tmp
-
-        usr
-
-        var
-
-'
+      string: !binary |-
+        AQAAAAAAAGZiaW4KYm9vdApkZXYKZXRjCmhvbWUKbGliCmxpYjY0Cm1lZGlh
+        Cm1udApvcHQKcHJvYwpyb290CnJ1bgpzYmluCnNlbGludXgKc3J2CnN0YWxs
+        bWFuCnN5cwp0bXAKdXNyCnZhcgo=
     http_version: 
-  recorded_at: Mon, 07 Oct 2013 00:47:47 GMT
+  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
 recorded_with: VCR 2.6.0

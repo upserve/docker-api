@@ -219,22 +219,21 @@ ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
 # => Docker::Container { :id => a1759f3e2873, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
-
-
 # Wait for the current command to finish executing. If an argument is given,
 # will timeout after that number of seconds. The default is one minute.
 container.wait(15)
 # => {'StatusCode'=>0}
 
 # Attach to the Container. Currently, the below options are the only valid ones.
-# By default, :stream and :stdout are set.
+# By default, :stream, :stdout, and :stderr are set.
 container.attach(:stream => true, :stdout => true, :stderr => true, :logs => true)
-# => "bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar"
+# => [["bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar", []]
 
 # If you wish to stream the attach method, a block may be supplied.
-container = Docker::Container.create('Image' => 'base', 'Cmd' => %[find / -name *])
-container.tap(&:start).attach { |chunk| puts chunk }
-# => nil
+container = Docker::Container.create('Image' => 'base', 'Cmd' => ['find / -name *'])
+container.tap(&:start).attach { |stream, chunk| puts "#{stream}: #{chunk}" }
+stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
+# => [[], ["2013/10/30 17:16:24 Unable to locate find / -name *\n"]]
 
 # Create an Image from a Container's changes.
 container.commit

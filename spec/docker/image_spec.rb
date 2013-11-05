@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Docker::Image do
   describe '#to_s' do
-    subject { described_class.send(:new, Docker.connection, id) }
+    subject { described_class.new(Docker.connection, id, info) }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
@@ -15,14 +15,6 @@ describe Docker::Image do
     let(:expected_string) do
       "Docker::Image { :id => #{id}, :info => #{info.inspect}, "\
         ":connection => #{connection} }"
-    end
-
-    before do
-      {
-        :@id => id,
-        :@connection => connection,
-        :@info => info
-      }.each { |k, v| subject.instance_variable_set(k, v) }
     end
 
     its(:to_s) { should == expected_string }
@@ -42,10 +34,10 @@ describe Docker::Image do
     subject { described_class.build('from base') }
     let(:new_image) { subject.insert(:path => '/stallman',
                                      :url => 'http://stallman.org') }
-    let(:ls_output) { new_image.run('ls /').attach.split("\n") }
+    let(:ls_output) { new_image.run('ls /').attach }
 
     it 'inserts the url\'s file into a new Image', :vcr do
-      ls_output.should include('stallman')
+      expect(ls_output.first.first).to include('stallman')
     end
   end
 
@@ -69,9 +61,11 @@ describe Docker::Image do
       let(:gemfile) { File.read('Gemfile') }
 
       it 'creates a new Image that has that file', :vcr do
-        new_image.run('cat /Gemfile').start.attach { |chunk|
-          chunk.should == gemfile
+        chunk = nil
+        new_image.run('cat /Gemfile').attach { |stream, c|
+          chunk ||= c
         }
+        expect(chunk).to eq(gemfile)
       end
     end
 
@@ -79,21 +73,38 @@ describe Docker::Image do
       let(:file) { ['./Gemfile', './Rakefile'] }
       let(:gemfile) { File.read('Gemfile') }
       let(:rakefile) { File.read('Rakefile') }
+      let(:response) {
+        new_image.run('cat /Gemfile /Rakefile').attach
+      }
 
       it 'creates a new Image that has each file', :vcr do
-        new_image.run('cat /Gemfile /Rakefile').start.attach do |chunk|
-          chunk.should == gemfile + rakefile
-        end
+        expect(response).to eq([[gemfile, rakefile],[]])
       end
     end
   end
 
   describe '#push' do
     subject { described_class.create('fromImage' => 'base') }
+    let(:credentials) {
+      {
+        :username => 'test',
+        :password => 'test',
+        :auth     => '',
+        :email    => 'test@test.com'
+      }
+    }
+    let(:base_image) {
+      described_class.create('fromImage' => 'base')
+    }
+    let(:container) {
+      base_image.run('true')
+    }
+    let(:new_image) {
+      container.commit('repo' => 'test/base')
+    }
 
     it 'pushes the Image', :vcr do
-      pending 'I don\'t want to push the Image to the Docker Registry'
-      subject.push
+      new_image.push(credentials)
     end
   end
 
@@ -134,7 +145,7 @@ describe Docker::Image do
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
       it 'splits the String by spaces and creates a new Container' do
-        output.should == "ld-linux-x86-64.so.2\n"
+        expect(output).to eq([["ld-linux-x86-64.so.2\n"],[]])
       end
     end
 
@@ -142,7 +153,7 @@ describe Docker::Image do
       let(:cmd) { %[which pwd] }
 
       it 'creates a new Container', :vcr do
-        output.should == "/bin/pwd\n"
+        expect(output).to eq([["/bin/pwd\n"],[]])
       end
     end
 
@@ -160,7 +171,7 @@ describe Docker::Image do
                                                   'Image' => 'base')}
         subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
         it 'should normally show result if image has Cmd configured' do
-          output.should eql "/\n"
+          expect(output).to eql [["/\n"],[]]
         end
       end
     end
@@ -248,12 +259,28 @@ describe Docker::Image do
     end
 
     context 'with a valid Dockerfile' do
-      let(:image) { subject.build("from base\n") }
+      context 'without query parameters' do
+        let(:image) { subject.build("from base\n") }
 
-      it 'builds an image', :vcr do
-        image.should be_a Docker::Image
-        image.id.should_not be_nil
-        image.connection.should be_a Docker::Connection
+        it 'builds an image', :vcr do
+          expect(image).to be_a Docker::Image
+          expect(image.id).to_not be_nil
+          expect(image.connection).to be_a Docker::Connection
+        end
+      end
+
+      context 'with specifying a repo in the query parameters' do
+        let(:image) {
+          subject.build("from base\nrun true\n", "t" => "swipely/base")
+        }
+        let(:images) { subject.all }
+
+        it 'builds an image and tags it', :vcr do
+          expect(image).to be_a Docker::Image
+          expect(image.id).to_not be_nil
+          expect(image.connection).to be_a Docker::Connection
+          expect(images.first.info["Repository"]).to eq("swipely/base")
+        end
       end
     end
   end
@@ -262,19 +289,32 @@ describe Docker::Image do
     subject { described_class }
 
     context 'with a valid Dockerfile' do
-      let(:dir) { File.join(File.dirname(__FILE__), '..', 'fixtures') }
+      let(:dir) {
+        File.join(File.dirname(__FILE__), '..', 'fixtures', 'build_from_dir')
+      }
       let(:docker_file) { File.new("#{dir}/Dockerfile") }
-      let(:image) { subject.build_from_dir(dir) }
+      let(:image) { subject.build_from_dir(dir, opts) }
+      let(:opts) { {} }
       let(:container) do
         Docker::Container.create('Image' => image.id,
                                  'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
                               .attach(:stderr => true) }
+      let(:images) { subject.all }
 
-      it 'builds the image', :vcr do
-        pending 'webmock / vcr issue'
-        output.should == docker_file.tap(&:rewind).read
+      context 'with no query parameters' do
+        it 'builds the image', :vcr do
+          expect(output).to eq([[docker_file.read],[]])
+        end
+      end
+
+      context 'with specifying a repo in the query parameters' do
+        let(:opts) { { "t" => "swipely/base2" } }
+        it 'builds the image and tags it', :vcr do
+          expect(output).to eq([[docker_file.read],[]])
+          expect(images.first.info["Repository"]).to eq("swipely/base2")
+        end
       end
     end
   end
