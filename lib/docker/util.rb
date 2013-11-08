@@ -69,7 +69,7 @@ module Docker::Util
     stdout_messages = []
     stderr_messages = []
     while body.length >= 8
-      type, length = body[0,8].unpack("CxxxL>")
+      type, length = body[0,8].unpack("CxxxN")
       # need more data
       break if body.length-8 < length
       body.slice!(0,8)
