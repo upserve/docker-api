@@ -54,13 +54,13 @@ class Docker::Container
       :stream => true, :stdout => true, :stderr => true
     }.merge(options)
     # Creates list to store stdout and stderr messages
-    msgs = [[],[]]
+    msgs = Docker::Messages.new
     connection.post(
       path_for(:attach),
       opts,
       :response_block => attach_for(block, msgs)
     )
-    msgs
+    [msgs.stdout_messages, msgs.stderr_messages]
   end
 
   # Create an Image from a Container's change.s
@@ -143,16 +143,16 @@ class Docker::Container
 
   # Method that takes chunks and calls the attached block for each mux'd message
   def attach_for(block, msg_stack)
+    messages = Docker::Messages.new
     lambda do |c,r,t|
-      stdout_msgs, stderr_msgs = Docker::Util.decipher_messages(c)
-      msg_stack[0] += stdout_msgs
-      msg_stack[1] += stderr_msgs
+      messages = messages.decipher_messages(c)
+      msg_stack.append(messages)
 
       unless block.nil?
-        stdout_msgs.each do |msg|
+        messages.stdout_messages.each do |msg|
           block.call(:stdout, msg)
         end
-        stderr_msgs.each do |msg|
+        messages.stderr_messages.each do |msg|
           block.call(:stderr, msg)
         end
       end
