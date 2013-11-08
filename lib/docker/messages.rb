@@ -50,10 +50,4 @@ class Docker::Messages
 
     messages
   end
-
-  def self.length(header)
-    header[4..7].chars
-      .map { |c| c.getbyte(0) }
-      .inject(0) { |total, curr| (total << 8) + curr }
-  end
 end
