@@ -64,19 +64,18 @@ module Docker::Util
   end
 
   # Method to break apart application/vnd.docker.raw-stream headers
+  # modifies body agument so after return it might contain pending data
   def decipher_messages(body)
-    raw_text = body.dup
     stdout_messages = []
     stderr_messages = []
-    while !raw_text.empty?
-      header = raw_text.slice!(0,8)
-      next if header.nil?
-      length = header[4..7].chars
-        .map { |c| c.getbyte(0) }
-        .inject(0) { |total, curr| (total << 8) + curr }
-      message = raw_text.slice!(0,length)
-      stdout_messages << message if header.getbyte(0) == 1
-      stderr_messages << message if header.getbyte(0) == 2
+    while body.length >= 8
+      type, length = body[0,8].unpack("CxxxN")
+      # need more data
+      break if body.length-8 < length
+      body.slice!(0,8)
+      message = body.slice!(0,length)
+      stdout_messages << message if type == 1
+      stderr_messages << message if type == 2
     end
 
     [stdout_messages, stderr_messages]
