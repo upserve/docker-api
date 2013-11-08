@@ -25,14 +25,13 @@ class Docker::Messages
       @buffer = header
       return
     end
-
-    length = Docker::Messages.length(header)
+    type, length = header.unpack("CxxxN")
 
     message = raw_text.slice!(0,length)
     if message.length < length
       @buffer = header + message
     else
-      add_message(header.getbyte(0), message)
+      add_message(type, message)
     end
   end
 

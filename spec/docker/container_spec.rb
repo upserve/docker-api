@@ -129,12 +129,32 @@ describe Docker::Container do
 
     before { subject.start }
 
-    it 'yields each chunk', :vcr do
-      chunk = nil
-      subject.attach do |stream, c|
-        chunk ||= c
+    context 'with normal sized chunks' do
+      it 'yields each chunk', :vcr do
+        chunk = nil
+        subject.attach do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("/\n")
       end
-      expect(chunk).to eq("/\n")
+    end
+
+    context 'with very small chunks' do
+      before do
+        Docker.options = { :chunk_size => 1 }
+      end
+
+      after do
+        Docker.options = {}
+      end
+
+      it 'yields each chunk', :vcr do
+        chunk = nil
+        subject.attach do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("/\n")
+      end
     end
   end
 
