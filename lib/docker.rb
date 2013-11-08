@@ -82,6 +82,7 @@ end
 require 'docker/version'
 require 'docker/error'
 require 'docker/util'
+require 'docker/messages'
 require 'docker/connection'
 require 'docker/container'
 require 'docker/image'

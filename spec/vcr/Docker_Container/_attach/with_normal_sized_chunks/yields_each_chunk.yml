@@ -8,7 +8,7 @@ http_interactions:
       string: ! '{"Cmd":["pwd"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.0
       Content-Type:
       - application/json
   response:
@@ -24,21 +24,21 @@ http_interactions:
         MjE=
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1MyBHTVQ=
+        RnJpLCAwOCBOb3YgMjAxMyAxOTo1OTo1NiBHTVQ=
     body:
       encoding: US-ASCII
-      string: ! '{"Id":"8fcf3ea9f6de"}'
+      string: ! '{"Id":"7cb80f7f5737"}'
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:53 GMT
+  recorded_at: Fri, 08 Nov 2013 19:59:56 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/8fcf3ea9f6de/start
+    uri: unix:///var/run/docker.sock/v1.6/containers/7cb80f7f5737/start
     body:
       encoding: UTF-8
       string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.0
       Content-Type:
       - application/json
   response:
@@ -54,21 +54,21 @@ http_interactions:
         MA==
       !binary "RGF0ZQ==":
       - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1MyBHTVQ=
+        RnJpLCAwOCBOb3YgMjAxMyAxOTo1OTo1NiBHTVQ=
     body:
       encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:53 GMT
+  recorded_at: Fri, 08 Nov 2013 19:59:56 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/8fcf3ea9f6de/attach?stderr=true&stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.6/containers/7cb80f7f5737/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.0
       Content-Type:
       - text/plain
   response:
@@ -84,5 +84,5 @@ http_interactions:
       string: !binary |-
         AQAAAAAAAAIvCg==
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:54 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Fri, 08 Nov 2013 19:59:56 GMT
+recorded_with: VCR 2.7.0

@@ -62,23 +62,4 @@ module Docker::Util
     credentials = credentials.to_json if credentials.is_a?(Hash)
     { 'X-Registry-Auth' => Base64.encode64(credentials).gsub(/\n/, '') }
   end
-
-  # Method to break apart application/vnd.docker.raw-stream headers
-  def decipher_messages(body)
-    raw_text = body.dup
-    stdout_messages = []
-    stderr_messages = []
-    while !raw_text.empty?
-      header = raw_text.slice!(0,8)
-      next if header.nil?
-      length = header[4..7].chars
-        .map { |c| c.getbyte(0) }
-        .inject(0) { |total, curr| (total << 8) + curr }
-      message = raw_text.slice!(0,length)
-      stdout_messages << message if header.getbyte(0) == 1
-      stderr_messages << message if header.getbyte(0) == 2
-    end
-
-    [stdout_messages, stderr_messages]
-  end
 end
