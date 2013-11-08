@@ -143,8 +143,11 @@ class Docker::Container
 
   # Method that takes chunks and calls the attached block for each mux'd message
   def attach_for(block, msg_stack)
+    buffer = ""
     lambda do |c,r,t|
-      stdout_msgs, stderr_msgs = Docker::Util.decipher_messages(c)
+      # append to buffer, might contain previous pending data
+      buffer << c
+      stdout_msgs, stderr_msgs = Docker::Util.decipher_messages(buffer)
       msg_stack[0] += stdout_msgs
       msg_stack[1] += stderr_msgs
 
