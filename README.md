@@ -32,6 +32,8 @@ Usage
 
 docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every extrenal method represents an API call.
 
+If you're just looking to build Docker images, [dockly](https://github.com/swipely/dockly) provides a simple syntax for building and packaging images.
+
 ## Starting up
 
 Follow the [installation instructions](http://www.docker.io/gettingstarted/), and then run:
