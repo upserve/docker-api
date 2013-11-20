@@ -150,7 +150,7 @@ describe Docker::Image do
     end
 
     context 'when the argument is an Array' do
-      let(:cmd) { %[which pwd] }
+      let(:cmd) { %w[which pwd] }
 
       it 'creates a new Container', :vcr do
         expect(output).to eq([["/bin/pwd\n"],[]])
