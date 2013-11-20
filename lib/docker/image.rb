@@ -19,7 +19,7 @@ class Docker::Image
   # necessary, but it will fail with 500 if no config is saved with the image
   def run(cmd=nil)
     opts = { 'Image' => self.id }
-    opts["Cmd"] = cmd.split(/\s+/) if cmd.is_a?(String)
+    opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
     begin
       Docker::Container.create(opts, connection)
                        .tap(&:start!)
