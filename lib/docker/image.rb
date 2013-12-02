@@ -34,10 +34,13 @@ class Docker::Image
 
   # Push the Image to the Docker registry.
   def push(creds = nil, options = {})
+    repository = self.info['Repository']
+    raise ArgumentError,
+      "Image does not have a name to push, got: #{repository}." unless repository
     credentials = (creds.nil?) ? Docker.creds : creds.to_json
     headers = Docker::Util.build_auth_header(credentials)
     connection.post(
-      path_for(:push),
+      "/images/#{repository}/push",
       options,
       :headers => headers
     )
