@@ -99,8 +99,12 @@ describe Docker::Image do
     let(:container) {
       base_image.run('true')
     }
+    let(:repo_name) { 'test/base' }
     let(:new_image) {
-      container.commit('repo' => 'test/base')
+      container.commit('repo' => repo_name)
+      Docker::Image.all.select { |image|
+        image.info['Repository'] == repo_name
+      }.first
     }
 
     it 'pushes the Image', :vcr do
