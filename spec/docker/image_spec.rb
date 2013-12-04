@@ -90,7 +90,9 @@ describe Docker::Image do
       let(:file) { './Gemfile' }
 
       it 'leave no intermediate containers', :vcr do
-        expect{new_image}.to change{Docker::Container.all(:all => true).count}.by 0
+        expect { new_image }.to change {
+          Docker::Container.all(:all => true).count
+        }.by 0
       end
 
       it 'creates a new image', :vcr do
