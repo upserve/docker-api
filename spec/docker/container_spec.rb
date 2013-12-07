@@ -357,6 +357,35 @@ describe Docker::Container do
     end
   end
 
+  describe '.get' do
+    subject { described_class }
+
+    context 'when the HTTP response is not a 200' do
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 500 })
+      end
+      after do
+        Excon.stubs.shift
+        Docker.options = {}
+      end
+
+      it 'raises an error' do
+        expect { subject.get('randomID') }
+            .to raise_error(Docker::Error::ServerError)
+      end
+    end
+
+    context 'when the HTTP response is a 200' do
+      let(:container) { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+
+      it 'materializes the Container into a Docker::Container', :vcr do
+        subject.get(container.id).should be_a(Docker::Container)
+      end
+    end
+
+  end
+
   describe '.all' do
     subject { described_class }
 
