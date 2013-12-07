@@ -32,12 +32,12 @@ module Docker::Util
   end
 
   def extract_id(body)
-    line = body.lines.to_a[-1]
-    if (id = line.match(/^Successfully built ([a-f0-9]+)$/)) && !id[1].empty?
-      id[1]
-    else
-      raise UnexpectedResponseError, "Couldn't find id: #{body}"
+    body.lines.each do |line|
+      if (id = line.match(/^Successfully built ([a-f0-9]+)$/)) && !id[1].empty?
+        return id[1]
+      end
     end
+    raise UnexpectedResponseError, "Couldn't find id: #{body}"
   end
 
   # Convenience method to get the file hash corresponding to an array of

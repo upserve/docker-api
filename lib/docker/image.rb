@@ -78,7 +78,7 @@ class Docker::Image
     file_hash['Dockerfile'] = dockerfile_for(file_hash, output_path)
 
     tar = Docker::Util.create_tar(file_hash)
-    body = connection.post('/build', {}, :body => tar)
+    body = connection.post('/build', opts, :body => tar)
     self.class.send(:new, connection, Docker::Util.extract_id(body))
   end
 

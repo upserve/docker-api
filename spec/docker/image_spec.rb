@@ -44,8 +44,11 @@ describe Docker::Image do
   describe '#insert_local' do
     subject { described_class.build('from base') }
 
+    let(:rm) { false }
     let(:new_image) {
-      subject.insert_local('localPath' => file, 'outputPath' => '/')
+      opts = {'localPath' => file, 'outputPath' => '/'}
+      opts[:rm] = true if rm
+      subject.insert_local(opts)
     }
 
     context 'when the local file does not exist' do
@@ -80,6 +83,22 @@ describe Docker::Image do
       it 'creates a new Image that has each file', :vcr do
         expect(response).to eq([[gemfile, rakefile],[]])
       end
+    end
+
+    context 'when removing intermediate containers' do
+      let(:rm) { true }
+      let(:file) { './Gemfile' }
+
+      it 'leave no intermediate containers', :vcr do
+        expect { new_image }.to change {
+          Docker::Container.all(:all => true).count
+        }.by 0
+      end
+
+      it 'creates a new image', :vcr do
+        expect{new_image}.to change{Docker::Image.all.count}.by 1
+      end
+
     end
   end
 
