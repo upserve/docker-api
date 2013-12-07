@@ -377,7 +377,7 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      let(:container) { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'base') }
 
       it 'materializes the Container into a Docker::Container', :vcr do
         subject.get(container.id).should be_a(Docker::Container)

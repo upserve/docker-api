@@ -132,7 +132,8 @@ class Docker::Container
 
   # Return the container with specified ID
   def self.get(id, opts = {}, conn = Docker.connection)
-    hash = Docker::Util.parse_json(conn.get("/containers/#{id}/json", opts)) || {}
+    container_json = conn.get("/containers/#{id}/json", opts)
+    hash = Docker::Util.parse_json(container_json) || {}
     new(conn, hash['ID'])
   end
 
