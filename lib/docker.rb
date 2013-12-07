@@ -5,6 +5,7 @@ require 'tempfile'
 require 'base64'
 require 'rubygems/package'
 require 'archive/tar/minitar'
+require 'uri'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
