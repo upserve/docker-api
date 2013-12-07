@@ -1,0 +1,57 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/create?name=bob
+    body:
+      encoding: UTF-8
+      string: '{"Cmd":["true"],"Image":"base"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.7.3
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 02 Dec 2013 23:14:48 GMT
+      Content-Length:
+      - '73'
+    body:
+      encoding: UTF-8
+      string: '{"Id":"81a582695592acd1d15e9990c332e579837bdac0f75a6055ca81cbfde88d69a3"}'
+    http_version: 
+  recorded_at: Mon, 02 Dec 2013 23:14:48 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.6/containers/81a582695592acd1d15e9990c332e579837bdac0f75a6055ca81cbfde88d69a3/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.7.3
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 02 Dec 2013 23:14:48 GMT
+      Content-Length:
+      - '1010'
+    body:
+      encoding: UTF-8
+      string: '{"ID":"81a582695592acd1d15e9990c332e579837bdac0f75a6055ca81cbfde88d69a3","Created":"2013-12-02T23:14:48.694921809Z","Path":"true","Args":[],"Config":{"Hostname":"81a582695592","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"ExposedPorts":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":"","WorkingDir":"","Entrypoint":null,"NetworkDisabled":false},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","FinishedAt":"0001-01-01T00:00:00Z","Ghost":false},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null,"Ports":null},"SysInitPath":"/usr/bin/docker","ResolvConfPath":"/etc/resolv.conf","HostnamePath":"","HostsPath":"","Name":"/bob","Driver":"aufs","Volumes":null,"VolumesRW":null}'
+    http_version: 
+  recorded_at: Mon, 02 Dec 2013 23:14:48 GMT
+recorded_with: VCR 2.8.0

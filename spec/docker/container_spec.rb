@@ -31,6 +31,20 @@ describe Docker::Container do
     end
   end
 
+  describe '#create' do
+    subject {
+      described_class.create({'Cmd' => %w[true], 'Image' => 'base'}.merge(opts))
+    }
+
+    context 'when creating a container named bob' do
+      let(:opts) { {"name" => "bob"} }
+
+      it 'should have name set to bob', :vcr do
+        subject.json["Name"].should == "/bob"
+      end
+    end
+  end
+
   describe '#changes' do
     subject {
       described_class.create('Cmd' => %w[rm -rf /root], 'Image' => 'base')
