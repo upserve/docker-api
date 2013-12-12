@@ -122,6 +122,13 @@ class Docker::Image
       end
     end
 
+    # Return a specific image.
+    def get(id, opts = {}, conn = Docker.connection)
+      image_json = conn.get("/images/#{URI.encode(id)}/json", opts)
+      hash = Docker::Util.parse_json(image_json) || {}
+      new(conn, hash['id'])
+    end
+
     # Return every Image.
     def all(opts = {}, conn = Docker.connection)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
