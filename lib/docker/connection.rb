@@ -38,6 +38,8 @@ class Docker::Connection
     raise ClientError, ex.message
   rescue Excon::Errors::Unauthorized => ex
     raise UnauthorizedError, ex.message
+  rescue Excon::Errors::NotFound => ex
+    raise NotFoundError, ex.message
   rescue Excon::Errors::InternalServerError => ex
     raise ServerError, ex.message
   rescue Excon::Errors::Timeout => ex
