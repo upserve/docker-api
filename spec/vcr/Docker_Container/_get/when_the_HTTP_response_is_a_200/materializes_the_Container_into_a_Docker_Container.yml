@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.6/containers/create
+    body:
+      encoding: UTF-8
+      string: ! '{"Cmd":["ls"],"Image":"base"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MjE=
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAyOCBPY3QgMjAxMyAxNDozNTozNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"86e7cfd11b94"}'
+    http_version: 
+  recorded_at: Mon, 28 Oct 2013 14:35:36 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.6/containers/86e7cfd11b94/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.6.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTkx
+      !binary "RGF0ZQ==":
+      - !binary |-
+        TW9uLCAyOCBPY3QgMjAxMyAxNDozNTozNiBHTVQ=
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"86e7cfd11b94c982d011dc6b9f5414dae7f92065f8ad444ec5254fc92ed6ffd3","Image":"base:latest","Command":"ls
+        ","Created":1382970936,"Status":"Exit 0","Ports":null,"SizeRw":0,"SizeRootFs":0}'
+    http_version: 
+  recorded_at: Mon, 28 Oct 2013 14:35:36 GMT

@@ -250,6 +250,10 @@ container.run('pwd', 10)
 container.delete
 # => nil
 
+# Request a Container by ID or name.
+Docker::Container.get('500f53b25e6e')
+# => Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
