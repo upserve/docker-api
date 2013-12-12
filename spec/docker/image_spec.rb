@@ -226,7 +226,17 @@ describe Docker::Image do
     end
 
     context 'when the image does not exist' do
-      let(:image_name) { 'abcdefhijkl' }
+      let(:image_name) { 'abcdefghijkl' }
+
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 404 })
+      end
+
+      after do
+        Docker.options = {}
+        Excon.stubs.shift
+      end
 
       it 'raises a not found error', :vcr do
         expect { image }.to raise_error(Docker::Error::NotFoundError)
