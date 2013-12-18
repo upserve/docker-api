@@ -213,6 +213,37 @@ describe Docker::Image do
     end
   end
 
+  describe '.get' do
+    subject { described_class }
+    let(:image) { subject.get(image_name) }
+
+    context 'when the image does exist' do
+      let(:image_name) { 'base' }
+
+      it 'returns the new image', :vcr do
+        expect(image).to be_a Docker::Image
+      end
+    end
+
+    context 'when the image does not exist' do
+      let(:image_name) { 'abcdefghijkl' }
+
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 404 })
+      end
+
+      after do
+        Docker.options = {}
+        Excon.stubs.shift
+      end
+
+      it 'raises a not found error', :vcr do
+        expect { image }.to raise_error(Docker::Error::NotFoundError)
+      end
+    end
+  end
+
   describe '.import' do
     subject { described_class }
 

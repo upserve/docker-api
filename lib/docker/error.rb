@@ -14,6 +14,9 @@ module Docker::Error
   # Raised when a request returns a 401.
   class UnauthorizedError < DockerError; end
 
+  # Raised when a request returns a 404.
+  class NotFoundError < DockerError; end
+
   # Raised when a request returns a 500.
   class ServerError < DockerError; end
 
