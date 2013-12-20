@@ -10,7 +10,7 @@ require 'uri'
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
-  attr_accessor :creds
+  attr_accessor :creds, :logger
 
   def default_socket_url
     'unix:///var/run/docker.sock'
@@ -76,8 +76,9 @@ module Docker
   end
 
   module_function :default_socket_url, :env_url, :url, :url=, :options,
-                  :options=, :creds, :creds=, :connection, :reset_connection!,
-                  :version, :info, :authenticate!, :validate_version!
+                  :options=, :creds, :creds=, :logger, :logger=,
+                  :connection, :reset_connection!, :version, :info,
+                  :authenticate!, :validate_version!
 end
 
 require 'docker/version'
