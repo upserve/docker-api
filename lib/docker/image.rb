@@ -157,10 +157,12 @@ class Docker::Image
     end
 
     # Given a Dockerfile as a string, builds an Image.
-    def build(commands, opts = {}, connection = Docker.connection)
-      body = connection.post(
+    def build(commands, opts = {}, connection = Docker.connection, &block)
+      body = ""
+      connection.post(
         '/build', opts,
-        :body => Docker::Util.create_tar('Dockerfile' => commands)
+        :body => Docker::Util.create_tar('Dockerfile' => commands),
+        :response_block => response_block_for_build(body, &block)
       )
       new(connection, Docker::Util.extract_id(body))
     rescue Docker::Error::ServerError

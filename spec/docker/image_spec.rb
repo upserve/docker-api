@@ -336,6 +336,16 @@ describe Docker::Image do
           expect(images.first.info["Repository"]).to eq("swipely/base")
         end
       end
+
+      context 'with a block capturing build output' do
+        let(:build_output) { "" }
+        let(:block) { Proc.new { |chunk| build_output << chunk } }
+        let!(:image) { subject.build("FROM base\n", &block) }
+
+        it 'calls the block and passes build output', :vcr do
+          expect(build_output).to start_with('Step 1 : FROM base')
+        end
+      end
     end
   end
 
