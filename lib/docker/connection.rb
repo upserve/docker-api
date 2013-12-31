@@ -33,7 +33,13 @@ class Docker::Connection
 
   # Send a request to the server with the `
   def request(*args, &block)
-    resource.request(compile_request_params(*args, &block)).body
+    request = compile_request_params(*args, &block)
+    if Docker.logger
+      Docker.logger.info(
+        [request[:method], request[:path], request[:query], request[:body]]
+      )
+    end
+    resource.request(request).body
   rescue Excon::Errors::BadRequest => ex
     raise ClientError, ex.message
   rescue Excon::Errors::Unauthorized => ex
