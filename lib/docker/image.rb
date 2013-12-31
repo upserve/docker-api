@@ -157,10 +157,12 @@ class Docker::Image
     end
 
     # Given a Dockerfile as a string, builds an Image.
-    def build(commands, opts = {}, connection = Docker.connection)
-      body = connection.post(
+    def build(commands, opts = {}, connection = Docker.connection, &block)
+      body = ""
+      connection.post(
         '/build', opts,
-        :body => Docker::Util.create_tar('Dockerfile' => commands)
+        :body => Docker::Util.create_tar('Dockerfile' => commands),
+        :response_block => response_block_for_build(body, &block)
       )
       new(connection, Docker::Util.extract_id(body))
     rescue Docker::Error::ServerError
@@ -168,12 +170,19 @@ class Docker::Image
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
-    def build_from_dir(dir, opts = {}, connection = Docker.connection)
+    #
+    # If a block is passed, chunks of output produced by Docker will be passed
+    # to that block.
+    def build_from_dir(dir, opts = {}, connection = Docker.connection, &block)
       tar = Docker::Util.create_dir_tar(dir)
-      body = connection.post(
+
+      # The response_block passed to Excon will build up this body variable.
+      body = ""
+      connection.post(
         '/build', opts,
         :headers => { 'Content-Type'      => 'application/tar',
-                      'Transfer-Encoding' => 'chunked' }
+                      'Transfer-Encoding' => 'chunked' },
+        :response_block => response_block_for_build(body, &block)
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
       new(connection, Docker::Util.extract_id(body))
     ensure
@@ -199,5 +208,15 @@ class Docker::Image
     end
 
     dockerfile
+  end
+
+  # Generates the block to be passed as a reponse block to Excon. The returned
+  # lambda will append Docker output to the first argument, and yield output to
+  # the passed block, if a block is given.
+  def self.response_block_for_build(body)
+    lambda do |chunk, remaining, total|
+      body << chunk
+      yield chunk if block_given?
+    end
   end
 end

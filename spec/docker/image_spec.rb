@@ -336,6 +336,16 @@ describe Docker::Image do
           expect(images.first.info["Repository"]).to eq("swipely/base")
         end
       end
+
+      context 'with a block capturing build output' do
+        let(:build_output) { "" }
+        let(:block) { Proc.new { |chunk| build_output << chunk } }
+        let!(:image) { subject.build("FROM base\n", &block) }
+
+        it 'calls the block and passes build output', :vcr do
+          expect(build_output).to start_with('Step 1 : FROM base')
+        end
+      end
     end
   end
 
@@ -347,8 +357,9 @@ describe Docker::Image do
         File.join(File.dirname(__FILE__), '..', 'fixtures', 'build_from_dir')
       }
       let(:docker_file) { File.new("#{dir}/Dockerfile") }
-      let(:image) { subject.build_from_dir(dir, opts) }
+      let(:image) { subject.build_from_dir(dir, opts, &block) }
       let(:opts) { {} }
+      let(:block) { Proc.new {} }
       let(:container) do
         Docker::Container.create('Image' => image.id,
                                  'Cmd' => %w[cat /Dockerfile])
@@ -368,6 +379,16 @@ describe Docker::Image do
         it 'builds the image and tags it', :vcr do
           expect(output).to eq([[docker_file.read],[]])
           expect(images.first.info["Repository"]).to eq("swipely/base2")
+        end
+      end
+
+      context 'with a block capturing build output' do
+        let(:build_output) { "" }
+        let(:block) { Proc.new { |chunk| build_output << chunk } }
+
+        it 'calls the block and passes build output', :vcr do
+          image # Create the image variable, which is lazy-loaded by Rspec
+          expect(build_output).to start_with("Step 1 : FROM base")
         end
       end
     end
