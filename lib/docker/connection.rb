@@ -35,7 +35,7 @@ class Docker::Connection
   def request(*args, &block)
     request = compile_request_params(*args, &block)
     if Docker.logger
-      Docker.logger.info(
+      Docker.logger.debug(
         [request[:method], request[:path], request[:query], request[:body]]
       )
     end
