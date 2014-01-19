@@ -50,15 +50,17 @@ class Docker::Container
 
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
-    opts = {
+    opts = { :read_timeout => options.delete(:timeout) }
+
+    query = {
       :stream => true, :stdout => true, :stderr => true
     }.merge(options)
     # Creates list to store stdout and stderr messages
     msgs = Docker::Messages.new
     connection.post(
       path_for(:attach),
-      opts,
-      :response_block => attach_for(block, msgs)
+      query,
+      opts.merge(:response_block => attach_for(block, msgs))
     )
     [msgs.stdout_messages, msgs.stderr_messages]
   end
