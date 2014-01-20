@@ -50,7 +50,10 @@ class Docker::Container
 
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
-    opts = { :read_timeout => options.delete(:timeout) }
+    opts = {}
+    if  options.has_key? :timeout
+      opts[:read_timeout] = options.delete(:timeout)
+    end
 
     query = {
       :stream => true, :stdout => true, :stderr => true
