@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/build
+    uri: unix:///var/run/docker.sock/v1.8/build
     body:
       encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDEx
-        ADAwMDAwMDAwMDAwADAxMzIzNQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMjc2NzI0NzY0ADAxMzMxNQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -54,7 +54,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -62,29 +62,35 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NCBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:05:56 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
     body:
-      encoding: US-ASCII
-      string: ! "Step 1 : FROM base\n ---> b750fe79269d\nSuccessfully built b750fe79269d\n"
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 0 : from base\\n\"}{\"status\":\"Pulling repository
+        base\"}{\"status\":\"Pulling image (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"27cf78414709\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"stream\":\" ---\\u003e
+        b750fe79269d\\n\"}{\"stream\":\"Successfully built b750fe79269d\\n\"}"
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:54 GMT
+  recorded_at: Wed, 12 Feb 2014 17:05:57 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/images/b750fe79269d/insert?path=%2Fstallman&url=http%3A%2F%2Fstallman.org
+    uri: unix:///var/run/docker.sock/v1.8/images/b750fe79269d/insert?path=%2Fstallman&url=http%3A%2F%2Fstallman.org
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - text/plain
   response:
@@ -92,49 +98,29 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NCBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
-    body:
-      encoding: US-ASCII
-      string: ! '{"status":"Downloading","progress":"1.208 kB/93.78 kB (1%)"}{"status":"Downloading","progress":"4.104
-        kB/93.78 kB (4%)"}{"status":"Downloading","progress":"5.552 kB/93.78 kB (6%)"}{"status":"Downloading","progress":"    7
-        kB/93.78 kB (7%)"}{"status":"Downloading","progress":"8.448 kB/93.78 kB (9%)"}{"status":"Downloading","progress":"9.896
-        kB/93.78 kB (11%)"}{"status":"Downloading","progress":"12.79 kB/93.78 kB (14%)"}{"status":"Downloading","progress":"15.69
-        kB/93.78 kB (17%)"}{"status":"Downloading","progress":"20.03 kB/93.78 kB (21%)"}{"status":"Downloading","progress":"22.93
-        kB/93.78 kB (24%)"}{"status":"Downloading","progress":"27.27 kB/93.78 kB (29%)"}{"status":"Downloading","progress":"31.62
-        kB/93.78 kB (34%)"}{"status":"Downloading","progress":"33.06 kB/93.78 kB (35%)"}{"status":"Downloading","progress":"37.41
-        kB/93.78 kB (40%)"}{"status":"Downloading","progress":"38.86 kB/93.78 kB (41%)"}{"status":"Downloading","progress":"
-        40.3 kB/93.78 kB (43%)"}{"status":"Downloading","progress":" 46.1 kB/93.78
-        kB (49%)"}{"status":"Downloading","progress":"50.44 kB/93.78 kB (54%)"}{"status":"Downloading","progress":"53.34
-        kB/93.78 kB (57%)"}{"status":"Downloading","progress":"57.68 kB/93.78 kB (62%)"}{"status":"Downloading","progress":"60.58
-        kB/93.78 kB (65%)"}{"status":"Downloading","progress":"62.02 kB/93.78 kB (66%)"}{"status":"Downloading","progress":"66.37
-        kB/93.78 kB (71%)"}{"status":"Downloading","progress":"67.82 kB/93.78 kB (72%)"}{"status":"Downloading","progress":"70.71
-        kB/93.78 kB (75%)"}{"status":"Downloading","progress":"72.16 kB/93.78 kB (77%)"}{"status":"Downloading","progress":"73.61
-        kB/93.78 kB (78%)"}{"status":"Downloading","progress":" 76.5 kB/93.78 kB (82%)"}{"status":"Downloading","progress":"77.95
-        kB/93.78 kB (83%)"}{"status":"Downloading","progress":" 79.4 kB/93.78 kB (85%)"}{"status":"Downloading","progress":"80.85
-        kB/93.78 kB (86%)"}{"status":"Downloading","progress":"83.74 kB/93.78 kB (89%)"}{"status":"Downloading","progress":"86.64
-        kB/93.78 kB (92%)"}{"status":"Downloading","progress":"89.54 kB/93.78 kB (95%)"}{"status":"Downloading","progress":"90.98
-        kB/93.78 kB (97%)"}{"status":"Downloading","progress":"92.43 kB/93.78 kB (99%)"}{"status":"Downloading","progress":"93.78
-        kB/93.78 kB (100%)"}{"status":"Downloading","progress":"93.78 kB/93.78 kB
-        (100%)"}{}{"status":"7c791b1c21969250800123515fe347db0b7c5abe1fa593897389e624e8f8dadd"}{"Id":"7c791b1c2196"}'
-    http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
-- request:
-    method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/create
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:06:00 GMT
+      Content-Length:
+      - '208'
+      Connection:
+      - close
     body:
       encoding: UTF-8
-      string: ! '{"Image":"7c791b1c2196","Cmd":["ls","/"]}'
+      string: "{\"status\":\"Downloading\",\"progressDetail\":{\"current\":94554,\"total\":-1,\"start\":1392224758},\"progress\":\"94.55
+        kB\",\"id\":\"b750fe79269d\"}{\"status\":\"4ba9053f199a519e1e1cdbbe1f19230c2160f77453d055a0f0d6ded82ce04946\"}"
+    http_version: 
+  recorded_at: Wed, 12 Feb 2014 17:06:00 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    body:
+      encoding: UTF-8
+      string: "{\"Image\":\"4ba9053f199a519e1e1cdbbe1f19230c2160f77453d055a0f0d6ded82ce04946\",\"Cmd\":[\"ls\",\"/\"]}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -142,29 +128,29 @@ http_interactions:
       code: 201
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjE=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
-    body:
-      encoding: US-ASCII
-      string: ! '{"Id":"c6b1179991e7"}'
-    http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
-- request:
-    method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/c6b1179991e7/start
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:06:00 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
     body:
       encoding: UTF-8
-      string: ! '{}'
+      string: |
+        {"Id":"d421cfdfd73c407d2ca86338cec93fdf86a57816a7332d641461d7f36168f1ab","Warnings":null}
+    http_version: 
+  recorded_at: Wed, 12 Feb 2014 17:06:00 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.8/containers/d421cfdfd73c407d2ca86338cec93fdf86a57816a7332d641461d7f36168f1ab/start
+    body:
+      encoding: UTF-8
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -172,29 +158,28 @@ http_interactions:
       code: 204
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        V2VkLCAzMCBPY3QgMjAxMyAxNjo1ODo1NSBHTVQ=
+      Date:
+      - Wed, 12 Feb 2014 17:06:00 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
+  recorded_at: Wed, 12 Feb 2014 17:06:00 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/c6b1179991e7/attach?stderr=true&stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.8/containers/d421cfdfd73c407d2ca86338cec93fdf86a57816a7332d641461d7f36168f1ab/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - text/plain
   response:
@@ -202,15 +187,14 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vdm5kLmRvY2tlci5yYXctc3RyZWFt
+      Content-Type:
+      - application/vnd.docker.raw-stream
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: !binary |-
         AQAAAAAAAGZiaW4KYm9vdApkZXYKZXRjCmhvbWUKbGliCmxpYjY0Cm1lZGlh
         Cm1udApvcHQKcHJvYwpyb290CnJ1bgpzYmluCnNlbGludXgKc3J2CnN0YWxs
         bWFuCnN5cwp0bXAKdXNyCnZhcgo=
     http_version: 
-  recorded_at: Wed, 30 Oct 2013 16:58:55 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Wed, 12 Feb 2014 17:06:00 GMT
+recorded_with: VCR 2.8.0

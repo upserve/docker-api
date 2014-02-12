@@ -23,9 +23,9 @@ class Docker::Image
     begin
       Docker::Container.create(opts, connection)
                        .tap(&:start!)
-    rescue ServerError
+    rescue ServerError => ex
       if cmd
-        raise ServerError, "Docker Server Error."
+        raise ex
       else
         raise ServerError, "No command specified."
       end
@@ -58,7 +58,7 @@ class Docker::Image
   # Insert a file into the Image, returns a new Image that has that file.
   def insert(query = {})
     body = connection.post(path_for(:insert), query)
-    if (id = body.match(/{"Id":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
+    if (id = body.match(/{"status":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
       raise UnexpectedResponseError, "Could not find Id in '#{body}'"
     else
       self.class.send(:new, connection, id[1])
@@ -140,7 +140,8 @@ class Docker::Image
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
-      hashes.map { |hash| new(connection, hash['Name']) }
+      puts hashes
+      hashes.map { |hash| new(connection, hash['name']) }
     end
 
     # Import an Image from the output of Docker::Container#export.
