@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.6/version
+    uri: unix:///var/run/docker.sock/v1.8/version
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - text/plain
   response:
@@ -16,18 +16,20 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        NjM=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNTo1NTozNyBHTVQ=
+      Content-Type:
+      - application/json
+      Job-Name:
+      - version
+      Date:
+      - Wed, 12 Feb 2014 17:06:43 GMT
+      Content-Length:
+      - '122'
+      Connection:
+      - close
     body:
-      encoding: US-ASCII
-      string: ! '{"Version":"0.6.4","GitCommit":"2f74b1c","GoVersion":"go1.1.2"}'
+      encoding: UTF-8
+      string: |
+        {"Arch":"amd64","GitCommit":"cc3a8c8","GoVersion":"go1.2","KernelVersion":"3.12.9-2-ARCH","Os":"linux","Version":"0.8.0"}
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 15:55:37 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Wed, 12 Feb 2014 17:06:43 GMT
+recorded_with: VCR 2.8.0

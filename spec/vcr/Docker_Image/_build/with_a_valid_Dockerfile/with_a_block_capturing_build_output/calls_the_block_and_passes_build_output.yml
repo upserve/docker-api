@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/build
+    uri: unix:///var/run/docker.sock/v1.8/build
     body:
-      encoding: ISO-8859-1
+      encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDEy
-        ADEyMjU3Mzc3MTAwADAxMzMwMQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMjc2NzI1MDQxADAxMzMwMwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -54,7 +54,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.5
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -62,17 +62,18 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Date:
-      - Fri, 27 Dec 2013 22:25:04 GMT
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:06:41 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "Step 1 : FROM base\n\r ---> b750fe79269d\n\rSuccessfully built b750fe79269d\n\r"
+      string: "{\"stream\":\"Step 0 : FROM base\\n\"}{\"stream\":\" ---\\u003e b750fe79269d\\n\"}{\"stream\":\"Successfully
+        built b750fe79269d\\n\"}"
     http_version: 
-  recorded_at: Fri, 27 Dec 2013 22:25:04 GMT
+  recorded_at: Wed, 12 Feb 2014 17:06:41 GMT
 recorded_with: VCR 2.8.0

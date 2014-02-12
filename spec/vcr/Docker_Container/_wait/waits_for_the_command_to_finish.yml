@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/create
+    uri: unix:///var/run/docker.sock/v1.8/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["tar","nonsense"],"Image":"base"}'
+      string: "{\"Cmd\":[\"tar\",\"nonsense\"],\"Image\":\"base\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -16,29 +16,29 @@ http_interactions:
       code: 201
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjE=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxMiBHTVQ=
-    body:
-      encoding: US-ASCII
-      string: ! '{"Id":"49a0920f92f7"}'
-    http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:29:12 GMT
-- request:
-    method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/49a0920f92f7/start
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:05:34 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
     body:
       encoding: UTF-8
-      string: ! '{}'
+      string: |
+        {"Id":"f59a41eaf3fe69c574fea81ba8fb48988c25727885e0a4781354752631ab682e","Warnings":null}
+    http_version: 
+  recorded_at: Wed, 12 Feb 2014 17:05:34 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.8/containers/f59a41eaf3fe69c574fea81ba8fb48988c25727885e0a4781354752631ab682e/start
+    body:
+      encoding: UTF-8
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -46,29 +46,28 @@ http_interactions:
       code: 204
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        dGV4dC9wbGFpbjsgY2hhcnNldD11dGYtOA==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MA==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxMiBHTVQ=
+      Date:
+      - Wed, 12 Feb 2014 17:05:34 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:29:12 GMT
+  recorded_at: Wed, 12 Feb 2014 17:05:34 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/49a0920f92f7/wait
+    uri: unix:///var/run/docker.sock/v1.8/containers/f59a41eaf3fe69c574fea81ba8fb48988c25727885e0a4781354752631ab682e/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - text/plain
   response:
@@ -76,18 +75,18 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MTc=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxMyBHTVQ=
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:05:34 GMT
+      Content-Length:
+      - '18'
+      Connection:
+      - close
     body:
-      encoding: US-ASCII
-      string: ! '{"StatusCode":64}'
+      encoding: UTF-8
+      string: |
+        {"StatusCode":64}
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:29:13 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Wed, 12 Feb 2014 17:05:34 GMT
+recorded_with: VCR 2.8.0

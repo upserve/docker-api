@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/containers/create
+    uri: unix:///var/run/docker.sock/v1.8/containers/create
     body:
       encoding: UTF-8
-      string: ! '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
+      string: "{\"Hostname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"Tty\":false,\"OpenStdin\":false,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"date\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":{},\"VolumesFrom\":\"\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - application/json
   response:
@@ -16,18 +16,18 @@ http_interactions:
       code: 201
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        MjE=
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjoyOToxOSBHTVQ=
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:05:54 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"925b54010170"}'
+      encoding: UTF-8
+      string: |
+        {"Id":"b95fc91a57b0342a30991266de97a29f509eccf1b4c5c34a299a463bfbd95766","Warnings":null}
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:29:19 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Wed, 12 Feb 2014 17:05:54 GMT
+recorded_with: VCR 2.8.0

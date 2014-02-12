@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.6/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.8/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - text/plain
   response:
@@ -16,32 +16,34 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo0NyBHTVQ=
-      !binary "VHJhbnNmZXItRW5jb2Rpbmc=":
-      - !binary |-
-        Y2h1bmtlZA==
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Feb 2014 17:06:21 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
     body:
-      encoding: US-ASCII
-      string: ! '{"status":"Pulling repository base"}{"status":"Pulling","progress":"image
-        (ubuntu-quantl) from base","id":"b750fe79269d"}{"status":"Pulling","progress":"image
-        (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/","id":"b750fe79269d"}{"status":"Pulling","progress":"dependend
-        layers","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"b750fe79269d"}{"status":"Download","progress":"complete","id":"27cf78414709"}{"status":"Download","progress":"complete","id":"b750fe79269d"}'
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling repository base\"}{\"status\":\"Pulling image
+        (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"27cf78414709\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:33:48 GMT
+  recorded_at: Wed, 12 Feb 2014 17:06:22 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.6/images/base/json
+    uri: unix:///var/run/docker.sock/v1.8/images/base/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.6.0
+      - Swipely/Docker-API 1.7.6
       Content-Type:
       - text/plain
   response:
@@ -49,18 +51,17 @@ http_interactions:
       code: 200
       message: 
     headers:
-      !binary "Q29udGVudC1UeXBl":
-      - !binary |-
-        YXBwbGljYXRpb24vanNvbg==
-      !binary "Q29udGVudC1MZW5ndGg=":
-      - !binary |-
-        NjMw
-      !binary "RGF0ZQ==":
-      - !binary |-
-        RnJpLCAyNSBPY3QgMjAxMyAxNjozMzo0OCBHTVQ=
+      Date:
+      - Wed, 12 Feb 2014 17:06:22 GMT
+      Content-Length:
+      - '650'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
     body:
-      encoding: US-ASCII
-      string: ! '{"id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","parent":"27cf784147099545","created":"2013-03-23T22:24:18.818426-07:00","container":"3d67245a8d72ecf13f33dffac9f79dcdf70f75acb84d308770391510e0c23ad0","container_config":{"Hostname":"","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":true,"OpenStdin":true,"StdinOnce":false,"Env":null,"Cmd":["/bin/bash"],"Dns":null,"Image":"base","Volumes":null,"VolumesFrom":"","WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"Privileged":false},"Size":24653}'
+      encoding: UTF-8
+      string: "{\"id\":\"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc\",\"parent\":\"27cf784147099545\",\"created\":\"2013-03-23T22:24:18.818426-07:00\",\"container\":\"3d67245a8d72ecf13f33dffac9f79dcdf70f75acb84d308770391510e0c23ad0\",\"container_config\":{\"Hostname\":\"\",\"Domainname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"CpuShares\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"ExposedPorts\":null,\"Tty\":true,\"OpenStdin\":true,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"/bin/bash\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":null,\"VolumesFrom\":\"\",\"WorkingDir\":\"\",\"Entrypoint\":null,\"NetworkDisabled\":false,\"OnBuild\":null},\"Size\":175306985}"
     http_version: 
-  recorded_at: Fri, 25 Oct 2013 16:33:48 GMT
-recorded_with: VCR 2.6.0
+  recorded_at: Wed, 12 Feb 2014 17:06:22 GMT
+recorded_with: VCR 2.8.0

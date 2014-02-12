@@ -56,17 +56,17 @@ describe Docker::Container do
     it 'returns the changes as an array', :vcr do
       changes.should == [
         {
-          "Path" => "/root",
-          "Kind" => 2
-        },
-        {
           "Path" => "/dev",
           "Kind" => 0
         },
         {
           "Path" => "/dev/kmsg",
-          "Kind" => 1
-        }
+          "Kind" => 0
+        },
+        {
+          "Path" => "/root",
+          "Kind" => 2
+        },
       ]
     end
   end
@@ -79,12 +79,12 @@ describe Docker::Container do
     let(:top) { sleep 1; container.top }
     let!(:container) { image.run('/while') }
 
-    after { container.kill; image.remove }
+    after { container.kill; container.delete; image.remove }
 
     it 'returns the top commands as an Array', :vcr do
       top.should be_a Array
       top.should_not be_empty
-      top.first.keys.should == %w(PID TTY TIME CMD)
+      top.first.keys.should == %w(UID PID PPID C STIME TTY TIME CMD)
     end
   end
 
@@ -97,6 +97,7 @@ describe Docker::Container do
 
     context 'when the file does not exist' do
       it 'raises an error', :vcr do
+        pending 'Docker no longer returns a 500 when the file does not exist'
         expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
             .to raise_error
       end
@@ -311,9 +312,10 @@ describe Docker::Container do
     end
 
     context 'if run is passed, it saves the command in the image', :vcr do
-      let(:image) { subject.commit('run' => {"Cmd" => %w[pwd]}) }
+      let(:image) { subject.commit }
       it 'saves the command' do
-        expect(image.run.attach).to eql [["/\n"],[]]
+        pending 'This is no longer working in v0.8'
+        expect(image.run('pwd').attach).to eql [["/\n"],[]]
       end
     end
 

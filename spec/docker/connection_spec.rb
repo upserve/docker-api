@@ -53,8 +53,8 @@ describe Docker::Connection do
     let(:query) { { :all => true } }
     let(:options) { { :expects => 201, :lol => true } }
     let(:body) { rand(10000000) }
-    let(:resource) { mock(:resource) }
-    let(:response) { mock(:response, :body => body) }
+    let(:resource) { double(:resource) }
+    let(:response) { double(:response, :body => body) }
     let(:expected_hash) {
       {
         :method  => method,
