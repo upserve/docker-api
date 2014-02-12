@@ -1,6 +1,6 @@
 module Docker
   # The version of the docker-api gem.
-  VERSION = '1.7.6'
+  VERSION = '1.8.0'
 
   # The version of the compatible Docker remote API.
   API_VERSION = '1.8'
