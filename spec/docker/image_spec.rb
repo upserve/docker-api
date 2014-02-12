@@ -105,10 +105,10 @@ describe Docker::Image do
   describe '#push' do
     let(:credentials) {
       {
-        :username => 'test',
-        :password => 'test',
-        :auth     => '',
-        :email    => 'test@test.com'
+        'username' => 'nahiluhmot',
+        'password' => '******',
+        'serveraddress' => 'https://index.docker.io/v1',
+        'email'    => 'tomhulihan@swipely.com'
       }
     }
     let(:base_image) {
@@ -117,16 +117,14 @@ describe Docker::Image do
     let(:container) {
       base_image.run('true')
     }
-    let(:repo_name) { 'test/base' }
     let(:new_image) {
-      container.commit('repo' => repo_name)
+      container.commit('repo' => 'nahiluhmot/base2')
       Docker::Image.all(:all => true).select { |image|
-        image.info['Repository'] == repo_name
+        image.info['RepoTags'].include?('nahiluhmot/base2:latest')
       }.first
     }
 
     it 'pushes the Image', :vcr do
-      pending
       new_image.push(credentials)
     end
   end
@@ -192,7 +190,7 @@ describe Docker::Image do
       context "command configured in image" do
         let(:container) {Docker::Container.create('Cmd' => %w[true],
                                                   'Image' => 'base')}
-        subject { container.commit('container_config' => {"Cmd" => %w[pwd]}) }
+        subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
 
         it 'should normally show result if image has Cmd configured' do
           pending 'The docs say this should work, but it clearly does not'
