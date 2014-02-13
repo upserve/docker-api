@@ -5,6 +5,7 @@ describe Docker do
 
   before do
     ENV['DOCKER_URL'] = nil
+    ENV['DOCKER_HOST'] = nil
   end
 
   it { should be_a Module }
@@ -28,6 +29,38 @@ describe Docker do
 
       its(:options) { {} }
       its(:url) { should == 'unixs:///var/run/not-docker.sock' }
+      its(:connection) { should be_a Docker::Connection }
+    end
+
+    context "when the DOCKER_HOST is set and uses default tcp://" do
+      before do
+        ENV['DOCKER_HOST'] = 'tcp://'
+      end
+
+      its(:options) { {} }
+      its(:url) { should == 'tcp://localhost:4243' }
+      its(:connection) { should be_a Docker::Connection }
+    end
+
+    context "when the DOCKER_HOST ENV variables is set" do
+      before do
+        ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
+      end
+
+      its(:options) { {} }
+      its(:url) { should == 'tcp://someserver:8103' }
+      its(:connection) { should be_a Docker::Connection }
+    end
+
+    context "DOCKER_URL should take precedence over DOCKER_HOST" do
+      before do
+        ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
+        ENV['DOCKER_URL'] = 'tcp://someotherserver:8103'
+
+      end
+
+      its(:options) { {} }
+      its(:url) { should == 'tcp://someotherserver:8103' }
       its(:connection) { should be_a Docker::Connection }
     end
   end

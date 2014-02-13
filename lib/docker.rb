@@ -30,7 +30,12 @@ module Docker
   end
 
   def url
-    @url ||= ENV['DOCKER_URL'] || default_socket_url
+    @url ||= ENV['DOCKER_URL'] || ENV['DOCKER_HOST'] || default_socket_url
+    # docker uses a default notation tcp:// which means tcp://localhost:4243
+    if @url == 'tcp://'
+      @url = 'tcp://localhost:4243'
+    end
+    @url
   end
 
   def options
