@@ -2,13 +2,13 @@ require 'spec_helper'
 
 describe Docker::Image do
   describe '#to_s' do
-    subject { described_class.new(Docker.connection, id, info) }
+    subject { described_class.new(Docker.connection, info) }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
 
     let(:info) do
-      {"Repository" => "base", "Tag" => "latest",
+      {"id" => "bf119e2", "Repository" => "base", "Tag" => "latest",
         "Created" => 1364102658, "Size" => 24653, "VirtualSize" => 180116135}
     end
 

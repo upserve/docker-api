@@ -4,7 +4,9 @@ require 'spec_helper'
 # Docker daemon and have the base Image pulled.
 describe Docker::Container do
   describe '#to_s' do
-    subject { described_class.send(:new, Docker.connection, rand(10000).to_s) }
+    subject {
+      described_class.send(:new, Docker.connection, 'id' => rand(10000).to_s)
+    }
 
     let(:id) { 'bf119e2' }
     let(:connection) { Docker.connection }
