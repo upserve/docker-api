@@ -87,6 +87,7 @@ class Docker::Image
   def remove
     connection.delete("/images/#{self.id}")
   end
+  alias_method :delete, :remove
 
   # Return a String representation of the Image.
   def to_s
