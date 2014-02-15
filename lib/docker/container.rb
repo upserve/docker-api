@@ -104,11 +104,12 @@ class Docker::Container
     end
   end
 
-  # delete container
-  def delete(options = {})
+  # remove container
+  def remove(options = {})
     connection.delete("/containers/#{self.id}", options)
     nil
   end
+  alias_method :delete, :remove
 
   def copy(path, &block)
     connection.post(path_for(:copy), {},
