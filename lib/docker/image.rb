@@ -124,7 +124,7 @@ class Docker::Image < Docker::Base
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
-      hashes.map { |hash| new(connection, 'id' => hash['name']) }
+      hashes.map { |hash| new(connection, hash.merge('id' => hash['name'])) }
     end
 
     # Import an Image from the output of Docker::Container#export.
