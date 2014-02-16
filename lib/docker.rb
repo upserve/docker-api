@@ -20,6 +20,7 @@ module Docker
   autoload :Image, 'docker/image'
   autoload :Messages, 'docker/messages'
   autoload :Util, 'docker/util'
+  autoload :Base, 'docker/base'
 
   def default_socket_url
     'unix:///var/run/docker.sock'

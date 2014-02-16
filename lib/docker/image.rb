@@ -1,17 +1,5 @@
 # This class represents a Docker Image.
-class Docker::Image
-  include Docker::Error
-
-  attr_accessor :id, :connection, :info
-
-  # The private new method accepts a connection and optional id.
-  def initialize(connection, id = nil, info = {})
-    if connection.is_a?(Docker::Connection)
-      @connection, @id, @info = connection, id, info
-    else
-      raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
-    end
-  end
+class Docker::Image < Docker::Base
 
   # Given a command and optional list of streams to attach to, run a command on
   # an Image. This will not modify the Image, but rather create a new Container
@@ -62,7 +50,7 @@ class Docker::Image
     if (id = body.match(/{"status":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
       raise UnexpectedResponseError, "Could not find Id in '#{body}'"
     else
-      self.class.send(:new, connection, id[1])
+      self.class.send(:new, connection, 'id' => id[1])
     end
   end
 
@@ -80,7 +68,7 @@ class Docker::Image
 
     tar = Docker::Util.create_tar(file_hash)
     body = connection.post('/build', opts, :body => tar)
-    self.class.send(:new, connection, Docker::Util.extract_id(body))
+    self.class.send(:new, connection, 'id' => Docker::Util.extract_id(body))
   end
 
   # Remove the Image from the server.
@@ -104,7 +92,6 @@ class Docker::Image
   end
 
   class << self
-    include Docker::Error
 
     # Create a new Image.
     def create(opts = {}, creds = nil, conn = Docker.connection)
@@ -114,27 +101,22 @@ class Docker::Image
       else
         {}
       end
-      instance = new(conn, {}, :headers => headers)
       conn.post('/images/create', opts)
       id = opts['repo'] ? "#{opts['repo']}/#{opts['tag']}" : opts['fromImage']
-      if (instance.id = id).nil?
-        raise UnexpectedResponseError, 'Create response did not contain an Id'
-      else
-        instance
-      end
+      new(conn, 'id' => id, :headers => headers)
     end
 
     # Return a specific image.
     def get(id, opts = {}, conn = Docker.connection)
       image_json = conn.get("/images/#{URI.encode(id)}/json", opts)
       hash = Docker::Util.parse_json(image_json) || {}
-      new(conn, hash['id'])
+      new(conn, hash)
     end
 
     # Return every Image.
     def all(opts = {}, conn = Docker.connection)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
-      hashes.map { |hash| new(conn, hash['Id'], hash.tap{|h| h.delete('Id')}) }
+      hashes.map { |hash| new(conn, hash) }
     end
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
@@ -142,7 +124,7 @@ class Docker::Image
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
-      hashes.map { |hash| new(connection, hash['name']) }
+      hashes.map { |hash| new(connection, 'id' => hash['name']) }
     end
 
     # Import an Image from the output of Docker::Container#export.
@@ -154,7 +136,7 @@ class Docker::Image
            :headers => { 'Content-Type' => 'application/tar',
                          'Transfer-Encoding' => 'chunked' }
         ) { io.read(Excon.defaults[:chunk_size]).to_s }
-        new(connection, Docker::Util.parse_json(body)['status'])
+        new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
       end
     end
 
@@ -166,7 +148,7 @@ class Docker::Image
         :body => Docker::Util.create_tar('Dockerfile' => commands),
         :response_block => response_block_for_build(body, &block)
       )
-      new(connection, Docker::Util.extract_id(body))
+      new(connection, 'id' => Docker::Util.extract_id(body))
     rescue Docker::Error::ServerError
       raise Docker::Error::UnexpectedResponseError
     end
@@ -186,7 +168,7 @@ class Docker::Image
                       'Transfer-Encoding' => 'chunked' },
         :response_block => response_block_for_build(body, &block)
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(connection, Docker::Util.extract_id(body))
+      new(connection, 'id' => Docker::Util.extract_id(body))
     ensure
       tar.close unless tar.nil?
     end

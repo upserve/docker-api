@@ -1,18 +1,6 @@
 # This class represents a Docker Container. It's important to note that nothing
 # is cached so that the information is always up to date.
-class Docker::Container
-  include Docker::Error
-
-  attr_accessor :id, :connection
-
-  # The private new method accepts a connection and optional id.
-  def initialize(connection, id = nil)
-    if connection.is_a?(Docker::Connection)
-      @connection, @id = connection, id
-    else
-      raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
-    end
-  end
+class Docker::Container < Docker::Base
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
@@ -74,10 +62,10 @@ class Docker::Container
     hash = Docker::Util.parse_json(connection.post('/commit',
                                                    options,
                                                    :body => config.to_json))
-    Docker::Image.send(:new, self.connection, hash['Id'])
+    Docker::Image.send(:new, self.connection, hash)
   end
 
-  # Return a String represntation of the Container.
+  # Return a String representation of the Container.
   def to_s
     "Docker::Container { :id => #{self.id}, :connection => #{self.connection} }"
   end
@@ -121,29 +109,25 @@ class Docker::Container
 
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    instance = new(conn)
     name = opts.delete('name')
     query = {}
     query['name'] = name if name
     resp = conn.post('/containers/create', query, :body => opts.to_json)
-    if (instance.id = Docker::Util.parse_json(resp)['Id']).nil?
-      raise UnexpectedResponseError, 'Create response did not contain an Id'
-    else
-      instance
-    end
+    hash = Docker::Util.parse_json(resp) || {}
+    new(conn, hash)
   end
 
   # Return the container with specified ID
   def self.get(id, opts = {}, conn = Docker.connection)
     container_json = conn.get("/containers/#{URI.encode(id)}/json", opts)
     hash = Docker::Util.parse_json(container_json) || {}
-    new(conn, hash['ID'])
+    new(conn, hash)
   end
 
   # Return all of the Containers.
   def self.all(opts = {}, conn = Docker.connection)
     hashes = Docker::Util.parse_json(conn.get('/containers/json', opts)) || []
-    hashes.map { |hash| new(conn, hash['Id']) }
+    hashes.map { |hash| new(conn, hash) }
   end
 
   # Convenience method to return the path for a particular resource.
