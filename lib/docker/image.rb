@@ -24,10 +24,7 @@ class Docker::Image < Docker::Base
   def push(creds = nil, options = {})
     repository = self.info['RepoTags'].first.split(/:/)[0] rescue nil
 
-    unless repository
-      raise ArgumentError
-        "Image does not have a name to push, got: #{repository}."
-    end
+    raise ArgumentError, "Image does not have a name to push." unless repository
 
     credentials = creds || Docker.creds
     headers = Docker::Util.build_auth_header(credentials)
@@ -41,7 +38,10 @@ class Docker::Image < Docker::Base
 
   # Tag the Image.
   def tag(opts = {})
-    Docker::Util.parse_json(connection.post(path_for(:tag), opts))
+    self.info['RepoTags'] ||= []
+    connection.post(path_for(:tag), opts)
+    repo = opts['repo'] || opts[:repo]
+    self.info['RepoTags'] << (repo.include?(?:) ? repo : "#{repo}:latest")
   end
 
   # Insert a file into the Image, returns a new Image that has that file.

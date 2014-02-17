@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.0
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:06:20 GMT
+      - Mon, 17 Feb 2014 19:21:58 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:21 GMT
+  recorded_at: Mon, 17 Feb 2014 19:22:00 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.8/images/base/tag?force=true&repo=base2
@@ -43,7 +43,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.0
       Content-Type:
       - text/plain
   response:
@@ -52,7 +52,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Feb 2014 17:06:21 GMT
+      - Mon, 17 Feb 2014 19:22:00 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -63,5 +63,5 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:21 GMT
+  recorded_at: Mon, 17 Feb 2014 19:22:00 GMT
 recorded_with: VCR 2.8.0
