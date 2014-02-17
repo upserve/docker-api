@@ -133,8 +133,8 @@ describe Docker::Image do
     subject { described_class.create('fromImage' => 'base') }
 
     it 'tags the image with the repo name', :vcr do
-      expect { subject.tag(:repo => 'base2', :force => true) }
-          .to_not raise_error
+      subject.tag(:repo => 'base2', :force => true)
+      subject.info['RepoTags'].should include('base2:latest')
     end
   end
 
