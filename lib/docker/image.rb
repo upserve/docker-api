@@ -91,6 +91,15 @@ class Docker::Image < Docker::Base
     end
   end
 
+  # Update the @info hash, which is the only mutable state in this object.
+  def refresh!
+    img = Docker::Image.all(:all => true).find { |image|
+      image.id.start_with?(self.id) || self.id.start_with?(image.id)
+    }
+    info.merge!(self.json)
+    img && info.merge!(img.info)
+  end
+
   class << self
 
     # Create a new Image.
