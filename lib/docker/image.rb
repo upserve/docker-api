@@ -1,5 +1,6 @@
 # This class represents a Docker Image.
-class Docker::Image < Docker::Base
+class Docker::Image
+  include Docker::Base
 
   # Given a command and optional list of streams to attach to, run a command on
   # an Image. This will not modify the Image, but rather create a new Container
