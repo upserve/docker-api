@@ -200,6 +200,16 @@ describe Docker::Image do
     end
   end
 
+  describe '#refresh!' do
+    let(:image) { Docker::Image.create('fromImage' => 'base') }
+
+    it 'updates the @info hash', :vcr do
+      size = image.info.size
+      image.refresh!
+      image.info.size.should be > size
+    end
+  end
+
   describe '.create' do
     subject { described_class }
 
