@@ -41,7 +41,8 @@ class Docker::Image < Docker::Base
     self.info['RepoTags'] ||= []
     connection.post(path_for(:tag), opts)
     repo = opts['repo'] || opts[:repo]
-    self.info['RepoTags'] << (repo.include?(?:) ? repo : "#{repo}:latest")
+    tag = opts['tag'] || opts[:tag] || 'latest'
+    self.info['RepoTags'] << "#{repo}:#{tag}"
   end
 
   # Insert a file into the Image, returns a new Image that has that file.
