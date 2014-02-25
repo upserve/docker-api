@@ -4,6 +4,8 @@ docker-api
 
 This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.8.*.
 
+If you're interested in using Docker to package your apps, we recmommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
+
 Installation
 ------------
 
@@ -31,8 +33,6 @@ Usage
 -----
 
 docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every extrenal method represents an API call.
-
-If you're just looking to build Docker images, [dockly](https://github.com/swipely/dockly) provides a simple syntax for building and packaging images.
 
 ## Starting up
 
