@@ -103,7 +103,7 @@ class Docker::Image < Docker::Base
         {}
       end
       conn.post('/images/create', opts)
-      id = opts['repo'] ? "#{opts['repo']}/#{opts['tag']}" : opts['fromImage']
+      id = opts['repo'] ? "#{opts['repo']}:#{opts['tag']}" : opts['fromImage']
       new(conn, 'id' => id, :headers => headers)
     end
 
