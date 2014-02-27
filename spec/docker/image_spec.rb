@@ -208,6 +208,7 @@ describe Docker::Image do
 
       it 'sets the id', :vcr do
         image.should be_a Docker::Image
+        image.id.should_not include('base')
         image.id.should_not be_nil
       end
     end
