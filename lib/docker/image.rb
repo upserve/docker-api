@@ -103,7 +103,7 @@ class Docker::Image < Docker::Base
         {}
       end
       body = conn.post('/images/create', opts)
-      id = Docker::Util.parse_json("[#{body.gsub(/}\s*{/, '},{')}]").last['id']
+      id = Docker::Util.fix_json(body).last['id']
       new(conn, 'id' => id, :headers => headers)
     end
 

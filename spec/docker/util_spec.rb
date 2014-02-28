@@ -41,6 +41,22 @@ describe Docker::Util do
     end
   end
 
+  describe '.fix_json' do
+    let(:response) { '{"this":"is"}{"not":"json"}' }
+    subject { Docker::Util.fix_json(response) }
+
+    it 'fixes the "JSON" response that Docker returns' do
+      subject.should == [
+        {
+          'this' => 'is'
+        },
+        {
+          'not' => 'json'
+        }
+      ]
+    end
+  end
+
   describe '.build_auth_header' do
     subject { described_class }
 

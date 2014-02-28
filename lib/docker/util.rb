@@ -11,6 +11,10 @@ module Docker::Util
     raise UnexpectedResponseError, ex.message
   end
 
+  def fix_json(body)
+    parse_json("[#{body.gsub(/}\s*{/, '},{')}]")
+  end
+
   def create_tar(hash = {})
     output = StringIO.new
     Gem::Package::TarWriter.new(output) do |tar|
