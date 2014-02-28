@@ -103,8 +103,7 @@ class Docker::Image < Docker::Base
         {}
       end
       body = conn.post('/images/create', opts)
-      id = body[/"id":"([^"]+)"}\Z/, 1]
-      id ||= opts['repo'] ? "#{opts['repo']}:#{opts['tag']}" : opts['fromImage']
+      id = Docker::Util.parse_json("[#{body.gsub(/}\s*{/, '},{')}]").last['id']
       new(conn, 'id' => id, :headers => headers)
     end
 
