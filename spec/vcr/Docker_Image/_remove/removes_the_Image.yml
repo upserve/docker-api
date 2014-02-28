@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - text/plain
   response:
@@ -19,14 +19,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:05:55 GMT
+      - Fri, 28 Feb 2014 19:13:55 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"status\":\"Pulling repository base\"}{\"status\":\"Pulling image
+      string: "{\"status\":\"Pulling repository base\"}\r\n{\"status\":\"Pulling image
         (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
@@ -34,16 +34,16 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:56 GMT
+  recorded_at: Fri, 28 Feb 2014 19:13:56 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.8/images/base
+    uri: unix:///var/run/docker.sock/v1.8/images/b750fe79269d
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - text/plain
   response:
@@ -51,21 +51,26 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Date:
-      - Wed, 12 Feb 2014 17:05:56 GMT
-      Content-Length:
-      - '82'
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Date:
+      - Fri, 28 Feb 2014 19:13:57 GMT
+      Content-Length:
+      - '246'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |-
-        [{"Untagged":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc"}
+        [{"Untagged":"base:latest"}
+        ,{"Untagged":"base:ubuntu-12.10"}
+        ,{"Untagged":"base:ubuntu-quantal"}
+        ,{"Untagged":"base:ubuntu-quantl"}
+        ,{"Deleted":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc"}
+        ,{"Deleted":"27cf784147099545"}
         ]
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:56 GMT
+  recorded_at: Fri, 28 Feb 2014 19:13:57 GMT
 - request:
     method: get
     uri: unix:///var/run/docker.sock/v1.8/images/json
@@ -74,7 +79,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - text/plain
   response:
@@ -82,22 +87,17 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Date:
-      - Wed, 12 Feb 2014 17:05:56 GMT
-      Content-Length:
-      - '964'
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Date:
+      - Fri, 28 Feb 2014 19:13:57 GMT
+      Content-Length:
+      - '2'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: |-
-        [{"Created":1392224753,"Id":"dae27da5a73f01eede1699649c42c727651b4311d2ff689810bf22c75c2d2a08","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":7,"VirtualSize":350613950}
-        ,{"Created":1392224748,"Id":"291b17ca54f04278c166b1313f9ec211fa27596a6f5a20855fcd8739b8f26116","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":7,"VirtualSize":350613950}
-        ,{"Created":1392224744,"Id":"328de6c59bef1db641600ea40668bbd57f6966a146bebe9640030dea13d0008c","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":7,"VirtualSize":350613950}
-        ,{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base2:latest"],"Size":175306985,"VirtualSize":350613943}
-        ]
+      string: "[]"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:56 GMT
+  recorded_at: Fri, 28 Feb 2014 19:13:57 GMT
 recorded_with: VCR 2.8.0
