@@ -69,8 +69,13 @@ describe Docker::Util do
       }
     }
     let(:credential_string) { credentials.to_json }
-    let(:x_registry_auth) { Base64.encode64(credential_string).gsub(/\n/, '') }
-    let(:expected_headers) { { 'X-Registry-Auth' => x_registry_auth } }
+    let(:encoded_creds) { Base64.encode64(credential_string).gsub(/\n/, '') }
+    let(:expected_headers) {
+      {
+        'X-Registry-Auth' => encoded_creds,
+        'X-Registry-Config' => encoded_creds
+      }
+    }
 
 
     context 'given credentials as a Hash' do
