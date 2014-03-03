@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/build
+    uri: unix:///var/run/docker.sock/v1.9/build
     body:
       encoding: US-ASCII
       string: ''
@@ -37,7 +37,7 @@ http_interactions:
   recorded_at: Wed, 12 Feb 2014 17:05:19 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    uri: unix:///var/run/docker.sock/v1.9/containers/create
     body:
       encoding: UTF-8
       string: "{\"Image\":\"8c71f00445f5\",\"Cmd\":[\"/while\"]}"
@@ -67,7 +67,7 @@ http_interactions:
   recorded_at: Wed, 12 Feb 2014 17:05:19 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688/start
+    uri: unix:///var/run/docker.sock/v1.9/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -96,7 +96,7 @@ http_interactions:
   recorded_at: Wed, 12 Feb 2014 17:05:19 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.8/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688/top
+    uri: unix:///var/run/docker.sock/v1.9/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688/top
     body:
       encoding: US-ASCII
       string: ''
@@ -126,7 +126,7 @@ http_interactions:
   recorded_at: Wed, 12 Feb 2014 17:05:20 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688/kill
+    uri: unix:///var/run/docker.sock/v1.9/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688/kill
     body:
       encoding: UTF-8
       string: "{}"
@@ -155,7 +155,7 @@ http_interactions:
   recorded_at: Wed, 12 Feb 2014 17:05:21 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.8/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688
+    uri: unix:///var/run/docker.sock/v1.9/containers/a8f25a38eae9d43dbc9fe1d20eeda7fb959ce4d0481f7bab1b5543d8ce366688
     body:
       encoding: US-ASCII
       string: ''
@@ -184,7 +184,7 @@ http_interactions:
   recorded_at: Wed, 12 Feb 2014 17:05:23 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.8/images/8c71f00445f5
+    uri: unix:///var/run/docker.sock/v1.9/images/8c71f00445f5
     body:
       encoding: US-ASCII
       string: ''

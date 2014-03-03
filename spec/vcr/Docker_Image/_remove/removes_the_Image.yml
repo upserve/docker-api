@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.9/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 19:13:55 GMT
+      - Fri, 28 Feb 2014 21:29:20 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,10 +34,10 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 19:13:56 GMT
+  recorded_at: Fri, 28 Feb 2014 21:29:21 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.8/images/b750fe79269d
+    uri: unix:///var/run/docker.sock/v1.9/images/b750fe79269d
     body:
       encoding: US-ASCII
       string: ''
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 19:13:57 GMT
+      - Fri, 28 Feb 2014 21:29:22 GMT
       Content-Length:
       - '246'
       Connection:
@@ -70,10 +70,10 @@ http_interactions:
         ,{"Deleted":"27cf784147099545"}
         ]
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 19:13:57 GMT
+  recorded_at: Fri, 28 Feb 2014 21:29:22 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.8/images/json
+    uri: unix:///var/run/docker.sock/v1.9/images/json
     body:
       encoding: US-ASCII
       string: ''
@@ -90,7 +90,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 19:13:57 GMT
+      - Fri, 28 Feb 2014 21:29:22 GMT
       Content-Length:
       - '2'
       Connection:
@@ -99,5 +99,5 @@ http_interactions:
       encoding: UTF-8
       string: "[]"
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 19:13:57 GMT
+  recorded_at: Fri, 28 Feb 2014 21:29:22 GMT
 recorded_with: VCR 2.8.0

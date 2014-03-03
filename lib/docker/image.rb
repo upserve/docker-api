@@ -48,10 +48,10 @@ class Docker::Image < Docker::Base
   # Insert a file into the Image, returns a new Image that has that file.
   def insert(query = {})
     body = connection.post(path_for(:insert), query)
-    if (id = body.match(/{"status":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
-      raise UnexpectedResponseError, "Could not find Id in '#{body}'"
+    if id = Docker::Util.fix_json(body).last['status']
+      self.class.send(:new, connection, 'id' => id)
     else
-      self.class.send(:new, connection, 'id' => id[1])
+      raise UnexpectedResponseError, "Could not find Id in '#{body}'"
     end
   end
 
