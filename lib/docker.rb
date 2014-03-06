@@ -6,21 +6,21 @@ require 'base64'
 require 'rubygems/package'
 require 'archive/tar/minitar'
 require 'uri'
-require 'docker/version'
 
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
   attr_accessor :creds, :logger
 
-  autoload :Connection, 'docker/connection'
-  autoload :Container, 'docker/container'
-  autoload :Error, 'docker/error'
-  autoload :Event, 'docker/event'
-  autoload :Image, 'docker/image'
-  autoload :Messages, 'docker/messages'
-  autoload :Util, 'docker/util'
-  autoload :Base, 'docker/base'
+  require 'docker/error'
+  require 'docker/connection'
+  require 'docker/base'
+  require 'docker/container'
+  require 'docker/event'
+  require 'docker/image'
+  require 'docker/messages'
+  require 'docker/util'
+  require 'docker/version'
 
   def default_socket_url
     'unix:///var/run/docker.sock'
