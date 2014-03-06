@@ -25,6 +25,6 @@ end
 # Monkey patch Rake::DSL to add the `image` method.
 module Rake::DSL
   def image(*args, &block)
-    Rake::ImageTask.define_task(*args, &block)
+    Docker::ImageTask.define_task(*args, &block)
   end
 end
