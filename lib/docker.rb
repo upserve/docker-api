@@ -21,6 +21,7 @@ module Docker
   require 'docker/messages'
   require 'docker/util'
   require 'docker/version'
+  require 'docker/rake_task' if defined?(Rake)
 
   def default_socket_url
     'unix:///var/run/docker.sock'
