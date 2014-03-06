@@ -41,6 +41,22 @@ describe Docker::Util do
     end
   end
 
+  describe '.fix_json' do
+    let(:response) { '{"this":"is"}{"not":"json"}' }
+    subject { Docker::Util.fix_json(response) }
+
+    it 'fixes the "JSON" response that Docker returns' do
+      subject.should == [
+        {
+          'this' => 'is'
+        },
+        {
+          'not' => 'json'
+        }
+      ]
+    end
+  end
+
   describe '.build_auth_header' do
     subject { described_class }
 
@@ -53,8 +69,13 @@ describe Docker::Util do
       }
     }
     let(:credential_string) { credentials.to_json }
-    let(:x_registry_auth) { Base64.encode64(credential_string).gsub(/\n/, '') }
-    let(:expected_headers) { { 'X-Registry-Auth' => x_registry_auth } }
+    let(:encoded_creds) { Base64.encode64(credential_string).gsub(/\n/, '') }
+    let(:expected_headers) {
+      {
+        'X-Registry-Auth' => encoded_creds,
+        'X-Registry-Config' => encoded_creds
+      }
+    }
 
 
     context 'given credentials as a Hash' do

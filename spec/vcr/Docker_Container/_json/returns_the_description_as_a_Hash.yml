@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    uri: unix:///var/run/docker.sock/v1.9/containers/create
     body:
       encoding: UTF-8
       string: "{\"Cmd\":[\"true\"],\"Image\":\"base\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:05:11 GMT
+      - Fri, 28 Feb 2014 21:41:43 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"84eaae34df6b150fb24ff9cb1a8f018a730da82f54bb96cef9875d3c7d443064","Warnings":null}
+        {"Id":"9c286a4bdae3f4ee5c581a26c742d80642bedc4b48a00365f5723f197c592cf2","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:11 GMT
+  recorded_at: Fri, 28 Feb 2014 21:41:43 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.8/containers/84eaae34df6b150fb24ff9cb1a8f018a730da82f54bb96cef9875d3c7d443064/json
+    uri: unix:///var/run/docker.sock/v1.9/containers/9c286a4bdae3f4ee5c581a26c742d80642bedc4b48a00365f5723f197c592cf2/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - text/plain
   response:
@@ -46,17 +46,17 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Date:
-      - Wed, 12 Feb 2014 17:05:11 GMT
-      Content-Length:
-      - '1153'
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Date:
+      - Fri, 28 Feb 2014 21:41:43 GMT
+      Content-Length:
+      - '1155'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: "{\"ID\":\"84eaae34df6b150fb24ff9cb1a8f018a730da82f54bb96cef9875d3c7d443064\",\"Created\":\"2014-02-12T17:05:10.610917076Z\",\"Path\":\"true\",\"Args\":[],\"Config\":{\"Hostname\":\"84eaae34df6b\",\"Domainname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"CpuShares\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"ExposedPorts\":null,\"Tty\":false,\"OpenStdin\":false,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"true\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":null,\"VolumesFrom\":\"\",\"WorkingDir\":\"\",\"Entrypoint\":null,\"NetworkDisabled\":false,\"OnBuild\":null},\"State\":{\"Running\":false,\"Pid\":0,\"ExitCode\":0,\"StartedAt\":\"0001-01-01T00:00:00Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"Ghost\":false},\"Image\":\"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc\",\"NetworkSettings\":{\"IPAddress\":\"\",\"IPPrefixLen\":0,\"Gateway\":\"\",\"Bridge\":\"\",\"PortMapping\":null,\"Ports\":null},\"ResolvConfPath\":\"/etc/resolv.conf\",\"HostnamePath\":\"\",\"HostsPath\":\"\",\"Name\":\"/boring_brattain\",\"Driver\":\"devicemapper\",\"Volumes\":null,\"VolumesRW\":null,\"HostConfig\":{\"Binds\":null,\"ContainerIDFile\":\"\",\"LxcConf\":null,\"Privileged\":false,\"PortBindings\":null,\"Links\":null,\"PublishAllPorts\":false}}"
+      string: "{\"ID\":\"9c286a4bdae3f4ee5c581a26c742d80642bedc4b48a00365f5723f197c592cf2\",\"Created\":\"2014-02-28T21:41:43.032743737Z\",\"Path\":\"true\",\"Args\":[],\"Config\":{\"Hostname\":\"9c286a4bdae3\",\"Domainname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"CpuShares\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"ExposedPorts\":null,\"Tty\":false,\"OpenStdin\":false,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"true\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":null,\"VolumesFrom\":\"\",\"WorkingDir\":\"\",\"Entrypoint\":null,\"NetworkDisabled\":false,\"OnBuild\":null},\"State\":{\"Running\":false,\"Pid\":0,\"ExitCode\":0,\"StartedAt\":\"0001-01-01T00:00:00Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"Ghost\":false},\"Image\":\"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc\",\"NetworkSettings\":{\"IPAddress\":\"\",\"IPPrefixLen\":0,\"Gateway\":\"\",\"Bridge\":\"\",\"PortMapping\":null,\"Ports\":null},\"ResolvConfPath\":\"/etc/resolv.conf\",\"HostnamePath\":\"\",\"HostsPath\":\"\",\"Name\":\"/trusting_torvalds\",\"Driver\":\"devicemapper\",\"Volumes\":null,\"VolumesRW\":null,\"HostConfig\":{\"Binds\":null,\"ContainerIDFile\":\"\",\"LxcConf\":null,\"Privileged\":false,\"PortBindings\":null,\"Links\":null,\"PublishAllPorts\":false}}"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:11 GMT
+  recorded_at: Fri, 28 Feb 2014 21:41:43 GMT
 recorded_with: VCR 2.8.0

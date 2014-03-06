@@ -81,8 +81,6 @@ describe Docker::Container do
     let(:top) { sleep 1; container.top }
     let!(:container) { image.run('/while') }
 
-    after { container.kill; container.delete; image.remove }
-
     it 'returns the top commands as an Array', :vcr do
       top.should be_a Array
       top.should_not be_empty
@@ -260,7 +258,7 @@ describe Docker::Container do
     before { subject.start }
 
     it 'waits for the command to finish', :vcr do
-      subject.wait['StatusCode'].should == 64
+      subject.wait['StatusCode'].should_not be_zero
     end
 
     context 'when an argument is given' do

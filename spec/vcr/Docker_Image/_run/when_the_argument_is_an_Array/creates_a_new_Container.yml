@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.9/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - text/plain
   response:
@@ -19,14 +19,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 18:20:51 GMT
+      - Fri, 28 Feb 2014 21:30:03 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"status\":\"Pulling repository base\"}{\"status\":\"Pulling image
+      string: "{\"status\":\"Pulling repository base\"}\r\n{\"status\":\"Pulling image
         (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
@@ -34,16 +34,16 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 18:20:52 GMT
+  recorded_at: Fri, 28 Feb 2014 21:30:04 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    uri: unix:///var/run/docker.sock/v1.9/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Image\":\"base\",\"Cmd\":[\"which\",\"pwd\"]}"
+      string: "{\"Image\":\"b750fe79269d\",\"Cmd\":[\"which\",\"pwd\"]}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - application/json
   response:
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 18:20:52 GMT
+      - Fri, 28 Feb 2014 21:30:04 GMT
       Content-Length:
       - '90'
       Connection:
@@ -62,18 +62,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"ec575036b45551e01044e31ccfab576d910f8574b78a5696c5615980e9b2ff81","Warnings":null}
+        {"Id":"54e5d38edb25f0294cc9011e557282d71ee6c8f88f588dd4efe6ffe609287fa0","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 18:20:52 GMT
+  recorded_at: Fri, 28 Feb 2014 21:30:04 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/ec575036b45551e01044e31ccfab576d910f8574b78a5696c5615980e9b2ff81/start
+    uri: unix:///var/run/docker.sock/v1.9/containers/54e5d38edb25f0294cc9011e557282d71ee6c8f88f588dd4efe6ffe609287fa0/start
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - application/json
   response:
@@ -82,7 +82,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Feb 2014 18:20:52 GMT
+      - Fri, 28 Feb 2014 21:30:05 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -93,16 +93,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 18:20:52 GMT
+  recorded_at: Fri, 28 Feb 2014 21:30:05 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/ec575036b45551e01044e31ccfab576d910f8574b78a5696c5615980e9b2ff81/attach?stderr=true&stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.9/containers/54e5d38edb25f0294cc9011e557282d71ee6c8f88f588dd4efe6ffe609287fa0/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.8.4
       Content-Type:
       - text/plain
   response:
@@ -117,5 +117,5 @@ http_interactions:
       string: !binary |-
         AQAAAAAAAAkvYmluL3B3ZAo=
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 18:20:52 GMT
+  recorded_at: Fri, 28 Feb 2014 21:30:05 GMT
 recorded_with: VCR 2.8.0
