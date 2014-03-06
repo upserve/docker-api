@@ -269,5 +269,27 @@ require 'docker'
 Docker::Container.all({}, Docker::Connection.new('http://example.com:4243', {}))
 ```
 
+## Rake Task
+
+To create images through `rake`, a DSL task is provided. For example:
+
+
+```ruby
+require 'rake'
+require 'docker'
+
+image 'repo:tag' do
+  image = Docker::Image.create('fromImage' => 'repo', 'tag' => 'old_tag')
+  image = Docker::Image.run('rm -rf /etc').commit
+  image.tag('repo' => 'repo', 'tag' => 'tag')
+end
+
+image 'repo:new_tag' => 'repo:tag' do
+  image = Docker::Image.create('fromImage' => 'repo', 'tag' => 'tag')
+  image = image.insert_local('localPath' => 'some-file.tar.gz', 'outputPath' => '/')
+  image.tag('repo' => 'repo', 'tag' => 'new_tag')
+end
+```
+
 ## Known Issues
 - `Docker::Container#attach` cannot attach to STDIN
