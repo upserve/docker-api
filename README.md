@@ -4,7 +4,7 @@ docker-api
 
 This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.8.*.
 
-If you're interested in using Docker to package your apps, we recmommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
+If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
 Installation
 ------------
@@ -32,7 +32,7 @@ Finally, just add `require 'docker'` to the top of the file using this gem.
 Usage
 -----
 
-docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every extrenal method represents an API call.
+docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every external method represents an API call.
 
 ## Starting up
 
@@ -50,7 +50,7 @@ If you're running Docker locally as a socket, there is no setup to do in Ruby. I
 Docker.url = 'http://example.com:5422'
 ```
 
-Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are alse valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connnect to the socket unless you specify otherwise.
+Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are also valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connect to the socket unless you specify otherwise.
 
 Also, you may set the above variables via `ENV` variables. For example:
 
