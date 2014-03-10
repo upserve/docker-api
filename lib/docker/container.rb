@@ -83,7 +83,10 @@ class Docker::Container < Docker::Base
   # but rescue from ServerErrors.
   [:start, :stop, :kill, :restart].each do |method|
     define_method(:"#{method}!") do |opts = {}|
-      connection.post(path_for(method), {}, :body => opts.to_json)
+      timeout = opts.delete('timeout')
+      query = {}
+      query['t'] = timeout if timeout
+      connection.post(path_for(method), query, :body => opts.to_json)
       self
     end
 
