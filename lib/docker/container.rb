@@ -109,7 +109,6 @@ class Docker::Container < Docker::Base
     end
   end
 
-
   # remove container
   def remove(options = {})
     connection.delete("/containers/#{self.id}", options)
