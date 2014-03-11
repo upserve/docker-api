@@ -194,7 +194,7 @@ describe Docker::Container do
   describe '#stop' do
     subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
 
-    before { subject.tap(&:start).stop }
+    before { subject.tap(&:start).stop('timeout' => '10') }
 
     it 'stops the container', :vcr do
       described_class.all(:all => true).map(&:id).should be_any { |id|
@@ -244,7 +244,7 @@ describe Docker::Container do
       described_class.all.map(&:id).should be_none { |id|
         id.start_with?(subject.id)
       }
-      subject.restart
+      subject.restart('timeout' => '10')
       described_class.all.map(&:id).should be_any { |id|
         id.start_with?(subject.id)
       }

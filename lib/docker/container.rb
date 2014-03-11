@@ -78,12 +78,29 @@ class Docker::Container < Docker::Base
     end
   end
 
-  # #start!, #stop!, #kill!, and #restart! all perform the associated action and
-  # return the Container. #start, #stop, #kill, and #restart all do the same,
+  # #start! and #kill! both perform the associated action and
+  # return the Container. #start and #kill do the same,
   # but rescue from ServerErrors.
-  [:start, :stop, :kill, :restart].each do |method|
+  [:start, :kill].each do |method|
     define_method(:"#{method}!") do |opts = {}|
       connection.post(path_for(method), {}, :body => opts.to_json)
+      self
+    end
+
+    define_method(method) do |*args|
+      begin; public_send(:"#{method}!", *args); rescue ServerError; self end
+    end
+  end
+
+  # #stop! and #restart! both perform the associated action and
+  # return the Container. #stop and #restart do the same,
+  # but rescue from ServerErrors.
+  [:stop, :restart].each do |method|
+    define_method(:"#{method}!") do |opts = {}|
+      timeout = opts.delete('timeout')
+      query = {}
+      query['t'] = timeout if timeout
+      connection.post(path_for(method), query, :body => opts.to_json)
       self
     end
 

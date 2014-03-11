@@ -61,7 +61,7 @@ http_interactions:
   recorded_at: Fri, 28 Feb 2014 21:42:06 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.9/containers/6b81a0b2d2b9377b34cacadc0caab3727992025133072a6dc8cfd113d0779aa1/stop
+    uri: unix:///var/run/docker.sock/v1.9/containers/6b81a0b2d2b9377b34cacadc0caab3727992025133072a6dc8cfd113d0779aa1/stop?t=10
     body:
       encoding: UTF-8
       string: "{}"
