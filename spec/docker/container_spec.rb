@@ -224,7 +224,7 @@ describe Docker::Container do
     subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
 
     it 'deletes the container', :vcr do
-      subject.delete
+      subject.delete(:force => true)
       described_class.all.map(&:id).should be_none { |id|
         id.start_with?(subject.id)
       }

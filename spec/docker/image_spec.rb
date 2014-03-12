@@ -25,7 +25,7 @@ describe Docker::Image do
     subject { described_class.create('fromImage' => 'base') }
 
     it 'removes the Image', :vcr do
-      subject.remove
+      subject.remove(:force => true)
       Docker::Image.all.map(&:id).should_not include(id)
     end
   end

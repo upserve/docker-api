@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.9/auth
+    uri: unix:///var/run/docker.sock/v1.10/auth
     body:
       encoding: UTF-8
       string: "{\"username\":\"test\",\"password\":\"account\",\"email\":\"test@test.com\",\"serveraddress\":\"https://index.docker.io/v1/\"}"

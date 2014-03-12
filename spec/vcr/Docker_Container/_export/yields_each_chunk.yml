@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.9/containers/create
+    uri: unix:///var/run/docker.sock/v1.10/containers/create
     body:
       encoding: UTF-8
       string: "{\"Cmd\":[\"rm\",\"-rf\",\"/\",\"--no-preserve-root\"],\"Image\":\"base\"}"
@@ -32,7 +32,7 @@ http_interactions:
   recorded_at: Mon, 03 Mar 2014 12:28:55 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.9/containers/29d6b39a24e54d692c0d65dc708eb18801a87eca31f50142d55ce9d02a295d50/start
+    uri: unix:///var/run/docker.sock/v1.10/containers/29d6b39a24e54d692c0d65dc708eb18801a87eca31f50142d55ce9d02a295d50/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -61,7 +61,7 @@ http_interactions:
   recorded_at: Mon, 03 Mar 2014 12:28:56 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.9/containers/29d6b39a24e54d692c0d65dc708eb18801a87eca31f50142d55ce9d02a295d50/export
+    uri: unix:///var/run/docker.sock/v1.10/containers/29d6b39a24e54d692c0d65dc708eb18801a87eca31f50142d55ce9d02a295d50/export
     body:
       encoding: US-ASCII
       string: ''
