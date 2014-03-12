@@ -1,6 +1,7 @@
 # This class represents a Docker Container. It's important to note that nothing
 # is cached so that the information is always up to date.
-class Docker::Container < Docker::Base
+class Docker::Container
+  include Docker::Base
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})

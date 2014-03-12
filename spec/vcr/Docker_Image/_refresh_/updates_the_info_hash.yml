@@ -1,0 +1,282 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromImage=base
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Mar 2014 20:07:33 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling repository base\"}\r\n{\"status\":\"Pulling image
+        (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        metadata\",\"progressDetail\":{},\"id\":\"27cf78414709\"}{\"status\":\"Pulling
+        fs layer\",\"progressDetail\":{},\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":528384,\"total\":94863360,\"start\":1394654855},\"progress\":\"[\\u003e
+        \                                                 ] 528.4 kB/94.86 MB 1m56s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":1056768,\"total\":94863360,\"start\":1394654855},\"progress\":\"[\\u003e
+        \                                                 ] 1.057 MB/94.86 MB 1m3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":1585152,\"total\":94863360,\"start\":1394654855},\"progress\":\"[\\u003e
+        \                                                 ] 1.585 MB/94.86 MB 46s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":2113536,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=\\u003e
+        \                                                ] 2.114 MB/94.86 MB 38s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":2641920,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=\\u003e
+        \                                                ] 2.642 MB/94.86 MB 32s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":3170304,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=\\u003e
+        \                                                ]  3.17 MB/94.86 MB 28s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":3698688,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=\\u003e
+        \                                                ] 3.699 MB/94.86 MB 25s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":4227072,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==\\u003e
+        \                                               ] 4.227 MB/94.86 MB 23s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":4755456,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==\\u003e
+        \                                               ] 4.755 MB/94.86 MB 21s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":5283840,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==\\u003e
+        \                                               ] 5.284 MB/94.86 MB 20s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":5812224,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===\\u003e
+        \                                              ] 5.812 MB/94.86 MB 18s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":6340608,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===\\u003e
+        \                                              ] 6.341 MB/94.86 MB 17s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":6868992,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===\\u003e
+        \                                              ] 6.869 MB/94.86 MB 17s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":7397376,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===\\u003e
+        \                                              ] 7.397 MB/94.86 MB 16s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":7925760,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====\\u003e
+        \                                             ] 7.926 MB/94.86 MB 15s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":8454144,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====\\u003e
+        \                                             ] 8.454 MB/94.86 MB 15s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":8982528,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====\\u003e
+        \                                             ] 8.983 MB/94.86 MB 15s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":9510912,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====\\u003e
+        \                                            ] 9.511 MB/94.86 MB 14s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":10039296,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====\\u003e
+        \                                            ] 10.04 MB/94.86 MB 14s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":10567680,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====\\u003e
+        \                                            ] 10.57 MB/94.86 MB 13s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":11096064,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====\\u003e
+        \                                            ]  11.1 MB/94.86 MB 13s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":11624448,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======\\u003e
+        \                                           ] 11.62 MB/94.86 MB 13s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":12152832,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======\\u003e
+        \                                           ] 12.15 MB/94.86 MB 12s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":12681216,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======\\u003e
+        \                                           ] 12.68 MB/94.86 MB 12s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":13209600,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======\\u003e
+        \                                           ] 13.21 MB/94.86 MB 12s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":13737984,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======\\u003e
+        \                                          ] 13.74 MB/94.86 MB 11s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":14266368,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======\\u003e
+        \                                          ] 14.27 MB/94.86 MB 11s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":14794752,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======\\u003e
+        \                                          ] 14.79 MB/94.86 MB 11s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":15323136,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========\\u003e
+        \                                         ] 15.32 MB/94.86 MB 10s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":15851520,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========\\u003e
+        \                                         ] 15.85 MB/94.86 MB 10s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":16379904,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========\\u003e
+        \                                         ] 16.38 MB/94.86 MB 10s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":16908288,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========\\u003e
+        \                                         ] 16.91 MB/94.86 MB 10s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":17436672,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========\\u003e
+        \                                        ] 17.44 MB/94.86 MB 10s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":17965056,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========\\u003e
+        \                                        ] 17.97 MB/94.86 MB 9s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":18493440,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========\\u003e
+        \                                        ] 18.49 MB/94.86 MB 9s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":19021824,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========\\u003e
+        \                                       ] 19.02 MB/94.86 MB 9s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":19550208,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========\\u003e
+        \                                       ] 19.55 MB/94.86 MB 9s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":20078592,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========\\u003e
+        \                                       ] 20.08 MB/94.86 MB 9s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":20606976,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========\\u003e
+        \                                       ] 20.61 MB/94.86 MB 9s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":21135360,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========\\u003e
+        \                                      ] 21.14 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":21663744,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========\\u003e
+        \                                      ] 21.66 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":22192128,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========\\u003e
+        \                                      ] 22.19 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":22720512,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========\\u003e
+        \                                      ] 22.72 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":23248896,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============\\u003e
+        \                                     ] 23.25 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":23777280,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============\\u003e
+        \                                     ] 23.78 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":24305664,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============\\u003e
+        \                                     ] 24.31 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":24834048,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============\\u003e
+        \                                    ] 24.83 MB/94.86 MB 8s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":25362432,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============\\u003e
+        \                                    ] 25.36 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":25890816,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============\\u003e
+        \                                    ] 25.89 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":26419200,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============\\u003e
+        \                                    ] 26.42 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":26947584,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============\\u003e
+        \                                   ] 26.95 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":27475968,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============\\u003e
+        \                                   ] 27.48 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":28004352,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============\\u003e
+        \                                   ]    28 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":28532736,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============\\u003e
+        \                                  ] 28.53 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":29061120,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============\\u003e
+        \                                  ] 29.06 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":29589504,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============\\u003e
+        \                                  ] 29.59 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":30117888,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============\\u003e
+        \                                  ] 30.12 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":30646272,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================\\u003e
+        \                                 ] 30.65 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":31174656,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================\\u003e
+        \                                 ] 31.17 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":31703040,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================\\u003e
+        \                                 ]  31.7 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":32231424,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================\\u003e
+        \                                 ] 32.23 MB/94.86 MB 7s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":32759808,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================\\u003e
+        \                                ] 32.76 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":33288192,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================\\u003e
+        \                                ] 33.29 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":33816576,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================\\u003e
+        \                                ] 33.82 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":34344960,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================\\u003e
+        \                               ] 34.34 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":34873344,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================\\u003e
+        \                               ] 34.87 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":35401728,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================\\u003e
+        \                               ]  35.4 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":35930112,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================\\u003e
+        \                               ] 35.93 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":36458496,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================\\u003e
+        \                              ] 36.46 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":36986880,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================\\u003e
+        \                              ] 36.99 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":37515264,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================\\u003e
+        \                              ] 37.52 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":38043648,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================\\u003e
+        \                             ] 38.04 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":38572032,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================\\u003e
+        \                             ] 38.57 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":39100416,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================\\u003e
+        \                             ]  39.1 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":39628800,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================\\u003e
+        \                             ] 39.63 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":40157184,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================\\u003e
+        \                            ] 40.16 MB/94.86 MB 6s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":40685568,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================\\u003e
+        \                            ] 40.69 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":41213952,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================\\u003e
+        \                            ] 41.21 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":41742336,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================\\u003e
+        \                           ] 41.74 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":42270720,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================\\u003e
+        \                           ] 42.27 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":42799104,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================\\u003e
+        \                           ]  42.8 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":43327488,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================\\u003e
+        \                           ] 43.33 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":43855872,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================\\u003e
+        \                          ] 43.86 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":44383585,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================\\u003e
+        \                          ] 44.38 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":44908544,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================\\u003e
+        \                          ] 44.91 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":45436928,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================\\u003e
+        \                          ] 45.44 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":45965312,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================\\u003e
+        \                         ] 45.97 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":46493696,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================\\u003e
+        \                         ] 46.49 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":47022080,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================\\u003e
+        \                         ] 47.02 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":47550464,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================\\u003e
+        \                        ] 47.55 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":48078848,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================\\u003e
+        \                        ] 48.08 MB/94.86 MB 5s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":48607232,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================\\u003e
+        \                        ] 48.61 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":49135616,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================\\u003e
+        \                        ] 49.14 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":49664000,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================\\u003e
+        \                       ] 49.66 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":50189521,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================\\u003e
+        \                       ] 50.19 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":50716672,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================\\u003e
+        \                       ] 50.72 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":51245056,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================\\u003e
+        \                      ] 51.25 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":51769791,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================\\u003e
+        \                      ] 51.77 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":52297728,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================\\u003e
+        \                      ]  52.3 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":52826112,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================\\u003e
+        \                      ] 52.83 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":53350594,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================\\u003e
+        \                     ] 53.35 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":53878346,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================\\u003e
+        \                     ] 53.88 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":54403072,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================\\u003e
+        \                     ]  54.4 MB/94.86 MB 4s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":54931701,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================\\u003e
+        \                     ] 54.93 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":55459840,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================\\u003e
+        \                    ] 55.46 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":55988224,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================\\u003e
+        \                    ] 55.99 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":56515076,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================\\u003e
+        \                    ] 56.52 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":57041490,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================\\u003e
+        \                   ] 57.04 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":57567530,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================\\u003e
+        \                   ] 57.57 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":58097101,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================\\u003e
+        \                   ]  58.1 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":58621952,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================\\u003e
+        \                   ] 58.62 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":59150825,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================\\u003e
+        \                  ] 59.15 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":59679759,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================\\u003e
+        \                  ] 59.68 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":60206135,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================\\u003e
+        \                  ] 60.21 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":60731390,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================\\u003e
+        \                 ] 60.73 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":61256241,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================\\u003e
+        \                 ] 61.26 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":61783624,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================\\u003e
+        \                 ] 61.78 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":62308352,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================\\u003e
+        \                 ] 62.31 MB/94.86 MB 3s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":62835962,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================\\u003e
+        \                ] 62.84 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":63365985,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================\\u003e
+        \                ] 63.37 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":63897600,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================\\u003e
+        \                ]  63.9 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":64425984,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================\\u003e
+        \                ] 64.43 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":64951547,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================================\\u003e
+        \               ] 64.95 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":65477287,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================================\\u003e
+        \               ] 65.48 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":66002838,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==================================\\u003e
+        \               ]    66 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":66527232,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================================\\u003e
+        \              ] 66.53 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":67058428,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================================\\u003e
+        \              ] 67.06 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":67585551,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================================\\u003e
+        \              ] 67.59 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":68113131,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===================================\\u003e
+        \              ] 68.11 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":68639112,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================================\\u003e
+        \             ] 68.64 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":69167384,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================================\\u003e
+        \             ] 69.17 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":69692312,\"total\":94863360,\"start\":1394654855},\"progress\":\"[====================================\\u003e
+        \             ] 69.69 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":70218071,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================================\\u003e
+        \            ] 70.22 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":70743386,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================================\\u003e
+        \            ] 70.74 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":71270400,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================================\\u003e
+        \            ] 71.27 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":71798784,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=====================================\\u003e
+        \            ]  71.8 MB/94.86 MB 2s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":72324928,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================================\\u003e
+        \           ] 72.32 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":72851258,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================================\\u003e
+        \           ] 72.85 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":73375744,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================================\\u003e
+        \           ] 73.38 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":73904091,\"total\":94863360,\"start\":1394654855},\"progress\":\"[======================================\\u003e
+        \           ]  73.9 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":74428416,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================================\\u003e
+        \          ] 74.43 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":74952715,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================================\\u003e
+        \          ] 74.95 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":75478532,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=======================================\\u003e
+        \          ] 75.48 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":76006647,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================================\\u003e
+        \         ] 76.01 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":76533760,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================================\\u003e
+        \         ] 76.53 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":77067779,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================================\\u003e
+        \         ] 77.07 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":77594624,\"total\":94863360,\"start\":1394654855},\"progress\":\"[========================================\\u003e
+        \         ] 77.59 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":78124063,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================================\\u003e
+        \        ] 78.12 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":78651392,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================================\\u003e
+        \        ] 78.65 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":79184834,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=========================================\\u003e
+        \        ] 79.18 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":79711231,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================================\\u003e
+        \       ] 79.71 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":80239069,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================================\\u003e
+        \       ] 80.24 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":80764928,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================================\\u003e
+        \       ] 80.76 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":81290784,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==========================================\\u003e
+        \       ] 81.29 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":81819342,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================================\\u003e
+        \      ] 81.82 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":82344206,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================================\\u003e
+        \      ] 82.34 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":82869115,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================================\\u003e
+        \      ] 82.87 MB/94.86 MB 1s\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":83393910,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===========================================\\u003e
+        \      ] 83.39 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":83918848,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================================\\u003e
+        \     ] 83.92 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":84447232,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================================\\u003e
+        \     ] 84.45 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":84975616,\"total\":94863360,\"start\":1394654855},\"progress\":\"[============================================\\u003e
+        \     ] 84.98 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":85506859,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================================\\u003e
+        \    ] 85.51 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":86032106,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================================\\u003e
+        \    ] 86.03 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":86559316,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================================\\u003e
+        \    ] 86.56 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":87086158,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=============================================\\u003e
+        \    ] 87.09 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":87612662,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================================\\u003e
+        \   ] 87.61 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":88138808,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================================\\u003e
+        \   ] 88.14 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":88666236,\"total\":94863360,\"start\":1394654855},\"progress\":\"[==============================================\\u003e
+        \   ] 88.67 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":89191986,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================================\\u003e
+        \  ] 89.19 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":89718784,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================================\\u003e
+        \  ] 89.72 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":90247168,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================================\\u003e
+        \  ] 90.25 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":90775552,\"total\":94863360,\"start\":1394654855},\"progress\":\"[===============================================\\u003e
+        \  ] 90.78 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":91307188,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================================\\u003e
+        \ ] 91.31 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":91833442,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================================\\u003e
+        \ ] 91.83 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":92360704,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================================\\u003e
+        \ ] 92.36 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":92889088,\"total\":94863360,\"start\":1394654855},\"progress\":\"[================================================\\u003e
+        \ ] 92.89 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":93419433,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================================\\u003e
+        ] 93.42 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":93945856,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================================\\u003e
+        ] 93.95 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":94474240,\"total\":94863360,\"start\":1394654855},\"progress\":\"[=================================================\\u003e
+        ] 94.47 MB/94.86 MB 0\",\"id\":\"27cf78414709\"}{\"status\":\"Download complete\",\"progressDetail\":{},\"id\":\"27cf78414709\"}{\"status\":\"Pulling
+        metadata\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
+        fs layer\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":4106,\"total\":10240,\"start\":1394654864},\"progress\":\"[====================\\u003e
+        \                             ] 4.106 kB/10.24 kB 0\",\"id\":\"b750fe79269d\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
+    http_version: 
+  recorded_at: Wed, 12 Mar 2014 20:07:44 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.10/images/json?all=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Mar 2014 20:07:44 GMT
+      Content-Length:
+      - '403'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base:latest","base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl"],"Size":77,"VirtualSize":175307035}
+        ,{"Created":1364068391,"Id":"27cf784147099545","ParentId":"","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":175306958,"VirtualSize":175306958}
+        ]
+    http_version: 
+  recorded_at: Wed, 12 Mar 2014 20:07:44 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.10/images/b750fe79269d/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 12 Mar 2014 20:07:44 GMT
+      Content-Length:
+      - '643'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: "{\"id\":\"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc\",\"parent\":\"27cf784147099545\",\"created\":\"2013-03-23T22:24:18.818426-07:00\",\"container\":\"3d67245a8d72ecf13f33dffac9f79dcdf70f75acb84d308770391510e0c23ad0\",\"container_config\":{\"Hostname\":\"\",\"Domainname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"CpuShares\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"ExposedPorts\":null,\"Tty\":true,\"OpenStdin\":true,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"/bin/bash\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":null,\"VolumesFrom\":\"\",\"WorkingDir\":\"\",\"Entrypoint\":null,\"NetworkDisabled\":false,\"OnBuild\":null},\"Size\":77}"
+    http_version: 
+  recorded_at: Wed, 12 Mar 2014 20:07:44 GMT
+recorded_with: VCR 2.8.0

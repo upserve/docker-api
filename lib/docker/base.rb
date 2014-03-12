@@ -1,6 +1,6 @@
 # This class is a base class for Docker Container and Image.
 # It is implementing accessor methods for the models attributes.
-class Docker::Base
+module Docker::Base
   include Docker::Error
 
   attr_accessor :connection, :info
