@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 21:29:20 GMT
+      - Wed, 12 Mar 2014 13:13:19 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,16 +34,16 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:29:21 GMT
+  recorded_at: Wed, 12 Mar 2014 13:13:20 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.9/images/b750fe79269d
+    uri: unix:///var/run/docker.sock/v1.9/images/b750fe79269d?force=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 21:29:22 GMT
+      - Wed, 12 Mar 2014 13:13:21 GMT
       Content-Length:
       - '246'
       Connection:
@@ -70,7 +70,7 @@ http_interactions:
         ,{"Deleted":"27cf784147099545"}
         ]
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:29:22 GMT
+  recorded_at: Wed, 12 Mar 2014 13:13:21 GMT
 - request:
     method: get
     uri: unix:///var/run/docker.sock/v1.9/images/json
@@ -79,7 +79,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -90,7 +90,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 21:29:22 GMT
+      - Wed, 12 Mar 2014 13:13:21 GMT
       Content-Length:
       - '2'
       Connection:
@@ -99,5 +99,5 @@ http_interactions:
       encoding: UTF-8
       string: "[]"
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:29:22 GMT
+  recorded_at: Wed, 12 Mar 2014 13:13:21 GMT
 recorded_with: VCR 2.8.0

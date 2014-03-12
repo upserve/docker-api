@@ -73,8 +73,8 @@ class Docker::Image < Docker::Base
   end
 
   # Remove the Image from the server.
-  def remove
-    connection.delete("/images/#{self.id}")
+  def remove(opts = {})
+    connection.delete("/images/#{self.id}", opts)
   end
   alias_method :delete, :remove
 

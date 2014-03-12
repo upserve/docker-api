@@ -140,7 +140,7 @@ image.run('ls -l')
 # => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Remove the Image from the server.
-image.remove
+image.remove(:force => true)
 # => true
 
 # Given a Container's export, creates a new Image.
@@ -247,7 +247,7 @@ container.run('pwd', 10)
 # => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Delete a Container.
-container.delete
+container.delete(:force => true)
 # => nil
 
 # Request a Container by ID or name.
