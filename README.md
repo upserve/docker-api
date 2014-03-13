@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.8.*.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.8.*.
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
@@ -95,7 +95,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 ```
 
 ## Images
-Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/reference/api/docker_remote_api_v1.10/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
@@ -165,7 +165,7 @@ Docker::Image.search('term' => 'sshd')
 ```
 
 ## Containers
-Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
+Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/reference/api/docker_remote_api_v1.10/#containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
 
 ```ruby
 require 'docker'
