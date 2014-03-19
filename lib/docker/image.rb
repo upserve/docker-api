@@ -107,13 +107,10 @@ class Docker::Image
 
     # Create a new Image.
     def create(opts = {}, creds = nil, conn = Docker.connection)
-      credentials = (creds.nil?) ? creds.to_json : Docker.creds
-      headers = if credentials.nil?
-        Docker::Util.build_auth_header(credentials)
-      else
-        {}
-      end
-      body = conn.post('/images/create', opts)
+      credentials = creds.nil? ? Docker.creds : creds.to_json
+      headers = !credentials.nil? && Docker::Util.build_auth_header(credentials)
+      headers ||= {}
+      body = conn.post('/images/create', opts, :headers => headers)
       id = Docker::Util.fix_json(body).last['id']
       new(conn, 'id' => id, :headers => headers)
     end

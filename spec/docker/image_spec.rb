@@ -214,14 +214,24 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'base') }
+      let(:image) { subject.create('fromImage' => 'ubuntu') }
+      let(:creds) {
+        {
+          :username => 'nahiluhmot',
+          :password => '*********',
+          :email => 'hulihan.tom159@gmail.com'
+        }
+      }
 
-      it 'sets the id', :vcr do
+      before { Docker.creds = creds }
+
+      it 'sets the id and sends Docker.creds', :vcr do
         image.should be_a Docker::Image
         image.id.should match(/\A[a-fA-F0-9]+\Z/)
         image.id.should_not include('base')
         image.id.should_not be_nil
         image.id.should_not be_empty
+        image.info[:headers].keys.should include('X-Registry-Auth')
       end
     end
   end
