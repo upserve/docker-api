@@ -1,0 +1,34 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromSrc=-
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.2
+      Content-Type:
+      - application/tar
+      Transfer-Encoding:
+      - chunked
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 21 Mar 2014 19:20:00 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"98464da2f481d80419b9c79758b804f9589aa0bc94f935f7a7acb009d1cfffec\"}\r\n"
+    http_version: 
+  recorded_at: Fri, 21 Mar 2014 19:20:00 GMT
+recorded_with: VCR 2.8.0

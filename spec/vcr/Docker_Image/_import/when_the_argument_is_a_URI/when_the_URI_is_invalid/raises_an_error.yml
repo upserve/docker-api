@@ -1,0 +1,35 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromSrc=-
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.2
+      Content-Type:
+      - application/tar
+      Transfer-Encoding:
+      - chunked
+  response:
+    status:
+      code: 500
+      message: 
+    headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Date:
+      - Fri, 21 Mar 2014 19:05:15 GMT
+      Content-Length:
+      - '32'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        archive/tar: invalid tar header
+    http_version: 
+  recorded_at: Fri, 21 Mar 2014 19:05:15 GMT
+recorded_with: VCR 2.8.0

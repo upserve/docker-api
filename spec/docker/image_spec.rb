@@ -275,20 +275,39 @@ describe Docker::Image do
 
       it 'raises an error' do
         expect { subject.import(file) }
-            .to raise_error Errno::ENOENT
+            .to raise_error(Docker::Error::ArgumentError)
       end
     end
 
     context 'when the file does exist' do
       let(:file) { 'spec/fixtures/export.tar' }
+      let(:body) { StringIO.new }
 
-      before { File.stub(:open).with(file, 'r').and_yield(mock(:read => '')) }
+      before { Docker::Image.stub(:open).with(file).and_yield(body) }
 
       it 'creates the Image', :vcr do
-        pending 'This works, but recording a streaming request breaks VCR'
         import = subject.import(file)
         import.should be_a Docker::Image
         import.id.should_not be_nil
+      end
+    end
+
+    context 'when the argument is a URI' do
+      context 'when the URI is invalid' do
+        it 'raises an error', :vcr do
+          expect { subject.import('http://google.com') }
+            .to raise_error(Docker::Error::ArgumentError)
+        end
+      end
+
+      context 'when the URI is valid' do
+        let(:uri) { 'http://swipely-pub.s3.amazonaws.com/ubuntu.tar' }
+
+        it 'returns an Image', :vcr do
+          image = subject.import(uri)
+          image.should be_a Docker::Image
+          image.id.should_not be_nil
+        end
       end
     end
   end
