@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.8.*.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.9.*.
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
@@ -146,6 +146,16 @@ image.remove(:force => true)
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# `Docker::Image.import` can also import from a URI
+Docker::Image.import('http://some-site.net/my-image.tar')
+# => Docker::Image { :id => 6b462b2d2, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# For a lower-level interface for importing tars, `Docker::Image.import_stream` may be used.
+# It accepts a block, and will call that block until it returns an empty `String`.
+File.open('my-export.tar') do |file|
+  Docker::Image.import_stream { file.read(1000).to_s }
+end
 
 # Create an Image from a Dockerfile as a String.
 Docker::Image.build("from base\nrun touch /test")
