@@ -136,18 +136,28 @@ class Docker::Image
       hashes.map { |hash| new(connection, 'id' => hash['name']) }
     end
 
-    # Import an Image from the output of Docker::Container#export.
-    def import(file, options = {}, connection = Docker.connection)
-      File.open(file, 'r') do |io|
-        body = connection.post(
-          '/images/create',
-           options.merge('fromSrc' => '-'),
-           :headers => { 'Content-Type' => 'application/tar',
-                         'Transfer-Encoding' => 'chunked' }
-        ) { io.read(Excon.defaults[:chunk_size]).to_s }
-        new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+    # Import an Image from the output of Docker::Container#export. The first
+    # argument may either be a File or URI.
+    def import(imp, opts = {}, conn = Docker.connection)
+      open(imp) do |io|
+        import_stream(opts, conn) do
+          io.read(Excon.defaults[:chunk_size]).to_s
+        end
       end
+    rescue StandardError
+      raise Docker::Error::IOError, "Could not import '#{imp}'"
     end
+
+  def import_stream(options = {}, connection = Docker.connection, &block)
+    body = connection.post(
+      '/images/create',
+       options.merge('fromSrc' => '-'),
+       :headers => { 'Content-Type' => 'application/tar',
+                     'Transfer-Encoding' => 'chunked' },
+       &block
+    )
+    new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+  end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, opts = {}, connection = Docker.connection, &block)
