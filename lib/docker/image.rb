@@ -145,7 +145,7 @@ class Docker::Image
         end
       end
     rescue StandardError
-      raise Docker::Error::ArgumentError, "Could not import '#{imp}'"
+      raise Docker::Error::IOError, "Could not import '#{imp}'"
     end
 
   def import_stream(options = {}, connection = Docker.connection, &block)

@@ -275,7 +275,7 @@ describe Docker::Image do
 
       it 'raises an error' do
         expect { subject.import(file) }
-            .to raise_error(Docker::Error::ArgumentError)
+          .to raise_error(Docker::Error::IOError)
       end
     end
 
@@ -296,7 +296,7 @@ describe Docker::Image do
       context 'when the URI is invalid' do
         it 'raises an error', :vcr do
           expect { subject.import('http://google.com') }
-            .to raise_error(Docker::Error::ArgumentError)
+            .to raise_error(Docker::Error::IOError)
         end
       end
 
