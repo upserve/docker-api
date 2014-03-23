@@ -180,7 +180,7 @@ Much like the Images, this object also has a one-to-one mapping with the [Contai
 ```ruby
 require 'docker'
 
-# Create a Container. 
+# Create a Container.
 Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
