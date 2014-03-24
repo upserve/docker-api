@@ -70,4 +70,19 @@ module Docker::Util
       'X-Registry-Config' => encoded_creds,
     }
   end
+
+  # Turn the keys of the given hash from snake_case to CamelCase or camelCase.
+  def camelize_keys(hash, caps = true)
+    Hash[hash.map { |key, value| [camelize(key, caps), value] }]
+  end
+
+  # Turn a snake_case String into CamelCase. If the second argument is false,
+  # the String will appear likeThis.
+  def camelize(str, caps = true)
+    str.to_s
+      .split('_')
+      .each { |word| word.gsub!(/\A[a-z]/, &:upcase) }
+      .join
+      .tap { |ret| ret.gsub!(/\A[A-Z]/, &:downcase) unless caps }
+  end
 end

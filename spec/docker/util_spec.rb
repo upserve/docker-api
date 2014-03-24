@@ -92,4 +92,73 @@ describe Docker::Util do
       end
     end
   end
+
+  describe '.camelize_keys' do
+    let(:input) {
+      {
+        :key_one => 'value1',
+        :keyTwo => 'value2',
+        :key_Three => 'value3'
+      }
+    }
+
+    context 'when there is no extra argument' do
+      let(:expected) {
+        {
+          'KeyOne' => 'value1',
+          'KeyTwo' => 'value2',
+          'KeyThree' => 'value3',
+        }
+      }
+
+      it 'turns each key of a Hash into CamelCase' do
+        expect(Docker::Util.camelize_keys(input)).to eq(expected)
+      end
+    end
+
+    context 'when the extra argument is false' do
+      let(:expected) {
+        {
+          'keyOne' => 'value1',
+          'keyTwo' => 'value2',
+          'keyThree' => 'value3',
+        }
+      }
+
+      it 'turns each key of a Hash into CamelCase' do
+        expect(Docker::Util.camelize_keys(input, false)).to eq(expected)
+      end
+    end
+  end
+
+  describe '.camelize' do
+    subject { strs.map { |str| Docker::Util.camelize(str) } }
+
+    context 'when the String is already CamelCase' do
+      let(:strs) { %w(CamelOne Cameltwo) }
+      let(:expected) { strs }
+
+      it 'does nothing' do
+        expect(subject).to eq(expected)
+      end
+    end
+
+    context 'when the String is snake_case' do
+      let(:strs) { %w(snake_case1 snake2_case snake_3case) }
+      let(:expected) { %w(SnakeCase1 Snake2Case Snake3case) }
+
+      it 'converts it to CamelCase' do
+        expect(subject).to eq(expected)
+      end
+
+      context 'when the second argument is false' do
+        subject { strs.map { |str| Docker::Util.camelize(str, false) } }
+        let(:expected) { %w(snakeCase1 snake2Case snake3case) }
+
+        it 'converts it to camelCase' do
+          expect(subject).to eq(expected)
+        end
+      end
+    end
+  end
 end
