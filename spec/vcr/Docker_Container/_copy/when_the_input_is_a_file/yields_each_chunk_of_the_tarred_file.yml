@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:22 GMT
+      - Tue, 25 Mar 2014 19:40:19 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:24 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:20 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.10/containers/create
@@ -43,7 +43,7 @@ http_interactions:
       string: "{\"Image\":\"b750fe79269d\",\"Cmd\":[\"touch\",\"/test\"]}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:25 GMT
+      - Tue, 25 Mar 2014 19:40:21 GMT
       Content-Length:
       - '90'
       Connection:
@@ -62,18 +62,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"2703dd3c331e8405de077d5ed9452e0fe27fe3bb9f54740dc34845e1d0ab5499","Warnings":null}
+        {"Id":"78d8eac3e58dc1f4df2c93884e42043b4e74ec316007bb0b36ec7db607a284e1","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:25 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:21 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/2703dd3c331e8405de077d5ed9452e0fe27fe3bb9f54740dc34845e1d0ab5499/start
+    uri: unix:///var/run/docker.sock/v1.10/containers/78d8eac3e58dc1f4df2c93884e42043b4e74ec316007bb0b36ec7db607a284e1/start
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -82,7 +82,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Mar 2014 13:31:25 GMT
+      - Tue, 25 Mar 2014 19:40:21 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -93,16 +93,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:25 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:21 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/2703dd3c331e8405de077d5ed9452e0fe27fe3bb9f54740dc34845e1d0ab5499/wait
+    uri: unix:///var/run/docker.sock/v1.10/containers/78d8eac3e58dc1f4df2c93884e42043b4e74ec316007bb0b36ec7db607a284e1/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -113,7 +113,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:25 GMT
+      - Tue, 25 Mar 2014 19:40:21 GMT
       Content-Length:
       - '17'
       Connection:
@@ -123,16 +123,16 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:25 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:21 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/2703dd3c331e8405de077d5ed9452e0fe27fe3bb9f54740dc34845e1d0ab5499/copy
+    uri: unix:///var/run/docker.sock/v1.10/containers/78d8eac3e58dc1f4df2c93884e42043b4e74ec316007bb0b36ec7db607a284e1/copy
     body:
       encoding: UTF-8
       string: "{\"Resource\":\"/test\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -141,7 +141,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Mar 2014 13:31:25 GMT
+      - Tue, 25 Mar 2014 19:40:21 GMT
       Content-Length:
       - '1536'
       Content-Type:
@@ -154,7 +154,7 @@ http_interactions:
         dGVzdAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAxMDA2NDQAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDAw
-        ADEyMzEwMDYwNjU1ADAxMDEzMwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMzE0MzU1NjQ1ADAxMDE0NQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -187,5 +187,5 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAA
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:25 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:21 GMT
 recorded_with: VCR 2.8.0

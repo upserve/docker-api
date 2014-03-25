@@ -8,7 +8,7 @@ http_interactions:
       string: "{\"Hostname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"Tty\":false,\"OpenStdin\":false,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"date\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":{},\"VolumesFrom\":\"\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:47 GMT
+      - Tue, 25 Mar 2014 19:47:35 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,7 +27,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"e5db8489f386c64097f8b2d23054d3285d6d39eff0e62ebdca8b0fec42864b7d","Warnings":null}
+        {"Id":"51a621a8deb2c1e5a804870a3ae47fdb87cf96ed4c6e2f5e6f8a9b153589ecb7","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:47 GMT
+  recorded_at: Tue, 25 Mar 2014 19:47:35 GMT
 recorded_with: VCR 2.8.0

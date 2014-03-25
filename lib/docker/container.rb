@@ -2,15 +2,12 @@
 # is cached so that the information is always up to date.
 class Docker::Container
   include Docker::Base
+  include Docker::Util
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
-    resp = Docker::Util.parse_json(connection.get(path_for(:top), opts))
-    if resp['Processes'].nil?
-      []
-    else
-      resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] }
-    end
+    hash = parse_json(connection.get(path_for(:top), opts))
+    (hash['Processes'] || []).map { |ary| Hash[hash['Titles'].zip(ary)] }
   end
 
   # Wait for the current command to finish executing.
@@ -40,8 +37,8 @@ class Docker::Container
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
     opts = {
-      :stream => true, :stdout => true, :stderr => true
-    }.merge(options)
+      'stream' => true, 'stdout' => true, 'stderr' => true
+    }.merge(camelize_keys(options, false))
     # Creates list to store stdout and stderr messages
     msgs = Docker::Messages.new
     connection.post(
@@ -54,16 +51,14 @@ class Docker::Container
 
   # Create an Image from a Container's change.s
   def commit(options = {})
-    options.merge!('container' => self.id[0..7])
+    opts = camelize_keys(options.merge('container' => self.id[0..7]), false)
     # [code](https://github.com/dotcloud/docker/blob/v0.6.3/commands.go#L1115)
     # Based on the link, the config passed as run, needs to be passed as the
     # body of the post so capture it, remove from the options, and pass it via
     # the post body
-    config = options.delete('run')
-    hash = Docker::Util.parse_json(connection.post('/commit',
-                                                   options,
-                                                   :body => config.to_json))
-    Docker::Image.send(:new, self.connection, hash)
+    config = opts['run'].nil? || camelize_keys(opts.delete('run'))
+    res = parse_json(connection.post('/commit', opts, :body => config.to_json))
+    Docker::Image.send(:new, self.connection, res)
   end
 
   # Return a String representation of the Container.
@@ -74,8 +69,8 @@ class Docker::Container
   # #json returns information about the Container, #changes returns a list of
   # the changes the Container has made to the filesystem.
   [:json, :changes].each do |method|
-    define_method(method) do |opts = {}|
-      Docker::Util.parse_json(connection.get(path_for(method), opts))
+    define_method(method) do
+      Docker::Util.parse_json(connection.get(path_for(method)))
     end
   end
 
@@ -83,7 +78,8 @@ class Docker::Container
   # return the Container. #start and #kill do the same,
   # but rescue from ServerErrors.
   [:start, :kill].each do |method|
-    define_method(:"#{method}!") do |opts = {}|
+    define_method(:"#{method}!") do |options = {}|
+      opts = camelize_keys(options)
       connection.post(path_for(method), {}, :body => opts.to_json)
       self
     end
@@ -98,7 +94,7 @@ class Docker::Container
   # but rescue from ServerErrors.
   [:stop, :restart].each do |method|
     define_method(:"#{method}!") do |opts = {}|
-      timeout = opts.delete('timeout')
+      timeout = camelize_keys(opts).delete('Timeout')
       query = {}
       query['t'] = timeout if timeout
       connection.post(path_for(method), query, :body => opts.to_json)
@@ -112,7 +108,7 @@ class Docker::Container
 
   # remove container
   def remove(options = {})
-    connection.delete("/containers/#{self.id}", options)
+    connection.delete("/containers/#{self.id}", camelize_keys(options, false))
     nil
   end
   alias_method :delete, :remove
@@ -125,27 +121,33 @@ class Docker::Container
     self
   end
 
-  # Create a new Container.
-  def self.create(opts = {}, conn = Docker.connection)
-    name = opts.delete('name')
-    query = {}
-    query['name'] = name if name
-    resp = conn.post('/containers/create', query, :body => opts.to_json)
-    hash = Docker::Util.parse_json(resp) || {}
-    new(conn, hash)
-  end
+  class << self
+    include Docker::Util
 
-  # Return the container with specified ID
-  def self.get(id, opts = {}, conn = Docker.connection)
-    container_json = conn.get("/containers/#{URI.encode(id)}/json", opts)
-    hash = Docker::Util.parse_json(container_json) || {}
-    new(conn, hash)
-  end
+    # Create a new Container.
+    def create(options = {}, conn = Docker.connection)
+      opts = camelize_keys(options)
+      name = opts.delete('Name')
+      query = {}
+      query['name'] = name if name
+      resp = conn.post('/containers/create', query, :body => opts.to_json)
+      hash = parse_json(resp) || {}
+      new(conn, hash)
+    end
 
-  # Return all of the Containers.
-  def self.all(opts = {}, conn = Docker.connection)
-    hashes = Docker::Util.parse_json(conn.get('/containers/json', opts)) || []
-    hashes.map { |hash| new(conn, hash) }
+    # Return the container with specified ID
+    def get(id, options = {}, conn = Docker.connection)
+      opts = camelize_keys(options, false)
+      container_json = conn.get("/containers/#{URI.encode(id)}/json", opts)
+      new(conn, parse_json(container_json) || {})
+    end
+
+    # Return all of the Containers.
+    def all(options = {}, conn = Docker.connection)
+      opts = camelize_keys(options, false)
+      hashes = parse_json(conn.get('/containers/json', opts)) || []
+      hashes.map { |hash| new(conn, hash) }
+    end
   end
 
   # Convenience method to return the path for a particular resource.
