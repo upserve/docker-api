@@ -23,7 +23,7 @@ describe Docker::Container do
     its(:to_s) { should == expected_string }
   end
 
-  describe '#json', :current do
+  describe '#json' do
     subject { described_class.create(:cmd => %w[true], :image => 'base') }
     let(:description) { subject.json }
 
@@ -77,7 +77,7 @@ describe Docker::Container do
   describe '#copy' do
     subject {
       Docker::Image.create(
-        'fromImage' => 'base'
+        :from_image => 'base'
       ).run('touch /test').tap { |c| c.wait }
     }
 

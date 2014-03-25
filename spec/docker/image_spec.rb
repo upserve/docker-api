@@ -22,7 +22,7 @@ describe Docker::Image do
 
   describe '#remove' do
     let(:id) { subject.id }
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(:from_image => 'base') }
 
     it 'removes the Image', :vcr do
       subject.remove(:force => true)
@@ -32,8 +32,9 @@ describe Docker::Image do
 
   describe '#insert' do
     subject { described_class.build('from base') }
-    let(:new_image) { subject.insert(:path => '/stallman',
-                                     :url => 'http://stallman.org') }
+    let(:new_image) {
+      subject.insert(:path => '/stallman', :url => 'http://stallman.org')
+    }
     let(:ls_output) { new_image.run('ls /').attach }
 
     it 'inserts the url\'s file into a new Image', :vcr do
@@ -46,7 +47,7 @@ describe Docker::Image do
 
     let(:rm) { false }
     let(:new_image) {
-      opts = {'localPath' => file, 'outputPath' => '/'}
+      opts = { :local_path => file, :output_path => '/'}
       opts[:rm] = true if rm
       subject.insert_local(opts)
     }
@@ -96,7 +97,7 @@ describe Docker::Image do
       end
 
       it 'creates a new image', :vcr do
-        expect{new_image}.to change{Docker::Image.all.count}.by 1
+        expect{new_image}.to change{ Docker::Image.all.count }.by 1
       end
 
     end
@@ -118,7 +119,7 @@ describe Docker::Image do
       base_image.run('true')
     }
     let(:new_image) {
-      container.commit('repo' => 'nahiluhmot/base2')
+      container.commit(:repo => 'nahiluhmot/base2')
       Docker::Image.all(:all => true).select { |image|
         image.info['RepoTags'].include?('nahiluhmot/base2:latest')
       }.first
@@ -130,7 +131,7 @@ describe Docker::Image do
   end
 
   describe '#tag' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(:from_image => 'base') }
 
     it 'tags the image with the repo name', :vcr do
       subject.tag(:repo => :base2, :force => true)
@@ -139,7 +140,7 @@ describe Docker::Image do
   end
 
   describe '#json' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(:from_image => 'base') }
     let(:json) { subject.json }
 
     it 'returns additional information about image image', :vcr do
@@ -149,7 +150,7 @@ describe Docker::Image do
   end
 
   describe '#history' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(:from_image => 'base') }
     let(:history) { subject.history }
 
     it 'returns the history of the Image', :vcr do
@@ -160,7 +161,7 @@ describe Docker::Image do
   end
 
   describe '#run' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create(:from_image => 'base') }
     let(:output) { subject.run(cmd).attach }
 
     context 'when the argument is a String', :vcr do
@@ -188,9 +189,10 @@ describe Docker::Image do
       end
 
       context "command configured in image" do
-        let(:container) {Docker::Container.create('Cmd' => %w[true],
-                                                  'Image' => 'base')}
-        subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
+        let(:container) {
+          Docker::Container.create(:cmd => %w[true], :image => 'base')
+        }
+        subject { container.commit(:run => { :cmd => %w[pwd] }) }
 
         it 'should normally show result if image has Cmd configured' do
           pending 'The docs say this should work, but it clearly does not'
@@ -201,7 +203,7 @@ describe Docker::Image do
   end
 
   describe '#refresh!' do
-    let(:image) { Docker::Image.create('fromImage' => 'base') }
+    let(:image) { Docker::Image.create(:from_image => 'base') }
 
     it 'updates the @info hash', :vcr do
       size = image.info.size
@@ -214,7 +216,7 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'ubuntu') }
+      let(:image) { subject.create(:from_image => 'ubuntu') }
       let(:creds) {
         {
           :username => 'nahiluhmot',
@@ -315,10 +317,21 @@ describe Docker::Image do
   describe '.all' do
     subject { described_class }
 
+    let(:creds) {
+      {
+        :username => 'nahiluhmot',
+        :password => '*********',
+        :email => 'hulihan.tom159@gmail.com'
+      }
+    }
     let(:images) { subject.all(:all => true) }
-    before { subject.create('fromImage' => 'base') }
+    before do
+      subject.create(:from_image => 'base')
+      Docker.creds = creds
+    end
 
-    it 'materializes each Image into a Docker::Image', :vcr do
+
+    it 'materializes each Image into a Docker::Image', :current, :vcr do
       images.each do |image|
         image.should_not be_nil
 
@@ -402,10 +415,12 @@ describe Docker::Image do
       let(:image) { subject.build_from_dir(dir, opts, &block) }
       let(:opts) { {} }
       let(:block) { Proc.new {} }
-      let(:container) do
-        Docker::Container.create('Image' => image.id,
-                                 'Cmd' => %w[cat /Dockerfile])
-      end
+      let(:container) {
+        Docker::Container.create(
+          :image => image.id,
+          :cmd => %w[cat /Dockerfile]
+        )
+      }
       let(:output) { container.tap(&:start)
                               .attach(:stderr => true) }
       let(:images) { subject.all }

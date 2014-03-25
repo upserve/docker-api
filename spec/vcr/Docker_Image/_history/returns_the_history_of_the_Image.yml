@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:32:09 GMT
+      - Tue, 25 Mar 2014 20:08:06 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:32:10 GMT
+  recorded_at: Tue, 25 Mar 2014 20:08:08 GMT
 - request:
     method: get
     uri: unix:///var/run/docker.sock/v1.10/images/b750fe79269d/history
@@ -43,7 +43,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:32:10 GMT
+      - Tue, 25 Mar 2014 20:08:08 GMT
       Content-Length:
       - '324'
       Connection:
@@ -66,5 +66,5 @@ http_interactions:
         ,{"Created":1364068391,"CreatedBy":"","Id":"27cf784147099545","Size":175306958,"Tags":null}
         ]
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:32:10 GMT
+  recorded_at: Tue, 25 Mar 2014 20:08:08 GMT
 recorded_with: VCR 2.8.0
