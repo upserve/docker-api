@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/build
+    uri: unix:///var/run/docker.sock/v1.10/build
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/tar
       Transfer-Encoding:
@@ -21,27 +21,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:06:41 GMT
+      - Wed, 12 Mar 2014 13:32:17 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"stream\":\"Step 0 : from base\\n\"}{\"stream\":\" ---\\u003e b750fe79269d\\n\"}{\"stream\":\"Step
-        1 : add / /\\n\"}{\"stream\":\" ---\\u003e d6d2bf4c6746\\n\"}{\"stream\":\"Successfully
-        built d6d2bf4c6746\\n\"}"
+      string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
+        b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 3755956b65f4\\n\"}\r\n{\"stream\":\"Successfully built 3755956b65f4\\n\"}\r\n"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:42 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:19 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    uri: unix:///var/run/docker.sock/v1.10/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Image\":\"d6d2bf4c6746\",\"Cmd\":[\"cat\",\"/Dockerfile\"]}"
+      string: "{\"Image\":\"3755956b65f4\",\"Cmd\":[\"cat\",\"/Dockerfile\"]}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/json
   response:
@@ -52,7 +52,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:06:43 GMT
+      - Wed, 12 Mar 2014 13:32:19 GMT
       Content-Length:
       - '90'
       Connection:
@@ -60,18 +60,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"2273b820aa7d40422901dcebd5833bfe64d1c5202082594b73f5373fdc1366bf","Warnings":null}
+        {"Id":"60de55097372d9177e3b877a6c9f13267379f42294e929d28f6fcbb358181b6e","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:43 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:19 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/2273b820aa7d40422901dcebd5833bfe64d1c5202082594b73f5373fdc1366bf/start
+    uri: unix:///var/run/docker.sock/v1.10/containers/60de55097372d9177e3b877a6c9f13267379f42294e929d28f6fcbb358181b6e/start
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/json
   response:
@@ -80,7 +80,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Feb 2014 17:06:43 GMT
+      - Wed, 12 Mar 2014 13:32:19 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -91,16 +91,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:43 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:19 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/2273b820aa7d40422901dcebd5833bfe64d1c5202082594b73f5373fdc1366bf/attach?stderr=true&stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.10/containers/60de55097372d9177e3b877a6c9f13267379f42294e929d28f6fcbb358181b6e/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -115,5 +115,5 @@ http_interactions:
       string: !binary |-
         AQAAAAAAABJmcm9tIGJhc2UKYWRkIC8gLwo=
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:43 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:19 GMT
 recorded_with: VCR 2.8.0

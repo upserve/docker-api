@@ -1,0 +1,81 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://swipely-pub.s3.amazonaws.com/ubuntu.tar
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      X-Amz-Id-2:
+      - gDzbfLKbcGI0aVhR6ZPCtlGh6XdtjCg8B1Q6kv45cNhLAmJ0TqX9nN1UDc6G9bc8
+      X-Amz-Request-Id:
+      - 8A710A4CEED81061
+      Date:
+      - Fri, 21 Mar 2014 20:09:59 GMT
+      X-Amz-Meta-S3cmd-Attrs:
+      - uid:1000/gname:thulihan/uname:thulihan/gid:1000/mode:33188/mtime:1395427962/atime:1395427960/md5:dd5c4a8854498b18f70022b98231f10e/ctime:1395427962
+      Last-Modified:
+      - Fri, 21 Mar 2014 18:53:20 GMT
+      Etag:
+      - "\"378fd3b78cc4f5afee7e47e9a948ef3f-14\""
+      Accept-Ranges:
+      - bytes
+      Content-Type:
+      - application/x-tar
+      Content-Length:
+      - '215523328'
+      Server:
+      - AmazonS3
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        Li8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAADAwNDA3NTUAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDAw
+        ADEyMzEzMTA1MTQ3ADAwNzQwMgAgNQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+    http_version: 
+  recorded_at: Fri, 21 Mar 2014 20:10:55 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromSrc=-
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.2
+      Content-Type:
+      - application/tar
+      Transfer-Encoding:
+      - chunked
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 21 Mar 2014 20:10:59 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"334a5c3837719bdc4872d1356a1c0ba72c0ad8ac2793979f136f8247180b3436\"}\r\n"
+    http_version: 
+  recorded_at: Fri, 21 Mar 2014 20:10:59 GMT
+recorded_with: VCR 2.8.0

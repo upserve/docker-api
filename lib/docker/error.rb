@@ -31,4 +31,7 @@ module Docker::Error
 
   # Raised when login fails.
   class AuthenticationError < DockerError; end
+
+  # Raised when an IO action fails.
+  class IOError < DockerError; end
 end

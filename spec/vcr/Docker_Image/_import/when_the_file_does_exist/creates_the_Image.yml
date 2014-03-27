@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/build
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromSrc=-
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.2
       Content-Type:
       - application/tar
       Transfer-Encoding:
@@ -21,17 +21,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:32:20 GMT
+      - Fri, 21 Mar 2014 19:20:00 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
-        b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e Using cache\\n\"}\r\n{\"stream\":\" ---\\u003e 3755956b65f4\\n\"}\r\n{\"stream\":\"Successfully
-        built 3755956b65f4\\n\"}\r\n"
+      string: "{\"status\":\"98464da2f481d80419b9c79758b804f9589aa0bc94f935f7a7acb009d1cfffec\"}\r\n"
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:32:20 GMT
+  recorded_at: Fri, 21 Mar 2014 19:20:00 GMT
 recorded_with: VCR 2.8.0

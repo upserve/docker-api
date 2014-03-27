@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -19,14 +19,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:05:55 GMT
+      - Wed, 12 Mar 2014 13:31:47 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"status\":\"Pulling repository base\"}{\"status\":\"Pulling image
+      string: "{\"status\":\"Pulling repository base\"}\r\n{\"status\":\"Pulling image
         (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
@@ -34,16 +34,16 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:56 GMT
+  recorded_at: Wed, 12 Mar 2014 13:31:48 GMT
 - request:
     method: delete
-    uri: unix:///var/run/docker.sock/v1.8/images/base
+    uri: unix:///var/run/docker.sock/v1.10/images/b750fe79269d?force=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -51,30 +51,33 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Date:
-      - Wed, 12 Feb 2014 17:05:56 GMT
-      Content-Length:
-      - '82'
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Date:
+      - Wed, 12 Mar 2014 13:31:48 GMT
+      Content-Length:
+      - '134'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |-
-        [{"Untagged":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc"}
+        [{"Untagged":"base:latest"}
+        ,{"Untagged":"base:ubuntu-12.10"}
+        ,{"Untagged":"base:ubuntu-quantal"}
+        ,{"Untagged":"base:ubuntu-quantl"}
         ]
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:56 GMT
+  recorded_at: Wed, 12 Mar 2014 13:31:48 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.8/images/json
+    uri: unix:///var/run/docker.sock/v1.10/images/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -82,22 +85,26 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Date:
-      - Wed, 12 Feb 2014 17:05:56 GMT
-      Content-Length:
-      - '964'
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Date:
+      - Wed, 12 Mar 2014 13:31:48 GMT
       Connection:
       - close
+      Transfer-Encoding:
+      - ''
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1392224753,"Id":"dae27da5a73f01eede1699649c42c727651b4311d2ff689810bf22c75c2d2a08","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":7,"VirtualSize":350613950}
-        ,{"Created":1392224748,"Id":"291b17ca54f04278c166b1313f9ec211fa27596a6f5a20855fcd8739b8f26116","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":7,"VirtualSize":350613950}
-        ,{"Created":1392224744,"Id":"328de6c59bef1db641600ea40668bbd57f6966a146bebe9640030dea13d0008c","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":7,"VirtualSize":350613950}
-        ,{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base2:latest"],"Size":175306985,"VirtualSize":350613943}
+        [{"Created":1394631105,"Id":"11967a8e57f5a4535fc81770a3645f10ec7abf92f22308fcb15288bd30a043f7","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":69,"VirtualSize":175307104}
+        ,{"Created":1394631103,"Id":"8564cd49afd7c8c41e5230408f71d3a4214d8cb6f91004ac89fccebc98843516","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":69,"VirtualSize":175307104}
+        ,{"Created":1394631080,"Id":"2e0a9a843f663c7a7159aef66386b60e3e5db6eb48dce592844f8716b4d3f3f9","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":104,"VirtualSize":175307139}
+        ,{"Created":1391448676,"Id":"9f676bd305a43a931a8d98b13e5840ffbebcd908370765373315926024c7c35e","ParentId":"1c7f181e78b90d347996d754ffa38c4c6b395e7cf0388bffffbda00365b45077","RepoTags":["ubuntu:13.10","ubuntu:saucy"],"Size":182125825,"VirtualSize":182125825}
+        ,{"Created":1391448539,"Id":"eb601b8965b806e798674245307e091b8ac3cdb9fb522aebaa6ac593df8b6b3c","ParentId":"f323cf34fd7797580c96f45c6b59c4c0704e0ecbc3504e986589c4039681c4fd","RepoTags":["ubuntu:13.04","ubuntu:raring"],"Size":170192839,"VirtualSize":170192839}
+        ,{"Created":1391448413,"Id":"5ac751e8d62391dab7b5e795e949e74e7053eb443f819cb35e6bd23fe847a794","ParentId":"321f7f4200f444a0ba37aa7bcf35d2776f7f28958ed1cfe79b5108c62a9c1ab5","RepoTags":["ubuntu:quantal","ubuntu:12.10"],"Size":161412295,"VirtualSize":161412295}
+        ,{"Created":1391448301,"Id":"9cc9ea5ea540116b89e41898dd30858107c1175260fb7ff50322b34704092232","ParentId":"7a4f8724184531b88441f95d0a12e47e0791aaedf4ef122b5464da54f38973d4","RepoTags":["ubuntu:10.04","ubuntu:lucid"],"Size":182964289,"VirtualSize":182964289}
+        ,{"Created":1391448149,"Id":"9cd978db300e27386baa9dd791bf6dc818f13e52235b26e95703361ec3c94dc6","ParentId":"6170bb7b0ad1003a827e4dc5253ba49f6719599eac485db51eaafd507c13c311","RepoTags":["ubuntu:latest","ubuntu:precise","ubuntu:12.04"],"Size":204705001,"VirtualSize":204705001}
         ]
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:56 GMT
+  recorded_at: Wed, 12 Mar 2014 13:31:48 GMT
 recorded_with: VCR 2.8.0

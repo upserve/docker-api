@@ -81,8 +81,6 @@ describe Docker::Container do
     let(:top) { sleep 1; container.top }
     let!(:container) { image.run('/while') }
 
-    after { container.kill; container.delete; image.remove }
-
     it 'returns the top commands as an Array', :vcr do
       top.should be_a Array
       top.should_not be_empty
@@ -196,7 +194,7 @@ describe Docker::Container do
   describe '#stop' do
     subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
 
-    before { subject.tap(&:start).stop }
+    before { subject.tap(&:start).stop('timeout' => '10') }
 
     it 'stops the container', :vcr do
       described_class.all(:all => true).map(&:id).should be_any { |id|
@@ -226,7 +224,7 @@ describe Docker::Container do
     subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
 
     it 'deletes the container', :vcr do
-      subject.delete
+      subject.delete(:force => true)
       described_class.all.map(&:id).should be_none { |id|
         id.start_with?(subject.id)
       }
@@ -246,7 +244,7 @@ describe Docker::Container do
       described_class.all.map(&:id).should be_none { |id|
         id.start_with?(subject.id)
       }
-      subject.restart
+      subject.restart('timeout' => '10')
       described_class.all.map(&:id).should be_any { |id|
         id.start_with?(subject.id)
       }
@@ -260,7 +258,7 @@ describe Docker::Container do
     before { subject.start }
 
     it 'waits for the command to finish', :vcr do
-      subject.wait['StatusCode'].should == 64
+      subject.wait['StatusCode'].should_not be_zero
     end
 
     context 'when an argument is given' do

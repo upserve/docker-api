@@ -1,5 +1,6 @@
 # This class represents a Docker Image.
-class Docker::Image < Docker::Base
+class Docker::Image
+  include Docker::Base
 
   # Given a command and optional list of streams to attach to, run a command on
   # an Image. This will not modify the Image, but rather create a new Container
@@ -24,10 +25,7 @@ class Docker::Image < Docker::Base
   def push(creds = nil, options = {})
     repository = self.info['RepoTags'].first.split(/:/)[0] rescue nil
 
-    unless repository
-      raise ArgumentError
-        "Image does not have a name to push, got: #{repository}."
-    end
+    raise ArgumentError, "Image does not have a name to push." unless repository
 
     credentials = creds || Docker.creds
     headers = Docker::Util.build_auth_header(credentials)
@@ -41,16 +39,20 @@ class Docker::Image < Docker::Base
 
   # Tag the Image.
   def tag(opts = {})
-    Docker::Util.parse_json(connection.post(path_for(:tag), opts))
+    self.info['RepoTags'] ||= []
+    connection.post(path_for(:tag), opts)
+    repo = opts['repo'] || opts[:repo]
+    tag = opts['tag'] || opts[:tag] || 'latest'
+    self.info['RepoTags'] << "#{repo}:#{tag}"
   end
 
   # Insert a file into the Image, returns a new Image that has that file.
   def insert(query = {})
     body = connection.post(path_for(:insert), query)
-    if (id = body.match(/{"status":"([a-f0-9]+)"}\z/)).nil? || id[1].empty?
-      raise UnexpectedResponseError, "Could not find Id in '#{body}'"
+    if id = Docker::Util.fix_json(body).last['status']
+      self.class.send(:new, connection, 'id' => id)
     else
-      self.class.send(:new, connection, 'id' => id[1])
+      raise UnexpectedResponseError, "Could not find Id in '#{body}'"
     end
   end
 
@@ -72,8 +74,8 @@ class Docker::Image < Docker::Base
   end
 
   # Remove the Image from the server.
-  def remove
-    connection.delete("/images/#{self.id}")
+  def remove(opts = {})
+    connection.delete("/images/#{self.id}", opts)
   end
   alias_method :delete, :remove
 
@@ -91,18 +93,25 @@ class Docker::Image < Docker::Base
     end
   end
 
+  # Update the @info hash, which is the only mutable state in this object.
+  def refresh!
+    img = Docker::Image.all(:all => true).find { |image|
+      image.id.start_with?(self.id) || self.id.start_with?(image.id)
+    }
+    info.merge!(self.json)
+    img && info.merge!(img.info)
+    self
+  end
+
   class << self
 
     # Create a new Image.
     def create(opts = {}, creds = nil, conn = Docker.connection)
-      credentials = (creds.nil?) ? creds.to_json : Docker.creds
-      headers = if credentials.nil?
-        Docker::Util.build_auth_header(credentials)
-      else
-        {}
-      end
-      conn.post('/images/create', opts)
-      id = opts['repo'] ? "#{opts['repo']}/#{opts['tag']}" : opts['fromImage']
+      credentials = creds.nil? ? Docker.creds : creds.to_json
+      headers = !credentials.nil? && Docker::Util.build_auth_header(credentials)
+      headers ||= {}
+      body = conn.post('/images/create', opts, :headers => headers)
+      id = Docker::Util.fix_json(body).last['id']
       new(conn, 'id' => id, :headers => headers)
     end
 
@@ -127,18 +136,28 @@ class Docker::Image < Docker::Base
       hashes.map { |hash| new(connection, hash.merge('id' => hash['name'])) }
     end
 
-    # Import an Image from the output of Docker::Container#export.
-    def import(file, options = {}, connection = Docker.connection)
-      File.open(file, 'r') do |io|
-        body = connection.post(
-          '/images/create',
-           options.merge('fromSrc' => '-'),
-           :headers => { 'Content-Type' => 'application/tar',
-                         'Transfer-Encoding' => 'chunked' }
-        ) { io.read(Excon.defaults[:chunk_size]).to_s }
-        new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+    # Import an Image from the output of Docker::Container#export. The first
+    # argument may either be a File or URI.
+    def import(imp, opts = {}, conn = Docker.connection)
+      open(imp) do |io|
+        import_stream(opts, conn) do
+          io.read(Excon.defaults[:chunk_size]).to_s
+        end
       end
+    rescue StandardError
+      raise Docker::Error::IOError, "Could not import '#{imp}'"
     end
+
+  def import_stream(options = {}, connection = Docker.connection, &block)
+    body = connection.post(
+      '/images/create',
+       options.merge('fromSrc' => '-'),
+       :headers => { 'Content-Type' => 'application/tar',
+                     'Transfer-Encoding' => 'chunked' },
+       &block
+    )
+    new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+  end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, opts = {}, connection = Docker.connection, &block)

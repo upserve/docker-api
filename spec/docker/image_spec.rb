@@ -25,7 +25,7 @@ describe Docker::Image do
     subject { described_class.create('fromImage' => 'base') }
 
     it 'removes the Image', :vcr do
-      subject.remove
+      subject.remove(:force => true)
       Docker::Image.all.map(&:id).should_not include(id)
     end
   end
@@ -133,8 +133,8 @@ describe Docker::Image do
     subject { described_class.create('fromImage' => 'base') }
 
     it 'tags the image with the repo name', :vcr do
-      expect { subject.tag(:repo => 'base2', :force => true) }
-          .to_not raise_error
+      subject.tag(:repo => :base2, :force => true)
+      subject.info['RepoTags'].should include('base2:latest')
     end
   end
 
@@ -200,15 +200,38 @@ describe Docker::Image do
     end
   end
 
+  describe '#refresh!' do
+    let(:image) { Docker::Image.create('fromImage' => 'base') }
+
+    it 'updates the @info hash', :vcr do
+      size = image.info.size
+      image.refresh!
+      image.info.size.should be > size
+    end
+  end
+
   describe '.create' do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'base') }
+      let(:image) { subject.create('fromImage' => 'ubuntu') }
+      let(:creds) {
+        {
+          :username => 'nahiluhmot',
+          :password => '*********',
+          :email => 'hulihan.tom159@gmail.com'
+        }
+      }
 
-      it 'sets the id', :vcr do
+      before { Docker.creds = creds }
+
+      it 'sets the id and sends Docker.creds', :vcr do
         image.should be_a Docker::Image
+        image.id.should match(/\A[a-fA-F0-9]+\Z/)
+        image.id.should_not include('base')
         image.id.should_not be_nil
+        image.id.should_not be_empty
+        image.info[:headers].keys.should include('X-Registry-Auth')
       end
     end
   end
@@ -252,20 +275,39 @@ describe Docker::Image do
 
       it 'raises an error' do
         expect { subject.import(file) }
-            .to raise_error Errno::ENOENT
+          .to raise_error(Docker::Error::IOError)
       end
     end
 
     context 'when the file does exist' do
       let(:file) { 'spec/fixtures/export.tar' }
+      let(:body) { StringIO.new }
 
-      before { File.stub(:open).with(file, 'r').and_yield(mock(:read => '')) }
+      before { Docker::Image.stub(:open).with(file).and_yield(body) }
 
       it 'creates the Image', :vcr do
-        pending 'This works, but recording a streaming request breaks VCR'
         import = subject.import(file)
         import.should be_a Docker::Image
         import.id.should_not be_nil
+      end
+    end
+
+    context 'when the argument is a URI' do
+      context 'when the URI is invalid' do
+        it 'raises an error', :vcr do
+          expect { subject.import('http://google.com') }
+            .to raise_error(Docker::Error::IOError)
+        end
+      end
+
+      context 'when the URI is valid' do
+        let(:uri) { 'http://swipely-pub.s3.amazonaws.com/ubuntu.tar' }
+
+        it 'returns an Image', :vcr do
+          image = subject.import(uri)
+          image.should be_a Docker::Image
+          image.id.should_not be_nil
+        end
       end
     end
   end

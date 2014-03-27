@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/build
+    uri: unix:///var/run/docker.sock/v1.10/build
     body:
       encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDA3
-        ADEyMjc2NzI1MDM3ADAxMzMxNAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMzEwMDYwNzM3ADAxMzMwMAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -54,7 +54,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/json
   response:
@@ -65,15 +65,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:06:39 GMT
+      - Wed, 12 Mar 2014 13:32:15 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"stream\":\"Step 0 : lololol\\n\"}{\"errorDetail\":{\"message\":\"build:
-        Invalid Dockerfile format\"},\"error\":\"build: Invalid Dockerfile format\"}"
+      string: "{\"stream\":\"Step 0 : lololol\\n\"}\r\n{\"errorDetail\":{\"message\":\"Invalid
+        Dockerfile format\"},\"error\":\"Invalid Dockerfile format\"}\r\n"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:06:39 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:15 GMT
 recorded_with: VCR 2.8.0

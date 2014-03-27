@@ -2,7 +2,9 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/api/docker_remote_api_v1.4/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.6.*.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented, with the exception of attaching to the STDIN of a Container. At the time of this writing, docker-api is meant to interface with Docker version 0.9.*.
+
+If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
 Installation
 ------------
@@ -30,9 +32,7 @@ Finally, just add `require 'docker'` to the top of the file using this gem.
 Usage
 -----
 
-docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every extrenal method represents an API call.
-
-If you're just looking to build Docker images, [dockly](https://github.com/swipely/dockly) provides a simple syntax for building and packaging images.
+docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every external method represents an API call.
 
 ## Starting up
 
@@ -50,7 +50,7 @@ If you're running Docker locally as a socket, there is no setup to do in Ruby. I
 Docker.url = 'http://example.com:5422'
 ```
 
-Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are alse valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connnect to the socket unless you specify otherwise.
+Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are also valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connect to the socket unless you specify otherwise.
 
 Also, you may set the above variables via `ENV` variables. For example:
 
@@ -95,7 +95,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 ```
 
 ## Images
-Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/reference/api/docker_remote_api_v1.10/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
@@ -140,12 +140,22 @@ image.run('ls -l')
 # => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Remove the Image from the server.
-image.remove
+image.remove(:force => true)
 # => true
 
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# `Docker::Image.import` can also import from a URI
+Docker::Image.import('http://some-site.net/my-image.tar')
+# => Docker::Image { :id => 6b462b2d2, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# For a lower-level interface for importing tars, `Docker::Image.import_stream` may be used.
+# It accepts a block, and will call that block until it returns an empty `String`.
+File.open('my-export.tar') do |file|
+  Docker::Image.import_stream { file.read(1000).to_s }
+end
 
 # Create an Image from a Dockerfile as a String.
 Docker::Image.build("from base\nrun touch /test")
@@ -165,12 +175,12 @@ Docker::Image.search('term' => 'sshd')
 ```
 
 ## Containers
-Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/api/docker_remote_api_v1.2/#containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
+Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/reference/api/docker_remote_api_v1.10/#containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
 
 ```ruby
 require 'docker'
 
-# Create a Container. 
+# Create a Container.
 Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
@@ -247,7 +257,7 @@ container.run('pwd', 10)
 # => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Delete a Container.
-container.delete
+container.delete(:force => true)
 # => nil
 
 # Request a Container by ID or name.
@@ -267,6 +277,28 @@ By default, each object connects to the connection specified by `Docker.connecti
 require 'docker'
 
 Docker::Container.all({}, Docker::Connection.new('http://example.com:4243', {}))
+```
+
+## Rake Task
+
+To create images through `rake`, a DSL task is provided. For example:
+
+
+```ruby
+require 'rake'
+require 'docker'
+
+image 'repo:tag' do
+  image = Docker::Image.create('fromImage' => 'repo', 'tag' => 'old_tag')
+  image = Docker::Image.run('rm -rf /etc').commit
+  image.tag('repo' => 'repo', 'tag' => 'tag')
+end
+
+image 'repo:new_tag' => 'repo:tag' do
+  image = Docker::Image.create('fromImage' => 'repo', 'tag' => 'tag')
+  image = image.insert_local('localPath' => 'some-file.tar.gz', 'outputPath' => '/')
+  image.tag('repo' => 'repo', 'tag' => 'new_tag')
+end
 ```
 
 ## Known Issues

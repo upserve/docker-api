@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -19,14 +19,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 18:20:52 GMT
+      - Wed, 12 Mar 2014 13:32:12 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"status\":\"Pulling repository base\"}{\"status\":\"Pulling image
+      string: "{\"status\":\"Pulling repository base\"}\r\n{\"status\":\"Pulling image
         (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
         dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
@@ -34,16 +34,16 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 18:20:53 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:12 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    uri: unix:///var/run/docker.sock/v1.10/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Image\":\"base\",\"Cmd\":null}"
+      string: "{\"Image\":\"b750fe79269d\",\"Cmd\":null}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/json
   response:
@@ -54,15 +54,15 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Wed, 12 Feb 2014 18:20:53 GMT
+      - Wed, 12 Mar 2014 13:32:12 GMT
       Content-Length:
-      - '29'
+      - '21'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |
-        create: No command specified
+        No command specified
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 18:20:53 GMT
+  recorded_at: Wed, 12 Mar 2014 13:32:12 GMT
 recorded_with: VCR 2.8.0

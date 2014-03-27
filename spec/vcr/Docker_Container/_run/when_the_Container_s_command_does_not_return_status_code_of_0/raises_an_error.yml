@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/create
+    uri: unix:///var/run/docker.sock/v1.10/containers/create
     body:
       encoding: UTF-8
       string: "{\"Cmd\":[\"lol\",\"not\",\"a\",\"real\",\"command\"],\"Image\":\"base\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:05:41 GMT
+      - Wed, 12 Mar 2014 13:31:42 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"ff01ea70677f91c239614d06d5594bee143047e2a8144b60ee012f5cd4619729","Warnings":null}
+        {"Id":"8ae2accd54d66e14604e210feb17ba35c10bea922a66e18df8abfecebe74bb35","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:41 GMT
+  recorded_at: Wed, 12 Mar 2014 13:31:42 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/ff01ea70677f91c239614d06d5594bee143047e2a8144b60ee012f5cd4619729/start
+    uri: unix:///var/run/docker.sock/v1.10/containers/8ae2accd54d66e14604e210feb17ba35c10bea922a66e18df8abfecebe74bb35/start
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - application/json
   response:
@@ -47,7 +47,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Feb 2014 17:05:41 GMT
+      - Wed, 12 Mar 2014 13:31:42 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -58,16 +58,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:41 GMT
+  recorded_at: Wed, 12 Mar 2014 13:31:42 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.8/containers/ff01ea70677f91c239614d06d5594bee143047e2a8144b60ee012f5cd4619729/wait
+    uri: unix:///var/run/docker.sock/v1.10/containers/8ae2accd54d66e14604e210feb17ba35c10bea922a66e18df8abfecebe74bb35/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.7.6
+      - Swipely/Docker-API 1.9.1
       Content-Type:
       - text/plain
   response:
@@ -78,15 +78,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Feb 2014 17:05:42 GMT
+      - Wed, 12 Mar 2014 13:31:42 GMT
       Content-Length:
-      - '19'
+      - '17'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |
-        {"StatusCode":127}
+        {"StatusCode":1}
     http_version: 
-  recorded_at: Wed, 12 Feb 2014 17:05:42 GMT
+  recorded_at: Wed, 12 Mar 2014 13:31:42 GMT
 recorded_with: VCR 2.8.0
