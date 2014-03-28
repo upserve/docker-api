@@ -8,7 +8,7 @@ http_interactions:
       string: "{\"Cmd\":[\"sleep\",\"5\"],\"Image\":\"base\"}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:36 GMT
+      - Tue, 25 Mar 2014 19:40:30 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"6a6064d6270041cae49685ab25cf48af4339e3af2f60dc1d869970deed56ef7e","Warnings":null}
+        {"Id":"a63ee149390ec9feb75b8246f2664efe7553f895d4207b7ff9717b3df1c3fbe1","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:36 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:30 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/6a6064d6270041cae49685ab25cf48af4339e3af2f60dc1d869970deed56ef7e/start
+    uri: unix:///var/run/docker.sock/v1.10/containers/a63ee149390ec9feb75b8246f2664efe7553f895d4207b7ff9717b3df1c3fbe1/start
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -47,7 +47,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Mar 2014 13:31:36 GMT
+      - Tue, 25 Mar 2014 19:40:30 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -58,16 +58,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:36 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:30 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/6a6064d6270041cae49685ab25cf48af4339e3af2f60dc1d869970deed56ef7e/wait
+    uri: unix:///var/run/docker.sock/v1.10/containers/a63ee149390ec9feb75b8246f2664efe7553f895d4207b7ff9717b3df1c3fbe1/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -78,7 +78,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:41 GMT
+      - Tue, 25 Mar 2014 19:40:35 GMT
       Content-Length:
       - '17'
       Connection:
@@ -88,5 +88,5 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:41 GMT
+  recorded_at: Tue, 25 Mar 2014 19:40:35 GMT
 recorded_with: VCR 2.8.0

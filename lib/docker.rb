@@ -15,12 +15,12 @@ module Docker
 
   require 'docker/error'
   require 'docker/connection'
+  require 'docker/util'
   require 'docker/base'
   require 'docker/container'
   require 'docker/event'
   require 'docker/image'
   require 'docker/messages'
-  require 'docker/util'
   require 'docker/version'
   require 'docker/rake_task' if defined?(Rake)
 

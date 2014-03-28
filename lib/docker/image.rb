@@ -1,6 +1,7 @@
 # This class represents a Docker Image.
 class Docker::Image
   include Docker::Base
+  include Docker::Util
 
   # Given a command and optional list of streams to attach to, run a command on
   # an Image. This will not modify the Image, but rather create a new Container
@@ -10,8 +11,7 @@ class Docker::Image
     opts = { 'Image' => self.id }
     opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
     begin
-      Docker::Container.create(opts, connection)
-                       .tap(&:start!)
+      Docker::Container.create(opts, connection).tap(&:start!)
     rescue ServerError => ex
       if cmd
         raise ex
@@ -28,10 +28,10 @@ class Docker::Image
     raise ArgumentError, "Image does not have a name to push." unless repository
 
     credentials = creds || Docker.creds
-    headers = Docker::Util.build_auth_header(credentials)
+    headers = build_auth_header(credentials)
     connection.post(
       "/images/#{repository}/push",
-      options,
+      camelize_keys(options, false),
       :headers => headers
     )
     self
@@ -40,7 +40,7 @@ class Docker::Image
   # Tag the Image.
   def tag(opts = {})
     self.info['RepoTags'] ||= []
-    connection.post(path_for(:tag), opts)
+    connection.post(path_for(:tag), camelize_keys(opts, false))
     repo = opts['repo'] || opts[:repo]
     tag = opts['tag'] || opts[:tag] || 'latest'
     self.info['RepoTags'] << "#{repo}:#{tag}"
@@ -48,8 +48,8 @@ class Docker::Image
 
   # Insert a file into the Image, returns a new Image that has that file.
   def insert(query = {})
-    body = connection.post(path_for(:insert), query)
-    if id = Docker::Util.fix_json(body).last['status']
+    body = connection.post(path_for(:insert), camelize_keys(query, false))
+    if id = fix_json(body).last['status']
       self.class.send(:new, connection, 'id' => id)
     else
       raise UnexpectedResponseError, "Could not find Id in '#{body}'"
@@ -58,24 +58,23 @@ class Docker::Image
 
   # Given a path of a local file and the path it should be inserted, creates
   # a new Image that has that file.
-  def insert_local(opts = {})
+  def insert_local(options = {})
+    opts = camelize_keys(options, false)
     local_paths = opts.delete('localPath')
     output_path = opts.delete('outputPath')
 
     local_paths = [ local_paths ] unless local_paths.is_a?(Array)
-
-    file_hash = Docker::Util.file_hash_from_paths(local_paths)
-
+    file_hash = file_hash_from_paths(local_paths)
     file_hash['Dockerfile'] = dockerfile_for(file_hash, output_path)
 
-    tar = Docker::Util.create_tar(file_hash)
+    tar = create_tar(file_hash)
     body = connection.post('/build', opts, :body => tar)
-    self.class.send(:new, connection, 'id' => Docker::Util.extract_id(body))
+    self.class.send(:new, connection, 'id' => extract_id(body))
   end
 
   # Remove the Image from the server.
   def remove(opts = {})
-    connection.delete("/images/#{self.id}", opts)
+    connection.delete("/images/#{self.id}", camelize_keys(opts, false))
   end
   alias_method :delete, :remove
 
@@ -89,7 +88,7 @@ class Docker::Image
   # history.
   [:json, :history].each do |method|
     define_method(method) do |opts = {}|
-      Docker::Util.parse_json(connection.get(path_for(method), opts))
+      parse_json(connection.get(path_for(method), camelize_keys(opts)))
     end
   end
 
@@ -104,35 +103,39 @@ class Docker::Image
   end
 
   class << self
+    include Docker::Util
 
     # Create a new Image.
-    def create(opts = {}, creds = nil, conn = Docker.connection)
+    def create(options = {}, creds = nil, conn = Docker.connection)
+      opts = camelize_keys(options, false)
       credentials = creds.nil? ? Docker.creds : creds.to_json
       headers = !credentials.nil? && Docker::Util.build_auth_header(credentials)
       headers ||= {}
       body = conn.post('/images/create', opts, :headers => headers)
-      id = Docker::Util.fix_json(body).last['id']
-      new(conn, 'id' => id, :headers => headers)
+      new(conn, 'id' => fix_json(body).last['id'], :headers => headers)
     end
 
     # Return a specific image.
-    def get(id, opts = {}, conn = Docker.connection)
+    def get(id, options = {}, conn = Docker.connection)
+      opts = camelize_keys(options, false)
       image_json = conn.get("/images/#{URI.encode(id)}/json", opts)
-      hash = Docker::Util.parse_json(image_json) || {}
+      hash = parse_json(image_json) || {}
       new(conn, hash)
     end
 
     # Return every Image.
-    def all(opts = {}, conn = Docker.connection)
+    def all(options = {}, conn = Docker.connection)
+      opts = camelize_keys(options, false)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
       hashes.map { |hash| new(conn, hash) }
     end
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponding Image.
-    def search(query = {}, connection = Docker.connection)
+    def search(options = {}, connection = Docker.connection)
+      query = camelize_keys(options, false)
       body = connection.get('/images/search', query)
-      hashes = Docker::Util.parse_json(body) || []
+      hashes = parse_json(body) || []
       hashes.map { |hash| new(connection, 'id' => hash['name']) }
     end
 
@@ -149,22 +152,24 @@ class Docker::Image
     end
 
   def import_stream(options = {}, connection = Docker.connection, &block)
+    opts = camelize_keys(options, false)
     body = connection.post(
       '/images/create',
-       options.merge('fromSrc' => '-'),
+       opts.merge('fromSrc' => '-'),
        :headers => { 'Content-Type' => 'application/tar',
                      'Transfer-Encoding' => 'chunked' },
        &block
     )
-    new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+    new(connection, 'id'=> parse_json(body)['status'])
   end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, opts = {}, connection = Docker.connection, &block)
       body = ""
       connection.post(
-        '/build', opts,
-        :body => Docker::Util.create_tar('Dockerfile' => commands),
+        '/build',
+        camelize_keys(opts, false),
+        :body => create_tar('Dockerfile' => commands),
         :response_block => response_block_for_build(body, &block)
       )
       new(connection, 'id' => Docker::Util.extract_id(body))
@@ -177,19 +182,31 @@ class Docker::Image
     # If a block is passed, chunks of output produced by Docker will be passed
     # to that block.
     def build_from_dir(dir, opts = {}, connection = Docker.connection, &block)
-      tar = Docker::Util.create_dir_tar(dir)
+      tar = create_dir_tar(dir)
 
       # The response_block passed to Excon will build up this body variable.
       body = ""
       connection.post(
-        '/build', opts,
+        '/build',
+        camelize_keys(opts, false),
         :headers => { 'Content-Type'      => 'application/tar',
                       'Transfer-Encoding' => 'chunked' },
         :response_block => response_block_for_build(body, &block)
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(connection, 'id' => Docker::Util.extract_id(body))
+      new(connection, 'id' => extract_id(body))
     ensure
       tar.close unless tar.nil?
+    end
+
+    private
+    # Generates the block to be passed as a reponse block to Excon. The returned
+    # lambda will append Docker output to the first argument, and yield output
+    # to the passed block, if a block is given.
+    def response_block_for_build(body)
+      lambda do |chunk, remaining, total|
+        body << chunk
+        yield chunk if block_given?
+      end
     end
   end
 
@@ -211,15 +228,5 @@ class Docker::Image
     end
 
     dockerfile
-  end
-
-  # Generates the block to be passed as a reponse block to Excon. The returned
-  # lambda will append Docker output to the first argument, and yield output to
-  # the passed block, if a block is given.
-  def self.response_block_for_build(body)
-    lambda do |chunk, remaining, total|
-      body << chunk
-      yield chunk if block_given?
-    end
   end
 end

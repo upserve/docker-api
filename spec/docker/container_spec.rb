@@ -24,7 +24,7 @@ describe Docker::Container do
   end
 
   describe '#json' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject { described_class.create(:cmd => %w[true], :image => 'base') }
     let(:description) { subject.json }
 
     it 'returns the description as a Hash', :vcr do
@@ -33,23 +33,9 @@ describe Docker::Container do
     end
   end
 
-  describe '#create' do
-    subject {
-      described_class.create({'Cmd' => %w[true], 'Image' => 'base'}.merge(opts))
-    }
-
-    context 'when creating a container named bob' do
-      let(:opts) { {"name" => "bob"} }
-
-      it 'should have name set to bob', :vcr do
-        subject.json["Name"].should == "/bob"
-      end
-    end
-  end
-
   describe '#changes' do
     subject {
-      described_class.create('Cmd' => %w[rm -rf /root], 'Image' => 'base')
+      described_class.create(:cmd => %w[rm -rf /root], :image => 'base')
     }
     let(:changes) { subject.changes }
 
@@ -91,7 +77,7 @@ describe Docker::Container do
   describe '#copy' do
     subject {
       Docker::Image.create(
-        'fromImage' => 'base'
+        :from_image => 'base'
       ).run('touch /test').tap { |c| c.wait }
     }
 
@@ -123,8 +109,12 @@ describe Docker::Container do
   end
 
   describe '#export' do
-    subject { described_class.create('Cmd' => %w[rm -rf / --no-preserve-root],
-                                     'Image' => 'base') }
+    subject {
+      Docker::Container.create(
+        :cmd => %w[rm -rf / --no-preserve-root],
+        :image => 'base'
+      )
+    }
     before { subject.start }
 
     # If you have to re-record this VCR, PLEASE edit it so that it's only ~200
@@ -140,14 +130,16 @@ describe Docker::Container do
   end
 
   describe '#attach' do
-    subject { described_class.create('Cmd' => %w[pwd], 'Image' => 'base') }
+    subject {
+      described_class.create(:cmd => %w[pwd], :image => 'base')
+    }
 
     before { subject.start }
 
     context 'with normal sized chunks' do
       it 'yields each chunk', :vcr do
         chunk = nil
-        subject.attach do |stream, c|
+        subject.attach(:stdout => true) do |stream, c|
           chunk ||= c
         end
         expect(chunk).to eq("/\n")
@@ -176,14 +168,14 @@ describe Docker::Container do
   describe '#start' do
     subject {
       described_class.create(
-        'Cmd' => %w[test -d /foo],
-        'Image' => 'base',
-        'Volumes' => {'/foo' => {}}
+        :cmd => %w[test -d /foo],
+        :image => 'base',
+        :volumes => {'/foo' => {}}
       )
     }
     let(:all) { Docker::Container.all }
 
-    before { subject.start('Binds' => ["/tmp:/foo"]) }
+    before { subject.start(:binds => ["/tmp:/foo"]) }
 
     it 'starts the container', :vcr do
       all.map(&:id).should be_any { |id| id.start_with?(subject.id) }
@@ -192,9 +184,9 @@ describe Docker::Container do
   end
 
   describe '#stop' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject { described_class.create(:cmd => %w[true], :image => 'base') }
 
-    before { subject.tap(&:start).stop('timeout' => '10') }
+    before { subject.tap(&:start).stop(:timeout => '10') }
 
     it 'stops the container', :vcr do
       described_class.all(:all => true).map(&:id).should be_any { |id|
@@ -207,7 +199,7 @@ describe Docker::Container do
   end
 
   describe '#kill' do
-    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+    subject { described_class.create(:cmd => ['ls'], :image => 'base') }
 
     it 'kills the container', :vcr do
       subject.kill
@@ -221,7 +213,7 @@ describe Docker::Container do
   end
 
   describe '#delete' do
-    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+    subject { described_class.create(:cmd => ['ls'], :image => 'base') }
 
     it 'deletes the container', :vcr do
       subject.delete(:force => true)
@@ -232,7 +224,7 @@ describe Docker::Container do
   end
 
   describe '#restart' do
-    subject { described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base') }
+    subject { described_class.create(:cmd => %w[sleep 50], :image => 'base') }
 
     before { subject.start }
 
@@ -252,8 +244,9 @@ describe Docker::Container do
   end
 
   describe '#wait' do
-    subject { described_class.create('Cmd' => %w[tar nonsense],
-                                     'Image' => 'base') }
+    subject {
+      described_class.create(:cmd => %w[tar nonsense], :image => 'base')
+    }
 
     before { subject.start }
 
@@ -262,8 +255,7 @@ describe Docker::Container do
     end
 
     context 'when an argument is given' do
-      subject { described_class.create('Cmd' => %w[sleep 5],
-                                       'Image' => 'base') }
+      subject { described_class.create(:cmd => %w[sleep 5], :image => 'base') }
 
       it 'sets the :read_timeout to that amount of time', :vcr do
         subject.wait(6)['StatusCode'].should be_zero
@@ -281,8 +273,12 @@ describe Docker::Container do
   describe '#run' do
     let(:run_command) { subject.run('ls') }
     context 'when the Container\'s command does not return status code of 0' do
-      subject { described_class.create('Cmd' => %w[lol not a real command],
-                                       'Image' => 'base') }
+      subject {
+        described_class.create(
+          :cmd => %w[lol not a real command],
+          :image => 'base'
+        )
+      }
 
       it 'raises an error', :vcr do
         expect { run_command }
@@ -291,8 +287,7 @@ describe Docker::Container do
     end
 
     context 'when the Container\'s command returns a status code of 0' do
-      subject { described_class.create('Cmd' => %w[pwd],
-                                       'Image' => 'base') }
+      subject { described_class.create(:cmd => %w[pwd], :image => 'base') }
 
       it 'creates a new container to run the specified command', :vcr do
         run_command.wait['StatusCode'].should be_zero
@@ -301,7 +296,7 @@ describe Docker::Container do
   end
 
   describe '#commit' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject { described_class.create(:cmd => %w[true], :image => 'base') }
     let(:image) { subject.commit }
 
     before { subject.start }
@@ -343,23 +338,23 @@ describe Docker::Container do
       context 'when the HTTP request returns a 200' do
         let(:options) do
           {
-            "Hostname"     => "",
-            "User"         => "",
-            "Memory"       => 0,
-            "MemorySwap"   => 0,
-            "AttachStdin"  => false,
-            "AttachStdout" => false,
-            "AttachStderr" => false,
-            "PortSpecs"    => nil,
-            "Tty"          => false,
-            "OpenStdin"    => false,
-            "StdinOnce"    => false,
-            "Env"          => nil,
-            "Cmd"          => ["date"],
-            "Dns"          => nil,
-            "Image"        => "base",
-            "Volumes"      => {},
-            "VolumesFrom"  => ""
+            :hostname      => "",
+            :user          => "",
+            :memory        => 0,
+            :memory_swap   => 0,
+            :attach_stdin  => false,
+            :attach_stdout => false,
+            :attach_stderr => false,
+            :port_specs    => nil,
+            :tty           => false,
+            :open_stdin    => false,
+            :stdin_once    => false,
+            :env           => nil,
+            :cmd           => ["date"],
+            :dns           => nil,
+            :image         => "base",
+            :volumes       => {},
+            :volumes_from  => ""
           }
         end
         let(:container) { subject.create(options) }
@@ -369,6 +364,18 @@ describe Docker::Container do
           container.id.should_not be_nil
           container.connection.should_not be_nil
         end
+      end
+    end
+
+    context 'when creating a container named bob' do
+      subject {
+        described_class.create({:cmd => %w[true], :image => 'base'}.merge(opts))
+      }
+
+      let(:opts) { { :name => "bob" } }
+
+      it 'should have name set to bob', :vcr do
+        subject.json['Name'].should == "/bob"
       end
     end
   end
@@ -393,7 +400,7 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'base') }
+      let(:container) { subject.create(:cmd => ['ls'], :image => 'base') }
 
       it 'materializes the Container into a Docker::Container', :vcr do
         subject.get(container.id).should be_a(Docker::Container)
@@ -422,7 +429,7 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      before { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+      before { described_class.create(:cmd => ['ls'], :image => 'base') }
 
       it 'materializes each Container into a Docker::Container', :vcr do
         subject.all(:all => true).should be_all { |container|

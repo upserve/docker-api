@@ -9,7 +9,7 @@ http_interactions:
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDEx
-        ADEyMzEzNjYyNjA2ADAxMzMwMQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMzE0MzYxMDI3ADAxMzI3MwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -54,7 +54,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -65,7 +65,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:50 GMT
+      - Tue, 25 Mar 2014 20:07:51 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -75,7 +75,7 @@ http_interactions:
       string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Successfully built b750fe79269d\\n\"}\r\n"
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:50 GMT
+  recorded_at: Tue, 25 Mar 2014 20:07:51 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.10/build
@@ -85,7 +85,7 @@ http_interactions:
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADEyMzEzNjYyNjA2ADAxMjYxMgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyMzE0MzYxMDI3ADAxMjYwNAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -107,8 +107,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJha2VmaWxlAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMTAzNQAxMjMxMzY2MjYw
-        NgAwMTI3NjMAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMTAzNQAxMjMxNDM2MTAy
+        NwAwMTI3NTUAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -142,7 +142,7 @@ http_interactions:
         cmZpbGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAwMDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA1NwAxMjMx
-        MzY2MjYwNgAwMTMzMTMAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        NDM2MTAyNwAwMTMzMDUAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAA
@@ -187,7 +187,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -198,7 +198,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:50 GMT
+      - Tue, 25 Mar 2014 20:07:51 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -207,19 +207,19 @@ http_interactions:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : from b750fe79269d\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 4a666898763a\\n\"}\r\n{\"stream\":\"Step 2 : add Rakefile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 1fe8ba4c5308\\n\"}\r\n{\"stream\":\"Successfully built 1fe8ba4c5308\\n\"}\r\n"
+        ---\\u003e 6f5ef25e9520\\n\"}\r\n{\"stream\":\"Step 2 : add Rakefile /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 57fd058d2089\\n\"}\r\n{\"stream\":\"Successfully built 57fd058d2089\\n\"}\r\n"
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:54 GMT
+  recorded_at: Tue, 25 Mar 2014 20:07:55 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.10/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Image\":\"1fe8ba4c5308\",\"Cmd\":[\"cat\",\"/Gemfile\",\"/Rakefile\"]}"
+      string: "{\"Image\":\"57fd058d2089\",\"Cmd\":[\"cat\",\"/Gemfile\",\"/Rakefile\"]}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -230,7 +230,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:54 GMT
+      - Tue, 25 Mar 2014 20:07:55 GMT
       Content-Length:
       - '90'
       Connection:
@@ -238,18 +238,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"41f5bb2b030dafaf52b6451e7d538a1b9e2749e618c351629f25970b142ef091","Warnings":null}
+        {"Id":"11d98e8d1e4bc4133d7664ad42c6157d5519aa2f3364ef81274ff7bc7c3452d8","Warnings":null}
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:54 GMT
+  recorded_at: Tue, 25 Mar 2014 20:07:55 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/41f5bb2b030dafaf52b6451e7d538a1b9e2749e618c351629f25970b142ef091/start
+    uri: unix:///var/run/docker.sock/v1.10/containers/11d98e8d1e4bc4133d7664ad42c6157d5519aa2f3364ef81274ff7bc7c3452d8/start
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -258,7 +258,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Sun, 23 Mar 2014 22:51:54 GMT
+      - Tue, 25 Mar 2014 20:07:55 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -269,16 +269,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:54 GMT
+  recorded_at: Tue, 25 Mar 2014 20:07:55 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/41f5bb2b030dafaf52b6451e7d538a1b9e2749e618c351629f25970b142ef091/attach?stderr=true&stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.10/containers/11d98e8d1e4bc4133d7664ad42c6157d5519aa2f3364ef81274ff7bc7c3452d8/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -306,5 +306,5 @@ http_interactions:
         IHB1dHMgIlB1bGxlZCB1YnVudHU6MTMuMTAsIGltYWdlIGlkOiAje2ltYWdl
         LmlkfSIKZW5kCg==
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:55 GMT
+  recorded_at: Tue, 25 Mar 2014 20:07:55 GMT
 recorded_with: VCR 2.8.0

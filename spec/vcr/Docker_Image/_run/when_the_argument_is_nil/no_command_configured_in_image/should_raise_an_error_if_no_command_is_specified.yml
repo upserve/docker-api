@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:32:12 GMT
+      - Tue, 25 Mar 2014 20:08:11 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,7 +34,7 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:32:12 GMT
+  recorded_at: Tue, 25 Mar 2014 20:08:12 GMT
 - request:
     method: post
     uri: unix:///var/run/docker.sock/v1.10/containers/create
@@ -43,7 +43,7 @@ http_interactions:
       string: "{\"Image\":\"b750fe79269d\",\"Cmd\":null}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.10.4
       Content-Type:
       - application/json
   response:
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Wed, 12 Mar 2014 13:32:12 GMT
+      - Tue, 25 Mar 2014 20:08:12 GMT
       Content-Length:
       - '21'
       Connection:
@@ -64,5 +64,5 @@ http_interactions:
       string: |
         No command specified
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:32:12 GMT
+  recorded_at: Tue, 25 Mar 2014 20:08:12 GMT
 recorded_with: VCR 2.8.0
