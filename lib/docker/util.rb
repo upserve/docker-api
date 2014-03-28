@@ -73,7 +73,12 @@ module Docker::Util
 
   # Turn the keys of the given hash from snake_case to CamelCase or camelCase.
   def camelize_keys(hash, caps = true)
-    Hash[hash.map { |key, value| [camelize(key, caps), value] }]
+    assoc_ary = hash.map { |key, value|
+      new_key = camelize(key, caps)
+      new_value = value.is_a?(Hash) ? camelize_keys(value, caps) : value
+      [new_key, new_value]
+    }
+    Hash[assoc_ary]
   end
 
   # Turn a snake_case String into CamelCase. If the second argument is false,

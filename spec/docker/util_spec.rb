@@ -97,8 +97,9 @@ describe Docker::Util do
     let(:input) {
       {
         :key_one => 'value1',
-        :keyTwo => 'value2',
-        :key_Three => 'value3'
+        :keyTwo => {
+          :key_Three => 'value2'
+        }
       }
     }
 
@@ -106,8 +107,9 @@ describe Docker::Util do
       let(:expected) {
         {
           'KeyOne' => 'value1',
-          'KeyTwo' => 'value2',
-          'KeyThree' => 'value3',
+          'KeyTwo' => {
+            'KeyThree' => 'value2'
+          }
         }
       }
 
@@ -120,8 +122,9 @@ describe Docker::Util do
       let(:expected) {
         {
           'keyOne' => 'value1',
-          'keyTwo' => 'value2',
-          'keyThree' => 'value3',
+          'keyTwo' => {
+            'keyThree' => 'value2'
+          }
         }
       }
 
