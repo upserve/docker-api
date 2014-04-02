@@ -27,8 +27,8 @@ class Docker::Image
 
     raise ArgumentError, "Image does not have a name to push." unless repository
 
-    credentials = creds || Docker.creds
-    headers = Docker::Util.build_auth_header(credentials)
+    creds ||= Docker.creds
+    headers = creds.nil? ? {} : Docker::Util.build_auth_header(creds)
     connection.post(
       "/images/#{repository}/push",
       options,

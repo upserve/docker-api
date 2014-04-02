@@ -127,6 +127,17 @@ describe Docker::Image do
     it 'pushes the Image', :vcr do
       new_image.push(credentials)
     end
+
+    context 'when there are no credentials' do
+      let(:credentials) { nil }
+
+      before { Docker.creds = nil }
+
+      it 'still pushes', :vcr do
+        expect { base_image.tag('repo' => 'localhost/base', 'tag' => 'latest') }
+          .to_not raise_error
+      end
+    end
   end
 
   describe '#tag' do
