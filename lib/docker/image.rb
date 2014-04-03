@@ -28,8 +28,8 @@ class Docker::Image
     repo, tag = Docker::Util.parse_repo_tag(repo_tag)
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
 
-    creds ||= Docker.creds || {}
-    headers = creds.nil? ? {} : Docker::Util.build_auth_header(creds)
+    credentials = creds || Docker.creds || {}
+    headers = creds.nil? ? {} : Docker::Util.build_auth_header(credentials)
     opts = options.merge(:tag => tag)
     connection.post("/images/#{repo}/push", opts, :headers => headers)
     self
