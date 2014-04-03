@@ -29,7 +29,7 @@ class Docker::Image
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
 
     credentials = creds || Docker.creds || {}
-    headers = creds.nil? ? {} : Docker::Util.build_auth_header(credentials)
+    headers = Docker::Util.build_auth_header(credentials)
     opts = options.merge(:tag => tag)
     connection.post("/images/#{repo}/push", opts, :headers => headers)
     self
