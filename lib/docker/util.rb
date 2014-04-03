@@ -11,6 +11,14 @@ module Docker::Util
     raise UnexpectedResponseError, ex.message
   end
 
+  def parse_repo_tag(str)
+    if match = str.match(/\A(.*):([^:]*)\z/)
+      match.captures
+    else
+      [str, '']
+    end
+  end
+
   def fix_json(body)
     parse_json("[#{body.gsub(/}\s*{/, '},{')}]")
   end
