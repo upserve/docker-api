@@ -130,12 +130,16 @@ describe Docker::Image do
 
     context 'when there are no credentials' do
       let(:credentials) { nil }
+      let(:image) {
+        Docker::Image.create('fromImage' => 'registry', 'tag' => 'latest')
+      }
 
-      before { Docker.creds = nil }
+      before do
+        image.tag('repo' => 'localhost:5000/registry', 'tag' => 'test')
+      end
 
       it 'still pushes', :vcr do
-        expect { base_image.tag('repo' => 'localhost/base', 'tag' => 'latest') }
-          .to_not raise_error
+        expect { image.push }.to_not raise_error
       end
     end
   end

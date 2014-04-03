@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.10/images/create?fromImage=registry&tag=latest
     body:
       encoding: US-ASCII
       string: ''
@@ -19,25 +19,36 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 02 Apr 2014 19:58:40 GMT
+      - Thu, 03 Apr 2014 17:29:48 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"status\":\"Pulling repository base\"}\r\n{\"status\":\"Pulling image
-        (ubuntu-quantl) from base\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
-        image (ubuntu-quantl) from base, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Pulling
-        dependent layers\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"27cf78414709\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
+      string: "{\"status\":\"Pulling repository registry\"}\r\n{\"status\":\"Pulling
+        image (latest) from registry\",\"progressDetail\":{},\"id\":\"6f1eaf7dab5f\"}{\"status\":\"Pulling
+        image (latest) from registry, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"6f1eaf7dab5f\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"6f1eaf7dab5f\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"f323cf34fd77\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"eb601b8965b8\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"3110c02964bb\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"585793f52716\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"269a74804068\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"938d785759c1\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"fe2cc747ebd5\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"17e14c6a562c\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"065bebc19274\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b978d5f1bee6\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"c971801055ec\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"6f1eaf7dab5f\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"6f1eaf7dab5f\"}"
     http_version: 
-  recorded_at: Wed, 02 Apr 2014 19:58:41 GMT
+  recorded_at: Thu, 03 Apr 2014 17:29:49 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/images/b750fe79269d/tag?repo=localhost%2Fbase&tag=latest
+    uri: unix:///var/run/docker.sock/v1.10/images/6f1eaf7dab5f/tag?repo=localhost%3A5000%2Fregistry&tag=test
     body:
       encoding: US-ASCII
       string: ''
@@ -52,7 +63,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 02 Apr 2014 19:58:41 GMT
+      - Thu, 03 Apr 2014 17:29:49 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -63,5 +74,51 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 02 Apr 2014 19:58:41 GMT
+  recorded_at: Thu, 03 Apr 2014 17:29:49 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/images/localhost:5000/registry/push?tag=test
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.4
+      Content-Type:
+      - text/plain
+      X-Registry-Auth:
+      - e30=
+      X-Registry-Config:
+      - e30=
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 03 Apr 2014 17:29:51 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"The push refers to a repository [localhost:5000/registry]
+        (len: 1)\"}\r\n{\"status\":\"Sending image list\"}\r\n{\"status\":\"Pushing
+        repository localhost:5000/registry (1 tags)\"}\r\n{\"status\":\"Image 511136ea3c5a
+        already pushed, skipping\"}\r\n{\"status\":\"Image f323cf34fd77 already pushed,
+        skipping\"}\r\n{\"status\":\"Image eb601b8965b8 already pushed, skipping\"}\r\n{\"status\":\"Image
+        3110c02964bb already pushed, skipping\"}\r\n{\"status\":\"Image 585793f52716
+        already pushed, skipping\"}\r\n{\"status\":\"Image 269a74804068 already pushed,
+        skipping\"}\r\n{\"status\":\"Image 938d785759c1 already pushed, skipping\"}\r\n{\"status\":\"Image
+        fe2cc747ebd5 already pushed, skipping\"}\r\n{\"status\":\"Image 17e14c6a562c
+        already pushed, skipping\"}\r\n{\"status\":\"Image 065bebc19274 already pushed,
+        skipping\"}\r\n{\"status\":\"Image b978d5f1bee6 already pushed, skipping\"}\r\n{\"status\":\"Image
+        c971801055ec already pushed, skipping\"}\r\n{\"status\":\"Image 6f1eaf7dab5f
+        already pushed, skipping\"}\r\n{\"status\":\"Pushing tag for rev [6f1eaf7dab5f]
+        on {http://localhost:5000/v1/repositories/registry/tags/test}\"}\r\n"
+    http_version: 
+  recorded_at: Thu, 03 Apr 2014 17:29:51 GMT
 recorded_with: VCR 2.8.0
