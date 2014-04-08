@@ -72,6 +72,17 @@ describe Docker::Image do
       end
     end
 
+    context 'when a direcory is passed' do
+      let(:new_image) {
+        subject.insert_local('localPath' => './lib', 'outputPath' => '/lib')
+      }
+      let(:response) { new_image.run('ls -a /lib/docker').attach.flatten.first }
+
+      it 'inserts the directory', :vcr do
+        expect(response.split("\n").sort).to eq(Dir.entries('lib/docker').sort)
+      end
+    end
+
     context 'when there are multiple files passed' do
       let(:file) { ['./Gemfile', './Rakefile'] }
       let(:gemfile) { File.read('Gemfile') }
@@ -98,7 +109,6 @@ describe Docker::Image do
       it 'creates a new image', :vcr do
         expect{new_image}.to change{Docker::Image.all.count}.by 1
       end
-
     end
   end
 
