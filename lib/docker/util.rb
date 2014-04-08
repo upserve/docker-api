@@ -60,8 +60,13 @@ module Docker::Util
     local_paths.each do |local_path|
       if File.exist?(local_path)
         basename = File.basename(local_path)
-
-        file_hash[basename] = File.read(local_path)
+        if File.file?(local_path)
+          file_hash[basename] = File.read(local_path)
+        else
+          tar = create_dir_tar(local_path)
+          file_hash[basename] = tar.read
+          tar.close
+        end
       else
         raise ArgumentError, "#{local_path} does not exist."
       end
