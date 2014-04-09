@@ -35,10 +35,10 @@ module Docker::Util
 
   def create_dir_tar(directory)
     cwd = FileUtils.pwd
-    tempfile = File.new('/tmp/out', 'wb')
+    tempfile = Tempfile.new('out')
     FileUtils.cd(directory)
     Archive::Tar::Minitar.pack('.', tempfile)
-    File.new('/tmp/out', 'r')
+    File.new(tempfile.path, 'r')
   ensure
     FileUtils.cd(cwd)
   end
@@ -55,24 +55,21 @@ module Docker::Util
   # Convenience method to get the file hash corresponding to an array of
   # local paths.
   def file_hash_from_paths(local_paths)
-    file_hash = {}
-
-    local_paths.each do |local_path|
-      if File.exist?(local_path)
-        basename = File.basename(local_path)
-        if File.directory?(local_path)
-          tar = create_dir_tar(local_path)
-          file_hash[basename] = tar.read
-          tar.close
-        else
-          file_hash[basename] = File.read(local_path)
-        end
-      else
+    local_paths.each_with_object({}) do |local_path, file_hash|
+      unless File.exist?(local_path)
         raise ArgumentError, "#{local_path} does not exist."
       end
-    end
 
-    file_hash
+      basename = File.basename(local_path)
+      if File.directory?(local_path)
+        tar = create_dir_tar(local_path)
+        file_hash[basename] = tar.read
+        tar.close
+        FileUtils.rm(tar.path)
+      else
+        file_hash[basename] = File.read(local_path)
+      end
+    end
   end
 
   def build_auth_header(credentials)
