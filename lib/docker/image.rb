@@ -187,7 +187,10 @@ class Docker::Image
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
       new(connection, 'id' => Docker::Util.extract_id(body))
     ensure
-      tar.close unless tar.nil?
+      unless tar.nil?
+        tar.close
+        FileUtils.rm(tar.path)
+      end
     end
   end
 
