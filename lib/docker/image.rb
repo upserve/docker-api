@@ -30,7 +30,7 @@ class Docker::Image
 
     credentials = creds || Docker.creds || {}
     headers = Docker::Util.build_auth_header(credentials)
-    opts = options.merge(:tag => tag)
+    opts = {:tag => tag}.merge(options)
     connection.post("/images/#{repo}/push", opts, :headers => headers)
     self
   end
