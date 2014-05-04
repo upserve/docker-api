@@ -1,0 +1,85 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/containers/create
+    body:
+      encoding: UTF-8
+      string: '{"Cmd":["cat"],"Image":"base","OpenStdin":true,"StdinOnce":true}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.10
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 02 May 2014 18:00:57 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"5d5735056dc7e7eb43e0f2ad4c1ee67b400a5de55566519bd6b3a9fae4bb73a5","Warnings":null}
+    http_version: 
+  recorded_at: Fri, 02 May 2014 18:00:57 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/containers/5d5735056dc7e7eb43e0f2ad4c1ee67b400a5de55566519bd6b3a9fae4bb73a5/start
+    body:
+      encoding: UTF-8
+      string: '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.10
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Fri, 02 May 2014 18:00:57 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 02 May 2014 18:00:57 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/containers/5d5735056dc7e7eb43e0f2ad4c1ee67b400a5de55566519bd6b3a9fae4bb73a5/attach?stderr=true&stdin=true&stdout=true&stream=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.10
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/vnd.docker.raw-stream
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 02 May 2014 18:00:57 GMT
+recorded_with: VCR 2.8.0

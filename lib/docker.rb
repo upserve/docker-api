@@ -8,6 +8,12 @@ require 'archive/tar/minitar'
 require 'uri'
 require 'open-uri'
 
+# Add the Hijack middleware at the top of the middleware stack so it can
+# potentially hijack HTTP sockets (when attaching to stdin) before other
+# middlewares try and parse the response.
+require 'excon/middlewares/hijack'
+Excon.defaults[:middlewares].unshift Excon::Middleware::Hijack
+
 # The top-level module for this gem. It's purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker

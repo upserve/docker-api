@@ -171,6 +171,21 @@ describe Docker::Container do
         expect(chunk).to eq("/\n")
       end
     end
+
+    context 'with stdin' do
+      subject { described_class.create('Cmd' => %w[cat], 'Image' => 'base', 'OpenStdin' => true, 'StdinOnce' => true) }
+
+      # Because this uses HTTP socket hijacking, it is not compatible with VCR, so it is currently
+      # pending until a good way to test it without a running Docker daemon is discovered
+      it 'yields the output', :vcr do
+        pending 'HTTP socket hijacking not compatible with VCR'
+        chunk = nil
+        subject.attach(stdin: StringIO.new("foo\nbar\n")) do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("foo\nbar\n")
+      end
+    end
   end
 
   describe '#start' do

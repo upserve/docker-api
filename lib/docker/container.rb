@@ -40,15 +40,29 @@ class Docker::Container
 
   # Attach to a container's standard streams / logs.
   def attach(options = {}, &block)
+    stdin = options.delete(:stdin)
+
     opts = {
       :stream => true, :stdout => true, :stderr => true
     }.merge(options)
     # Creates list to store stdout and stderr messages
     msgs = Docker::Messages.new
+
+    excon_params = {}
+
+    if stdin
+      # If attaching to stdin, we must hijack the underlying TCP connection
+      # so we can stream stdin to the remote Docker process
+      opts[:stdin] = true
+      excon_params[:hijack_block] = hijack_for(stdin, block, msgs)
+    else
+      excon_params[:response_block] = attach_for(block, msgs)
+    end
+
     connection.post(
       path_for(:attach),
       opts,
-      :response_block => attach_for(block, msgs)
+      excon_params
     )
     [msgs.stdout_messages, msgs.stderr_messages]
   end
@@ -154,6 +168,42 @@ class Docker::Container
     "/containers/#{self.id}/#{resource}"
   end
 
+  def hijack_for(stdin, block, msg_stack)
+    attach_block = attach_for(block, msg_stack)
+
+    lambda do |socket|
+      debug "hijack: hijacking the HTTP socket"
+      threads = []
+
+      debug "hijack: starting stdin copy thread"
+      threads << Thread.start do
+        debug "hijack: copying stdin => socket"
+        IO.copy_stream stdin, socket
+
+        debug "hijack: finished copying stdin => socket, closing write end of hijacked socket"
+        socket.close_write
+      end
+
+      debug "hijack: starting hijacked socket read thread"
+      threads << Thread.start do
+        debug "hijack: reading from hijacked socket"
+
+        begin
+          while chunk = socket.readpartial(512)
+            debug "hijack: got #{chunk.bytesize} bytes from hijacked socket"
+            attach_block.call chunk, nil, nil
+          end
+        rescue EOFError
+        end
+
+        debug "hijack: finished reading from hijacked socket, killing stdin copy thread"
+        threads.first.kill
+      end
+
+      threads.each(&:join)
+    end
+  end
+
   # Method that takes chunks and calls the attached block for each mux'd message
   def attach_for(block, msg_stack)
     messages = Docker::Messages.new
@@ -172,6 +222,10 @@ class Docker::Container
     end
   end
 
-  private :path_for, :attach_for
+  def debug(msg)
+    Docker.logger.debug(msg) if Docker.logger
+  end
+
+  private :path_for, :attach_for, :debug
   private_class_method :new
 end
