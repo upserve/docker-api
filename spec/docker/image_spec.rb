@@ -458,6 +458,22 @@ describe Docker::Image do
           expect(build_output).to match(/Step 0 : from base/)
         end
       end
+
+      context 'with credentials passed' do
+        let(:creds) {
+          {
+            :username => 'nahiluhmot',
+            :password => '*********',
+            :email => 'hulihan.tom159@gmail.com'
+          }
+        }
+
+	before { Docker.creds = creds }
+
+        it 'sends Docker.creds', :vcr do
+	  image.info[:headers].keys.should include('X-Registry-Auth')
+        end
+      end
     end
   end
 end
