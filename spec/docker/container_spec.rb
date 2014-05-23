@@ -23,6 +23,7 @@ describe Docker::Container do
     its(:to_s) { should == expected_string }
   end
 
+
   describe '#json' do
     subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
     let(:description) { subject.json }
@@ -33,6 +34,27 @@ describe Docker::Container do
     end
   end
 
+  describe '#logs' do
+    subject { described_class.create('Cmd' => "echo Hello, world", 'Image' => 'base') }
+
+    context "when not selecting any stream" do
+      let(:non_destination) { subject.logs }     
+      it 'returns the error message', :vcr do
+        non_destination.should be_a(String)
+        non_destination.should be =~ /You must choose at least one/
+      end
+    end
+
+    context "when selecting stdout" do
+      let(:stdout) { subject.logs(stdout: 1) }
+      it 'returns blank logs', :vcr do
+        stdout.should be_a(String)
+        stdout.should eq ""
+      end
+    end
+  end
+
+  
   describe '#create' do
     subject {
       described_class.create({'Cmd' => %w[true], 'Image' => 'base'}.merge(opts))

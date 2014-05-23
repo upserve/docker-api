@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/containers/create
+    body:
+      encoding: UTF-8
+      string: "{\"Cmd\":\"echo Hello, world\",\"Image\":\"base\"}"
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.10
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 23 May 2014 05:11:24 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"d8f803cf10d6b2cc0613c5f26a7212e07cde5b018d7dcd84574aef0ca46210bd","Warnings":null}
+    http_version: 
+  recorded_at: Fri, 23 May 2014 05:11:24 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.10/containers/d8f803cf10d6b2cc0613c5f26a7212e07cde5b018d7dcd84574aef0ca46210bd/logs
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.10.10
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Fri, 23 May 2014 05:11:24 GMT
+      Content-Type:
+      - application/octet-stream
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: !binary |-
+        AgAAAAAAACRZb3UgbXVzdCBjaG9vc2UgYXQgbGVhc3Qgb25lIHN0cmVhbQoB
+        AAAAAAAAK0Vycm9yOiBZb3UgbXVzdCBjaG9vc2UgYXQgbGVhc3Qgb25lIHN0
+        cmVhbQo=
+    http_version: 
+  recorded_at: Fri, 23 May 2014 05:11:24 GMT
+recorded_with: VCR 2.9.0
