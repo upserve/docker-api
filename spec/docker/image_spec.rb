@@ -468,10 +468,10 @@ describe Docker::Image do
           }
         }
 
-	before { Docker.creds = creds }
+        before { Docker.creds = creds }
 
         it 'sends Docker.creds', :vcr do
-	  image.info[:headers].keys.should include('X-Registry-Auth')
+          image.info[:headers].keys.should include('X-Registry-Auth')
         end
       end
     end

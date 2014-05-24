@@ -174,13 +174,12 @@ class Docker::Image
     #
     # If a block is passed, chunks of output produced by Docker will be passed
     # to that block.
-    def build_from_dir(dir, opts = {}, creds = nil, connection = Docker.connection, &block)
+    def build_from_dir(dir, opts = {}, creds = nil,
+                       connection = Docker.connection, &block)
+
       tar = Docker::Util.create_dir_tar(dir)
 
-      credentials = creds.nil? ? Docker.creds : creds.to_json
-      headers = credentials.nil? ? {} : Docker::Util.build_auth_header(credentials) 
-      headers = { 'Content-Type'      => 'application/tar',
-                  'Transfer-Encoding' => 'chunked' }.merge(headers)
+      headers = build_headers(creds)
 
       # The response_block passed to Excon will build up this body variable.
       body = ""
@@ -189,7 +188,10 @@ class Docker::Image
         :headers => headers,
         :response_block => response_block_for_build(body, &block)
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-      new(connection, 'id' => Docker::Util.extract_id(body), :headers => headers)
+
+      new(connection,
+          'id' => Docker::Util.extract_id(body),
+          :headers => headers)
     ensure
       unless tar.nil?
         tar.close
@@ -199,6 +201,18 @@ class Docker::Image
   end
 
   private
+
+  # A method to build auth headers and merge them into headers sent
+  # by build_from_dir.
+  def self.build_headers(creds)
+    credentials = creds || Docker.creds || {}
+    auth_header = Docker::Util.build_auth_header(credentials.to_json)
+
+    headers = { 'Content-Type'      => 'application/tar',
+                'Transfer-Encoding' => 'chunked' }
+    headers = headers.merge(auth_header) if auth_header
+    headers
+  end
 
   # Convenience method to return the path for a particular resource.
   def path_for(resource)
