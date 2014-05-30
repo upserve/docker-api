@@ -180,7 +180,7 @@ class Docker::Container
         debug "hijack: copying stdin => socket"
         IO.copy_stream stdin, socket
 
-        debug "hijack: finished copying stdin => socket, closing write end of hijacked socket"
+        debug "hijack: closing write end of hijacked socket"
         socket.close_write
       end
 
@@ -196,7 +196,7 @@ class Docker::Container
         rescue EOFError
         end
 
-        debug "hijack: finished reading from hijacked socket, killing stdin copy thread"
+        debug "hijack: killing stdin copy thread"
         threads.first.kill
       end
 
