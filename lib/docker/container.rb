@@ -80,12 +80,10 @@ class Docker::Container
     end
   end
 
-  [:logs].each do |method|
-    define_method(method) do |opts = {}|
-      connection.get(path_for(method), opts)
-    end
+  def logs(opts = {})
+    connection.get(path_for(:logs), opts)
   end
-  
+
   # #start! and #kill! both perform the associated action and
   # return the Container. #start and #kill do the same,
   # but rescue from ServerErrors.

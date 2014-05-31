@@ -35,10 +35,10 @@ describe Docker::Container do
   end
 
   describe '#logs' do
-    subject { described_class.create('Cmd' => "echo Hello, world", 'Image' => 'base') }
+    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'base') }
 
     context "when not selecting any stream" do
-      let(:non_destination) { subject.logs }     
+      let(:non_destination) { subject.logs }
       it 'returns the error message', :vcr do
         non_destination.should be_a(String)
         non_destination.should be =~ /You must choose at least one/
@@ -54,7 +54,6 @@ describe Docker::Container do
     end
   end
 
-  
   describe '#create' do
     subject {
       described_class.create({'Cmd' => %w[true], 'Image' => 'base'}.merge(opts))
