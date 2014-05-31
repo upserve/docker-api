@@ -23,7 +23,6 @@ describe Docker::Container do
     its(:to_s) { should == expected_string }
   end
 
-
   describe '#json' do
     subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
     let(:description) { subject.json }
