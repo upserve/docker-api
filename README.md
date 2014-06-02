@@ -238,7 +238,7 @@ container.wait(15)
 
 # Attach to the Container. Currently, the below options are the only valid ones.
 # By default, :stream, :stdout, and :stderr are set.
-container.attach(:stream => true, :stdout => true, :stderr => true, :logs => true)
+container.attach(:stream => true, :stdin => nil, :stdout => true, :stderr => true, :logs => true)
 # => [["bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar", []]
 
 # If you wish to stream the attach method, a block may be supplied.
@@ -246,6 +246,11 @@ container = Docker::Container.create('Image' => 'base', 'Cmd' => ['find / -name 
 container.tap(&:start).attach { |stream, chunk| puts "#{stream}: #{chunk}" }
 stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
 # => [[], ["2013/10/30 17:16:24 Unable to locate find / -name *\n"]]
+
+# If you want to attach to stdin of the container, supply an IO-like object:
+container = Docker::Container.create('Image' => 'base', 'Cmd' => ['cat'], 'OpenStdin' => true, 'StdinOnce' => true)
+container.tap(&:start).attach(stdin: StringIO.new("foo\nbar\n"))
+# => [["foo\nbar\n"], []]
 
 # Create an Image from a Container's changes.
 container.commit
@@ -300,6 +305,3 @@ image 'repo:new_tag' => 'repo:tag' do
   image.tag('repo' => 'repo', 'tag' => 'new_tag')
 end
 ```
-
-## Known Issues
-- `Docker::Container#attach` cannot attach to STDIN

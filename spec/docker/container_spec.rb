@@ -193,6 +193,26 @@ describe Docker::Container do
     end
   end
 
+  describe '#attach with stdin' do
+    # Because this uses HTTP socket hijacking, it is not compatible with
+    # VCR, so it is currently pending until a good way to test it without
+    # a running Docker daemon is discovered
+    it 'yields the output' do
+      pending 'HTTP socket hijacking not compatible with VCR'
+      container = described_class.create(
+        'Cmd'       => %w[cat],
+        'Image'     => 'base',
+        'OpenStdin' => true,
+        'StdinOnce' => true
+      )
+      chunk = nil
+      container.attach(stdin: StringIO.new("foo\nbar\n")) do |stream, c|
+        chunk ||= c
+      end
+      expect(chunk).to eq("foo\nbar\n")
+    end
+  end
+
   describe '#start' do
     subject {
       described_class.create(
