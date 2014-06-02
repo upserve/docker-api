@@ -238,7 +238,7 @@ container.wait(15)
 
 # Attach to the Container. Currently, the below options are the only valid ones.
 # By default, :stream, :stdout, and :stderr are set.
-container.attach(:stream => true, :stdin => nil, :stdout => true, :stderr => true, :logs => true)
+container.attach(:stream => true, :stdin => nil, :stdout => true, :stderr => true, :logs => true, :tty => false)
 # => [["bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar", []]
 
 # If you wish to stream the attach method, a block may be supplied.
@@ -251,6 +251,12 @@ stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
 container = Docker::Container.create('Image' => 'base', 'Cmd' => ['cat'], 'OpenStdin' => true, 'StdinOnce' => true)
 container.tap(&:start).attach(stdin: StringIO.new("foo\nbar\n"))
 # => [["foo\nbar\n"], []]
+
+# If the container has TTY enabled, set `tty => true` to get the raw stream:
+command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"]
+container = Docker::Container.create('Image' => 'ubuntu', 'Cmd' => command, 'Tty' => true)
+container.tap(&:start).attach(:tty => true)
+# => [["I'm a TTY!"], []]
 
 # Create an Image from a Container's changes.
 container.commit
