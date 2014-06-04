@@ -36,8 +36,8 @@ describe Docker::Connection do
 
       context 'and the second argument is a Hash' do
         it 'sets the url and options' do
-          subject.url.should == url
-          subject.options.should == options
+          expect(subject.url).to eq url
+          expect(subject.options).to eq options
         end
       end
     end
@@ -70,19 +70,19 @@ describe Docker::Connection do
     }
 
     before do
-      subject.stub(:resource).and_return(resource)
-      resource.should_receive(:request).with(expected_hash).and_return(response)
+      allow(subject).to receive(:resource).and_return(resource)
+      expect(resource).to receive(:request).with(expected_hash).and_return(response)
     end
 
     it 'sends #request to #resource with the compiled params' do
-      subject.request(method, path, query, options).should == body
+      expect(subject.request(method, path, query, options)).to eq body
     end
   end
 
   [:get, :put, :post, :delete].each do |method|
     describe "##{method}" do
       it 'is delegated to #request' do
-        subject.should_receive(:request).with(method)
+        expect(subject).to receive(:request).with(method)
         subject.public_send(method)
       end
     end
@@ -97,7 +97,7 @@ describe Docker::Connection do
     subject { described_class.new(url, options) }
 
     it 'returns a pretty version with the url and port' do
-      subject.to_s.should == expected_string
+      expect(subject.to_s).to eq expected_string
     end
   end
 end

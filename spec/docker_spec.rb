@@ -76,12 +76,13 @@ describe Docker do
 
   [:options=, :url=].each do |method|
     describe "##{method}" do
-      after(:all) do
-        subject.instance_variable_set(:@url, nil)
-        subject.instance_variable_set(:@options, nil)
+      before do
+        subject.url = nil
+        subject.options = nil
       end
+
       it 'calls #reset_connection!' do
-        subject.should_receive(:reset_connection!)
+        expect(subject).to receive(:reset_connection!)
         subject.public_send(method, {})
       end
     end
@@ -96,8 +97,8 @@ describe Docker do
 
     let(:version) { subject.version }
     it 'returns the version as a Hash', :vcr do
-      version.should be_a Hash
-      version.keys.sort.should == expected
+      expect(version).to be_a Hash
+      expect(version.keys.sort).to eq expected
     end
   end
 
@@ -115,8 +116,8 @@ describe Docker do
     end
 
     it 'returns the info as a Hash', :vcr do
-      info.should be_a Hash
-      info.keys.sort.should == keys
+      expect(info).to be_a Hash
+      expect(info.keys.sort).to eq keys
     end
   end
 
@@ -144,7 +145,7 @@ describe Docker do
       }
 
       it 'logs in and sets the creds', :vcr do
-        expect(authentication).to be_true
+        expect(authentication).to be true
         expect(Docker.creds).to eq(credentials.to_json)
       end
     end
@@ -178,7 +179,9 @@ describe Docker do
     end
 
     context 'when a Docker Error is raised' do
-      before { Docker.stub(:info).and_raise(Docker::Error::ClientError) }
+      before do
+        allow(Docker).to receive(:info).and_raise(Docker::Error::ClientError)
+      end
 
       it 'raises a Version Error' do
         expect { subject.validate_version! }
@@ -187,7 +190,7 @@ describe Docker do
     end
 
     context 'when nothing is raised', :vcr do
-      its(:validate_version!) { should be_true }
+      its(:validate_version!) { should be true }
     end
   end
 end

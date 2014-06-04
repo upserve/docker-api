@@ -22,7 +22,7 @@ describe Docker::Event do
   describe ".stream" do
     it 'receives three events', :vcr do
       pending "get VCR to record events that break"
-      Docker::Event.should_receive(:new_event).exactly(3).times
+      expect(Docker::Event).to receive(:new_event).exactly(3).times
         .and_call_original
       fork do
         sleep 1
@@ -42,7 +42,7 @@ describe Docker::Event do
 
     it 'receives three events', :vcr do
       pending "get VCR to record events that break"
-      Docker::Event.should_receive(:new_event).exactly(3).times
+      expect(Docker::Event).to receive(:new_event).exactly(3).times
         .and_call_original
       fork do
         sleep 1
