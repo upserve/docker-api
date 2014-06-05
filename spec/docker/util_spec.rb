@@ -57,7 +57,7 @@ describe Docker::Util do
     end
   end
 
-  describe '.create_dir_tag' do
+  describe '.create_dir_tar' do
     attr_accessor :tmpdir
 
     around do |example|
@@ -67,13 +67,8 @@ describe Docker::Util do
       end
     end
 
-    before do
-      FileUtils.touch File.join(tmpdir, 'file')
-    end
-
     specify do
       tar = subject.create_dir_tar tmpdir
-      GC.start
       expect { FileUtils.rm tar }.to_not raise_error
     end
   end
