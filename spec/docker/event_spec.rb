@@ -21,7 +21,7 @@ describe Docker::Event do
 
   describe ".stream" do
     it 'receives three events', :vcr do
-      pending "get VCR to record events that break"
+      skip "get VCR to record events that break"
       expect(Docker::Event).to receive(:new_event).exactly(3).times
         .and_call_original
       fork do
@@ -41,7 +41,7 @@ describe Docker::Event do
     let!(:time) { Time.now.to_i }
 
     it 'receives three events', :vcr do
-      pending "get VCR to record events that break"
+      skip "get VCR to record events that break"
       expect(Docker::Event).to receive(:new_event).exactly(3).times
         .and_call_original
       fork do
