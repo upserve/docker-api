@@ -218,7 +218,7 @@ describe Docker::Image do
         subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
 
         it 'should normally show result if image has Cmd configured' do
-          pending 'The docs say this should work, but it clearly does not'
+          skip 'The docs say this should work, but it clearly does not'
           expect(output).to eql [["/\n"],[]]
         end
       end

@@ -71,7 +71,9 @@ describe Docker::Connection do
 
     before do
       allow(subject).to receive(:resource).and_return(resource)
-      expect(resource).to receive(:request).with(expected_hash).and_return(response)
+      expect(resource).to receive(:request).
+        with(expected_hash).
+        and_return(response)
     end
 
     it 'sends #request to #resource with the compiled params' do

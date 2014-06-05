@@ -117,7 +117,7 @@ describe Docker::Container do
 
     context 'when the file does not exist' do
       it 'raises an error', :vcr do
-        pending 'Docker no longer returns a 500 when the file does not exist'
+        skip 'Docker no longer returns a 500 when the file does not exist'
         expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
             .to raise_error
       end
@@ -198,7 +198,7 @@ describe Docker::Container do
     # VCR, so it is currently pending until a good way to test it without
     # a running Docker daemon is discovered
     it 'yields the output' do
-      pending 'HTTP socket hijacking not compatible with VCR'
+      skip 'HTTP socket hijacking not compatible with VCR'
       container = described_class.create(
         'Cmd'       => %w[cat],
         'Image'     => 'base',
@@ -311,7 +311,7 @@ describe Docker::Container do
 
       context 'and a command runs for too long' do
         it 'raises a ServerError', :vcr do
-          pending "VCR doesn't like to record errors"
+          skip "VCR doesn't like to record errors"
           expect { subject.wait(4) }.to raise_error(Docker::Error::TimeoutError)
         end
       end
@@ -354,7 +354,7 @@ describe Docker::Container do
     context 'if run is passed, it saves the command in the image', :vcr do
       let(:image) { subject.commit }
       it 'saves the command' do
-        pending 'This is no longer working in v0.8'
+        skip 'This is no longer working in v0.8'
         expect(image.run('pwd').attach).to eql [["/\n"],[]]
       end
     end
