@@ -36,7 +36,7 @@ describe Docker::Util do
       let(:arg) { '{"yolo":"swag"}' }
 
       it 'parses the JSON into a Hash' do
-        subject.should == { 'yolo' => 'swag' }
+        expect(subject).to eq 'yolo' => 'swag'
       end
     end
   end
@@ -46,7 +46,7 @@ describe Docker::Util do
     subject { Docker::Util.fix_json(response) }
 
     it 'fixes the "JSON" response that Docker returns' do
-      subject.should == [
+      expect(subject).to eq [
         {
           'this' => 'is'
         },

@@ -26,7 +26,7 @@ describe Docker::Image do
 
     it 'removes the Image', :vcr do
       subject.remove(:force => true)
-      Docker::Image.all.map(&:id).should_not include(id)
+      expect(Docker::Image.all.map(&:id)).to_not include(id)
     end
   end
 
@@ -159,7 +159,7 @@ describe Docker::Image do
 
     it 'tags the image with the repo name', :vcr do
       subject.tag(:repo => :base2, :force => true)
-      subject.info['RepoTags'].should include('base2:latest')
+      expect(subject.info['RepoTags']).to include 'base2:latest'
     end
   end
 
@@ -168,8 +168,8 @@ describe Docker::Image do
     let(:json) { subject.json }
 
     it 'returns additional information about image image', :vcr do
-      json.should be_a Hash
-      json.length.should_not be_zero
+      expect(json).to be_a Hash
+      expect(json.length).to_not be_zero
     end
   end
 
@@ -178,9 +178,9 @@ describe Docker::Image do
     let(:history) { subject.history }
 
     it 'returns the history of the Image', :vcr do
-      history.should be_a Array
-      history.length.should_not be_zero
-      history.should be_all { |elem| elem.is_a? Hash }
+      expect(history).to be_a Array
+      expect(history.length).to_not be_zero
+      expect(history).to be_all { |elem| elem.is_a? Hash }
     end
   end
 
@@ -218,7 +218,7 @@ describe Docker::Image do
         subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
 
         it 'should normally show result if image has Cmd configured' do
-          pending 'The docs say this should work, but it clearly does not'
+          skip 'The docs say this should work, but it clearly does not'
           expect(output).to eql [["/\n"],[]]
         end
       end
@@ -231,7 +231,7 @@ describe Docker::Image do
     it 'updates the @info hash', :vcr do
       size = image.info.size
       image.refresh!
-      image.info.size.should be > size
+      expect(image.info.size).to be > size
     end
   end
 
@@ -251,12 +251,12 @@ describe Docker::Image do
       before { Docker.creds = creds }
 
       it 'sets the id and sends Docker.creds', :vcr do
-        image.should be_a Docker::Image
-        image.id.should match(/\A[a-fA-F0-9]+\Z/)
-        image.id.should_not include('base')
-        image.id.should_not be_nil
-        image.id.should_not be_empty
-        image.info[:headers].keys.should include('X-Registry-Auth')
+        expect(image).to be_a Docker::Image
+        expect(image.id).to match(/\A[a-fA-F0-9]+\Z/)
+        expect(image.id).to_not include('base')
+        expect(image.id).to_not be_nil
+        expect(image.id).to_not be_empty
+        expect(image.info[:headers].keys).to include 'X-Registry-Auth'
       end
     end
   end
@@ -308,12 +308,14 @@ describe Docker::Image do
       let(:file) { 'spec/fixtures/export.tar' }
       let(:body) { StringIO.new }
 
-      before { Docker::Image.stub(:open).with(file).and_yield(body) }
+      before do
+        allow(Docker::Image).to receive(:open).with(file).and_yield(body)
+      end
 
       it 'creates the Image', :vcr do
         import = subject.import(file)
-        import.should be_a Docker::Image
-        import.id.should_not be_nil
+        expect(import).to be_a Docker::Image
+        expect(import.id).to_not be_nil
       end
     end
 
@@ -330,8 +332,8 @@ describe Docker::Image do
 
         it 'returns an Image', :vcr do
           image = subject.import(uri)
-          image.should be_a Docker::Image
-          image.id.should_not be_nil
+          expect(image).to be_a Docker::Image
+          expect(image.id).to_not be_nil
         end
       end
     end
@@ -345,18 +347,18 @@ describe Docker::Image do
 
     it 'materializes each Image into a Docker::Image', :vcr do
       images.each do |image|
-        image.should_not be_nil
+        expect(image).to_not be_nil
 
-        image.should be_a(described_class)
+        expect(image).to be_a(described_class)
 
-        image.id.should_not be_nil
+        expect(image.id).to_not be_nil
 
         %w(Created Size VirtualSize).each do |key|
-          image.info.should have_key(key)
+          expect(image.info).to have_key(key)
         end
       end
 
-      images.length.should_not be_zero
+      expect(images.length).to_not be_zero
     end
   end
 
@@ -364,7 +366,7 @@ describe Docker::Image do
     subject { described_class }
 
     it 'materializes each Image into a Docker::Image', :vcr do
-      subject.search('term' => 'sshd').should be_all { |image|
+      expect(subject.search('term' => 'sshd')).to be_all { |image|
         !image.id.nil? && image.is_a?(described_class)
       }
     end
@@ -471,7 +473,7 @@ describe Docker::Image do
         before { Docker.creds = creds }
 
         it 'sends Docker.creds', :vcr do
-          image.info[:headers].keys.should include('X-Registry-Auth')
+          expect(image.info[:headers].keys).to include('X-Registry-Auth')
         end
       end
     end
