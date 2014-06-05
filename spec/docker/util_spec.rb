@@ -57,6 +57,22 @@ describe Docker::Util do
     end
   end
 
+  describe '.create_dir_tar' do
+    attr_accessor :tmpdir
+
+    around do |example|
+      Dir.mktmpdir do |tmpdir|
+        self.tmpdir = tmpdir
+        example.call
+      end
+    end
+
+    specify do
+      tar = subject.create_dir_tar tmpdir
+      expect { FileUtils.rm tar }.to_not raise_error
+    end
+  end
+
   describe '.build_auth_header' do
     subject { described_class }
 

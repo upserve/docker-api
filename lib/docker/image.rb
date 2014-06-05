@@ -195,7 +195,7 @@ class Docker::Image
     ensure
       unless tar.nil?
         tar.close
-        FileUtils.rm(tar.path)
+        FileUtils.rm(tar.path, force: true)
       end
     end
   end
