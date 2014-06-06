@@ -146,16 +146,16 @@ class Docker::Image
       raise Docker::Error::IOError, "Could not import '#{imp}'"
     end
 
-  def import_stream(options = {}, connection = Docker.connection, &block)
-    body = connection.post(
-      '/images/create',
-       options.merge('fromSrc' => '-'),
-       :headers => { 'Content-Type' => 'application/tar',
-                     'Transfer-Encoding' => 'chunked' },
-       &block
-    )
-    new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
-  end
+    def import_stream(options = {}, connection = Docker.connection, &block)
+      body = connection.post(
+        '/images/create',
+         options.merge('fromSrc' => '-'),
+         :headers => { 'Content-Type' => 'application/tar',
+                       'Transfer-Encoding' => 'chunked' },
+         &block
+      )
+      new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+    end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, opts = {}, connection = Docker.connection, &block)
