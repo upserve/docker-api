@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/create
+    uri: unix:///var/run/docker.sock/v1.11/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Cmd\":[\"ls\"],\"Image\":\"base\"}"
+      string: '{"Cmd":["ls"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:32 GMT
+      - Fri, 06 Jun 2014 13:36:45 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"dd173940ca2db820cab4cf1f951fc97e98786b953ce2e848a7a8b9c9a1800b6b","Warnings":null}
+        {"Id":"c843e3cc949ba97facdf6ce574af1e19abaed630a7a5118000f2baac202daf3f","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:32 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:45 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/dd173940ca2db820cab4cf1f951fc97e98786b953ce2e848a7a8b9c9a1800b6b/kill
+    uri: unix:///var/run/docker.sock/v1.11/containers/c843e3cc949ba97facdf6ce574af1e19abaed630a7a5118000f2baac202daf3f/kill
     body:
       encoding: UTF-8
-      string: "{}"
+      string: '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -47,7 +47,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 12 Mar 2014 13:31:32 GMT
+      - Fri, 06 Jun 2014 13:36:45 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -58,16 +58,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:32 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:45 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/containers/json
+    uri: unix:///var/run/docker.sock/v1.11/containers/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -78,27 +78,27 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:32 GMT
+      - Fri, 06 Jun 2014 13:36:45 GMT
       Content-Length:
-      - '200'
+      - '199'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"/while","Created":1394631081,"Id":"d2def324f3daa1989173223f03d22e789c4354aa99d80e7258068de9e911cb35","Image":"2e0a9a843f66","Names":["/stoic_brown"],"Ports":[],"Status":"Up 11 seconds"}
+        [{"Command":"/while","Created":1402061799,"Id":"74553200d912dda35c0f8641028d3e42faaf6e41b4337a4e202328414bb2da5e","Image":"5964d75bfbd2","Names":["/angry_brown"],"Ports":[],"Status":"Up 5 seconds"}
         ]
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:32 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:45 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.11/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -109,7 +109,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:32 GMT
+      - Fri, 06 Jun 2014 13:36:45 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -117,20 +117,26 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"ls","Created":1394631092,"Id":"dd173940ca2db820cab4cf1f951fc97e98786b953ce2e848a7a8b9c9a1800b6b","Image":"base:latest","Names":["/trusting_galileo"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"true","Created":1394631092,"Id":"0ab853c18a2a8eaa4513a6a017dc749d5d691f689c6bdd339d9a64087aee88c1","Image":"base:latest","Names":["/prickly_galileo"],"Ports":[],"Status":"Exit 2"}
-        ,{"Command":"test -d /foo","Created":1394631091,"Id":"6c3645ba631b4370d9199983b9a5133e49edaf019a5944148971b1c2db53bf79","Image":"base:latest","Names":["/angry_lumiere"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"pwd","Created":1394631090,"Id":"345e4a1df616ce448e2d45cdb95e8a3f0560fba39ab27e816b244f003430d59f","Image":"base:latest","Names":["/desperate_darwin"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"pwd","Created":1394631090,"Id":"71488237068c3873ebd7ff4cc408b7de962b2a90b7c8b8ad519483b592e282db","Image":"base:latest","Names":["/hungry_curie"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"rm -rf / --no-preserve-root","Created":1394631087,"Id":"8c8e11746d819efcd1403d94058d28f20c326ad44f0f406cb86a569931f26a60","Image":"base:latest","Names":["/boring_mclean"],"Ports":[],"Status":"Exit 1"}
-        ,{"Command":"touch /test","Created":1394631086,"Id":"f68efa48ea8d41a0edade5d966d712133d723c910ef01b96fc3d0a9fbad368fe","Image":"base:latest","Names":["/grave_hawking"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"touch /test","Created":1394631084,"Id":"2703dd3c331e8405de077d5ed9452e0fe27fe3bb9f54740dc34845e1d0ab5499","Image":"base:latest","Names":["/tender_bell"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/while","Created":1394631081,"Id":"d2def324f3daa1989173223f03d22e789c4354aa99d80e7258068de9e911cb35","Image":"2e0a9a843f66","Names":["/stoic_brown"],"Ports":[],"Status":"Up 11 seconds"}
-        ,{"Command":"/bin/sh -c printf '#! /bin/sh\nwhile true\ndo\ntrue\ndone\n' \u003e /while \u0026\u0026 chmod +x /while","Created":1394631079,"Id":"68f09ac82fcf7c76327180d3573d3a2b54ebe13afc528e29195642a9710d888e","Image":"base:latest","Names":["/determined_einstein"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"rm -rf /root","Created":1394631078,"Id":"5584a4b00578255194eea3b885d831e6ea0da94d56529f0dab97cd972471026c","Image":"base:latest","Names":["/thirsty_bardeen"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"true","Created":1394631078,"Id":"be31311878d52f79a24ae359a00d7859e80fe6bb429026a74ccbafa606b04782","Image":"base:latest","Names":["/bob"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"true","Created":1394631077,"Id":"b615f325b67d6bf74b31ce94f39dea0c1a9f2707b2f610bbdbf6e5dc779b4444","Image":"base:latest","Names":["/high_pasteur"],"Ports":[],"Status":"Exit 0"}
+        [{"Command":"ls","Created":1402061805,"Id":"c843e3cc949ba97facdf6ce574af1e19abaed630a7a5118000f2baac202daf3f","Image":"base:latest","Names":["/pensive_hopper"],"Ports":[],"Status":""}
+        ,{"Command":"true","Created":1402061804,"Id":"443df8d63a3a3072d0bf8d556f798702446bb58240a20c7209943c4fd673cbb6","Image":"base:latest","Names":["/lonely_lumiere"],"Ports":[],"Status":"Exited (2) Less than a second ago"}
+        ,{"Command":"test -d /foo","Created":1402061803,"Id":"931f5a5a5c2b4fad7b87e7348d08278321467f83bacf32c8c8a397f08c51646d","Image":"base:latest","Names":["/cranky_curie"],"Ports":[],"Status":"Exited (0) Less than a second ago"}
+        ,{"Command":"pwd","Created":1402061803,"Id":"ca222127cb8b1cfd32b49f7bce67a65551ca95c06a39df9d533e526cdd6b3012","Image":"base:latest","Names":["/determined_bartik"],"Ports":[],"Status":"Exited (0) 1 seconds ago"}
+        ,{"Command":"pwd","Created":1402061802,"Id":"1cbce47c914fad3c7d384c91cae92c025e3ef68293fcc96cb100e6f88c9a2ef2","Image":"base:latest","Names":["/berserk_sammet"],"Ports":[],"Status":"Exited (0) 2 seconds ago"}
+        ,{"Command":"rm -rf / --no-preserve-root","Created":1402061800,"Id":"46a466141579783967dcbc035bc6399649bd43b7f4408ce4e709d233aac5ef14","Image":"base:latest","Names":["/grave_poincare"],"Ports":[],"Status":"Exited (1) 3 seconds ago"}
+        ,{"Command":"/while","Created":1402061799,"Id":"74553200d912dda35c0f8641028d3e42faaf6e41b4337a4e202328414bb2da5e","Image":"5964d75bfbd2","Names":["/angry_brown"],"Ports":[],"Status":"Up 5 seconds"}
+        ,{"Command":"/bin/sh -c 'printf '#! /bin/sh\nwhile true\ndo\ntrue\ndone\n' \u003e /while \u0026\u0026 chmod +x /while'","Created":1402061795,"Id":"9bae4f8c6a162a4751230b334d7a1883fc05898c5a8674fb2e5f74d13b5fd535","Image":"base:latest","Names":["/stupefied_darwin"],"Ports":[],"Status":"Exited (0) 9 seconds ago"}
+        ,{"Command":"rm -rf /root","Created":1402061793,"Id":"e2aa3bf983f31a26fa4ea31f915f33dbb800210fe5155f3e5ec2b7ef2f6f011a","Image":"base:latest","Names":["/agitated_lumiere"],"Ports":[],"Status":"Exited (0) 11 seconds ago"}
+        ,{"Command":"true","Created":1402061792,"Id":"b2fffac62786c5b22eebc6e89dcc6146f6d5c7c2d1c87f4047c224594f9fd626","Image":"base:latest","Names":["/bob"],"Ports":[],"Status":""}
+        ,{"Command":"echo hello","Created":1402061792,"Id":"43a9245ac3f67d2150845dbe4bb014d1b33f6fe7755f53c0795b793abec025e6","Image":"base:latest","Names":["/nostalgic_brattain"],"Ports":[],"Status":""}
+        ,{"Command":"echo hello","Created":1402061792,"Id":"3b94c2244b65ee461a8de220f689efc4f5139952c3acfbcc62b54754fc2d42af","Image":"base:latest","Names":["/loving_mccarthy"],"Ports":[],"Status":""}
+        ,{"Command":"true","Created":1402061791,"Id":"9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627","Image":"base:latest","Names":["/berserk_albattani"],"Ports":[],"Status":""}
+        ,{"Command":"bash","Created":1401993112,"Id":"a4a956e5908713eeeeacd438d9b1af76aee3a2d2cfd286509879d66688a51a96","Image":"base:latest","Names":["/distracted_davinci"],"Ports":[],"Status":"Exited (0) 19 hours ago"}
+        ,{"Command":"pwd","Created":1401992998,"Id":"84417dce0437109b3da550a5e9b26c53cd3c470a10f140665f50936c4cbc6e5c","Image":"cd20e353a62d","Names":["/nostalgic_sinoussi"],"Ports":[],"Status":"Exited (0) 19 hours ago"}
+        ,{"Command":"bash","Created":1401992997,"Id":"3fa30cf9b82e719a9e599350e25321ead36454995621c18da0873991911b5dcf","Image":"base:latest","Names":["/jolly_leakey"],"Ports":[],"Status":"Exited (0) 19 hours ago"}
+        ,{"Command":"true","Created":1401992995,"Id":"75b8e7c8f01a5ce68062a91fa05b7aea1a6c71a030207ae1ad266633a6cdd4cc","Image":"base:latest","Names":["/sad_wright"],"Ports":[],"Status":""}
+        ,{"Command":"bash","Created":1401992994,"Id":"a39a9b9e48ea2a4e0e7448ce2e895284911dad63e1e4a5cf0f4ee23ea11f62a6","Image":"base:latest","Names":["/distracted_yonath"],"Ports":[],"Status":"Exited (0) 19 hours ago"}
+        ,{"Command":"touch /test","Created":1401992992,"Id":"bbe024cccc9898f753a96119eb761d447e4d5d750b45c833a573aec71cc2392e","Image":"base:latest","Names":["/prickly_heisenberg"],"Ports":[],"Status":"Exited (0) 19 hours ago"}
         ]
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:32 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Fri, 06 Jun 2014 13:36:45 GMT
+recorded_with: VCR 2.9.2

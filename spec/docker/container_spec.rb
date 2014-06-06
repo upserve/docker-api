@@ -78,14 +78,6 @@ describe Docker::Container do
     it 'returns the changes as an array', :vcr do
       expect(changes).to eq [
         {
-          "Path" => "/dev",
-          "Kind" => 0
-        },
-        {
-          "Path" => "/dev/kmsg",
-          "Kind" => 0
-        },
-        {
           "Path" => "/root",
           "Kind" => 2
         },
