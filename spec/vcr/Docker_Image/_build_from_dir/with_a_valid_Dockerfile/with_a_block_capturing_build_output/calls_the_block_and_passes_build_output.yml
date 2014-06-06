@@ -2,17 +2,21 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/build
+    uri: unix:///var/run/docker.sock/v1.11/build
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.7
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/tar
       Transfer-Encoding:
       - chunked
+      X-Registry-Auth:
+      - eyJ1c2VybmFtZSI6Im5haGlsdWhtb3QiLCJwYXNzd29yZCI6IioqKioqKioqKiIsImVtYWlsIjoiaHVsaWhhbi50b20xNTlAZ21haWwuY29tIn0=
+      X-Registry-Config:
+      - eyJ1c2VybmFtZSI6Im5haGlsdWhtb3QiLCJwYXNzd29yZCI6IioqKioqKioqKiIsImVtYWlsIjoiaHVsaWhhbi50b20xNTlAZ21haWwuY29tIn0=
   response:
     status:
       code: 200
@@ -21,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 09 Apr 2014 14:52:14 GMT
+      - Fri, 06 Jun 2014 14:25:10 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -30,8 +34,8 @@ http_interactions:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e Using cache\\n\"}\r\n{\"stream\":\" ---\\u003e 2d1ee8b60e67\\n\"}\r\n{\"stream\":\"Successfully
-        built 2d1ee8b60e67\\n\"}\r\n"
+        ---\\u003e Using cache\\n\"}\r\n{\"stream\":\" ---\\u003e 4f9603c673e9\\n\"}\r\n{\"stream\":\"Successfully
+        built 4f9603c673e9\\n\"}\r\n"
     http_version: 
-  recorded_at: Wed, 09 Apr 2014 14:52:14 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Fri, 06 Jun 2014 14:25:10 GMT
+recorded_with: VCR 2.9.2

@@ -2,17 +2,21 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/build
+    uri: unix:///var/run/docker.sock/v1.11/build
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.7
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/tar
       Transfer-Encoding:
       - chunked
+      X-Registry-Auth:
+      - eyJ1c2VybmFtZSI6Im5haGlsdWhtb3QiLCJwYXNzd29yZCI6IioqKioqKioqKiIsImVtYWlsIjoiaHVsaWhhbi50b20xNTlAZ21haWwuY29tIn0=
+      X-Registry-Config:
+      - eyJ1c2VybmFtZSI6Im5haGlsdWhtb3QiLCJwYXNzd29yZCI6IioqKioqKioqKiIsImVtYWlsIjoiaHVsaWhhbi50b20xNTlAZ21haWwuY29tIn0=
   response:
     status:
       code: 200
@@ -21,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 09 Apr 2014 14:52:10 GMT
+      - Fri, 06 Jun 2014 14:25:07 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -30,18 +34,18 @@ http_interactions:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 2d1ee8b60e67\\n\"}\r\n{\"stream\":\"Successfully built 2d1ee8b60e67\\n\"}\r\n"
+        ---\\u003e 4f9603c673e9\\n\"}\r\n{\"stream\":\"Successfully built 4f9603c673e9\\n\"}\r\n"
     http_version: 
-  recorded_at: Wed, 09 Apr 2014 14:52:13 GMT
+  recorded_at: Fri, 06 Jun 2014 14:25:09 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/create
+    uri: unix:///var/run/docker.sock/v1.11/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Image\":\"2d1ee8b60e67\",\"Cmd\":[\"cat\",\"/Dockerfile\"]}"
+      string: '{"Image":"4f9603c673e9","Cmd":["cat","/Dockerfile"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.7
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -52,7 +56,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 09 Apr 2014 14:52:13 GMT
+      - Fri, 06 Jun 2014 14:25:09 GMT
       Content-Length:
       - '90'
       Connection:
@@ -60,18 +64,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"c16275a57c313edd1edb0f1047589d70743407cc60523af1dd2c85f4a23b2b33","Warnings":null}
+        {"Id":"473eeea2ddb1e12a5ecfa29cf7c571fc987e290768d379d4c937a5994163df85","Warnings":null}
     http_version: 
-  recorded_at: Wed, 09 Apr 2014 14:52:13 GMT
+  recorded_at: Fri, 06 Jun 2014 14:25:09 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/c16275a57c313edd1edb0f1047589d70743407cc60523af1dd2c85f4a23b2b33/start
+    uri: unix:///var/run/docker.sock/v1.11/containers/473eeea2ddb1e12a5ecfa29cf7c571fc987e290768d379d4c937a5994163df85/start
     body:
       encoding: UTF-8
-      string: "{}"
+      string: '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.7
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -80,7 +84,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 09 Apr 2014 14:52:13 GMT
+      - Fri, 06 Jun 2014 14:25:09 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -91,16 +95,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 09 Apr 2014 14:52:13 GMT
+  recorded_at: Fri, 06 Jun 2014 14:25:09 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/c16275a57c313edd1edb0f1047589d70743407cc60523af1dd2c85f4a23b2b33/attach?stderr=true&stdout=true&stream=true
+    uri: unix:///var/run/docker.sock/v1.11/containers/473eeea2ddb1e12a5ecfa29cf7c571fc987e290768d379d4c937a5994163df85/attach?stderr=true&stdout=true&stream=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.7
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -115,5 +119,5 @@ http_interactions:
       string: !binary |-
         AQAAAAAAABJmcm9tIGJhc2UKYWRkIC8gLwo=
     http_version: 
-  recorded_at: Wed, 09 Apr 2014 14:52:13 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Fri, 06 Jun 2014 14:25:09 GMT
+recorded_with: VCR 2.9.2
