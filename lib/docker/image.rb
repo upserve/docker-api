@@ -192,15 +192,15 @@ class Docker::Image
 
   private
 
-  # A method to build auth headers and merge them into headers sent
-  # by build_from_dir.
+  # A method to build the config header and merge it into the
+  # headers sent by build_from_dir.
   def self.build_headers(creds)
     credentials = creds || Docker.creds || {}
-    auth_header = Docker::Util.build_auth_header(credentials.to_json)
+    config_header = Docker::Util.build_config_header(credentials.to_json)
 
     headers = { 'Content-Type'      => 'application/tar',
                 'Transfer-Encoding' => 'chunked' }
-    headers = headers.merge(auth_header) if auth_header
+    headers = headers.merge(config_header) if config_header
     headers
   end
 
