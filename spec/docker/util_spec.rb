@@ -86,17 +86,16 @@ describe Docker::Util do
     }
     let(:credential_string) { credentials.to_json }
     let(:encoded_creds) { Base64.encode64(credential_string).gsub(/\n/, '') }
-    let(:expected_headers) {
+    let(:expected_header) {
       {
-        'X-Registry-Auth' => encoded_creds,
-        'X-Registry-Config' => encoded_creds
+        'X-Registry-Auth' => encoded_creds
       }
     }
 
 
     context 'given credentials as a Hash' do
       it 'returns an X-Registry-Auth header encoded' do
-        expect(subject.build_auth_header(credentials)).to eq(expected_headers)
+        expect(subject.build_auth_header(credentials)).to eq(expected_header)
       end
     end
 
@@ -104,7 +103,53 @@ describe Docker::Util do
       it 'returns an X-Registry-Auth header encoded' do
         expect(
           subject.build_auth_header(credential_string)
-        ).to eq(expected_headers)
+        ).to eq(expected_header)
+      end
+    end
+  end
+
+  describe '.build_config_header' do
+    subject { described_class }
+
+    let(:credentials) {
+      {
+        :username      => 'test',
+        :password      => 'password',
+        :email         => 'test@example.com',
+        :serveraddress => 'https://registry.com/'
+      }
+    }
+
+    let(:credentials_object) {
+      {
+        :configs => {
+          :'https://registry.com/' => {
+            :username => 'test',
+            :password => 'password',
+            :email    => 'test@example.com',
+          }
+        }
+      }.to_json
+    }
+
+    let(:encoded_creds) { Base64.encode64(credentials_object).gsub(/\n/, '') }
+    let(:expected_header) {
+      {
+        'X-Registry-Config' => encoded_creds
+      }
+    }
+
+    context 'given credentials as a Hash' do
+      it 'returns an X-Registry-Config header encoded' do
+        expect(subject.build_config_header(credentials)).to eq(expected_header)
+      end
+    end
+
+    context 'given credentials as a String' do
+      it 'returns an X-Registry-Config header encoded' do
+        expect(
+          subject.build_config_header(credentials.to_json)
+        ).to eq(expected_header)
       end
     end
   end
