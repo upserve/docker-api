@@ -77,8 +77,28 @@ module Docker::Util
     credentials = credentials.to_json if credentials.is_a?(Hash)
     encoded_creds = Base64.encode64(credentials).gsub(/\n/, '')
     {
-      'X-Registry-Auth' => encoded_creds,
-      'X-Registry-Config' => encoded_creds,
+      'X-Registry-Auth' => encoded_creds
+    }
+  end
+
+  def build_config_header(credentials)
+    credentials = credentials.to_json if credentials.is_a?(Hash)
+    credentials = JSON.parse(credentials)
+
+    header = {
+      "configs" => {
+        "#{credentials["serveraddress"]}" => {
+          "username" => "#{credentials["username"]}",
+          "password" => "#{credentials["password"]}",
+          "email" => "#{credentials["email"]}"
+        }
+      }
+    }.to_json
+
+    encoded_header = Base64.encode64(header).gsub(/\n/, '')
+
+    {
+      'X-Registry-Config' => encoded_header
     }
   end
 end
