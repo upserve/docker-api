@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.10/build
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.1
+      Content-Type:
+      - application/tar
+      Transfer-Encoding:
+      - chunked
+      X-Registry-Config:
+      - eyJjb25maWdzIjp7Imh0dHBzOi8vaW5kZXguZG9ja2VyLmlvL3YxIjp7InVzZXJuYW1lIjoibmFoaWx1aG1vdCIsInBhc3N3b3JkIjoiKioqKioqKioqIiwiZW1haWwiOiJodWxpaGFuLnRvbTE1OUBnbWFpbC5jb20ifX19
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 07 Jun 2014 21:06:09 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
+        b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e Using cache\\n\"}\r\n{\"stream\":\" ---\\u003e 044e630f5aaf\\n\"}\r\n{\"stream\":\"Successfully
+        built 044e630f5aaf\\n\"}\r\n"
+    http_version: 
+  recorded_at: Sat, 07 Jun 2014 21:06:09 GMT
+recorded_with: VCR 2.9.0
