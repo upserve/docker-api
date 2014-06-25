@@ -136,6 +136,21 @@ class Docker::Container
   end
   alias_method :delete, :remove
 
+  # pause and unpause containers
+  # #pause! and #unpause! both perform the associated action and
+  # return the Container. #pause and #unpause do the same,
+  # but rescue from ServerErrors.
+  [:pause, :unpause].each do |method|
+    define_method(:"#{method}!") do
+      connection.post path_for(method)
+      self
+    end
+
+    define_method(method) do
+      begin; public_send(:"#{method}!"); rescue ServerError; self; end
+    end
+  end
+
   def copy(path, &block)
     connection.post(path_for(:copy), {},
       :body => { "Resource" => path }.to_json,
