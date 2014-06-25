@@ -291,6 +291,25 @@ describe Docker::Container do
     end
   end
 
+  describe '#pause' do
+    subject { described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base').start }
+
+    it 'pauses the container', :vcr do
+      subject.pause
+      expect(described_class.get(subject.id).info['State']['Paused']).to be true
+    end
+  end
+
+  describe '#unpause' do
+    subject { described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base').start }
+    before { subject.pause }
+
+    it 'unpauses the container', :vcr do
+      subject.unpause
+      expect(described_class.get(subject.id).info['State']['Paused']).to be false
+    end
+  end
+
   describe '#wait' do
     subject { described_class.create('Cmd' => %w[tar nonsense],
                                      'Image' => 'base') }
