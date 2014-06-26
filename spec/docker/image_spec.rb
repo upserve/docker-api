@@ -242,9 +242,9 @@ describe Docker::Image do
       let(:image) { subject.create('fromImage' => 'ubuntu') }
       let(:creds) {
         {
-          :username => 'nahiluhmot',
-          :password => '*********',
-          :email => 'hulihan.tom159@gmail.com'
+          :username => 'tlunter',
+          :password => '************',
+          :email => 'tlunter@gmail.com'
         }
       }
 

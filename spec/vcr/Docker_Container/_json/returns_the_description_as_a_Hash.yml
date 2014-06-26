@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/create
+    uri: unix:///var/run/docker.sock/v1.11/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Cmd\":[\"true\"],\"Image\":\"base\"}"
+      string: '{"Cmd":["true"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:17 GMT
+      - Fri, 06 Jun 2014 13:36:32 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"b615f325b67d6bf74b31ce94f39dea0c1a9f2707b2f610bbdbf6e5dc779b4444","Warnings":null}
+        {"Id":"9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627","Warnings":null}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:17 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:32 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/containers/b615f325b67d6bf74b31ce94f39dea0c1a9f2707b2f610bbdbf6e5dc779b4444/json
+    uri: unix:///var/run/docker.sock/v1.11/containers/9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -49,14 +49,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 12 Mar 2014 13:31:17 GMT
+      - Fri, 06 Jun 2014 13:36:32 GMT
       Content-Length:
-      - '1175'
+      - '1221'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: "{\"ID\":\"b615f325b67d6bf74b31ce94f39dea0c1a9f2707b2f610bbdbf6e5dc779b4444\",\"Created\":\"2014-03-12T13:31:17.80029627Z\",\"Path\":\"true\",\"Args\":[],\"Config\":{\"Hostname\":\"b615f325b67d\",\"Domainname\":\"\",\"User\":\"\",\"Memory\":0,\"MemorySwap\":0,\"CpuShares\":0,\"AttachStdin\":false,\"AttachStdout\":false,\"AttachStderr\":false,\"PortSpecs\":null,\"ExposedPorts\":null,\"Tty\":false,\"OpenStdin\":false,\"StdinOnce\":false,\"Env\":null,\"Cmd\":[\"true\"],\"Dns\":null,\"Image\":\"base\",\"Volumes\":null,\"VolumesFrom\":\"\",\"WorkingDir\":\"\",\"Entrypoint\":null,\"NetworkDisabled\":false,\"OnBuild\":null},\"State\":{\"Running\":false,\"Pid\":0,\"ExitCode\":0,\"StartedAt\":\"0001-01-01T00:00:00Z\",\"FinishedAt\":\"0001-01-01T00:00:00Z\",\"Ghost\":false},\"Image\":\"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc\",\"NetworkSettings\":{\"IPAddress\":\"\",\"IPPrefixLen\":0,\"Gateway\":\"\",\"Bridge\":\"\",\"PortMapping\":null,\"Ports\":null},\"ResolvConfPath\":\"/etc/resolv.conf\",\"HostnamePath\":\"\",\"HostsPath\":\"\",\"Name\":\"/high_pasteur\",\"Driver\":\"devicemapper\",\"ExecDriver\":\"native-0.1\",\"Volumes\":null,\"VolumesRW\":null,\"HostConfig\":{\"Binds\":null,\"ContainerIDFile\":\"\",\"LxcConf\":null,\"Privileged\":false,\"PortBindings\":null,\"Links\":null,\"PublishAllPorts\":false}}"
+      string: '{"ID":"9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627","Created":"2014-06-06T13:36:31.878727014Z","Path":"true","Args":[],"Config":{"Hostname":"9f7808dd7512","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"ExposedPorts":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Image":"base","Volumes":null,"WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"OnBuild":null},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","FinishedAt":"0001-01-01T00:00:00Z"},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null,"Ports":null},"ResolvConfPath":"","HostnamePath":"","HostsPath":"","Name":"/berserk_albattani","Driver":"devicemapper","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","Volumes":null,"VolumesRW":null,"HostConfig":{"Binds":null,"ContainerIDFile":"","LxcConf":null,"Privileged":false,"PortBindings":null,"Links":null,"PublishAllPorts":false,"Dns":null,"DnsSearch":null,"VolumesFrom":null,"NetworkMode":""}}'
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:31:17 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Fri, 06 Jun 2014 13:36:32 GMT
+recorded_with: VCR 2.9.2

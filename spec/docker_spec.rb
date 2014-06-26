@@ -93,7 +93,9 @@ describe Docker do
       subject.url = nil
       subject.options = nil
     end
-    let(:expected) { %w[Arch GitCommit GoVersion KernelVersion Os Version] }
+    let(:expected) {
+      %w[ApiVersion Arch GitCommit GoVersion KernelVersion Os Version]
+    }
 
     let(:version) { subject.version }
     it 'returns the version as a Hash', :vcr do
@@ -137,9 +139,9 @@ describe Docker do
       # cassette to match these credentials
       let(:credentials) {
         {
-          :username      => 'test',
-          :password      => 'account',
-          :email         => 'test@test.com',
+          :username      => 'tlunter',
+          :password      => '************',
+          :email         => 'tlunter@gmail.com',
           :serveraddress => 'https://index.docker.io/v1/'
         }
       }

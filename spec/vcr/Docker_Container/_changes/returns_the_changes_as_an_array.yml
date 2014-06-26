@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/create
+    uri: unix:///var/run/docker.sock/v1.11/containers/create
     body:
       encoding: UTF-8
-      string: "{\"Cmd\":[\"rm\",\"-rf\",\"/root\"],\"Image\":\"base\"}"
+      string: '{"Cmd":["rm","-rf","/root"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 21:41:43 GMT
+      - Fri, 06 Jun 2014 13:36:33 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"b308381c9274c9c2e398635eeca5988c015268bf7e2a558eee0498e25629adc7","Warnings":null}
+        {"Id":"e2aa3bf983f31a26fa4ea31f915f33dbb800210fe5155f3e5ec2b7ef2f6f011a","Warnings":null}
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:41:43 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:33 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/b308381c9274c9c2e398635eeca5988c015268bf7e2a558eee0498e25629adc7/start
+    uri: unix:///var/run/docker.sock/v1.11/containers/e2aa3bf983f31a26fa4ea31f915f33dbb800210fe5155f3e5ec2b7ef2f6f011a/start
     body:
       encoding: UTF-8
-      string: "{}"
+      string: '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -47,7 +47,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Fri, 28 Feb 2014 21:41:44 GMT
+      - Fri, 06 Jun 2014 13:36:33 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -58,16 +58,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:41:44 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:33 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/containers/b308381c9274c9c2e398635eeca5988c015268bf7e2a558eee0498e25629adc7/wait
+    uri: unix:///var/run/docker.sock/v1.11/containers/e2aa3bf983f31a26fa4ea31f915f33dbb800210fe5155f3e5ec2b7ef2f6f011a/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -78,7 +78,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 21:41:45 GMT
+      - Fri, 06 Jun 2014 13:36:33 GMT
       Content-Length:
       - '17'
       Connection:
@@ -88,16 +88,16 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:41:45 GMT
+  recorded_at: Fri, 06 Jun 2014 13:36:33 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/containers/b308381c9274c9c2e398635eeca5988c015268bf7e2a558eee0498e25629adc7/changes
+    uri: unix:///var/run/docker.sock/v1.11/containers/e2aa3bf983f31a26fa4ea31f915f33dbb800210fe5155f3e5ec2b7ef2f6f011a/changes
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.8.4
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -108,18 +108,16 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 28 Feb 2014 21:41:45 GMT
+      - Fri, 06 Jun 2014 13:36:35 GMT
       Content-Length:
-      - '85'
+      - '28'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |-
-        [{"Kind":0,"Path":"/dev"}
-        ,{"Kind":0,"Path":"/dev/kmsg"}
-        ,{"Kind":2,"Path":"/root"}
+        [{"Kind":2,"Path":"/root"}
         ]
     http_version: 
-  recorded_at: Fri, 28 Feb 2014 21:41:45 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Fri, 06 Jun 2014 13:36:35 GMT
+recorded_with: VCR 2.9.2

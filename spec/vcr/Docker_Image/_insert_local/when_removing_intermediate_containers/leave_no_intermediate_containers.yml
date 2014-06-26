@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.11/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -19,37 +19,26 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:55 GMT
+      - Fri, 06 Jun 2014 14:31:02 GMT
+      Content-Length:
+      - '2'
       Connection:
       - close
-      Transfer-Encoding:
-      - ''
     body:
       encoding: UTF-8
-      string: |-
-        [{"Command":"cat /Gemfile /Rakefile","Created":1395615114,"Id":"41f5bb2b030dafaf52b6451e7d538a1b9e2749e618c351629f25970b142ef091","Image":"1fe8ba4c5308","Names":["/suspicious_nobel"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:fc000cafaac6c9ef1975d88b91a0dc060c1a06623127233c76f18e867272f599 in /","Created":1395615112,"Id":"b28f7df24111249c6376b716158a103f177d8a7c4468fc0c1122e9ef9ef25c65","Image":"4a666898763a","Names":["/naughty_einstein"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:675a3f36a170ea5f92020111ebc6a332bc591517ef9f4f40425fa89a92fd16a2 in /","Created":1395615110,"Id":"4168949ea22a21d36dc2081381baf60990fac9242f962969b8b45223c128272b","Image":"base:latest","Names":["/backstabbing_heisenberg"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"cat /Gemfile","Created":1395615110,"Id":"592b830ab81914a92943a8d3bce3c1234cbd8d83aadc863477db7aef476d1b6e","Image":"f436c033a91e","Names":["/stoic_feynman"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:55e415893bdbadc4f7eb527228395d27ad0c272ec56c53be0829b2791ac9420c in /","Created":1395615108,"Id":"a42e1ed4c3dd186379a12e84e39e8566488a7426fb75e1054b82a20c8a275745","Image":"base:latest","Names":["/naughty_newton"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"cat /Gemfile /Rakefile","Created":1395615093,"Id":"a1687110527d24ef8bfc5f1c320724bc8105cb952ef515e28914190ca5b8b51c","Image":"49312967b210","Names":["/furious_pare"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:70e7412d8807542f4cd318c8f31c72f81debc60e164dd846059f0602652a7e50 in /","Created":1395615092,"Id":"865b86959f045068e5d29e18643d07ddd3b738be1d51045b89efa9bc7e0149ac","Image":"6ff1bc8b4a76","Names":["/tender_fermi"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:e8e2cb2809ea4c9c3117cdc0aa170daf98f132705f7e0f9f2ffb93f0d9ab2efa in /","Created":1395615090,"Id":"909be783d7626f909ccd2d4db87c5d5e0a4b04d60e7585992bbb8c9babd36ff1","Image":"base:latest","Names":["/sleepy_ritchie"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"cat /Gemfile","Created":1395615089,"Id":"e2c601a8e00e143fae2c279d58f7e789e76174484c5aed9989c21b521815e81b","Image":"cccbcd861d93","Names":["/cocky_thompson"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:267dd8662509ad8c2db6581535f1bd5895104ede376c68db66f91fb67e673a96 in /","Created":1395615087,"Id":"9d01185db242cf7453d3b6c92dc4cd790cb1c1b32eb93d7397f408f707afefa2","Image":"base:latest","Names":["/suspicious_turing"],"Ports":[],"Status":"Exit 0"}
-        ]
+      string: '[]'
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:55 GMT
+  recorded_at: Fri, 06 Jun 2014 14:31:02 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/build
+    uri: unix:///var/run/docker.sock/v1.11/build
     body:
       encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDEx
-        ADEyMzEzNjYyNjEzADAxMzI3NwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADAwMDAwMDAwMDAwADAxMzIzNQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -94,7 +83,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -105,7 +94,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:55 GMT
+      - Fri, 06 Jun 2014 14:31:02 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -115,17 +104,17 @@ http_interactions:
       string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Successfully built b750fe79269d\\n\"}\r\n"
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:55 GMT
+  recorded_at: Fri, 06 Jun 2014 14:31:02 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.10/build?rm=true
+    uri: unix:///var/run/docker.sock/v1.11/build?rm=true
     body:
       encoding: UTF-8
       string: !binary |-
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADEyMzEzNjYyNjEzADAxMjYxMAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADAwMDAwMDAwMDAwADAxMjU0NgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -147,8 +136,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjMxMzY2MjYx
-        MwAwMTMzMDEAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAwMDAwMDAwMDAw
+        MAAwMTMyMzcAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -193,7 +182,7 @@ http_interactions:
         AAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - application/json
   response:
@@ -204,7 +193,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:55 GMT
+      - Fri, 06 Jun 2014 14:31:02 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -213,19 +202,19 @@ http_interactions:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : from b750fe79269d\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 3373eb3b86cd\\n\"}\r\n{\"stream\":\"Successfully built 3373eb3b86cd\\n\"}\r\n{\"stream\":\"Removing
-        intermediate container 01079fed9f74\\n\"}\r\n"
+        ---\\u003e Using cache\\n\"}\r\n{\"stream\":\" ---\\u003e 708490cac070\\n\"}\r\n{\"stream\":\"Successfully
+        built 708490cac070\\n\"}\r\n"
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:57 GMT
+  recorded_at: Fri, 06 Jun 2014 14:31:02 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/containers/json?all=true
+    uri: unix:///var/run/docker.sock/v1.11/containers/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.10.3
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -236,25 +225,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 23 Mar 2014 22:51:57 GMT
+      - Fri, 06 Jun 2014 14:31:02 GMT
+      Content-Length:
+      - '2'
       Connection:
       - close
-      Transfer-Encoding:
-      - ''
     body:
       encoding: UTF-8
-      string: |-
-        [{"Command":"cat /Gemfile /Rakefile","Created":1395615114,"Id":"41f5bb2b030dafaf52b6451e7d538a1b9e2749e618c351629f25970b142ef091","Image":"1fe8ba4c5308","Names":["/suspicious_nobel"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:fc000cafaac6c9ef1975d88b91a0dc060c1a06623127233c76f18e867272f599 in /","Created":1395615112,"Id":"b28f7df24111249c6376b716158a103f177d8a7c4468fc0c1122e9ef9ef25c65","Image":"4a666898763a","Names":["/naughty_einstein"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:675a3f36a170ea5f92020111ebc6a332bc591517ef9f4f40425fa89a92fd16a2 in /","Created":1395615110,"Id":"4168949ea22a21d36dc2081381baf60990fac9242f962969b8b45223c128272b","Image":"base:latest","Names":["/backstabbing_heisenberg"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"cat /Gemfile","Created":1395615110,"Id":"592b830ab81914a92943a8d3bce3c1234cbd8d83aadc863477db7aef476d1b6e","Image":"f436c033a91e","Names":["/stoic_feynman"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:55e415893bdbadc4f7eb527228395d27ad0c272ec56c53be0829b2791ac9420c in /","Created":1395615108,"Id":"a42e1ed4c3dd186379a12e84e39e8566488a7426fb75e1054b82a20c8a275745","Image":"base:latest","Names":["/naughty_newton"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"cat /Gemfile /Rakefile","Created":1395615093,"Id":"a1687110527d24ef8bfc5f1c320724bc8105cb952ef515e28914190ca5b8b51c","Image":"49312967b210","Names":["/furious_pare"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:70e7412d8807542f4cd318c8f31c72f81debc60e164dd846059f0602652a7e50 in /","Created":1395615092,"Id":"865b86959f045068e5d29e18643d07ddd3b738be1d51045b89efa9bc7e0149ac","Image":"6ff1bc8b4a76","Names":["/tender_fermi"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:e8e2cb2809ea4c9c3117cdc0aa170daf98f132705f7e0f9f2ffb93f0d9ab2efa in /","Created":1395615090,"Id":"909be783d7626f909ccd2d4db87c5d5e0a4b04d60e7585992bbb8c9babd36ff1","Image":"base:latest","Names":["/sleepy_ritchie"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"cat /Gemfile","Created":1395615089,"Id":"e2c601a8e00e143fae2c279d58f7e789e76174484c5aed9989c21b521815e81b","Image":"cccbcd861d93","Names":["/cocky_thompson"],"Ports":[],"Status":"Exit 0"}
-        ,{"Command":"/bin/sh -c #(nop) ADD file:267dd8662509ad8c2db6581535f1bd5895104ede376c68db66f91fb67e673a96 in /","Created":1395615087,"Id":"9d01185db242cf7453d3b6c92dc4cd790cb1c1b32eb93d7397f408f707afefa2","Image":"base:latest","Names":["/suspicious_turing"],"Ports":[],"Status":"Exit 0"}
-        ]
+      string: '[]'
     http_version: 
-  recorded_at: Sun, 23 Mar 2014 22:51:57 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Fri, 06 Jun 2014 14:31:02 GMT
+recorded_with: VCR 2.9.2
