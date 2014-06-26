@@ -1,0 +1,142 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.11/images/create?fromImage=registry&tag=latest
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 26 Jun 2014 19:00:14 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling repository registry\"}\r\n{\"status\":\"Pulling
+        image (latest) from registry\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}{\"status\":\"Pulling
+        image (latest) from registry, endpoint: https://cdn-registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"55589ce0cce0\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"7ffd65ea5c7e\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"2d8332c7750a\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"f5e98cd079d1\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"8550586362b5\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"3d824df8820f\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"097a63d9bb5e\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"075ad3dc90c2\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"8bb0ed3a4874\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"1f1f6dc3ed45\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"bc066c5826ea\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"40c4afa62604\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"b34ed9c2158c\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"ca5d645dac85\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"d39dfd06bae1\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"14faab53c729\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}"
+    http_version: 
+  recorded_at: Thu, 26 Jun 2014 19:00:16 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.11/images/6e526128fd5b/tag?repo=localhost%3A5000%2Fregistry&tag=test
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Date:
+      - Thu, 26 Jun 2014 19:00:16 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 26 Jun 2014 19:00:16 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.11/images/localhost:5000/registry/push?tag=test
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.1
+      Content-Type:
+      - text/plain
+      X-Registry-Auth:
+      - e30=
+      X-Registry-Config:
+      - e30=
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 26 Jun 2014 19:00:18 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"Image successfully
+        pushed\",\"progressDetail\":{},\"id\":\"b34ed9c2158c\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"ca5d645dac85\"}{\"status\":\"Buffering
+        to disk\",\"progressDetail\":{\"current\":1024,\"start\":1403809302},\"progress\":\"1.024
+        kB\",\"id\":\"ca5d645dac85\"}{\"status\":\"Buffering to disk\",\"progressDetail\":{\"start\":1403809302},\"id\":\"ca5d645dac85\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":512,\"total\":1024,\"start\":1403809302},\"progress\":\"[=========================\\u003e
+        \                        ]    512 B/1.024 kB 0\",\"id\":\"ca5d645dac85\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809302},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"ca5d645dac85\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809302},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"ca5d645dac85\"}{\"status\":\"Image successfully
+        pushed\",\"progressDetail\":{},\"id\":\"ca5d645dac85\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"d39dfd06bae1\"}{\"status\":\"Buffering
+        to disk\",\"progressDetail\":{\"current\":1024,\"start\":1403809303},\"progress\":\"1.024
+        kB\",\"id\":\"d39dfd06bae1\"}{\"status\":\"Buffering to disk\",\"progressDetail\":{\"start\":1403809303},\"id\":\"d39dfd06bae1\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":512,\"total\":1024,\"start\":1403809303},\"progress\":\"[=========================\\u003e
+        \                        ]    512 B/1.024 kB 0\",\"id\":\"d39dfd06bae1\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809303},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"d39dfd06bae1\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809303},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"d39dfd06bae1\"}{\"status\":\"Image successfully
+        pushed\",\"progressDetail\":{},\"id\":\"d39dfd06bae1\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"14faab53c729\"}{\"status\":\"Buffering
+        to disk\",\"progressDetail\":{\"current\":1024,\"start\":1403809305},\"progress\":\"1.024
+        kB\",\"id\":\"14faab53c729\"}{\"status\":\"Buffering to disk\",\"progressDetail\":{\"start\":1403809305},\"id\":\"14faab53c729\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":512,\"total\":1024,\"start\":1403809305},\"progress\":\"[=========================\\u003e
+        \                        ]    512 B/1.024 kB 0\",\"id\":\"14faab53c729\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809305},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"14faab53c729\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809305},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"14faab53c729\"}{\"status\":\"Image successfully
+        pushed\",\"progressDetail\":{},\"id\":\"14faab53c729\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}{\"status\":\"Buffering
+        to disk\",\"progressDetail\":{\"current\":1024,\"start\":1403809306},\"progress\":\"1.024
+        kB\",\"id\":\"6e526128fd5b\"}{\"status\":\"Buffering to disk\",\"progressDetail\":{\"start\":1403809306},\"id\":\"6e526128fd5b\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":512,\"total\":1024,\"start\":1403809306},\"progress\":\"[=========================\\u003e
+        \                        ]    512 B/1.024 kB 0\",\"id\":\"6e526128fd5b\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809306},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"6e526128fd5b\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":1024,\"start\":1403809306},\"progress\":\"[==================================================\\u003e]
+        1.024 kB/1.024 kB\",\"id\":\"6e526128fd5b\"}{\"status\":\"Image successfully
+        pushed\",\"progressDetail\":{},\"id\":\"6e526128fd5b\"}{\"status\":\"Pushing
+        tag for rev [6e526128fd5b] on {http://localhost:5000/v1/repositories/registry/tags/test}\"}\r\n"
+    http_version: 
+  recorded_at: Thu, 26 Jun 2014 19:01:46 GMT
+recorded_with: VCR 2.9.2
