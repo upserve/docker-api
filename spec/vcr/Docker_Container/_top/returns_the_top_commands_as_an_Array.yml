@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/build
+    uri: unix:///var/run/docker.sock/v1.12/build
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/tar
       Transfer-Encoding:
@@ -25,7 +25,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:16:05 GMT
+      - Thu, 26 Jun 2014 19:42:54 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -35,19 +35,20 @@ http_interactions:
       string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : run printf '#! /bin/sh\\\\nwhile
         true\\\\ndo\\\\ntrue\\\\ndone\\\\n' \\u003e /while \\u0026\\u0026 chmod +x
-        /while\\n\"}\r\n{\"stream\":\" ---\\u003e Using cache\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 5964d75bfbd2\\n\"}\r\n{\"stream\":\"Successfully built 5964d75bfbd2\\n\"}\r\n"
+        /while\\n\"}\r\n{\"stream\":\" ---\\u003e Running in 0902d83c4674\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 41b70f59d9b6\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        0902d83c4674\\n\"}\r\n{\"stream\":\"Successfully built 41b70f59d9b6\\n\"}\r\n"
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:16:05 GMT
+  recorded_at: Thu, 26 Jun 2014 19:42:58 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/containers/create
+    uri: unix:///var/run/docker.sock/v1.12/containers/create
     body:
       encoding: UTF-8
-      string: '{"Image":"5964d75bfbd2","Cmd":["/while"]}'
+      string: '{"Image":"41b70f59d9b6","Cmd":["/while"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/json
   response:
@@ -58,7 +59,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:16:06 GMT
+      - Thu, 26 Jun 2014 19:42:58 GMT
       Content-Length:
       - '90'
       Connection:
@@ -66,18 +67,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"4895cb1e1abcbbadbb5a20d43ed0b63059c4342e96b9aa154d8eb18227cefb6e","Warnings":null}
+        {"Id":"e3ef53f0c6fc463801a85b9c8d9b2fe348600c2e529c59fa0592da739912224d","Warnings":null}
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:16:06 GMT
+  recorded_at: Thu, 26 Jun 2014 19:42:58 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/containers/4895cb1e1abcbbadbb5a20d43ed0b63059c4342e96b9aa154d8eb18227cefb6e/start
+    uri: unix:///var/run/docker.sock/v1.12/containers/e3ef53f0c6fc463801a85b9c8d9b2fe348600c2e529c59fa0592da739912224d/start
     body:
       encoding: UTF-8
       string: '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/json
   response:
@@ -86,27 +87,23 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Fri, 06 Jun 2014 14:16:06 GMT
-      Content-Length:
-      - '0'
-      Content-Type:
-      - text/plain; charset=utf-8
+      - Thu, 26 Jun 2014 19:42:58 GMT
       Connection:
       - close
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:16:06 GMT
+  recorded_at: Thu, 26 Jun 2014 19:42:58 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.11/containers/4895cb1e1abcbbadbb5a20d43ed0b63059c4342e96b9aa154d8eb18227cefb6e/top
+    uri: unix:///var/run/docker.sock/v1.12/containers/e3ef53f0c6fc463801a85b9c8d9b2fe348600c2e529c59fa0592da739912224d/top
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -117,15 +114,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:16:07 GMT
+      - Thu, 26 Jun 2014 19:42:59 GMT
       Content-Length:
-      - '145'
+      - '147'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |
-        {"Processes":[["root","5657","5480","95","10:16","?","00:00:00","/bin/sh /while"]],"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}
+        {"Processes":[["root","10678","17600","95","15:42","?","00:00:00","/bin/sh /while"]],"Titles":["UID","PID","PPID","C","STIME","TTY","TIME","CMD"]}
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:16:07 GMT
+  recorded_at: Thu, 26 Jun 2014 19:42:59 GMT
 recorded_with: VCR 2.9.2

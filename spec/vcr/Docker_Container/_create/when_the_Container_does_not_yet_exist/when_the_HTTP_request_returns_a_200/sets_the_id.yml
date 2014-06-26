@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/containers/create
+    uri: unix:///var/run/docker.sock/v1.12/containers/create
     body:
       encoding: UTF-8
       string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 13:36:59 GMT
+      - Thu, 26 Jun 2014 19:48:19 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,7 +27,7 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"a223b5b4fcd93f795ddb65df4ec1616ffa2e764120941d0dd65c7fe126bc1311","Warnings":null}
+        {"Id":"f3b40d5d64c5615c13b8d1301908e94f76b502b629bb96be84b8dbef283f816e","Warnings":null}
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 13:36:59 GMT
+  recorded_at: Thu, 26 Jun 2014 19:48:19 GMT
 recorded_with: VCR 2.9.2

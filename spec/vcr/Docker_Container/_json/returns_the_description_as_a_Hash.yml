@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/containers/create
+    uri: unix:///var/run/docker.sock/v1.12/containers/create
     body:
       encoding: UTF-8
       string: '{"Cmd":["true"],"Image":"base"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/json
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 13:36:32 GMT
+      - Thu, 26 Jun 2014 19:39:22 GMT
       Content-Length:
       - '90'
       Connection:
@@ -27,18 +27,18 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Id":"9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627","Warnings":null}
+        {"Id":"cf367fe2a4eaf9908dd1f6c6d988b6b7391cebfbe827435ee7204659fa2d6ec1","Warnings":null}
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 13:36:32 GMT
+  recorded_at: Thu, 26 Jun 2014 19:39:22 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.11/containers/9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627/json
+    uri: unix:///var/run/docker.sock/v1.12/containers/cf367fe2a4eaf9908dd1f6c6d988b6b7391cebfbe827435ee7204659fa2d6ec1/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -49,14 +49,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 13:36:32 GMT
+      - Thu, 26 Jun 2014 19:39:22 GMT
       Content-Length:
-      - '1221'
+      - '1243'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: '{"ID":"9f7808dd7512fa74bd22f748b04c02694ac13f9fdb3936ddf73858cdfc667627","Created":"2014-06-06T13:36:31.878727014Z","Path":"true","Args":[],"Config":{"Hostname":"9f7808dd7512","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"ExposedPorts":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Image":"base","Volumes":null,"WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"OnBuild":null},"State":{"Running":false,"Pid":0,"ExitCode":0,"StartedAt":"0001-01-01T00:00:00Z","FinishedAt":"0001-01-01T00:00:00Z"},"Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","NetworkSettings":{"IPAddress":"","IPPrefixLen":0,"Gateway":"","Bridge":"","PortMapping":null,"Ports":null},"ResolvConfPath":"","HostnamePath":"","HostsPath":"","Name":"/berserk_albattani","Driver":"devicemapper","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","Volumes":null,"VolumesRW":null,"HostConfig":{"Binds":null,"ContainerIDFile":"","LxcConf":null,"Privileged":false,"PortBindings":null,"Links":null,"PublishAllPorts":false,"Dns":null,"DnsSearch":null,"VolumesFrom":null,"NetworkMode":""}}'
+      string: |
+        {"Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":null,"ExposedPorts":null,"Hostname":"cf367fe2a4ea","Image":"base","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-06-26T19:39:22.490034231Z","Driver":"devicemapper","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"ContainerIDFile":"","Dns":null,"DnsSearch":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"cf367fe2a4eaf9908dd1f6c6d988b6b7391cebfbe827435ee7204659fa2d6ec1","Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","MountLabel":"","Name":"/thirsty_nobel","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"PortMapping":null,"Ports":null},"Path":true,"ProcessLabel":"","ResolvConfPath":"","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":0,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":null,"VolumesRW":null}
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 13:36:32 GMT
+  recorded_at: Thu, 26 Jun 2014 19:39:22 GMT
 recorded_with: VCR 2.9.2
