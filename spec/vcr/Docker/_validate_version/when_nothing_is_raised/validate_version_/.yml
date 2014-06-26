@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.10/info
+    uri: unix:///var/run/docker.sock/v1.11/info
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.9.1
+      - Swipely/Docker-API 1.11.1
       Content-Type:
       - text/plain
   response:
@@ -21,15 +21,15 @@ http_interactions:
       Job-Name:
       - info
       Date:
-      - Wed, 12 Mar 2014 13:32:21 GMT
+      - Thu, 26 Jun 2014 19:18:54 GMT
       Content-Length:
-      - '693'
+      - '697'
       Connection:
       - close
     body:
       encoding: UTF-8
       string: |
-        {"Containers":39,"Debug":0,"Driver":"devicemapper","DriverStatus":[["Pool Name","docker-8:4-12104-pool"],["Data file","/var/lib/docker/devicemapper/devicemapper/data"],["Metadata file","/var/lib/docker/devicemapper/devicemapper/metadata"],["Data Space Used","1631.8 Mb"],["Data Space Total","102400.0 Mb"],["Metadata Space Used","4.1 Mb"],["Metadata Space Total","2048.0 Mb"]],"ExecutionDriver":"native-0.1","IPv4Forwarding":1,"Images":25,"IndexServerAddress":"https://index.docker.io/v1/","InitPath":"/usr/lib/docker/dockerinit","InitSha1":"df6aa6b00e1e829a422f1a761d0fab5425291e07","KernelVersion":"3.13.6-1-ARCH","MemoryLimit":1,"NEventsListener":0,"NFd":19,"NGoroutines":19,"SwapLimit":0}
+        {"Containers":31,"Debug":0,"Driver":"devicemapper","DriverStatus":[["Pool Name","docker-8:2-5393690-pool"],["Data file","/var/lib/docker/devicemapper/devicemapper/data"],["Metadata file","/var/lib/docker/devicemapper/devicemapper/metadata"],["Data Space Used","9805.8 Mb"],["Data Space Total","102400.0 Mb"],["Metadata Space Used","16.1 Mb"],["Metadata Space Total","2048.0 Mb"]],"ExecutionDriver":"native-0.2","IPv4Forwarding":1,"Images":204,"IndexServerAddress":"https://index.docker.io/v1/","InitPath":"/usr/lib/docker/dockerinit","InitSha1":"728ea391473ec106b15a6486b3b1a2e8a07e4ff5","KernelVersion":"3.15.1-1-ARCH","MemoryLimit":1,"NEventsListener":0,"NFd":20,"NGoroutines":27,"SwapLimit":0}
     http_version: 
-  recorded_at: Wed, 12 Mar 2014 13:32:21 GMT
-recorded_with: VCR 2.8.0
+  recorded_at: Thu, 26 Jun 2014 19:18:54 GMT
+recorded_with: VCR 2.9.2
