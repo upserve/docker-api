@@ -30,17 +30,6 @@ describe Docker::Image do
     end
   end
 
-  describe '#insert' do
-    subject { described_class.build('from base') }
-    let(:new_image) { subject.insert(:path => '/stallman',
-                                     :url => 'http://stallman.org') }
-    let(:ls_output) { new_image.run('ls /').attach }
-
-    it 'inserts the url\'s file into a new Image', :vcr do
-      expect(ls_output.first.first).to include('stallman')
-    end
-  end
-
   describe '#insert_local' do
     subject { described_class.build('from base') }
 
