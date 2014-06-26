@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.11/images/json
+    uri: unix:///var/run/docker.sock/v1.12/images/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:34:52 GMT
+      - Thu, 26 Jun 2014 20:08:16 GMT
       Content-Length:
       - '251'
       Connection:
@@ -30,10 +30,10 @@ http_interactions:
         [{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base:latest","base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl"],"Size":77,"VirtualSize":175307035}
         ]
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:34:52 GMT
+  recorded_at: Thu, 26 Jun 2014 20:08:16 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/build
+    uri: unix:///var/run/docker.sock/v1.12/build
     body:
       encoding: UTF-8
       string: !binary |-
@@ -85,7 +85,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/json
   response:
@@ -96,7 +96,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:34:52 GMT
+      - Thu, 26 Jun 2014 20:08:16 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -106,10 +106,10 @@ http_interactions:
       string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Successfully built b750fe79269d\\n\"}\r\n"
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:34:52 GMT
+  recorded_at: Thu, 26 Jun 2014 20:08:16 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/build?rm=true
+    uri: unix:///var/run/docker.sock/v1.12/build?rm=true
     body:
       encoding: UTF-8
       string: !binary |-
@@ -184,7 +184,7 @@ http_interactions:
         AAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/json
   response:
@@ -195,7 +195,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:34:52 GMT
+      - Thu, 26 Jun 2014 20:08:16 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -204,19 +204,19 @@ http_interactions:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : from b750fe79269d\\n\"}\r\n{\"stream\":\" ---\\u003e
         b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 05e7e1d523ff\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        9607befc3e1a\\n\"}\r\n{\"stream\":\"Successfully built 05e7e1d523ff\\n\"}\r\n"
+        ---\\u003e 6ed87cdb001d\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        c49761e484c3\\n\"}\r\n{\"stream\":\"Successfully built 6ed87cdb001d\\n\"}\r\n"
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:34:56 GMT
+  recorded_at: Thu, 26 Jun 2014 20:08:19 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.11/images/json
+    uri: unix:///var/run/docker.sock/v1.12/images/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -227,7 +227,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 14:34:56 GMT
+      - Thu, 26 Jun 2014 20:08:19 GMT
       Content-Length:
       - '508'
       Connection:
@@ -235,9 +235,9 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1402065294,"Id":"05e7e1d523ff92976daa0b5515b6ba16da8e9a033e7ee528bf4cb0123e089873","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":175307073}
-        ,{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base:latest","base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl"],"Size":77,"VirtualSize":175307035}
+        [{"Created":1403813297,"Id":"6ed87cdb001d21ca678a37123e814334e2e447d63d2cb6a21d8877c583995975","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":175307073}
+        ,{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl","base:latest"],"Size":77,"VirtualSize":175307035}
         ]
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 14:34:56 GMT
+  recorded_at: Thu, 26 Jun 2014 20:08:19 GMT
 recorded_with: VCR 2.9.2
