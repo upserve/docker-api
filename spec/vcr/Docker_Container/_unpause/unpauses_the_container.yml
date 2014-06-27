@@ -1,0 +1,150 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/create
+    body:
+      encoding: UTF-8
+      string: '{"Cmd":["sleep","50"],"Image":"base"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.2
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message:
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Jun 2014 20:36:48 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc","Warnings":null}
+    http_version:
+  recorded_at: Wed, 25 Jun 2014 22:31:11 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/start
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.2
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message:
+    headers:
+      Date:
+      - Wed, 25 Jun 2014 20:36:48 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Wed, 25 Jun 2014 22:31:11 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/pause
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.2
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message:
+    headers:
+      Date:
+      - Wed, 25 Jun 2014 20:36:48 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Wed, 25 Jun 2014 22:31:11 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/unpause
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.2
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message:
+    headers:
+      Date:
+      - Wed, 25 Jun 2014 20:36:48 GMT
+      Content-Length:
+      - '0'
+      Content-Type:
+      - text/plain; charset=utf-8
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version:
+  recorded_at: Wed, 25 Jun 2014 22:31:11 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.12/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.11.2
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message:
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Jun 2014 20:36:48 GMT
+      Content-Length:
+      - '1614'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {"Args":["50"],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["sleep","50"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":null,"ExposedPorts":null,"Hostname":"fb761093d72b","Image":"base","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-06-25T20:36:48.80485791Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"ContainerIDFile":"","Dns":null,"DnsSearch":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"VolumesFrom":null},"HostnamePath":"/mnt/sda1/var/lib/docker/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/hostname","HostsPath":"/mnt/sda1/var/lib/docker/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/hosts","Id":"fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc","Image":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","MountLabel":"","Name":"/stupefied_feynman","NetworkSettings":{"Bridge":"docker0","Gateway":"172.17.42.1","IPAddress":"172.17.0.53","IPPrefixLen":16,"PortMapping":null,"Ports":{}},"Path":"sleep","ProcessLabel":"","ResolvConfPath":"/mnt/sda1/var/lib/docker/containers/fb761093d72b11437af1fbb405cad2128920db46e8bce79ed13b20f818ee3edc/resolv.conf","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":12100,"Running":true,"StartedAt":"2014-06-25T20:36:48.92517516Z"},"Volumes":{},"VolumesRW":{}}
+    http_version:
+  recorded_at: Wed, 25 Jun 2014 22:31:11 GMT
+recorded_with: VCR 2.9.2

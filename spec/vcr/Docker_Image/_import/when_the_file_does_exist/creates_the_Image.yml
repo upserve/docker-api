@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/images/create?fromSrc=-
+    uri: unix:///var/run/docker.sock/v1.12/images/create?fromSrc=-
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - application/tar
       Transfer-Encoding:
@@ -21,14 +21,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 15:04:32 GMT
+      - Thu, 26 Jun 2014 20:30:43 GMT
       Connection:
       - close
       Transfer-Encoding:
       - ''
     body:
       encoding: UTF-8
-      string: "{\"status\":\"f97c0340b51437f9c26d5173f3a4740ddc7fd514149c217bb5ccd74582748532\"}\r\n"
+      string: "{\"status\":\"8e6af99faf6639486edb869399f9b4c602972f3b5e1be48cd47a03d40b198203\"}\r\n"
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 15:04:32 GMT
+  recorded_at: Thu, 26 Jun 2014 20:30:43 GMT
 recorded_with: VCR 2.9.2

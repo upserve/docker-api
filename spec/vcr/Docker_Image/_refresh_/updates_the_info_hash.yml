@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.11/images/create?fromImage=base
+    uri: unix:///var/run/docker.sock/v1.12/images/create?fromImage=base
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 15:21:27 GMT
+      - Thu, 26 Jun 2014 20:16:19 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -34,16 +34,16 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"b750fe79269d\"}"
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 15:21:28 GMT
+  recorded_at: Thu, 26 Jun 2014 20:16:20 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.11/images/json?all=true
+    uri: unix:///var/run/docker.sock/v1.12/images/json?all=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -54,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 15:21:28 GMT
+      - Thu, 26 Jun 2014 20:16:20 GMT
       Connection:
       - close
       Transfer-Encoding:
@@ -62,40 +62,40 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1402067547,"Id":"8487c71145e1b4d0f1b30c87c198138fd9a62a1c5c72125c0d1dda51c57d923a","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":88195,"VirtualSize":175395230}
-        ,{"Created":1402067050,"Id":"f97c0340b51437f9c26d5173f3a4740ddc7fd514149c217bb5ccd74582748532","ParentId":"","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":175854140,"VirtualSize":175854140}
-        ,{"Created":1402066420,"Id":"3746c6801d76c35763c3bde3bbbcfeb412e574ac8ccf6f5dcabf5b5ae8d388e8","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":88195,"VirtualSize":175395230}
-        ,{"Created":1401970080,"Id":"da394c73c60c542a7f34bd0dac5ab71e31c81dd56df90080718b697345665ffc","ParentId":"69249d7fb38f6f9fd16842712c2d64f7984146c83d67d429c0da68f5ac942381","RepoTags":["registry:latest"],"Size":0,"VirtualSize":508212264}
-        ,{"Created":1401970079,"Id":"887fdc776a7d3de2627177a85f396f9d22ad92b8b2dbff194ff58e0857a3ce33","ParentId":"112f480acea15a04308b0abad5ee745d8cdfaf8ef73b753fd194d4be2903be76","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":508212264}
-        ,{"Created":1401970079,"Id":"112f480acea15a04308b0abad5ee745d8cdfaf8ef73b753fd194d4be2903be76","ParentId":"b48042dcc960b4b77940e8719b5190622a32e3f20047be9043e61c806bd394d6","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":508212264}
-        ,{"Created":1401970079,"Id":"69249d7fb38f6f9fd16842712c2d64f7984146c83d67d429c0da68f5ac942381","ParentId":"887fdc776a7d3de2627177a85f396f9d22ad92b8b2dbff194ff58e0857a3ce33","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":508212264}
-        ,{"Created":1401970076,"Id":"b48042dcc960b4b77940e8719b5190622a32e3f20047be9043e61c806bd394d6","ParentId":"c51266c6a24759f0c14c1693107d16fddf2c8b6bdb5c8aa40dd16de2e010e6bc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":20117936,"VirtualSize":508212264}
-        ,{"Created":1401969934,"Id":"c51266c6a24759f0c14c1693107d16fddf2c8b6bdb5c8aa40dd16de2e010e6bc","ParentId":"0d13b0be2dc84b3db06c3738dee73fe754626553da7336551b7a834f811a9a9a","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":8438003,"VirtualSize":488094328}
-        ,{"Created":1401969929,"Id":"73f46c56bcbd933bec0c91a5a49ab69fa8a067bd50ccdb91093b21f9d16cde66","ParentId":"7a64b3c4456e03848795faf5612a569c75b7921e11c46aa8590d17327dc741b0","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1331039,"VirtualSize":479656252}
-        ,{"Created":1401969929,"Id":"0d13b0be2dc84b3db06c3738dee73fe754626553da7336551b7a834f811a9a9a","ParentId":"73f46c56bcbd933bec0c91a5a49ab69fa8a067bd50ccdb91093b21f9d16cde66","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":73,"VirtualSize":479656325}
-        ,{"Created":1401927058,"Id":"7a64b3c4456e03848795faf5612a569c75b7921e11c46aa8590d17327dc741b0","ParentId":"a857da6ec2d5f4fa89b2638347c4f080beb8305c94df77b3553747ad19100e93","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":40765785,"VirtualSize":478325213}
-        ,{"Created":1401927040,"Id":"a857da6ec2d5f4fa89b2638347c4f080beb8305c94df77b3553747ad19100e93","ParentId":"d0750650eb468ac23b8c410f185684ae398f686f653c326785635c631e8c8f06","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":134946185,"VirtualSize":437559428}
-        ,{"Created":1401926997,"Id":"d0750650eb468ac23b8c410f185684ae398f686f653c326785635c631e8c8f06","ParentId":"ea40f710e26c93b7f51b73ba2185f6eade802e5d3b66f3f7295ca09e91bc4fbc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":26083857,"VirtualSize":302613243}
-        ,{"Created":1401926977,"Id":"ea40f710e26c93b7f51b73ba2185f6eade802e5d3b66f3f7295ca09e91bc4fbc","ParentId":"5cf8fd909c6ccc61199df6dbeb165767b83c23842ef49ca3ef3b81ece1bdce4f","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":2314277,"VirtualSize":276529386}
-        ,{"Created":1401405206,"Id":"5cf8fd909c6ccc61199df6dbeb165767b83c23842ef49ca3ef3b81ece1bdce4f","ParentId":"e497c7c1bfbb69ab9fe556cc0bcb35c642c45eeed600ad812fdff0ce719f0610","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":81541301,"VirtualSize":274215109}
-        ,{"Created":1401405176,"Id":"e497c7c1bfbb69ab9fe556cc0bcb35c642c45eeed600ad812fdff0ce719f0610","ParentId":"7baf0ef6f14afdc7428cb658911ab196ac245a533c679be5e53e75dbe60c5b0a","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1903,"VirtualSize":192673808}
-        ,{"Created":1401405175,"Id":"7baf0ef6f14afdc7428cb658911ab196ac245a533c679be5e53e75dbe60c5b0a","ParentId":"35f6dd4dd141c32f2259c730e05111beb6bf8c5994c4e3ae3c76c29e2e35d195","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":194463,"VirtualSize":192671905}
-        ,{"Created":1401405168,"Id":"35f6dd4dd141c32f2259c730e05111beb6bf8c5994c4e3ae3c76c29e2e35d195","ParentId":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":192477442,"VirtualSize":192477442}
+        [{"Created":1403813375,"Id":"45482b19ac1b73d938bdc3e53cb92725fa500c58c251c7e5681d3b062e8ef89b","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["nahiluhmot/base2:latest"],"Size":0,"VirtualSize":175307035}
+        ,{"Created":1403813297,"Id":"6ed87cdb001d21ca678a37123e814334e2e447d63d2cb6a21d8877c583995975","ParentId":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":175307073}
+        ,{"Created":1403169743,"Id":"14faab53c729894ee2c5e929839a8437392473ed7fba6e756d15543c269a4e06","ParentId":"d39dfd06bae1fc189c989398a2d9c51210afaaad97b14c6050412bab61ab65db","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":515971797}
+        ,{"Created":1403169743,"Id":"6e526128fd5b256ced4e7863d4e431cf3fca87ae2058c1e40ca65bf139e68285","ParentId":"14faab53c729894ee2c5e929839a8437392473ed7fba6e756d15543c269a4e06","RepoTags":["registry:latest","localhost:5000/registry:test"],"Size":0,"VirtualSize":515971797}
+        ,{"Created":1403169743,"Id":"d39dfd06bae1fc189c989398a2d9c51210afaaad97b14c6050412bab61ab65db","ParentId":"ca5d645dac852209aa56c55bbda5b46be576454406183388351bbbeaacde5196","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":515971797}
+        ,{"Created":1403169742,"Id":"ca5d645dac852209aa56c55bbda5b46be576454406183388351bbbeaacde5196","ParentId":"b34ed9c2158c67930ac9f9fd18fe949fae7fb2adbfabd86d686a2d1b6a17d36b","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":515971797}
+        ,{"Created":1403169741,"Id":"b34ed9c2158c67930ac9f9fd18fe949fae7fb2adbfabd86d686a2d1b6a17d36b","ParentId":"40c4afa62604490beea4d6a0ee588356849ca20530e667ea66ce1ca4ec413a3f","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":20134370,"VirtualSize":515971797}
+        ,{"Created":1403169613,"Id":"40c4afa62604490beea4d6a0ee588356849ca20530e667ea66ce1ca4ec413a3f","ParentId":"bc066c5826ead01f6e87cf53b27959c1a0bbdf48960bd2b412d0d858f2da1881","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":8437026,"VirtualSize":495837427}
+        ,{"Created":1403169610,"Id":"bc066c5826ead01f6e87cf53b27959c1a0bbdf48960bd2b412d0d858f2da1881","ParentId":"1f1f6dc3ed45dc82256de49767ff0bac102faad8877abb3cde41a4f4831d3b6e","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":73,"VirtualSize":487400401}
+        ,{"Created":1403169609,"Id":"1f1f6dc3ed45dc82256de49767ff0bac102faad8877abb3cde41a4f4831d3b6e","ParentId":"8bb0ed3a48748d02ebf61f32cce2f76d131931900363696c44dc750b932bd3f0","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1361088,"VirtualSize":487400328}
+        ,{"Created":1403126524,"Id":"8bb0ed3a48748d02ebf61f32cce2f76d131931900363696c44dc750b932bd3f0","ParentId":"075ad3dc90c288fc704bc24399edd78edc976a0fb8f59d0d3c68f87a155aec3a","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":40778210,"VirtualSize":486039240}
+        ,{"Created":1403126504,"Id":"075ad3dc90c288fc704bc24399edd78edc976a0fb8f59d0d3c68f87a155aec3a","ParentId":"097a63d9bb5e5fb1121cae26f3192c257f47fe515b2cad4a6e60f22209a6e125","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":134959942,"VirtualSize":445261030}
+        ,{"Created":1403126456,"Id":"097a63d9bb5e5fb1121cae26f3192c257f47fe515b2cad4a6e60f22209a6e125","ParentId":"3d824df8820fa3c96ead49dfb503f10094da14a2b4eb79eea5aa0e4ae0378633","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":34200723,"VirtualSize":310301088}
+        ,{"Created":1403126419,"Id":"3d824df8820fa3c96ead49dfb503f10094da14a2b4eb79eea5aa0e4ae0378633","ParentId":"8550586362b521cacb428df31730d0fa64c3391bb3e6acf9a2dcba96e54d0da8","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":8,"VirtualSize":276100365}
+        ,{"Created":1403125465,"Id":"8550586362b521cacb428df31730d0fa64c3391bb3e6acf9a2dcba96e54d0da8","ParentId":"f5e98cd079d1db4041f76044a1388d029a2331a18e98b5cb0bfe45f53cb9ed37","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":8,"VirtualSize":276100357}
+        ,{"Created":1403125451,"Id":"f5e98cd079d1db4041f76044a1388d029a2331a18e98b5cb0bfe45f53cb9ed37","ParentId":"2d8332c7750a3540576e69cd43f93c308824f6f0379c2962587cbf42d324062c","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":83426549,"VirtualSize":276100349}
+        ,{"Created":1403125412,"Id":"7ffd65ea5c7e5900c3d969973cce866b81beba3de14f6085bbff981a63f1f4bb","ParentId":"55589ce0cce009d6e76a44c8bec94b06b3763a045225d5aca61b100c7bb11ed9","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":194463,"VirtualSize":192671905}
+        ,{"Created":1403125412,"Id":"2d8332c7750a3540576e69cd43f93c308824f6f0379c2962587cbf42d324062c","ParentId":"7ffd65ea5c7e5900c3d969973cce866b81beba3de14f6085bbff981a63f1f4bb","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1895,"VirtualSize":192673800}
+        ,{"Created":1403125408,"Id":"55589ce0cce009d6e76a44c8bec94b06b3763a045225d5aca61b100c7bb11ed9","ParentId":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":192477442,"VirtualSize":192477442}
         ,{"Created":1371157430,"Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","ParentId":"","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":0}
-        ,{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base:latest","base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl"],"Size":77,"VirtualSize":175307035}
+        ,{"Created":1364102658,"Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","ParentId":"27cf784147099545","RepoTags":["base2:latest","base:latest","base:ubuntu-12.10","base:ubuntu-quantal","base:ubuntu-quantl"],"Size":77,"VirtualSize":175307035}
         ,{"Created":1364068391,"Id":"27cf784147099545","ParentId":"","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":175306958,"VirtualSize":175306958}
         ]
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 15:21:28 GMT
+  recorded_at: Thu, 26 Jun 2014 20:16:20 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.11/images/b750fe79269d/json
+    uri: unix:///var/run/docker.sock/v1.12/images/b750fe79269d/json
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.1
+      - Swipely/Docker-API 1.11.2
       Content-Type:
       - text/plain
   response:
@@ -106,14 +106,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 06 Jun 2014 15:21:28 GMT
+      - Thu, 26 Jun 2014 20:16:20 GMT
       Content-Length:
-      - '615'
+      - '711'
       Connection:
       - close
     body:
       encoding: UTF-8
-      string: '{"id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","parent":"27cf784147099545","created":"2013-03-23T22:24:18.818426-07:00","container":"3d67245a8d72ecf13f33dffac9f79dcdf70f75acb84d308770391510e0c23ad0","container_config":{"Hostname":"","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"ExposedPorts":null,"Tty":true,"OpenStdin":true,"StdinOnce":false,"Env":null,"Cmd":["/bin/bash"],"Image":"base","Volumes":null,"WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"OnBuild":null},"Size":77}'
+      string: |
+        {"Architecture":"","Author":"","Comment":"","Config":null,"Container":"3d67245a8d72ecf13f33dffac9f79dcdf70f75acb84d308770391510e0c23ad0","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/bash"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":null,"ExposedPorts":null,"Hostname":"","Image":"base","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":true,"PortSpecs":null,"StdinOnce":false,"Tty":true,"User":"","Volumes":null,"WorkingDir":""},"Created":"2013-03-23T22:24:18.818426-07:00","DockerVersion":"","Id":"b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc","Os":"","Parent":"27cf784147099545","Size":77}
     http_version: 
-  recorded_at: Fri, 06 Jun 2014 15:21:28 GMT
+  recorded_at: Thu, 26 Jun 2014 20:16:20 GMT
 recorded_with: VCR 2.9.2

@@ -44,16 +44,6 @@ class Docker::Image
     self.info['RepoTags'] << "#{repo}:#{tag}"
   end
 
-  # Insert a file into the Image, returns a new Image that has that file.
-  def insert(query = {})
-    body = connection.post(path_for(:insert), query)
-    if id = Docker::Util.fix_json(body).last['status']
-      self.class.send(:new, connection, 'id' => id)
-    else
-      raise UnexpectedResponseError, "Could not find Id in '#{body}'"
-    end
-  end
-
   # Given a path of a local file and the path it should be inserted, creates
   # a new Image that has that file.
   def insert_local(opts = {})

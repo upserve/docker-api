@@ -29,7 +29,7 @@ describe Docker::Container do
 
     it 'returns the description as a Hash', :vcr do
       expect(description).to be_a Hash
-      expect(description['ID']).to start_with(subject.id)
+      expect(description['Id']).to start_with(subject.id)
     end
   end
 
@@ -280,6 +280,31 @@ describe Docker::Container do
       expect(described_class.all.map(&:id)).to be_any { |id|
         id.start_with?(subject.id)
       }
+    end
+  end
+
+  describe '#pause' do
+    subject {
+      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base').start
+    }
+
+    it 'pauses the container', :vcr do
+      subject.pause
+      expect(described_class.get(subject.id).info['State']['Paused']).to be true
+    end
+  end
+
+  describe '#unpause' do
+    subject {
+      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base').start
+    }
+    before { subject.pause }
+
+    it 'unpauses the container', :vcr do
+      subject.unpause
+      expect(
+        described_class.get(subject.id).info['State']['Paused']
+      ).to be false
     end
   end
 
