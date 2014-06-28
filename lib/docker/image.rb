@@ -6,9 +6,12 @@ class Docker::Image
   # an Image. This will not modify the Image, but rather create a new Container
   # to run the Image. If the image has an embedded config, no command is
   # necessary, but it will fail with 500 if no config is saved with the image
-  def run(cmd=nil)
+  def run(cmd=nil, options = {})
     opts = { 'Image' => self.id }
     opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
+    if options.is_a? Hash
+      opts.merge! options unless options.empty?
+    end
     begin
       Docker::Container.create(opts, connection)
                        .tap(&:start!)
