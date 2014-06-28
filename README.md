@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 0.11.*.
+This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.0.*
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
@@ -105,10 +105,6 @@ require 'docker'
 Docker::Image.create('fromImage' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
-# Insert a file into an Image from a url.
-image.insert('path' => '/google', 'url' => 'http://google.com')
-# => Docker::Image { :id => 11ef6c882, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
 # Insert a local file into an Image.
 image.insert_local('localPath' => 'Gemfile', 'outputPath' => '/')
 # => Docker::Image { :id => 682ea192f, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
@@ -198,6 +194,14 @@ container.stop
 
 # Restart the Container.
 container.restart
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# Pause the running Container processes.
+container.pause
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
+# Unpause the running Container processes.
+container.unpause
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
 # Kill the command running in the Container.
@@ -305,3 +309,9 @@ image 'repo:new_tag' => 'repo:tag' do
   image.tag('repo' => 'repo', 'tag' => 'new_tag')
 end
 ```
+
+## Not supported (yet)
+
+*   Providing a signal for the kill endpoint
+*   Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/reference/api/docker_remote_api_v1.12/#get-a-tarball-containing-all-images-and-tags-in-a-repository
+*   Load a tarball generated from docker that contains all the images and metadata of a repository: https://docs.docker.com/reference/api/docker_remote_api_v1.12/#load-a-tarball-with-a-set-of-images-and-tags-into-docker
