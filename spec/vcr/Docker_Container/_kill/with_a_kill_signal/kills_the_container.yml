@@ -1,0 +1,265 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/create
+    body:
+      encoding: UTF-8
+      string: '{"Cmd":["/bin/bash","-c","trap echo SIGTERM; while [ 1 ]; do echo hello;
+        done"],"Image":"base"}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Content-Length:
+      - '90'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8","Warnings":null}
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8/start
+    body:
+      encoding: UTF-8
+      string: '{}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8/kill?signal=SIGTERM
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.12/containers/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Content-Length:
+      - '277'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138649,"Id":"f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8","Image":"base:latest","Names":["/determined_kowalevski"],"Ports":[],"Status":"Up Less than a second"}
+        ]
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.12/containers/json?all=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138649,"Id":"f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8","Image":"base:latest","Names":["/determined_kowalevski"],"Ports":[],"Status":"Up Less than a second"}
+        ,{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138612,"Id":"259a695ed0085ad730abf9ce193c9d7ee3af12b72ebdda29360603291582409d","Image":"base:latest","Names":["/condescending_mclean"],"Ports":[],"Status":"Exited (-1) 32 seconds ago"}
+        ,{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138535,"Id":"cbfa145f2cd0130dee85c94bb70eec3c3cff23892e60a42d2404377a8b9c02ad","Image":"base:latest","Names":["/sharp_archimedes"],"Ports":[],"Status":"Exited (-1) About a minute ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hello; done'","Created":1404138533,"Id":"e7db5709022fd06d4e3c8bd0f493233d67b2a793dc07a4982b3c491ec61b2c83","Image":"base:latest","Names":["/stoic_bartik"],"Ports":[],"Status":"Exited (-1) About a minute ago"}
+        ,{"Command":"\"/bin/bash -c 'trap \"\" SIGTERM; while [ 1 ]; do echo hello; done'\"","Created":1404138438,"Id":"3a2d6022918aa91e4d8b56d7b29420ee45476e27c0f83889d547e0cbc44483c8","Image":"base:latest","Names":["/focused_mayer"],"Ports":[],"Status":"Exited (-1) 3 minutes ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hello; done'","Created":1404138414,"Id":"05bdffae4dd9ece30ad25869ff1f616486ada32ad70916838564b32a8866cd40","Image":"base:latest","Names":["/trusting_perlman"],"Ports":[],"Status":"Exited (-1) 3 minutes ago"}
+        ,{"Command":"\"/bin/bash -c 'trap \"\" SIGTERM; while [ 1 ]; do echo hello; done'\"","Created":1404138313,"Id":"fda96aefea21efe7a4dfd79d746ece41bb50907422d047a4e595f8e2f52e4b78","Image":"base:latest","Names":["/sharp_galileo"],"Ports":[],"Status":"Exited (-1) 5 minutes ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hello; done'","Created":1404138312,"Id":"4d12860bcd0dc646005c06fe2c171b4112dd81a0b8a1cbbf6c566ca1fa4c6953","Image":"base:latest","Names":["/agitated_engelbart"],"Ports":[],"Status":"Exited (-1) 5 minutes ago"}
+        ,{"Command":"\"bash -c 'if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi'\"","Created":1404136615,"Id":"98a0f56b2c636d5064379b7926832f0d74cc3f943d4dd0dc2260a7026b90a96c","Image":"base:latest","Names":["/boring_thompson"],"Ports":[],"Status":"Exited (0) 33 minutes ago"}
+        ,{"Command":"\"bash -c 'if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi'\"","Created":1404136493,"Id":"3f0e369bd075b7955f5478cade06cb8381a914b9119fa29ee9c216ae314fafdc","Image":"base:latest","Names":["/pensive_leakey"],"Ports":[],"Status":"Exited (0) 35 minutes ago"}
+        ,{"Command":"bash","Created":1403880270,"Id":"07639598c2822237a2f047a6172dea0f45d84c4b31dfc9f63877ddf63cb30616","Image":"ubuntu:latest","Names":["/elegant_albattani"],"Ports":[],"Status":"Exited (0) 47 hours ago"}
+        ,{"Command":"bash","Created":1403880246,"Id":"349ba74bf51d253317d94044d6c20d129b264dfd16bc5d4097a30b5bea387e48","Image":"ubuntu:latest","Names":["/lonely_bardeen"],"Ports":[],"Status":"Exited (0) 2 days ago"}
+        ,{"Command":"\"/bin/bash -lc \"while [ 1 ]; do echo hi; done\"\"","Created":1403880236,"Id":"584efc0cdeaf5e5676b62baf3a601cb730e17ff41c49ebe0b18324fb23bbb63a","Image":"ubuntu:latest","Names":["/jolly_yonath"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"/bin/bash -lc while [ 1 ]; do echo hi; done","Created":1403880225,"Id":"644b149356fb4cb18f4526b61581f5507d1f8fa96a54f6d9f386c57de75bd1a0","Image":"ubuntu:latest","Names":["/clever_colden"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"while [ 1 ]; do echo hi; done","Created":1403880219,"Id":"a98acea9bd23b1e5af827f0c908115186742edf0523146eaf420b42688a2109d","Image":"ubuntu:latest","Names":["/jovial_mccarthy"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"while [ 1 ]; do echo hi; done","Created":1403880205,"Id":"7df16e2c57020a6471a80cf13084d689d43af60cd867df78350ee893c5724f80","Image":"ubuntu:latest","Names":["/goofy_hopper"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hi; done'","Created":1403880195,"Id":"c544ec7940bd88b88b6ccbd4c8d4f33ac6056b1c27b9c0f7fc2327eb462b9c47","Image":"ubuntu:latest","Names":["/lonely_tesla"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"/bin/bash -lc 'while [ 1 ]; do echo hi; done'","Created":1403880190,"Id":"4e725734f92afc720a56e498266f078529a2ce8bc1f325948b25ada131e9472f","Image":"ubuntu:latest","Names":["/hopeful_kowalevski"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ]
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/containers/f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8/kill?signal=SIGKILL
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.12/containers/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Content-Length:
+      - '2'
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '[]'
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.12/containers/json?all=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 30 Jun 2014 14:30:49 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138649,"Id":"f6c1ce0f958c5a584ee74ebb78f19f69016b53be5dfcf11347f4b587cabaaec8","Image":"base:latest","Names":["/determined_kowalevski"],"Ports":[],"Status":"Exited (-1) Less than a second ago"}
+        ,{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138612,"Id":"259a695ed0085ad730abf9ce193c9d7ee3af12b72ebdda29360603291582409d","Image":"base:latest","Names":["/condescending_mclean"],"Ports":[],"Status":"Exited (-1) 33 seconds ago"}
+        ,{"Command":"/bin/bash -c 'trap echo SIGTERM; while [ 1 ]; do echo hello; done'","Created":1404138535,"Id":"cbfa145f2cd0130dee85c94bb70eec3c3cff23892e60a42d2404377a8b9c02ad","Image":"base:latest","Names":["/sharp_archimedes"],"Ports":[],"Status":"Exited (-1) About a minute ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hello; done'","Created":1404138533,"Id":"e7db5709022fd06d4e3c8bd0f493233d67b2a793dc07a4982b3c491ec61b2c83","Image":"base:latest","Names":["/stoic_bartik"],"Ports":[],"Status":"Exited (-1) About a minute ago"}
+        ,{"Command":"\"/bin/bash -c 'trap \"\" SIGTERM; while [ 1 ]; do echo hello; done'\"","Created":1404138438,"Id":"3a2d6022918aa91e4d8b56d7b29420ee45476e27c0f83889d547e0cbc44483c8","Image":"base:latest","Names":["/focused_mayer"],"Ports":[],"Status":"Exited (-1) 3 minutes ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hello; done'","Created":1404138414,"Id":"05bdffae4dd9ece30ad25869ff1f616486ada32ad70916838564b32a8866cd40","Image":"base:latest","Names":["/trusting_perlman"],"Ports":[],"Status":"Exited (-1) 3 minutes ago"}
+        ,{"Command":"\"/bin/bash -c 'trap \"\" SIGTERM; while [ 1 ]; do echo hello; done'\"","Created":1404138313,"Id":"fda96aefea21efe7a4dfd79d746ece41bb50907422d047a4e595f8e2f52e4b78","Image":"base:latest","Names":["/sharp_galileo"],"Ports":[],"Status":"Exited (-1) 5 minutes ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hello; done'","Created":1404138312,"Id":"4d12860bcd0dc646005c06fe2c171b4112dd81a0b8a1cbbf6c566ca1fa4c6953","Image":"base:latest","Names":["/agitated_engelbart"],"Ports":[],"Status":"Exited (-1) 5 minutes ago"}
+        ,{"Command":"\"bash -c 'if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi'\"","Created":1404136615,"Id":"98a0f56b2c636d5064379b7926832f0d74cc3f943d4dd0dc2260a7026b90a96c","Image":"base:latest","Names":["/boring_thompson"],"Ports":[],"Status":"Exited (0) 33 minutes ago"}
+        ,{"Command":"\"bash -c 'if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi'\"","Created":1404136493,"Id":"3f0e369bd075b7955f5478cade06cb8381a914b9119fa29ee9c216ae314fafdc","Image":"base:latest","Names":["/pensive_leakey"],"Ports":[],"Status":"Exited (0) 35 minutes ago"}
+        ,{"Command":"bash","Created":1403880270,"Id":"07639598c2822237a2f047a6172dea0f45d84c4b31dfc9f63877ddf63cb30616","Image":"ubuntu:latest","Names":["/elegant_albattani"],"Ports":[],"Status":"Exited (0) 47 hours ago"}
+        ,{"Command":"bash","Created":1403880246,"Id":"349ba74bf51d253317d94044d6c20d129b264dfd16bc5d4097a30b5bea387e48","Image":"ubuntu:latest","Names":["/lonely_bardeen"],"Ports":[],"Status":"Exited (0) 2 days ago"}
+        ,{"Command":"\"/bin/bash -lc \"while [ 1 ]; do echo hi; done\"\"","Created":1403880236,"Id":"584efc0cdeaf5e5676b62baf3a601cb730e17ff41c49ebe0b18324fb23bbb63a","Image":"ubuntu:latest","Names":["/jolly_yonath"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"/bin/bash -lc while [ 1 ]; do echo hi; done","Created":1403880225,"Id":"644b149356fb4cb18f4526b61581f5507d1f8fa96a54f6d9f386c57de75bd1a0","Image":"ubuntu:latest","Names":["/clever_colden"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"while [ 1 ]; do echo hi; done","Created":1403880219,"Id":"a98acea9bd23b1e5af827f0c908115186742edf0523146eaf420b42688a2109d","Image":"ubuntu:latest","Names":["/jovial_mccarthy"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"while [ 1 ]; do echo hi; done","Created":1403880205,"Id":"7df16e2c57020a6471a80cf13084d689d43af60cd867df78350ee893c5724f80","Image":"ubuntu:latest","Names":["/goofy_hopper"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"/bin/bash -c 'while [ 1 ]; do echo hi; done'","Created":1403880195,"Id":"c544ec7940bd88b88b6ccbd4c8d4f33ac6056b1c27b9c0f7fc2327eb462b9c47","Image":"ubuntu:latest","Names":["/lonely_tesla"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ,{"Command":"/bin/bash -lc 'while [ 1 ]; do echo hi; done'","Created":1403880190,"Id":"4e725734f92afc720a56e498266f078529a2ce8bc1f325948b25ada131e9472f","Image":"ubuntu:latest","Names":["/hopeful_kowalevski"],"Ports":[],"Status":"Exited (1) 2 days ago"}
+        ]
+    http_version: 
+  recorded_at: Mon, 30 Jun 2014 14:30:49 GMT
+recorded_with: VCR 2.9.2

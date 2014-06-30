@@ -98,15 +98,20 @@ class Docker::Container
     connection.get(path_for(:logs), opts)
   end
 
+  def start!(opts = {})
+    connection.post(path_for(:start), {}, :body => opts.to_json)
+    self
+  end
+
+  def kill!(opts = {})
+    connection.post(path_for(:kill), opts)
+    self
+  end
+
   # #start! and #kill! both perform the associated action and
   # return the Container. #start and #kill do the same,
   # but rescue from ServerErrors.
   [:start, :kill].each do |method|
-    define_method(:"#{method}!") do |opts = {}|
-      connection.post(path_for(method), {}, :body => opts.to_json)
-      self
-    end
-
     define_method(method) do |*args|
       begin; public_send(:"#{method}!", *args); rescue ServerError; self end
     end

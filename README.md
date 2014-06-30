@@ -208,6 +208,10 @@ container.unpause
 container.kill
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
 
+# Kill the Container specifying the kill signal.
+container.kill(:signal => "SIGHUP")
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+
 # Return the currently executing processes in a Container.
 container.top
 # => [{"PID"=>"4851", "TTY"=>"pts/0", "TIME"=>"00:00:00", "CMD"=>"lxc-start"}]
@@ -312,6 +316,5 @@ end
 
 ## Not supported (yet)
 
-*   Providing a signal for the kill endpoint
 *   Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/reference/api/docker_remote_api_v1.12/#get-a-tarball-containing-all-images-and-tags-in-a-repository
 *   Load a tarball generated from docker that contains all the images and metadata of a repository: https://docs.docker.com/reference/api/docker_remote_api_v1.12/#load-a-tarball-with-a-set-of-images-and-tags-into-docker
