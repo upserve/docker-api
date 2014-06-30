@@ -239,7 +239,12 @@ describe Docker::Container do
   end
 
   describe '#kill' do
-    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+    let(:command) { ['/bin/bash', '-c', 'while [ 1 ]; do echo hello; done'] }
+    subject { described_class.create('Cmd' => command, 'Image' => 'base') }
+
+    before do
+      subject.start
+    end
 
     it 'kills the container', :vcr do
       subject.kill
@@ -249,6 +254,33 @@ describe Docker::Container do
       expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
         id.start_with?(subject.id)
       }
+    end
+
+    context 'with a kill signal' do
+      let(:command) {
+        [
+          '/bin/bash',
+          '-c',
+          'trap echo SIGTERM; while [ 1 ]; do echo hello; done'
+        ]
+      }
+      it 'kills the container', :vcr do
+        subject.kill(:signal => "SIGTERM")
+        expect(described_class.all.map(&:id)).to be_any { |id|
+          id.start_with?(subject.id)
+        }
+        expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
+          id.start_with?(subject.id)
+        }
+
+        subject.kill(:signal => "SIGKILL")
+        expect(described_class.all.map(&:id)).to be_none { |id|
+          id.start_with?(subject.id)
+        }
+        expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
+          id.start_with?(subject.id)
+        }
+      end
     end
   end
 
