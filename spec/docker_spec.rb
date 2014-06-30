@@ -38,7 +38,7 @@ describe Docker do
       end
 
       its(:options) { {} }
-      its(:url) { should == 'tcp://localhost:4243' }
+      its(:url) { should == 'tcp://localhost:2375' }
       its(:connection) { should be_a Docker::Connection }
     end
 
