@@ -233,12 +233,20 @@ class Docker::Container
   def attach_for(block, msg_stack, tty)
     # If TTY is enabled expect raw data and append to stdout
     if tty
-      return lambda do |c,r,t|
-        msg_stack.stdout_messages << c
-        block.call c if block
-      end
+      attach_for_tty(block, msg_stack)
+    else
+      attach_for_multiplex(block, msg_stack)
     end
+  end
 
+  def attach_for_tty(block, msg_stack)
+    return lambda do |c,r,t|
+      msg_stack.stdout_messages << c
+      block.call c if block
+    end
+  end
+
+  def attach_for_multiplex(block, msg_stack)
     messages = Docker::Messages.new
     lambda do |c,r,t|
       messages = messages.decipher_messages(c)
