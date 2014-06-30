@@ -267,6 +267,6 @@ class Docker::Container
     Docker.logger.debug(msg) if Docker.logger
   end
 
-  private :path_for, :attach_for, :debug
+  private :path_for, :attach_for, :attach_for_tty, :attach_for_multiplex, :debug
   private_class_method :new
 end
