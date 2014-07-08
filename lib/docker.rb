@@ -61,6 +61,11 @@ module Docker
     reset_connection!
   end
 
+  def api_version=(new_version)
+    options[:api_version] = new_version
+    reset_connection!
+  end
+
   def connection
     @connection ||= Connection.new(url, options)
   end
@@ -99,7 +104,7 @@ module Docker
   end
 
   module_function :default_socket_url, :env_url, :url, :url=, :options,
-                  :options=, :creds, :creds=, :logger, :logger=,
+                  :options=, :api_version=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset_connection!, :version, :info,
                   :authenticate!, :validate_version!
 end

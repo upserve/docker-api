@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Docker::Connection do
-  subject { described_class.new('http://localhost:4243', {}) }
+  let(:connection_options) { {} }
+  subject { described_class.new('http://localhost:4243', connection_options) }
 
   describe '#initialize' do
     let(:url) { 'http://localhost:4243' }
@@ -55,29 +56,39 @@ describe Docker::Connection do
     let(:body) { rand(10000000) }
     let(:resource) { double(:resource) }
     let(:response) { double(:response, :body => body) }
-    let(:expected_hash) {
-      {
-        :method  => method,
-        :path    => "/v#{Docker::API_VERSION}#{path}",
-        :query   => query,
-        :headers => { 'Content-Type' => 'text/plain',
-                      'User-Agent'   => "Swipely/Docker-API #{Docker::VERSION}",
-                    },
-        :expects => 201,
-        :idempotent => true,
-        :lol => true
-      }
-    }
 
-    before do
-      allow(subject).to receive(:resource).and_return(resource)
-      expect(resource).to receive(:request).
-        with(expected_hash).
-        and_return(response)
-    end
+    [nil, 'foo'].each do |api_version|
 
-    it 'sends #request to #resource with the compiled params' do
-      expect(subject.request(method, path, query, options)).to eq body
+      context "with api version #{api_version.inspect}" do
+
+        let(:expected_hash) {
+          {
+            :method  => method,
+            :path    => "/v#{api_version.nil? ? Docker::API_VERSION : api_version}#{path}",
+            :query   => query,
+            :headers => { 'Content-Type' => 'text/plain',
+                          'User-Agent'   => "Swipely/Docker-API #{Docker::VERSION}",
+                        },
+            :expects => 201,
+            :idempotent => true,
+            :lol => true
+          }
+        }
+
+        let(:connection_options) { {api_version: api_version} }
+
+        before do
+          puts subject.inspect
+          allow(subject).to receive(:resource).and_return(resource)
+          expect(resource).to receive(:request).
+            with(expected_hash).
+            and_return(response)
+        end
+
+        it 'sends #request to #resource with the compiled params' do
+          expect(subject.request(method, path, query, options)).to eq body
+        end
+      end
     end
   end
 

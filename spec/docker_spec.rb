@@ -88,6 +88,21 @@ describe Docker do
     end
   end
 
+  describe "#api_version=" do
+
+    let(:version) { 'foo' }
+
+    it 'calls #reset_connection!' do
+      expect(subject).to receive(:reset_connection!)
+      subject.api_version = version
+    end
+
+    it 'sets the version on connection' do
+      subject.api_version = version
+      subject.options[:api_version].should eq version
+    end
+  end
+
   describe '#version' do
     before do
       subject.url = nil

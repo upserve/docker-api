@@ -16,6 +16,7 @@ class Docker::Connection
       raise ArgumentError, "Expected a Hash, got: '#{opts}'"
     else
       uri = URI.parse(url)
+      @api_version = opts.delete(:api_version) || Docker::API_VERSION
       if uri.scheme == "unix"
         @url, @options = 'unix:///', {:socket => uri.path}.merge(opts)
       else
@@ -72,7 +73,7 @@ private
     user_agent = "Swipely/Docker-API #{Docker::VERSION}"
     {
       :method        => http_method,
-      :path          => "/v#{Docker::API_VERSION}#{path}",
+      :path          => "/v#{@api_version}#{path}",
       :query         => query,
       :headers       => { 'Content-Type' => content_type,
                           'User-Agent'   => user_agent,
