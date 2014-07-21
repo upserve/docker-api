@@ -196,7 +196,7 @@ class Docker::Image
   # headers sent by build_from_dir.
   def self.build_headers(creds)
     credentials = creds || Docker.creds || {}
-    config_header = Docker::Util.build_config_header(credentials.to_json)
+    config_header = Docker::Util.build_config_header(credentials)
 
     headers = { 'Content-Type'      => 'application/tar',
                 'Transfer-Encoding' => 'chunked' }
