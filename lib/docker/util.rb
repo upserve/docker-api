@@ -82,7 +82,9 @@ module Docker::Util
   end
 
   def build_config_header(credentials)
-    credentials = JSON.parse(credentials, symbolize_names: true) if credentials.is_a?(String)
+    if credentials.is_a?(String)
+      credentials = JSON.parse(credentials, symbolize_names: true)
+    end
     header = {
       "configs" => {
         credentials[:serveraddress].to_s => {
