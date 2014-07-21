@@ -455,14 +455,15 @@ describe Docker::Image do
           {
             :username => 'nahiluhmot',
             :password => '*********',
-            :email => 'hulihan.tom159@gmail.com'
+            :email => 'hulihan.tom159@gmail.com',
+            :serveraddress => 'https://index.docker.io/v1'
           }
         }
 
         before { Docker.creds = creds }
 
-        it 'sends Docker.creds', :vcr do
-          expect(image.info[:headers].keys).to include('X-Registry-Auth')
+        it 'sends X-Registry-Config header', :vcr do
+          expect(image.info[:headers].keys).to include('X-Registry-Config')
         end
       end
     end

@@ -1,0 +1,39 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: unix:///var/run/docker.sock/v1.12/build
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.1
+      Content-Type:
+      - application/tar
+      Transfer-Encoding:
+      - chunked
+      X-Registry-Config:
+      - eyJjb25maWdzIjp7Imh0dHBzOi8vaW5kZXguZG9ja2VyLmlvL3YxIjp7InVzZXJuYW1lIjoibmFoaWx1aG1vdCIsInBhc3N3b3JkIjoiKioqKioqKioqIiwiZW1haWwiOiJodWxpaGFuLnRvbTE1OUBnbWFpbC5jb20ifX19
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 21 Jul 2014 17:07:50 GMT
+      Connection:
+      - close
+      Transfer-Encoding:
+      - ''
+    body:
+      encoding: US-ASCII
+      string: ! "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
+        b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 282d877698a4\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        f76554ba0d24\\n\"}\r\n{\"stream\":\"Successfully built 282d877698a4\\n\"}\r\n"
+    http_version: 
+  recorded_at: Mon, 21 Jul 2014 17:07:53 GMT
+recorded_with: VCR 2.9.2
