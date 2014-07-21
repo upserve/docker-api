@@ -70,12 +70,12 @@ module Docker
   end
 
   # Get the version of Go, Docker, and optionally the Git commit.
-  def version
+  def version(connection = self.connection)
     Util.parse_json(connection.get('/version'))
   end
 
   # Get more information about the Docker server.
-  def info
+  def info(connection = self.connection)
     Util.parse_json(connection.get('/info'))
   end
 
