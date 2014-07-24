@@ -26,7 +26,7 @@ class Docker::Container
   # UnexpectedResponseError is raised.
   def run(cmd, time = 1000)
     if (code = tap(&:start).wait(time)['StatusCode']).zero?
-      commit.run(cmd).tap(&:start)
+      commit.run(cmd)
     else
       raise UnexpectedResponseError, "Command returned status code #{code}."
     end

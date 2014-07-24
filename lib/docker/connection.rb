@@ -77,7 +77,7 @@ private
       :headers       => { 'Content-Type' => content_type,
                           'User-Agent'   => user_agent,
                         }.merge(headers),
-      :expects       => (200..204),
+      :expects       => (200..204).to_a << 304,
       :idempotent    => http_method == :get,
       :request_block => block
     }.merge(opts).reject { |_, v| v.nil? }
