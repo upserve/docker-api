@@ -139,6 +139,9 @@ image.run('ls -l')
 image.remove(:force => true)
 # => true
 
+# Get Image from the server, with id
+Docker::Image.get('df4f1bdecf40')
+
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
