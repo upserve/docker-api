@@ -41,6 +41,24 @@ describe Docker::Connection do
         end
       end
     end
+
+    context 'url conversion to uri' do
+      context 'when the url follows the Docker convention for DOCKER_HOST and does not contain a scheme' do
+        let(:url) { 'localhost:4243' }
+
+        it 'adds the scheme to the url' do
+          expect(subject.url).to eq "http://#{url}"
+        end
+      end
+
+      context 'when the url is a complete uri' do
+        let(:url) { 'http://localhost:4243' }
+
+        it 'leaves the url intact' do
+          expect(subject.url).to eq url
+        end
+      end
+    end
   end
 
   describe '#resource' do
