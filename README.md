@@ -1,8 +1,8 @@
 docker-api
 ==========
-[![Gem Version](https://badge.fury.io/rb/docker-api.png)](http://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
+[![Gem Version](https://badge.fury.io/rb/docker-api.png)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](http://docs.docker.io/en/latest/reference/api/docker_remote_api/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.0.*
+This gem provides an object-oriented interface to the [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.0.*
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
@@ -36,7 +36,7 @@ docker-api is designed to be very lightweight. Almost no state is cached (aside 
 
 ## Starting up
 
-Follow the [installation instructions](http://www.docker.io/gettingstarted/), and then run:
+Follow the [installation instructions](https://docs.docker.com/installation/#installation), and then run:
 
 ```shell
 $ sudo docker -d
@@ -47,7 +47,7 @@ This will daemonize Docker so that it can be used for the remote API calls.
 If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not or change the path of the socket, you'll have to point the gem to your socket or local/remote port. For example:
 
 ```ruby
-Docker.url = 'http://example.com:5422'
+Docker.url = 'tcp://example.com:5422'
 ```
 
 Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are also valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connect to the socket unless you specify otherwise.
@@ -65,11 +65,11 @@ irb(main):003:0> Docker.options
 ```
 
 ```shell
-$ DOCKER_URL=http://example.com:1000 irb
+$ DOCKER_URL=tcp://example.com:1000 irb
 irb(main):001:0> require 'docker'
 => true
 irb(main):003:0> Docker.url
-=> "http://example.com:1000"
+=> "tcp://example.com:1000"
 irb(main):004:0> Docker.options
 => {}
 ```
@@ -95,7 +95,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 ```
 
 ## Images
-Just about every method here has a one-to-one mapping with the [Images](http://docs.docker.io/en/latest/reference/api/docker_remote_api_v1.10/#images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/docker_remote_api_v1.12/#22-images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
@@ -103,16 +103,15 @@ require 'docker'
 
 # Create an Image.
 Docker::Image.create('fromImage' => 'base')
-# => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Insert a local file into an Image.
 image.insert_local('localPath' => 'Gemfile', 'outputPath' => '/')
-# => Docker::Image { :id => 682ea192f, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => 682ea192f, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Insert multiple local files into an Image.
 image.insert_local('localPath' => [ 'Gemfile', 'Rakefile' ], 'outputPath' => '/')
-# => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
-
+# => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Tag an Image.
 image.tag('repo' => 'base2', 'force' => true)
@@ -133,7 +132,7 @@ image.push
 
 # Given a command, create a new Container to run that command in the Image.
 image.run('ls -l')
-# => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Remove the Image from the server.
 image.remove(:force => true)
@@ -141,11 +140,11 @@ image.remove(:force => true)
 
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
-# => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # `Docker::Image.import` can also import from a URI
 Docker::Image.import('http://some-site.net/my-image.tar')
-# => Docker::Image { :id => 6b462b2d2, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => 6b462b2d2, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # For a lower-level interface for importing tars, `Docker::Image.import_stream` may be used.
 # It accepts a block, and will call that block until it returns an empty `String`.
@@ -155,30 +154,34 @@ end
 
 # Create an Image from a Dockerfile as a String.
 Docker::Image.build("from base\nrun touch /test")
-# => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Create an Image from a Dockerfile.
 Docker::Image.build_from_dir('.')
-# => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Load all Images on your Docker server.
 Docker::Image.all
-# => [Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
+# => [Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
+
+# Get Image from the server, with id
+Docker::Image.get('df4f1bdecf40')
+# => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Search the Docker registry.
 Docker::Image.search('term' => 'sshd')
-# => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
+# => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
 
 ## Containers
-Much like the Images, this object also has a one-to-one mapping with the [Containers](http://docs.docker.io/en/latest/reference/api/docker_remote_api_v1.10/#containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
+Much like the Images, this object also has a one-to-one mapping with the [Containers](https://docs.docker.com/reference/api/docker_remote_api_v1.12/#21-containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
 
 ```ruby
 require 'docker'
 
 # Create a Container.
 Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Get more information about the Container.
 container.json
@@ -186,31 +189,31 @@ container.json
 
 # Start running the Container.
 container.start
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Stop running the Container.
 container.stop
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Restart the Container.
 container.restart
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Pause the running Container processes.
 container.pause
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Unpause the running Container processes.
 container.unpause
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Kill the command running in the Container.
 container.kill
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Kill the Container specifying the kill signal.
 container.kill(:signal => "SIGHUP")
-# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Return the currently executing processes in a Container.
 container.top
@@ -237,7 +240,7 @@ fe00::0         ip6-localnet
 ff00::0         ip6-mcastprefix
 ff02::1         ip6-allnodes
 ff02::2         ip6-allrouters
-# => Docker::Container { :id => a1759f3e2873, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => a1759f3e2873, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Wait for the current command to finish executing. If an argument is given,
 # will timeout after that number of seconds. The default is one minute.
@@ -268,12 +271,12 @@ container.tap(&:start).attach(:tty => true)
 
 # Create an Image from a Container's changes.
 container.commit
-# => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Commit the Container and run a new command. The second argument is the number
 # of seconds the Container should wait before stopping its current command.
 container.run('pwd', 10)
-# => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Delete a Container.
 container.delete(:force => true)
@@ -281,11 +284,11 @@ container.delete(:force => true)
 
 # Request a Container by ID or name.
 Docker::Container.get('500f53b25e6e')
-# => Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }
+# => Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)
-# => [Docker::Container { :id => , :connection => Docker::Connection { :url => http://localhost, :options => {:port=>4243} } }]
+# => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
 
 ## Connecting to Multiple Servers
@@ -295,7 +298,7 @@ By default, each object connects to the connection specified by `Docker.connecti
 ```ruby
 require 'docker'
 
-Docker::Container.all({}, Docker::Connection.new('http://example.com:4243', {}))
+Docker::Container.all({}, Docker::Connection.new('tcp://example.com:2375', {}))
 ```
 
 ## Rake Task
