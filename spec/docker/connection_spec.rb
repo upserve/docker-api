@@ -43,7 +43,7 @@ describe Docker::Connection do
     end
 
     context 'url conversion to uri' do
-      context 'when the url follows the Docker convention for DOCKER_HOST and does not contain a scheme' do
+      context 'when the url does not contain a scheme' do
         let(:url) { 'localhost:4243' }
 
         it 'adds the scheme to the url' do
