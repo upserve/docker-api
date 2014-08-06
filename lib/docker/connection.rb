@@ -16,12 +16,12 @@ class Docker::Connection
       raise ArgumentError, "Expected a Hash, got: '#{opts}'"
     else
       uri = URI.parse(url)
-      if uri.host.nil? && uri.port.nil? && url.match(/\w+\:\d+/)
-        @url, @options = "http://#{uri}", opts
-      elsif uri.scheme == "unix"
+      if uri.scheme == "unix"
         @url, @options = 'unix:///', {:socket => uri.path}.merge(opts)
-      else
+      elsif uri.scheme =~ /^(https?|tcp)$/
         @url, @options = url, opts
+      else
+        @url, @options = "http://#{uri}", opts
       end
     end
   end
