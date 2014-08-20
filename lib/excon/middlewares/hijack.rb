@@ -21,11 +21,15 @@ module Excon
             :status        => status,
             :remote_ip     => socket.respond_to?(:remote_ip) &&
                               socket.remote_ip,
-            :local_port    => socket.respond_to?(:local_port) &&
-                              socket.local_port,
-            :local_address => socket.respond_to?(:local_address) &&
-                              socket.local_address
           }
+          if socket.data[:scheme] =~ /^(https?|tcp)$/
+            datum[:response].merge({
+              :local_port    => socket.respond_to?(:local_port) &&
+                                socket.local_port,
+              :local_address => socket.respond_to?(:local_address) &&
+                                socket.local_address
+          })
+          end
 
           Excon::Response.parse_headers(socket, datum)
           datum[:hijack_block].call socket.instance_variable_get(:@socket)
