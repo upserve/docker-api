@@ -160,14 +160,12 @@ class Docker::Image
       raise Docker::Error::UnexpectedResponseError
     end
 
-    # Given a directory that contains a Dockerfile, builds an Image.
+    # Given File like object containing a tar file, builds an Image.
     #
     # If a block is passed, chunks of output produced by Docker will be passed
     # to that block.
-    def build_from_dir(dir, opts = {}, connection = Docker.connection,
+    def build_from_tar(tar, opts = {}, connection = Docker.connection,
                        creds = nil, &block)
-
-      tar = Docker::Util.create_dir_tar(dir)
 
       headers = build_headers(creds)
 
@@ -182,13 +180,24 @@ class Docker::Image
       new(connection,
           'id' => Docker::Util.extract_id(body),
           :headers => headers)
-    ensure
-      unless tar.nil?
-        tar.close
-        FileUtils.rm(tar.path, force: true)
-      end
+  end
+
+  # Given a directory that contains a Dockerfile, builds an Image.
+  #
+  # If a block is passed, chunks of output produced by Docker will be passed
+  # to that block.
+  def build_from_dir(dir, opts = {}, connection = Docker.connection,
+                     creds = nil, &block)
+
+    tar = Docker::Util.create_dir_tar(dir)
+    build_from_tar tar, opts, connection, creds, &block
+  ensure
+    unless tar.nil?
+      tar.close
+      FileUtils.rm(tar.path, force: true)
     end
   end
+end
 
   private
 
