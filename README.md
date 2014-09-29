@@ -95,7 +95,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 ```
 
 ## Images
-Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/docker_remote_api_v1.12/#22-images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/docker_remote_api_v1.12/#22-images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
@@ -158,6 +158,10 @@ Docker::Image.build("from base\nrun touch /test")
 
 # Create an Image from a Dockerfile.
 Docker::Image.build_from_dir('.')
+# => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
+
+# Create an Image from a tar file.
+Docker::Image.build_from_tar(File.open('docker_image.tar', 'r'))
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Load all Images on your Docker server.
