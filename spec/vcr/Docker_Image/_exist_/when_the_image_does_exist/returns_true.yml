@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: unix:///var/run/docker.sock/v1.12/images/base/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.13.4
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      !binary "Q29udGVudC1UeXBl":
+      - !binary |-
+        YXBwbGljYXRpb24vanNvbg==
+      !binary "RGF0ZQ==":
+      - !binary |-
+        VHVlLCAzMCBTZXAgMjAxNCAxNDo1MzoxNiBHTVQ=
+      !binary "Q29udGVudC1MZW5ndGg=":
+      - !binary |-
+        MTU4MQ==
+    body:
+      encoding: US-ASCII
+      string: ! '{"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/bash"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":["/bin/sh","-c","/bin/bash
+        -l -c bin/hoosegow"],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"265bbe22abe7","Image":"697157367a35a2a0c7283894ab3035c069ae48ff6fb6d5cf10747deee5e3a723","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":"/hoosegow"},"Container":"4fabe9ab2546a3dd5edc70571ffa2839bc327109716a17d3054fbd5cddb68400","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/sh","-c","#(nop)
+        ENTRYPOINT [/bin/sh -c /bin/bash -l -c bin/hoosegow]"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":["/bin/sh","-c","/bin/bash
+        -l -c bin/hoosegow"],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"265bbe22abe7","Image":"697157367a35a2a0c7283894ab3035c069ae48ff6fb6d5cf10747deee5e3a723","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":"/hoosegow"},"Created":"2014-09-30T14:47:46.62397332Z","DockerVersion":"1.0.1","Id":"ba5d55a9e74b5274f06653c2717f2251d8a37a3ac837034d8d2e5a6259b9553d","Os":"linux","Parent":"697157367a35a2a0c7283894ab3035c069ae48ff6fb6d5cf10747deee5e3a723","Size":0}
+
+'
+    http_version: 
+  recorded_at: Tue, 30 Sep 2014 14:53:16 GMT
+recorded_with: VCR 2.9.3

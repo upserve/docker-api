@@ -281,6 +281,37 @@ describe Docker::Image do
     end
   end
 
+  describe '.exist?' do
+    subject { described_class }
+    let(:exists) { subject.exist?(image_name) }
+
+    context 'when the image does exist' do
+      let(:image_name) { 'base' }
+
+      it 'returns true', :vcr do
+        expect(exists).to eq(true)
+      end
+    end
+
+    context 'when the image does not exist' do
+      let(:image_name) { 'abcdefghijkl' }
+
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 404 })
+      end
+
+      after do
+        Docker.options = {}
+        Excon.stubs.shift
+      end
+
+      it 'return false', :vcr do
+        expect(exists).to eq(false)
+      end
+    end
+  end
+
   describe '.import' do
     subject { described_class }
 
