@@ -110,6 +110,14 @@ class Docker::Image
       new(conn, hash)
     end
 
+    # Check if an image exists.
+    def exist?(id, opts = {}, conn = Docker.connection)
+      get(id, opts, conn)
+      true
+    rescue Docker::Error::NotFoundError
+      false
+    end
+
     # Return every Image.
     def all(opts = {}, conn = Docker.connection)
       hashes = Docker::Util.parse_json(conn.get('/images/json', opts)) || []
