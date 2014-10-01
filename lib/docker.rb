@@ -80,7 +80,7 @@ module Docker
   end
 
   # Login to the Docker registry.
-  def authenticate!(options = {})
+  def authenticate!(options = {}, connection = connection)
     creds = options.to_json
     connection.post('/auth', {}, :body => creds)
     @creds = creds
