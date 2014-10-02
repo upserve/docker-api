@@ -1,4 +1,6 @@
 module Excon
+  VALID_REQUEST_KEYS << :hijack_block
+
   module Middleware
     # Hijack is an Excon middleware which parses response headers and then
     # yields the underlying TCP socket for raw TCP communication (used to
