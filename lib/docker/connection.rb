@@ -52,6 +52,8 @@ class Docker::Connection
     raise ServerError, ex.response.data[:body]
   rescue Excon::Errors::Timeout => ex
     raise TimeoutError, ex.message
+  rescue Excon::Errors::NotModified => ex
+    raise NotModifiedError, ex.message
   end
 
   # Delegate all HTTP methods to the #request.
