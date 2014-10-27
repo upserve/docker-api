@@ -99,6 +99,14 @@ class Docker::Container
     connection.get(path_for(:logs), opts)
   end
 
+  def streaming_logs(opts = {}, &block)
+    msgs = Docker::Messages.new
+    excon_params = { response_block: attach_for(block, msgs, false) }
+
+    connection.get(path_for(:logs), opts, excon_params)
+    msgs.all_messages.join("\n")
+  end
+
   def start!(opts = {})
     connection.post(path_for(:start), {}, :body => opts.to_json)
     self
@@ -242,6 +250,7 @@ class Docker::Container
   def attach_for_tty(block, msg_stack)
     return lambda do |c,r,t|
       msg_stack.stdout_messages << c
+      msg_stack.all_messages << c
       block.call c if block
     end
   end

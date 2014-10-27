@@ -33,14 +33,32 @@ describe Docker::Container do
     end
   end
 
+  describe '#streaming_logs' do
+    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'base') }
+
+    context "when not selecting any stream" do
+      let(:non_destination) { subject.logs }
+      it 'raises a client error', :vcr do
+        expect { non_destination }.to raise_error(Docker::Error::ClientError)
+      end
+    end
+
+    context "when selecting stdout" do
+      let(:stdout) { subject.logs(stdout: 1) }
+      it 'returns blank logs', :vcr do
+        expect(stdout).to be_a String
+        expect(stdout).to eq ""
+      end
+    end
+  end
+
   describe '#logs' do
     subject { described_class.create('Cmd' => "echo hello", 'Image' => 'base') }
 
     context "when not selecting any stream" do
       let(:non_destination) { subject.logs }
-      it 'returns the error message', :vcr do
-        expect(non_destination).to be_a String
-        expect(non_destination).to match /You must choose at least one/
+      it 'raises a client error', :vcr do
+        expect { non_destination }.to raise_error(Docker::Error::ClientError)
       end
     end
 
