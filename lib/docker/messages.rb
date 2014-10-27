@@ -1,11 +1,15 @@
 # This class represents all the messages either received by chunks from attach
 class Docker::Messages
 
-  attr_accessor :buffer, :stdout_messages, :stderr_messages
+  attr_accessor :buffer, :stdout_messages, :stderr_messages, :all_messages
 
-  def initialize(stdout_messages = [], stderr_messages = [], buffer = "")
+  def initialize(stdout_messages=[],
+                 stderr_messages=[],
+                 all_messages=[],
+                 buffer="")
     @stdout_messages = stdout_messages
     @stderr_messages = stderr_messages
+    @all_messages = all_messages
     @buffer = buffer
   end
 
@@ -16,6 +20,7 @@ class Docker::Messages
     when 2
       stderr_messages << message
     end
+    all_messages << message
   end
 
   def get_message(raw_text)
@@ -37,6 +42,7 @@ class Docker::Messages
   def append(messages)
     @stdout_messages += messages.stdout_messages
     @stderr_messages += messages.stderr_messages
+    @all_messages += messages.all_messages
   end
 
   # Method to break apart application/vnd.docker.raw-stream headers

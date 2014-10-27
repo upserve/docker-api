@@ -3,6 +3,7 @@ require 'spec_helper'
 describe Docker::Messages do
   shared_examples_for "two equal messages" do
     it "has the same messages as we expect" do
+      expect(messages.all_messages).to eq(expected.all_messages)
       expect(messages.stdout_messages).to eq(expected.stdout_messages)
       expect(messages.stderr_messages).to eq(expected.stderr_messages)
       expect(messages.buffer).to eq(expected.buffer)
@@ -23,7 +24,7 @@ describe Docker::Messages do
         "\x01\x00\x00\x00\x00\x00\x00\x01a\x02\x00\x00\x00\x00\x00\x00\x01b"
       }
       let(:expected) {
-        Docker::Messages.new(["a"], ["b"], "")
+        Docker::Messages.new(["a"], ["b"], ["a","b"], "")
       }
 
       it_behaves_like "decipher_messages of raw_test"
@@ -32,7 +33,7 @@ describe Docker::Messages do
     context 'given a single header' do
       let(:raw_text) { "\x01\x00\x00\x00\x00\x00\x00\x01a" }
       let(:expected) {
-        Docker::Messages.new(["a"], [], "")
+        Docker::Messages.new(["a"], [], ["a"], "")
       }
 
       it_behaves_like "decipher_messages of raw_test"
@@ -44,7 +45,7 @@ describe Docker::Messages do
       }
 
       let(:expected) {
-        Docker::Messages.new(["a", "b"], [], "")
+        Docker::Messages.new(["a", "b"], [], ["a","b"], "")
       }
 
       it_behaves_like "decipher_messages of raw_test"
@@ -55,7 +56,7 @@ describe Docker::Messages do
         "\x01\x00\x00\x00\x00\x00\x01\x01" + ("a" * 257)
       }
       let(:expected) {
-        Docker::Messages.new([("a" * 257)], [], "")
+        Docker::Messages.new([("a" * 257)], [], [("a" * 257)], "")
       }
 
       it_behaves_like "decipher_messages of raw_test"
@@ -65,7 +66,7 @@ describe Docker::Messages do
   describe "#append" do
     context "appending one set of messages on another" do
       let(:messages) {
-        Docker::Messages.new([], [], "")
+        Docker::Messages.new([], [], [], "")
       }
 
       before do
@@ -74,20 +75,20 @@ describe Docker::Messages do
 
       context "with a buffer" do
         let(:new_messages) {
-          Docker::Messages.new(["a"], [], "b")
+          Docker::Messages.new(["a"], [], ["a"], "b")
         }
         let(:expected) {
-          Docker::Messages.new(["a"], [], "")
+          Docker::Messages.new(["a"], [], ["a"], "")
         }
         it_behaves_like "two equal messages"
       end
 
       context "without a buffer" do
         let(:new_messages) {
-          Docker::Messages.new(["a"], [], "")
+          Docker::Messages.new(["a"], [], ["a"], "")
         }
         let(:expected) {
-          Docker::Messages.new(["a"], [], "")
+          Docker::Messages.new(["a"], [], ["a"], "")
         }
         it_behaves_like "two equal messages"
       end
