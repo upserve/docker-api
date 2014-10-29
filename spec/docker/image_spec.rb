@@ -133,7 +133,16 @@ describe Docker::Image do
         Docker::Image.create('fromImage' => 'registry', 'tag' => 'latest')
       }
 
+      let(:container) { Docker::Container.create('Image' => image.id) }
+
       before do
+        opts = {
+          "PortBindings" => {
+            "5000/tcp" => [{"HostPort" => "5000"}]
+          }
+        }
+        container.start!(opts)
+        sleep 10 # for some reason the registry isn't ready right away
         image.tag('repo' => 'localhost:5000/registry', 'tag' => 'test')
       end
 
