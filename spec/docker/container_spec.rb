@@ -221,6 +221,13 @@ describe Docker::Container do
       expect(all.map(&:id)).to be_any { |id| id.start_with?(subject.id) }
       expect(subject.wait(10)['StatusCode']).to be_zero
     end
+
+    context 'when the container is already stopped' do
+      it 'raises an error' do
+        expect { subject.start }
+        .to raise_error(Docker::Error::NotModifiedError)
+      end
+    end
   end
 
   describe '#stop' do
@@ -235,6 +242,13 @@ describe Docker::Container do
       expect(described_class.all.map(&:id)).to be_none { |id|
         id.start_with?(subject.id)
       }
+    end
+
+    context 'when the container is already stopped' do
+      it 'raises an error', :vcr do
+        expect { subject.stop }
+        .to raise_error(Docker::Error::NotModifiedError)
+      end
     end
   end
 
