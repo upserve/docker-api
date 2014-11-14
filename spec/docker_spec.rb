@@ -6,6 +6,7 @@ describe Docker do
   before do
     ENV['DOCKER_URL'] = nil
     ENV['DOCKER_HOST'] = nil
+    ENV['DOCKER_CERT_PATH'] = nil
   end
 
   it { should be_a Module }
@@ -17,7 +18,7 @@ describe Docker do
     end
 
     context "when the DOCKER_* ENV variables aren't set" do
-      its(:options) { {} }
+      its(:options) { should == {} }
       its(:url) { should == 'unix:///var/run/docker.sock' }
       its(:connection) { should be_a Docker::Connection }
     end
@@ -25,9 +26,10 @@ describe Docker do
     context "when the DOCKER_* ENV variables are set" do
       before do
         ENV['DOCKER_URL'] = 'unixs:///var/run/not-docker.sock'
+        Docker.options = nil
       end
 
-      its(:options) { {} }
+      its(:options) { should == {} }
       its(:url) { should == 'unixs:///var/run/not-docker.sock' }
       its(:connection) { should be_a Docker::Connection }
     end
@@ -35,19 +37,21 @@ describe Docker do
     context "when the DOCKER_HOST is set and uses default tcp://" do
       before do
         ENV['DOCKER_HOST'] = 'tcp://'
+        Docker.options = nil
       end
 
-      its(:options) { {} }
+      its(:options) { should == {} }
       its(:url) { should == 'tcp://localhost:2375' }
       its(:connection) { should be_a Docker::Connection }
     end
 
-    context "when the DOCKER_HOST ENV variables is set" do
+    context "when the DOCKER_HOST ENV variable is set" do
       before do
         ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
+        Docker.options = nil
       end
 
-      its(:options) { {} }
+      its(:options) { should == {} }
       its(:url) { should == 'tcp://someserver:8103' }
       its(:connection) { should be_a Docker::Connection }
     end
@@ -56,11 +60,30 @@ describe Docker do
       before do
         ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
         ENV['DOCKER_URL'] = 'tcp://someotherserver:8103'
-
+        Docker.options = nil
       end
 
-      its(:options) { {} }
+      its(:options) { should == {} }
       its(:url) { should == 'tcp://someotherserver:8103' }
+      its(:connection) { should be_a Docker::Connection }
+    end
+
+    context "when the DOCKER_CERT_PATH and DOCKER_HOST ENV variables are set" do
+      before do
+        ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
+        ENV['DOCKER_CERT_PATH'] = '/boot2dockert/cert/path'
+        Docker.options = nil
+      end
+
+      its(:options) {
+        should == {
+          client_cert: '/boot2dockert/cert/path/cert.pem',
+          client_key: '/boot2dockert/cert/path/key.pem',
+          ssl_ca_file: '/boot2dockert/cert/path/ca.pem',
+          scheme: 'https'
+        }
+      }
+      its(:url) { should == 'tcp://someserver:8103' }
       its(:connection) { should be_a Docker::Connection }
     end
   end

@@ -35,11 +35,24 @@ module Docker
   end
 
   def env_url
-    ENV['DOCKER_URL']
+    ENV['DOCKER_URL'] || ENV['DOCKER_HOST']
+  end
+
+  def env_options
+    if cert_path = ENV['DOCKER_CERT_PATH']
+      {
+        client_cert: File.join(cert_path, 'cert.pem'),
+        client_key: File.join(cert_path, 'key.pem'),
+        ssl_ca_file: File.join(cert_path, 'ca.pem'),
+        scheme: 'https'
+      }
+    else
+      {}
+    end
   end
 
   def url
-    @url ||= ENV['DOCKER_URL'] || ENV['DOCKER_HOST'] || default_socket_url
+    @url ||= env_url || default_socket_url
     # docker uses a default notation tcp:// which means tcp://localhost:2375
     if @url == 'tcp://'
       @url = 'tcp://localhost:2375'
@@ -48,7 +61,7 @@ module Docker
   end
 
   def options
-    @options ||= {}
+    @options ||= env_options
   end
 
   def url=(new_url)
@@ -57,7 +70,7 @@ module Docker
   end
 
   def options=(new_options)
-    @options = new_options
+    @options = env_options.merge(new_options || {})
     reset_connection!
   end
 
@@ -98,8 +111,8 @@ module Docker
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end
 
-  module_function :default_socket_url, :env_url, :url, :url=, :options,
-                  :options=, :creds, :creds=, :logger, :logger=,
+  module_function :default_socket_url, :env_url, :url, :url=, :env_options,
+                  :options, :options=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset_connection!, :version, :info,
                   :authenticate!, :validate_version!
 end
