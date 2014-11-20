@@ -104,10 +104,10 @@ describe Docker::Image do
   describe '#push' do
     let(:credentials) {
       {
-        'username' => 'nahiluhmot',
-        'password' => '******',
+        'username' => ENV['DOCKER_API_USER'],
+        'password' => ENV['DOCKER_API_PASS'],
         'serveraddress' => 'https://index.docker.io/v1',
-        'email'    => 'tomhulihan@swipely.com'
+        'email'    => ENV['DOCKER_API_EMAIL']
       }
     }
     let(:base_image) {
@@ -117,9 +117,9 @@ describe Docker::Image do
       base_image.run('true')
     }
     let(:new_image) {
-      container.commit('repo' => 'nahiluhmot/base2')
+      container.commit('repo' => "#{ENV['DOCKER_API_USER']}/busybox2")
       Docker::Image.all(:all => true).select { |image|
-        image.info['RepoTags'].include?('nahiluhmot/base2:latest')
+        image.info['RepoTags'].include?("#{ENV['DOCKER_API_USER']}/busybox2:latest")
       }.first
     }
 
@@ -240,9 +240,9 @@ describe Docker::Image do
       let(:image) { subject.create('fromImage' => 'ubuntu') }
       let(:creds) {
         {
-          :username => 'tlunter',
-          :password => '************',
-          :email => 'tlunter@gmail.com'
+          :username => ENV['DOCKER_API_USER'],
+          :password => ENV['DOCKER_API_PASS'],
+          :email => ENV['DOCKER_API_EMAIL']
         }
       }
 
@@ -493,9 +493,9 @@ describe Docker::Image do
       context 'with credentials passed' do
         let(:creds) {
           {
-            :username => 'nahiluhmot',
-            :password => '*********',
-            :email => 'hulihan.tom159@gmail.com',
+            :username => ENV['DOCKER_API_USER'],
+            :password => ENV['DOCKER_API_PASS'],
+            :email => ENV['DOCKER_API_EMAIL'],
             :serveraddress => 'https://index.docker.io/v1'
           }
         }

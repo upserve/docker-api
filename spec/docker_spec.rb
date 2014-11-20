@@ -162,9 +162,9 @@ describe Docker do
       # cassette to match these credentials
       let(:credentials) {
         {
-          :username      => 'tlunter',
-          :password      => '************',
-          :email         => 'tlunter@gmail.com',
+          :username      => ENV['DOCKER_API_USER'],
+          :password      => ENV['DOCKER_API_PASS'],
+          :email         => ENV['DOCKER_API_EMAIL'],
           :serveraddress => 'https://index.docker.io/v1/'
         }
       }

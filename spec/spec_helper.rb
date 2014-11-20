@@ -5,6 +5,10 @@ require 'rspec/its'
 require 'simplecov'
 require 'docker'
 
+ENV['DOCKER_API_USER']  ||= 'debbie_docker'
+ENV['DOCKER_API_PASS']  ||= '*************'
+ENV['DOCKER_API_EMAIL'] ||= 'debbie_docker@example.com'
+
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
