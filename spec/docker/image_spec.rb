@@ -49,7 +49,7 @@ describe Docker::Image do
     end
 
     context 'when the local file does exist' do
-      let(:file) { './Gemfile' }
+      let(:file) { "#{project_dir}/Gemfile" }
       let(:gemfile) { File.read('Gemfile') }
       let(:container) { new_image.run('cat /Gemfile') }
 
@@ -61,7 +61,7 @@ describe Docker::Image do
 
     context 'when a direcory is passed' do
       let(:new_image) {
-        subject.insert_local('localPath' => './lib', 'outputPath' => '/lib')
+        subject.insert_local('localPath' => "#{project_dir}/lib", 'outputPath' => '/lib')
       }
       let(:container) { new_image.run('ls -a /lib/docker') }
       let(:response) { container.streaming_logs(stdout: true) }
@@ -76,7 +76,7 @@ describe Docker::Image do
     end
 
     context 'when there are multiple files passed' do
-      let(:file) { ['./Gemfile', './Rakefile'] }
+      let(:file) { ["#{project_dir}/Gemfile", "#{project_dir}/Rakefile"] }
       let(:gemfile) { File.read('Gemfile') }
       let(:rakefile) { File.read('Rakefile') }
       let(:container) { new_image.run('cat /Gemfile /Rakefile') }
@@ -91,7 +91,7 @@ describe Docker::Image do
 
     context 'when removing intermediate containers' do
       let(:rm) { true }
-      let(:file) { './Gemfile' }
+      let(:file) { "#{project_dir}/Gemfile" }
 
       it 'leave no intermediate containers', :vcr do
         expect { new_image }.to change {
