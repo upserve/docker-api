@@ -102,7 +102,7 @@ require 'docker'
 # => true
 
 # Create an Image.
-Docker::Image.create('fromImage' => 'base')
+image = Docker::Image.create('fromImage' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Insert a local file into an Image.
