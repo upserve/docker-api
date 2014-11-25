@@ -104,7 +104,7 @@ class Docker::Container
     excon_params = { response_block: attach_for(block, msgs, false) }
 
     connection.get(path_for(:logs), opts, excon_params)
-    msgs.all_messages.join("\n")
+    msgs.all_messages.join('')
   end
 
   def start!(opts = {})

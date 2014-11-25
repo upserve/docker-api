@@ -51,13 +51,11 @@ describe Docker::Image do
     context 'when the local file does exist' do
       let(:file) { './Gemfile' }
       let(:gemfile) { File.read('Gemfile') }
+      let(:container) { new_image.run('cat /Gemfile') }
 
       it 'creates a new Image that has that file', :vcr do
-        chunk = nil
-        new_image.run('cat /Gemfile').attach { |stream, c|
-          chunk ||= c
-        }
-        expect(chunk).to eq(gemfile)
+        output = container.streaming_logs(stdout: true)
+        expect(output).to eq(gemfile)
       end
     end
 
@@ -65,7 +63,12 @@ describe Docker::Image do
       let(:new_image) {
         subject.insert_local('localPath' => './lib', 'outputPath' => '/lib')
       }
-      let(:response) { new_image.run('ls -a /lib/docker').attach.flatten.first }
+      let(:container) { new_image.run('ls -a /lib/docker') }
+      let(:response) { container.streaming_logs(stdout: true) }
+      after do
+        container.tap(&:wait).remove
+        new_image.remove
+      end
 
       it 'inserts the directory', :vcr do
         expect(response.split("\n").sort).to eq(Dir.entries('lib/docker').sort)
@@ -76,12 +79,13 @@ describe Docker::Image do
       let(:file) { ['./Gemfile', './Rakefile'] }
       let(:gemfile) { File.read('Gemfile') }
       let(:rakefile) { File.read('Rakefile') }
+      let(:container) { new_image.run('cat /Gemfile /Rakefile') }
       let(:response) {
-        new_image.run('cat /Gemfile /Rakefile').attach
+        container.streaming_logs(stdout: true)
       }
 
       it 'creates a new Image that has each file', :vcr do
-        expect(response).to eq([[gemfile, rakefile],[]])
+        expect(response).to eq("#{gemfile}#{rakefile}")
       end
     end
 
@@ -184,20 +188,22 @@ describe Docker::Image do
 
   describe '#run' do
     subject { described_class.create('fromImage' => 'base') }
-    let(:output) { subject.run(cmd).attach }
+    let(:container) { subject.run(cmd) }
+    let(:output) { container.streaming_logs(stdout: true) }
 
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
       it 'splits the String by spaces and creates a new Container' do
-        expect(output).to eq([["ld-linux-x86-64.so.2\n"],[]])
+        expect(output).to eq("ld-linux-x86-64.so.2\n")
       end
     end
 
     context 'when the argument is an Array' do
       let(:cmd) { %w[which pwd] }
+      after { container.tap(&:wait).remove }
 
       it 'creates a new Container', :vcr do
-        expect(output).to eq([["/bin/pwd\n"],[]])
+        expect(output).to eq("/bin/pwd\n")
       end
     end
 
@@ -205,19 +211,16 @@ describe Docker::Image do
       let(:cmd) { nil }
       context 'no command configured in image'do
         it 'should raise an error if no command is specified' do
-          expect {output}.to raise_error(Docker::Error::ServerError,
+          expect {container}.to raise_error(Docker::Error::ServerError,
                                          "No command specified.")
         end
       end
 
       context "command configured in image" do
-        let(:container) {Docker::Container.create('Cmd' => %w[true],
-                                                  'Image' => 'base')}
-        subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
+        let(:cmd) { 'pwd' }
 
         it 'should normally show result if image has Cmd configured' do
-          skip 'The docs say this should work, but it clearly does not'
-          expect(output).to eql [["/\n"],[]]
+          expect(output).to eql "/\n"
         end
       end
     end
@@ -463,20 +466,19 @@ describe Docker::Image do
                                  'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
-                              .attach(:stderr => true) }
-      let(:images) { subject.all }
+                              .streaming_logs(stdout: true) }
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
-          expect(output).to eq([[docker_file.read],[]])
+          expect(output).to eq(docker_file.read)
         end
       end
 
       context 'with specifying a repo in the query parameters' do
         let(:opts) { { "t" => "swipely/base2" } }
         it 'builds the image and tags it', :vcr do
-          expect(output).to eq([[docker_file.read],[]])
           expect(images.first.info["RepoTags"]).to eq(["swipely/base2:latest"])
+          expect(output).to eq(docker_file.read)
         end
       end
 
