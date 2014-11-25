@@ -212,7 +212,7 @@ end
 
   # A method to build the config header and merge it into the
   # headers sent by build_from_dir.
-  def self.build_headers(creds)
+  def self.build_headers(creds=nil)
     credentials = creds || Docker.creds || {}
     config_header = Docker::Util.build_config_header(credentials)
 
