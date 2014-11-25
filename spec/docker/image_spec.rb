@@ -8,7 +8,7 @@ describe Docker::Image do
     let(:connection) { Docker.connection }
 
     let(:info) do
-      {"id" => "bf119e2", "Repository" => "base", "Tag" => "latest",
+      {"id" => "bf119e2", "Repository" => "debian", "Tag" => "wheezy",
         "Created" => 1364102658, "Size" => 24653, "VirtualSize" => 180116135}
     end
 
@@ -21,17 +21,20 @@ describe Docker::Image do
   end
 
   describe '#remove' do
-    let(:id) { subject.id }
-    subject { described_class.create('fromImage' => 'base') }
 
-    it 'removes the Image', :vcr do
-      subject.remove(:force => true)
-      expect(Docker::Image.all.map(&:id)).to_not include(id)
+    context 'when no name is given' do
+      let(:id) { subject.id }
+      subject { described_class.create('fromImage' => 'busybox') }
+
+      it 'removes the Image', :vcr do
+        subject.remove(:force => true)
+        expect(Docker::Image.all.map(&:id)).to_not include(id)
+      end
     end
   end
 
   describe '#insert_local' do
-    subject { described_class.build('from base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
 
     let(:rm) { false }
     let(:new_image) {
@@ -114,41 +117,18 @@ describe Docker::Image do
         'email'    => ENV['DOCKER_API_EMAIL']
       }
     }
-    let(:base_image) {
-      described_class.create('fromImage' => 'base')
-    }
-    let(:container) {
-      base_image.run('true')
-    }
-    let(:new_image) {
-      container.commit('repo' => "#{ENV['DOCKER_API_USER']}/busybox2")
-      Docker::Image.all(:all => true).select { |image|
-        image.info['RepoTags'].include?("#{ENV['DOCKER_API_USER']}/busybox2:latest")
-      }.first
+    let(:repo_tag) { "#{ENV['DOCKER_API_USER']}/true" }
+    let(:image) {
+      described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
     }
 
     it 'pushes the Image', :vcr do
-      new_image.push(credentials)
+      image.push(credentials)
     end
 
     context 'when there are no credentials' do
       let(:credentials) { nil }
-      let(:image) {
-        Docker::Image.create('fromImage' => 'registry', 'tag' => 'latest')
-      }
-
-      let(:container) { Docker::Container.create('Image' => image.id) }
-
-      before do
-        opts = {
-          "PortBindings" => {
-            "5000/tcp" => [{"HostPort" => "5000"}]
-          }
-        }
-        container.start!(opts)
-        sleep 10 # for some reason the registry isn't ready right away
-        image.tag('repo' => 'localhost:5000/registry', 'tag' => 'test')
-      end
+      let(:repo_tag) { "localhost:5000/true" }
 
       it 'still pushes', :vcr do
         expect { image.push }.to_not raise_error
@@ -157,16 +137,16 @@ describe Docker::Image do
   end
 
   describe '#tag' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
 
     it 'tags the image with the repo name', :vcr do
-      subject.tag(:repo => :base2, :force => true)
-      expect(subject.info['RepoTags']).to include 'base2:latest'
+      subject.tag(:repo => :teh, :force => true)
+      expect(subject.info['RepoTags']).to include 'teh:latest'
     end
   end
 
   describe '#json' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
     let(:json) { subject.json }
 
     it 'returns additional information about image image', :vcr do
@@ -176,7 +156,7 @@ describe Docker::Image do
   end
 
   describe '#history' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
     let(:history) { subject.history }
 
     it 'returns the history of the Image', :vcr do
@@ -187,7 +167,7 @@ describe Docker::Image do
   end
 
   describe '#run' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
     let(:container) { subject.run(cmd) }
     let(:output) { container.streaming_logs(stdout: true) }
 
@@ -209,7 +189,8 @@ describe Docker::Image do
 
     context 'when the argument is nil', :vcr  do
       let(:cmd) { nil }
-      context 'no command configured in image'do
+      context 'no command configured in image' do
+        subject { described_class.create('fromImage' => 'scratch') }
         it 'should raise an error if no command is specified' do
           expect {container}.to raise_error(Docker::Error::ServerError,
                                          "No command specified.")
@@ -227,7 +208,7 @@ describe Docker::Image do
   end
 
   describe '#refresh!' do
-    let(:image) { Docker::Image.create('fromImage' => 'base') }
+    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
 
     it 'updates the @info hash', :vcr do
       size = image.info.size
@@ -240,7 +221,7 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'ubuntu') }
+      let(:image) { subject.create('fromImage' => 'tduffield/scratch') }
       let(:creds) {
         {
           :username => ENV['DOCKER_API_USER'],
@@ -267,7 +248,7 @@ describe Docker::Image do
     let(:image) { subject.get(image_name) }
 
     context 'when the image does exist' do
-      let(:image_name) { 'base' }
+      let(:image_name) { 'debian:wheezy' }
 
       it 'returns the new image', :vcr do
         expect(image).to be_a Docker::Image
@@ -298,7 +279,7 @@ describe Docker::Image do
     let(:exists) { subject.exist?(image_name) }
 
     context 'when the image does exist' do
-      let(:image_name) { 'base' }
+      let(:image_name) { 'debian:wheezy' }
 
       it 'returns true', :vcr do
         expect(exists).to eq(true)
@@ -337,15 +318,10 @@ describe Docker::Image do
     end
 
     context 'when the file does exist' do
-      let(:file) { 'spec/fixtures/export.tar' }
-      let(:body) { StringIO.new }
-
-      before do
-        allow(Docker::Image).to receive(:open).with(file).and_yield(body)
-      end
+      let(:file) { "#{project_dir}/spec/fixtures/export.tar" }
+      let(:import) { subject.import(file) }
 
       it 'creates the Image', :vcr do
-        import = subject.import(file)
         expect(import).to be_a Docker::Image
         expect(import.id).to_not be_nil
       end
@@ -360,12 +336,12 @@ describe Docker::Image do
       end
 
       context 'when the URI is valid' do
-        let(:uri) { 'http://swipely-pub.s3.amazonaws.com/ubuntu.tar' }
+        let(:uri) { 'http://i.tomduffield.com/YdPT/tianon_true.tar' }
+        let(:import) { subject.import(uri) }
 
         it 'returns an Image', :vcr do
-          image = subject.import(uri)
-          expect(image).to be_a Docker::Image
-          expect(image.id).to_not be_nil
+          expect(import).to be_a Docker::Image
+          expect(import.id).to_not be_nil
         end
       end
     end
@@ -375,7 +351,7 @@ describe Docker::Image do
     subject { described_class }
 
     let(:images) { subject.all(:all => true) }
-    before { subject.create('fromImage' => 'base') }
+    before { subject.create('fromImage' => 'debian:wheezy') }
 
     it 'materializes each Image into a Docker::Image', :vcr do
       images.each do |image|
@@ -415,7 +391,7 @@ describe Docker::Image do
 
     context 'with a valid Dockerfile' do
       context 'without query parameters' do
-        let(:image) { subject.build("from base\n") }
+        let(:image) { subject.build("FROM debian:wheezy\n") }
 
         it 'builds an image', :vcr do
           expect(image).to be_a Docker::Image
@@ -426,25 +402,25 @@ describe Docker::Image do
 
       context 'with specifying a repo in the query parameters' do
         let(:image) {
-          subject.build("from base\nrun true\n", "t" => "swipely/base")
+          subject.build("FROM debian:wheezy\nRUN true\n", "t" => "#{ENV['DOCKER_API_USER']}/debian:true")
         }
-        let(:images) { subject.all }
 
         it 'builds an image and tags it', :vcr do
           expect(image).to be_a Docker::Image
           expect(image.id).to_not be_nil
           expect(image.connection).to be_a Docker::Connection
-          expect(images.first.info["RepoTags"]).to eq(["swipely/base:latest"])
+          image.refresh!
+          expect(image.info["RepoTags"]).to eq(["#{ENV['DOCKER_API_USER']}/debian:true"])
         end
       end
 
       context 'with a block capturing build output' do
         let(:build_output) { "" }
         let(:block) { Proc.new { |chunk| build_output << chunk } }
-        let!(:image) { subject.build("FROM base\n", &block) }
+        let!(:image) { subject.build("FROM debian:wheezy\n", &block) }
 
         it 'calls the block and passes build output', :vcr do
-          expect(build_output).to match(/Step 0 : FROM base/)
+          expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
         end
       end
     end
@@ -475,10 +451,11 @@ describe Docker::Image do
       end
 
       context 'with specifying a repo in the query parameters' do
-        let(:opts) { { "t" => "swipely/base2" } }
+        let(:opts) { { "t" => "#{ENV['DOCKER_API_USER']}/debian:from_dir" } }
         it 'builds the image and tags it', :vcr do
-          expect(images.first.info["RepoTags"]).to eq(["swipely/base2:latest"])
           expect(output).to eq(docker_file.read)
+          image.refresh!
+          expect(image.info["RepoTags"]).to eq(["#{ENV['DOCKER_API_USER']}/debian:from_dir"])
         end
       end
 
@@ -488,7 +465,7 @@ describe Docker::Image do
 
         it 'calls the block and passes build output', :vcr do
           image # Create the image variable, which is lazy-loaded by Rspec
-          expect(build_output).to match(/Step 0 : from base/)
+          expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
         end
       end
 

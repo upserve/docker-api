@@ -6,7 +6,7 @@ describe Docker::Event do
 
     let(:status) { "start" }
     let(:id) { "398c9f77b5d2" }
-    let(:from) { "base:latest" }
+    let(:from) { "debian:wheezy" }
     let(:time) { 1381956164 }
 
     let(:expected_string) {
@@ -26,7 +26,7 @@ describe Docker::Event do
         .and_call_original
       fork do
         sleep 1
-        Docker::Image.create('fromImage' => 'base').run('bash')
+        Docker::Image.create('fromImage' => 'debian:wheezy').run('bash')
       end
       Docker::Event.stream do |event|
         puts "#{event}"
@@ -46,7 +46,7 @@ describe Docker::Event do
         .and_call_original
       fork do
         sleep 1
-        Docker::Image.create('fromImage' => 'base').run('bash')
+        Docker::Image.create('fromImage' => 'debian:wheezy').run('bash')
       end
       Docker::Event.since(time) do |event|
         puts "#{event}"
@@ -61,7 +61,7 @@ describe Docker::Event do
     subject { Docker::Event.new_event(response_body, nil, nil) }
     let(:status) { "start" }
     let(:id) { "398c9f77b5d2" }
-    let(:from) { "base:latest" }
+    let(:from) { "debian:wheezy" }
     let(:time) { 1381956164 }
     let(:response_body) {
       "{\"status\":\"#{status}\",\"id\":\"#{id}\""\

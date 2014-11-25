@@ -24,7 +24,7 @@ describe Docker::Container do
   end
 
   describe '#json' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy') }
     let(:description) { subject.json }
 
     it 'returns the description as a Hash', :vcr do
@@ -34,7 +34,7 @@ describe Docker::Container do
   end
 
   describe '#streaming_logs' do
-    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'base') }
+    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy') }
 
     context "when not selecting any stream" do
       let(:non_destination) { subject.logs }
@@ -53,7 +53,7 @@ describe Docker::Container do
   end
 
   describe '#logs' do
-    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'base') }
+    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy') }
 
     context "when not selecting any stream" do
       let(:non_destination) { subject.logs }
@@ -73,7 +73,7 @@ describe Docker::Container do
 
   describe '#create' do
     subject {
-      described_class.create({'Cmd' => %w[true], 'Image' => 'base'}.merge(opts))
+      described_class.create({'Cmd' => %w[true], 'Image' => 'debian:wheezy'}.merge(opts))
     }
 
     context 'when creating a container named bob' do
@@ -87,7 +87,7 @@ describe Docker::Container do
 
   describe '#changes' do
     subject {
-      described_class.create('Cmd' => %w[rm -rf /root], 'Image' => 'base')
+      described_class.create('Cmd' => %w[rm -rf /root], 'Image' => 'debian:wheezy')
     }
     let(:changes) { subject.changes }
 
@@ -119,11 +119,8 @@ describe Docker::Container do
   end
 
   describe '#copy' do
-    subject {
-      Docker::Image.create(
-        'fromImage' => 'base'
-      ).run('touch /test').tap { |c| c.wait }
-    }
+    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
+    subject { image.run('touch /test').tap { |c| c.wait } }
 
     context 'when the file does not exist' do
       it 'raises an error', :vcr do
@@ -145,21 +142,18 @@ describe Docker::Container do
     context 'when the input is a directory' do
       it 'yields each chunk of the tarred directory', :vcr do
         chunks = []
-        subject.copy('/etc/vim') { |chunk| chunks << chunk }
+        subject.copy('/etc/logrotate.d') { |chunk| chunks << chunk }
         chunks = chunks.join("\n")
-        expect(%w[vimrc vimrc.tiny]).to be_all { |file| chunks.include?(file) }
+        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
       end
     end
   end
 
   describe '#export' do
     subject { described_class.create('Cmd' => %w[rm -rf / --no-preserve-root],
-                                     'Image' => 'base') }
+                                     'Image' => 'tianon/true') }
     before { subject.start }
 
-    # If you have to re-record this VCR, PLEASE edit it so that it's only ~200
-    # lines. This is only because we don't want our gem to be a few hundred
-    # megabytes.
     it 'yields each chunk', :vcr do
       first = nil
       subject.export do |chunk|
@@ -170,7 +164,7 @@ describe Docker::Container do
   end
 
   describe '#attach' do
-    subject { described_class.create('Cmd' => %w[pwd], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => ['bash','-c','sleep 2; echo hello'], 'Image' => 'debian:wheezy') }
 
     before { subject.start }
 
@@ -180,7 +174,7 @@ describe Docker::Container do
         subject.attach do |stream, c|
           chunk ||= c
         end
-        expect(chunk).to eq("/\n")
+        expect(chunk).to eq("hello\n")
       end
     end
 
@@ -198,7 +192,7 @@ describe Docker::Container do
         subject.attach do |stream, c|
           chunk ||= c
         end
-        expect(chunk).to eq("/\n")
+        expect(chunk).to eq("hello\n")
       end
     end
   end
@@ -211,7 +205,7 @@ describe Docker::Container do
       skip 'HTTP socket hijacking not compatible with VCR'
       container = described_class.create(
         'Cmd'       => %w[cat],
-        'Image'     => 'base',
+        'Image'     => 'debian:wheezy',
         'OpenStdin' => true,
         'StdinOnce' => true
       )
@@ -227,7 +221,7 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[test -d /foo],
-        'Image' => 'base',
+        'Image' => 'debian:wheezy',
         'Volumes' => {'/foo' => {}}
       )
     }
@@ -242,7 +236,7 @@ describe Docker::Container do
   end
 
   describe '#stop' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy') }
 
     before { subject.tap(&:start).stop('timeout' => '10') }
 
@@ -258,7 +252,7 @@ describe Docker::Container do
 
   describe '#kill' do
     let(:command) { ['/bin/bash', '-c', 'while [ 1 ]; do echo hello; done'] }
-    subject { described_class.create('Cmd' => command, 'Image' => 'base') }
+    subject { described_class.create('Cmd' => command, 'Image' => 'debian:wheezy') }
 
     before do
       subject.start
@@ -303,7 +297,7 @@ describe Docker::Container do
   end
 
   describe '#delete' do
-    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy') }
 
     it 'deletes the container', :vcr do
       subject.delete(:force => true)
@@ -314,7 +308,7 @@ describe Docker::Container do
   end
 
   describe '#restart' do
-    subject { described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy') }
 
     before { subject.start }
 
@@ -335,7 +329,7 @@ describe Docker::Container do
 
   describe '#pause' do
     subject {
-      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base').start
+      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'debian:wheezy').start
     }
 
     it 'pauses the container', :vcr do
@@ -346,7 +340,7 @@ describe Docker::Container do
 
   describe '#unpause' do
     subject {
-      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'base').start
+      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'debian:wheezy').start
     }
     before { subject.pause }
 
@@ -360,7 +354,7 @@ describe Docker::Container do
 
   describe '#wait' do
     subject { described_class.create('Cmd' => %w[tar nonsense],
-                                     'Image' => 'base') }
+                                     'Image' => 'debian:wheezy') }
 
     before { subject.start }
 
@@ -370,7 +364,7 @@ describe Docker::Container do
 
     context 'when an argument is given' do
       subject { described_class.create('Cmd' => %w[sleep 5],
-                                       'Image' => 'base') }
+                                       'Image' => 'debian:wheezy') }
 
       it 'sets the :read_timeout to that amount of time', :vcr do
         expect(subject.wait(6)['StatusCode']).to be_zero
@@ -388,8 +382,8 @@ describe Docker::Container do
   describe '#run' do
     let(:run_command) { subject.run('ls') }
     context 'when the Container\'s command does not return status code of 0' do
-      subject { described_class.create('Cmd' => %w[lol not a real command],
-                                       'Image' => 'base') }
+      subject { described_class.create('Cmd' => %w[false],
+                                       'Image' => 'debian:wheezy') }
 
       it 'raises an error', :vcr do
         expect { run_command }
@@ -399,7 +393,7 @@ describe Docker::Container do
 
     context 'when the Container\'s command returns a status code of 0' do
       subject { described_class.create('Cmd' => %w[pwd],
-                                       'Image' => 'base') }
+                                       'Image' => 'debian:wheezy') }
 
       it 'creates a new container to run the specified command', :vcr do
         expect(run_command.wait['StatusCode']).to be_zero
@@ -408,7 +402,7 @@ describe Docker::Container do
   end
 
   describe '#commit' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'base') }
+    subject { described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy') }
     let(:image) { subject.commit }
 
     before { subject.start }
@@ -464,7 +458,7 @@ describe Docker::Container do
             "Env"          => nil,
             "Cmd"          => ["date"],
             "Dns"          => nil,
-            "Image"        => "base",
+            "Image"        => "debian:wheezy",
             "Volumes"      => {},
             "VolumesFrom"  => ""
           }
@@ -500,7 +494,7 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'base') }
+      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy') }
 
       it 'materializes the Container into a Docker::Container', :vcr do
         expect(subject.get(container.id)).to be_a Docker::Container
@@ -529,7 +523,8 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      before { described_class.create('Cmd' => ['ls'], 'Image' => 'base') }
+      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy') }
+      before { container }
 
       it 'materializes each Container into a Docker::Container', :vcr do
         expect(subject.all(:all => true)).to be_all { |container|
