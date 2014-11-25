@@ -55,6 +55,10 @@ describe Docker::Image do
       let(:file) { "#{project_dir}/Gemfile" }
       let(:gemfile) { File.read('Gemfile') }
       let(:container) { new_image.run('cat /Gemfile') }
+      after do
+        container.tap(&:wait).remove
+        new_image.remove
+      end
 
       it 'creates a new Image that has that file', :vcr do
         output = container.streaming_logs(stdout: true)
@@ -86,6 +90,10 @@ describe Docker::Image do
       let(:response) {
         container.streaming_logs(stdout: true)
       }
+      after do
+        container.tap(&:wait).remove
+        new_image.remove
+      end
 
       it 'creates a new Image that has each file', :vcr do
         expect(response).to eq("#{gemfile}#{rakefile}")
@@ -95,6 +103,7 @@ describe Docker::Image do
     context 'when removing intermediate containers' do
       let(:rm) { true }
       let(:file) { "#{project_dir}/Gemfile" }
+      after(:each) { new_image.remove }
 
       it 'leave no intermediate containers', :vcr do
         expect { new_image }.to change {
@@ -121,6 +130,7 @@ describe Docker::Image do
     let(:image) {
       described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
     }
+    after { image.remove(:name => repo_tag, :noprune => true) }
 
     it 'pushes the Image', :vcr do
       image.push(credentials)
@@ -138,6 +148,7 @@ describe Docker::Image do
 
   describe '#tag' do
     subject { described_class.create('fromImage' => 'debian:wheezy') }
+    after { subject.remove(:name => 'teh:latest', :noprune => true) }
 
     it 'tags the image with the repo name', :vcr do
       subject.tag(:repo => :teh, :force => true)
@@ -173,6 +184,8 @@ describe Docker::Image do
 
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
+      after { container.tap(&:wait).remove }
+
       it 'splits the String by spaces and creates a new Container' do
         expect(output).to eq("ld-linux-x86-64.so.2\n")
       end
@@ -199,6 +212,7 @@ describe Docker::Image do
 
       context "command configured in image" do
         let(:cmd) { 'pwd' }
+        after { container.tap(&:wait).remove }
 
         it 'should normally show result if image has Cmd configured' do
           expect(output).to eql "/\n"
@@ -231,6 +245,7 @@ describe Docker::Image do
       }
 
       before { Docker.creds = creds }
+      after { image.remove(:name => 'tduffield/scratch', :noprune => true) }
 
       it 'sets the id and sends Docker.creds', :vcr do
         expect(image).to be_a Docker::Image
@@ -320,6 +335,7 @@ describe Docker::Image do
     context 'when the file does exist' do
       let(:file) { "#{project_dir}/spec/fixtures/export.tar" }
       let(:import) { subject.import(file) }
+      after { import.remove(:noprune => true) }
 
       it 'creates the Image', :vcr do
         expect(import).to be_a Docker::Image
@@ -338,6 +354,7 @@ describe Docker::Image do
       context 'when the URI is valid' do
         let(:uri) { 'http://i.tomduffield.com/YdPT/tianon_true.tar' }
         let(:import) { subject.import(uri) }
+        after { import.remove(:noprune => true) }
 
         it 'returns an Image', :vcr do
           expect(import).to be_a Docker::Image
@@ -404,6 +421,7 @@ describe Docker::Image do
         let(:image) {
           subject.build("FROM debian:wheezy\nRUN true\n", "t" => "#{ENV['DOCKER_API_USER']}/debian:true")
         }
+        after { image.remove(:noprune => true) }
 
         it 'builds an image and tags it', :vcr do
           expect(image).to be_a Docker::Image
@@ -443,6 +461,10 @@ describe Docker::Image do
       end
       let(:output) { container.tap(&:start)
                               .streaming_logs(stdout: true) }
+      after(:each) do
+        container.tap(&:wait).remove
+        image.remove(:noprune => true)
+      end
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
