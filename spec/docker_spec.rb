@@ -141,7 +141,7 @@ describe Docker do
     let(:keys) do
       %w(Containers Debug Driver DriverStatus ExecutionDriver IPv4Forwarding
          Images IndexServerAddress InitPath InitSha1 KernelVersion MemoryLimit
-         NEventsListener NFd NGoroutines SwapLimit)
+         NEventsListener NFd NGoroutines OperatingSystem SwapLimit)
     end
 
     it 'returns the info as a Hash', :vcr do
