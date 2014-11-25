@@ -23,7 +23,7 @@ class Docker::Image
 
   # Push the Image to the Docker registry.
   def push(creds = nil, options = {})
-    repo_tag = info['RepoTags'].first
+    repo_tag = options.delete(:repo_tag) || info['RepoTags'].first
     raise ArgumentError "Image is untagged" if repo_tag.nil?
     repo, tag = Docker::Util.parse_repo_tag(repo_tag)
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
@@ -63,7 +63,8 @@ class Docker::Image
 
   # Remove the Image from the server.
   def remove(opts = {})
-    connection.delete("/images/#{self.id}", opts)
+    name = opts.delete(:name) || self.id
+    connection.delete("/images/#{name}", opts)
   end
   alias_method :delete, :remove
 
