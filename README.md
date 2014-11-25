@@ -188,7 +188,7 @@ Much like the Images, this object also has a one-to-one mapping with the [Contai
 require 'docker'
 
 # Create a Container.
-Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
+container = Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Get more information about the Container.
