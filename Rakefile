@@ -15,6 +15,43 @@ Cane::RakeTask.new(:quality) do |cane|
   cane.canefile = '.cane'
 end
 
+dir = File.expand_path(File.dirname(__FILE__))
+namespace :vcr do
+  desc 'Run the full test suite from scratch'
+  task :spec => [:unpack, :record]
+
+  desc 'Download the necessary base images'
+  task :unpack do
+    %w( registry busybox tianon/true scratch ).each do |image|
+      system "docker pull #{image}"
+    end
+  end
+
+  desc 'Run spec tests and record VCR cassettes'
+  task :record do
+    begin
+      FileUtils.remove_dir("#{dir}/spec/vcr", true)
+      registry = Docker::Container.create(
+        'name' => 'registry',
+        'Image' => 'registry',
+        'Env' => ["GUNICORN_OPTS=[--preload]"],
+        'ExposedPorts' => {
+          '5000/tcp' => {}
+        },
+        'HostConfig' => {
+          'PortBindings' => { '5000/tcp' => [{ 'HostPort' => '5000' }] }
+        }
+      )
+      registry.start
+      Rake::Task["spec"].invoke
+    rescue
+      # nothing
+    ensure
+      registry.kill!.remove
+    end
+  end
+end
+
 desc 'Pull an Ubuntu image'
 image 'ubuntu:13.10' do
   puts "Pulling ubuntu:13.10"
