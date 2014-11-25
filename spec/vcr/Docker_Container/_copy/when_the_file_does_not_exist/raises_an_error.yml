@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:00 GMT
+      - Tue, 25 Nov 2014 02:50:24 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,13 +28,13 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:59 GMT
+  recorded_at: Tue, 25 Nov 2014 02:50:23 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/containers/create
     body:
       encoding: UTF-8
-      string: '{"Image":"f6fab3b798be","Cmd":["which","pwd"]}'
+      string: '{"Image":"f6fab3b798be","Cmd":["touch","/test"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -48,18 +48,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:00 GMT
+      - Tue, 25 Nov 2014 02:50:24 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"3ef701ebd8d379d843723886b71e73a777c017cb8ae536129c8c1f41322120c3","Warnings":null}
+        {"Id":"d5f8bfd0dc2f9795d733010b3ba91d06858ba72e44508dacad42934e4f16b1bc","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:59 GMT
+  recorded_at: Tue, 25 Nov 2014 02:50:23 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/3ef701ebd8d379d843723886b71e73a777c017cb8ae536129c8c1f41322120c3/start
+    uri: https://192.168.59.103:2376/v1.15/containers/d5f8bfd0dc2f9795d733010b3ba91d06858ba72e44508dacad42934e4f16b1bc/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -74,41 +74,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:52:00 GMT
+      - Tue, 25 Nov 2014 02:50:24 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:59 GMT
-- request:
-    method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/3ef701ebd8d379d843723886b71e73a777c017cb8ae536129c8c1f41322120c3/logs?stdout=true
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.15.0
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Date:
-      - Tue, 25 Nov 2014 02:52:00 GMT
-      Content-Type:
-      - application/octet-stream
-    body:
-      encoding: UTF-8
-      string: !binary |-
-        AQAAAAAAAAkvYmluL3B3ZAo=
-    http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:59 GMT
+  recorded_at: Tue, 25 Nov 2014 02:50:23 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/3ef701ebd8d379d843723886b71e73a777c017cb8ae536129c8c1f41322120c3/wait
+    uri: https://192.168.59.103:2376/v1.15/containers/d5f8bfd0dc2f9795d733010b3ba91d06858ba72e44508dacad42934e4f16b1bc/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -125,7 +99,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:00 GMT
+      - Tue, 25 Nov 2014 02:50:24 GMT
       Content-Length:
       - '17'
     body:
@@ -133,10 +107,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:59 GMT
+  recorded_at: Tue, 25 Nov 2014 02:50:24 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/3ef701ebd8d379d843723886b71e73a777c017cb8ae536129c8c1f41322120c3
+    uri: https://192.168.59.103:2376/v1.15/containers/d5f8bfd0dc2f9795d733010b3ba91d06858ba72e44508dacad42934e4f16b1bc
     body:
       encoding: US-ASCII
       string: ''
@@ -151,10 +125,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:52:00 GMT
+      - Tue, 25 Nov 2014 02:50:24 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:59 GMT
+  recorded_at: Tue, 25 Nov 2014 02:50:24 GMT
 recorded_with: VCR 2.9.3

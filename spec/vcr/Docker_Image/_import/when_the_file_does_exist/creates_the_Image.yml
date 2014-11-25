@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/images/create?fromSrc=-
+    uri: https://192.168.59.103:2376/v1.15/images/create?fromSrc=-
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/tar
       Transfer-Encoding:
@@ -21,14 +21,39 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 20:30:43 GMT
-      Connection:
-      - close
-      Transfer-Encoding:
-      - ''
+      - Tue, 25 Nov 2014 02:52:06 GMT
     body:
       encoding: UTF-8
-      string: "{\"status\":\"8e6af99faf6639486edb869399f9b4c602972f3b5e1be48cd47a03d40b198203\"}\r\n"
+      string: "{\"status\":\"8e69de2f8b025010e91eb4d4edd6c253680438288202aa5f013b421d8b5625e9\"}\r\n"
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 20:30:43 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Tue, 25 Nov 2014 02:52:06 GMT
+- request:
+    method: delete
+    uri: https://192.168.59.103:2376/v1.15/images/8e69de2f8b025010e91eb4d4edd6c253680438288202aa5f013b421d8b5625e9?noprune=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Nov 2014 02:52:07 GMT
+      Content-Length:
+      - '81'
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Deleted":"8e69de2f8b025010e91eb4d4edd6c253680438288202aa5f013b421d8b5625e9"}
+        ]
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:52:06 GMT
+recorded_with: VCR 2.9.3

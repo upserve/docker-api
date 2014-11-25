@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/containers/create
+    uri: https://192.168.59.103:2376/v1.15/containers/create
     body:
       encoding: UTF-8
-      string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"base","Volumes":{},"VolumesFrom":""}'
+      string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"debian:wheezy","Volumes":{},"VolumesFrom":""}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -19,15 +19,36 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 19:48:19 GMT
+      - Tue, 25 Nov 2014 02:51:02 GMT
       Content-Length:
       - '90'
-      Connection:
-      - close
     body:
       encoding: UTF-8
       string: |
-        {"Id":"f3b40d5d64c5615c13b8d1301908e94f76b502b629bb96be84b8dbef283f816e","Warnings":null}
+        {"Id":"45c9f36aa1562d9817c3433d70d1c6bcf9ea5ebd2a6ab590455c9e3bc59e44fd","Warnings":null}
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:48:19 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+- request:
+    method: delete
+    uri: https://192.168.59.103:2376/v1.15/containers/45c9f36aa1562d9817c3433d70d1c6bcf9ea5ebd2a6ab590455c9e3bc59e44fd
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Tue, 25 Nov 2014 02:51:02 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+recorded_with: VCR 2.9.3

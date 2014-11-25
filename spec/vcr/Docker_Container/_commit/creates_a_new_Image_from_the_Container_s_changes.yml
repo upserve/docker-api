@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/containers/create
+    uri: https://192.168.59.103:2376/v1.15/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":["true"],"Image":"base"}'
+      string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -19,26 +19,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 19:47:25 GMT
+      - Tue, 25 Nov 2014 02:51:01 GMT
       Content-Length:
       - '90'
-      Connection:
-      - close
     body:
       encoding: UTF-8
       string: |
-        {"Id":"0d8ae14c085366adfbccb7d6b58da0e49988e357be43d9a369843952ff35f5a4","Warnings":null}
+        {"Id":"87a329249626d972d67f40fa02aa73aa4890f901fa873fe0cc90fe90b3624f71","Warnings":null}
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:47:25 GMT
+  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/containers/0d8ae14c085366adfbccb7d6b58da0e49988e357be43d9a369843952ff35f5a4/start
+    uri: https://192.168.59.103:2376/v1.15/containers/87a329249626d972d67f40fa02aa73aa4890f901fa873fe0cc90fe90b3624f71/start
     body:
       encoding: UTF-8
-      string: '{}'
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -47,23 +45,21 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Thu, 26 Jun 2014 19:47:25 GMT
-      Connection:
-      - close
+      - Tue, 25 Nov 2014 02:51:01 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:47:25 GMT
+  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/commit?container=0d8ae14c
+    uri: https://192.168.59.103:2376/v1.15/commit?container=87a32924
     body:
       encoding: UTF-8
       string: 'null'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -74,15 +70,65 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 19:47:27 GMT
+      - Tue, 25 Nov 2014 02:51:02 GMT
       Content-Length:
       - '74'
-      Connection:
-      - close
     body:
       encoding: UTF-8
       string: |
-        {"Id":"a0c4eb76de43e01915098f7901d9f3556c6653547504bede6de3ac4a0cbeba94"}
+        {"Id":"6f0030df332d6a0a8f5e62b64f1b9c33945d825edee7736ca81e02d898a94e0c"}
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:47:27 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+- request:
+    method: delete
+    uri: https://192.168.59.103:2376/v1.15/containers/87a329249626d972d67f40fa02aa73aa4890f901fa873fe0cc90fe90b3624f71
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Tue, 25 Nov 2014 02:51:02 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+- request:
+    method: delete
+    uri: https://192.168.59.103:2376/v1.15/images/6f0030df332d6a0a8f5e62b64f1b9c33945d825edee7736ca81e02d898a94e0c
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Nov 2014 02:51:02 GMT
+      Content-Length:
+      - '81'
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Deleted":"6f0030df332d6a0a8f5e62b64f1b9c33945d825edee7736ca81e02d898a94e0c"}
+        ]
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+recorded_with: VCR 2.9.3

@@ -2,21 +2,19 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/build
+    uri: https://192.168.59.103:2376/v1.15/build
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/tar
       Transfer-Encoding:
       - chunked
-      X-Registry-Auth:
-      - e30=
       X-Registry-Config:
-      - e30=
+      - eyJjb25maWdzIjp7IiI6eyJ1c2VybmFtZSI6InRkdWZmaWVsZCIsInBhc3N3b3JkIjoiaTlCZj5KZ3ZmYmpZL3NKV01jVTkiLCJlbWFpbCI6ImdpdGh1YkB0b21kdWZmaWVsZC5jb20ifX19
   response:
     status:
       code: 200
@@ -25,17 +23,121 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 20:37:13 GMT
-      Connection:
-      - close
-      Transfer-Encoding:
-      - ''
+      - Tue, 25 Nov 2014 02:52:14 GMT
     body:
       encoding: UTF-8
-      string: "{\"stream\":\"Step 0 : from base\\n\"}\r\n{\"stream\":\" ---\\u003e
-        b750fe79269d\\n\"}\r\n{\"stream\":\"Step 1 : add / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e Using cache\\n\"}\r\n{\"stream\":\" ---\\u003e bd7ca82afb11\\n\"}\r\n{\"stream\":\"Successfully
-        built bd7ca82afb11\\n\"}\r\n"
+      string: "{\"stream\":\"Step 0 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\" ---\\u003e
+        f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD / /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 0dc0778a854d\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        e563f606f015\\n\"}\r\n{\"stream\":\"Successfully built 0dc0778a854d\\n\"}\r\n"
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 20:37:13 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Tue, 25 Nov 2014 02:52:14 GMT
+- request:
+    method: post
+    uri: https://192.168.59.103:2376/v1.15/containers/create
+    body:
+      encoding: UTF-8
+      string: '{"Image":"0dc0778a854d","Cmd":["cat","/Dockerfile"]}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Nov 2014 02:52:15 GMT
+      Content-Length:
+      - '90'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"1ed1a10615c7782d1fc4d78c928b509a5edeb0b8d00346fd9c97b4a8cca067bd","Warnings":null}
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:52:14 GMT
+- request:
+    method: post
+    uri: https://192.168.59.103:2376/v1.15/containers/1ed1a10615c7782d1fc4d78c928b509a5edeb0b8d00346fd9c97b4a8cca067bd/wait
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Nov 2014 02:52:15 GMT
+      Content-Length:
+      - '17'
+    body:
+      encoding: UTF-8
+      string: |
+        {"StatusCode":0}
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:52:14 GMT
+- request:
+    method: delete
+    uri: https://192.168.59.103:2376/v1.15/containers/1ed1a10615c7782d1fc4d78c928b509a5edeb0b8d00346fd9c97b4a8cca067bd
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Tue, 25 Nov 2014 02:52:15 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:52:14 GMT
+- request:
+    method: delete
+    uri: https://192.168.59.103:2376/v1.15/images/0dc0778a854d?noprune=true
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 25 Nov 2014 02:52:15 GMT
+      Content-Length:
+      - '81'
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Deleted":"0dc0778a854d5e986395b31e84309f59eb5c0011f1c9b3ec469e6d1e1dd6d703"}
+        ]
+    http_version: 
+  recorded_at: Tue, 25 Nov 2014 02:52:14 GMT
+recorded_with: VCR 2.9.3
