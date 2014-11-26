@@ -21,15 +21,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:06 GMT
+      - Wed, 26 Nov 2014 18:54:07 GMT
     body:
       encoding: UTF-8
-      string: "{\"status\":\"8e69de2f8b025010e91eb4d4edd6c253680438288202aa5f013b421d8b5625e9\"}\r\n"
+      string: "{\"status\":\"981fb818abae50d8b0247c1c0f8fded7b5c03d805b4300ab949a795cd3f8afbf\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:06 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:07 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/8e69de2f8b025010e91eb4d4edd6c253680438288202aa5f013b421d8b5625e9?noprune=true
+    uri: https://192.168.59.103:2376/v1.15/images/981fb818abae50d8b0247c1c0f8fded7b5c03d805b4300ab949a795cd3f8afbf?noprune=true
     body:
       encoding: US-ASCII
       string: ''
@@ -46,14 +46,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:07 GMT
+      - Wed, 26 Nov 2014 18:54:08 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"8e69de2f8b025010e91eb4d4edd6c253680438288202aa5f013b421d8b5625e9"}
+        [{"Deleted":"981fb818abae50d8b0247c1c0f8fded7b5c03d805b4300ab949a795cd3f8afbf"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:06 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:07 GMT
 recorded_with: VCR 2.9.3

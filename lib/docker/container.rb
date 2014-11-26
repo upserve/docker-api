@@ -32,6 +32,44 @@ class Docker::Container
     end
   end
 
+  # Create an Exec instance inside the container
+  #
+  # @param command [String, Array] The command to run inside the Exec instance
+  # @param options [Hash] The options to pass to Docker::Exec
+  #
+  # @return [Docker::Exec] The Exec instance
+  def exec(command, opts = {}, &block)
+    # Establish values
+    tty = opts.delete(:tty) || false
+    detach = opts.delete(:detach) || false
+    stdin = opts.delete(:stdin)
+    stdout = opts.delete(:stdout) || !detach
+    stderr = opts.delete(:stderr) || !detach
+
+    # Create Exec Instance
+    instance = Docker::Exec.create(
+      'Container' => self.id,
+      'AttachStdin' => !!stdin,
+      'AttachStdout' => stdout,
+      'AttachStderr' => stderr,
+      'Tty' => tty,
+      'Cmd' => command
+    )
+
+    start_opts = {
+      :tty => tty,
+      :stdin => stdin,
+      :detach => detach
+    }
+
+    if detach
+      instance.start!(start_opts)
+      return instance
+    else
+      instance.start!(start_opts, &block)
+    end
+  end
+
   # Export the Container as a tar.
   def export(&block)
     connection.get(path_for(:export), {}, :response_block => block)
@@ -55,9 +93,9 @@ class Docker::Container
       # If attaching to stdin, we must hijack the underlying TCP connection
       # so we can stream stdin to the remote Docker process
       opts[:stdin] = true
-      excon_params[:hijack_block] = hijack_for(stdin, block, msgs, tty)
+      excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block, msgs, tty)
     else
-      excon_params[:response_block] = attach_for(block, msgs, tty)
+      excon_params[:response_block] = Docker::Util.attach_for(block, msgs, tty)
     end
 
     connection.post(
@@ -101,7 +139,7 @@ class Docker::Container
 
   def streaming_logs(opts = {}, &block)
     msgs = Docker::Messages.new
-    excon_params = { response_block: attach_for(block, msgs, false) }
+    excon_params = { response_block: Docker::Util.attach_for(block, msgs, false) }
 
     connection.get(path_for(:logs), opts, excon_params)
     msgs.all_messages.join('')
@@ -201,81 +239,6 @@ class Docker::Container
     "/containers/#{self.id}/#{resource}"
   end
 
-  def hijack_for(stdin, block, msg_stack, tty)
-    attach_block = attach_for(block, msg_stack, tty)
-
-    lambda do |socket|
-      debug "hijack: hijacking the HTTP socket"
-      threads = []
-
-      debug "hijack: starting stdin copy thread"
-      threads << Thread.start do
-        debug "hijack: copying stdin => socket"
-        IO.copy_stream stdin, socket
-
-        debug "hijack: closing write end of hijacked socket"
-        socket.close_write
-      end
-
-      debug "hijack: starting hijacked socket read thread"
-      threads << Thread.start do
-        debug "hijack: reading from hijacked socket"
-
-        begin
-          while chunk = socket.readpartial(512)
-            debug "hijack: got #{chunk.bytesize} bytes from hijacked socket"
-            attach_block.call chunk, nil, nil
-          end
-        rescue EOFError
-        end
-
-        debug "hijack: killing stdin copy thread"
-        threads.first.kill
-      end
-
-      threads.each(&:join)
-    end
-  end
-
-  # Method that takes chunks and calls the attached block for each mux'd message
-  def attach_for(block, msg_stack, tty)
-    # If TTY is enabled expect raw data and append to stdout
-    if tty
-      attach_for_tty(block, msg_stack)
-    else
-      attach_for_multiplex(block, msg_stack)
-    end
-  end
-
-  def attach_for_tty(block, msg_stack)
-    return lambda do |c,r,t|
-      msg_stack.stdout_messages << c
-      msg_stack.all_messages << c
-      block.call c if block
-    end
-  end
-
-  def attach_for_multiplex(block, msg_stack)
-    messages = Docker::Messages.new
-    lambda do |c,r,t|
-      messages = messages.decipher_messages(c)
-      msg_stack.append(messages)
-
-      unless block.nil?
-        messages.stdout_messages.each do |msg|
-          block.call(:stdout, msg)
-        end
-        messages.stderr_messages.each do |msg|
-          block.call(:stderr, msg)
-        end
-      end
-    end
-  end
-
-  def debug(msg)
-    Docker.logger.debug(msg) if Docker.logger
-  end
-
-  private :path_for, :attach_for, :attach_for_tty, :attach_for_multiplex, :debug
+  private :path_for
   private_class_method :new
 end

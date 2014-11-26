@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:02 GMT
+      - Wed, 26 Nov 2014 18:53:24 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"45c9f36aa1562d9817c3433d70d1c6bcf9ea5ebd2a6ab590455c9e3bc59e44fd","Warnings":null}
+        {"Id":"389540142da677a4ffce5591b49906026d02a0a02780be615c84652e4aaede80","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:23 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/45c9f36aa1562d9817c3433d70d1c6bcf9ea5ebd2a6ab590455c9e3bc59e44fd
+    uri: https://192.168.59.103:2376/v1.15/containers/389540142da677a4ffce5591b49906026d02a0a02780be615c84652e4aaede80
     body:
       encoding: US-ASCII
       string: ''
@@ -45,10 +45,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:02 GMT
+      - Wed, 26 Nov 2014 18:53:24 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:23 GMT
 recorded_with: VCR 2.9.3

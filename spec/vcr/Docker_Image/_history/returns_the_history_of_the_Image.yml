@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:58 GMT
+      - Wed, 26 Nov 2014 18:53:58 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,7 +28,7 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:57 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:58 GMT
 - request:
     method: get
     uri: https://192.168.59.103:2376/v1.15/images/f6fab3b798be/history
@@ -48,7 +48,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:58 GMT
+      - Wed, 26 Nov 2014 18:53:58 GMT
       Content-Length:
       - '560'
     body:
@@ -59,5 +59,5 @@ http_interactions:
         ,{"Created":1371157430,"CreatedBy":"","Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","Size":0,"Tags":["scratch:latest"]}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:57 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:58 GMT
 recorded_with: VCR 2.9.3

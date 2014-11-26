@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:02 GMT
+      - Wed, 26 Nov 2014 18:53:24 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"9177c5b609729a95d1085efcaf3529f79cc0786a73ac04d2b14e8565d6107ca5","Warnings":null}
+        {"Id":"c7ca4a95bb1fb23ecaad5519c12c286bcb5172b73165b757cdf6c46d55cd35a0","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:24 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/9177c5b609729a95d1085efcaf3529f79cc0786a73ac04d2b14e8565d6107ca5/json
+    uri: https://192.168.59.103:2376/v1.15/containers/c7ca4a95bb1fb23ecaad5519c12c286bcb5172b73165b757cdf6c46d55cd35a0/json
     body:
       encoding: US-ASCII
       string: ''
@@ -47,18 +47,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:02 GMT
+      - Wed, 26 Nov 2014 18:53:24 GMT
       Content-Length:
-      - '1471'
+      - '1496'
     body:
       encoding: UTF-8
       string: |
-        {"Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["ls"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"9177c5b60972","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-25T02:51:02.46502789Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"9177c5b609729a95d1085efcaf3529f79cc0786a73ac04d2b14e8565d6107ca5","Image":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","MountLabel":"","Name":"/agitated_tesla","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"ls","ProcessLabel":"","ResolvConfPath":"","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":null,"VolumesRW":null}
+        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["ls"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"c7ca4a95bb1f","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-26T18:53:24.19569089Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"c7ca4a95bb1fb23ecaad5519c12c286bcb5172b73165b757cdf6c46d55cd35a0","Image":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","MountLabel":"","Name":"/suspicious_bardeen","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"ls","ProcessLabel":"","ResolvConfPath":"","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":null,"VolumesRW":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:24 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/9177c5b609729a95d1085efcaf3529f79cc0786a73ac04d2b14e8565d6107ca5
+    uri: https://192.168.59.103:2376/v1.15/containers/c7ca4a95bb1fb23ecaad5519c12c286bcb5172b73165b757cdf6c46d55cd35a0
     body:
       encoding: US-ASCII
       string: ''
@@ -73,10 +73,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:02 GMT
+      - Wed, 26 Nov 2014 18:53:24 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:01 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:24 GMT
 recorded_with: VCR 2.9.3

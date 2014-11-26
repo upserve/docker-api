@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:50 GMT
+      - Wed, 26 Nov 2014 18:53:54 GMT
     body:
       encoding: UTF-8
       string: |-
@@ -36,7 +36,7 @@ http_interactions:
         ,{"Created":1371157430,"Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","ParentId":"","RepoTags":["scratch:latest"],"Size":0,"VirtualSize":0}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:49 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:54 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/images/create?fromImage=debian%3Awheezy
@@ -56,7 +56,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:52 GMT
+      - Wed, 26 Nov 2014 18:53:55 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -65,7 +65,7 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:52 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:54 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/build?rm=true
@@ -75,7 +75,7 @@ http_interactions:
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADEyNDM0NzY3MzEwADAxMjYxNAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNDM1NDIwNzAyADAxMjYwNAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -97,8 +97,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjQzNDc2NzMx
-        MAAwMTMzMDUAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjQzNTQyMDcw
+        MgAwMTMyNzUAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -154,15 +154,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:52 GMT
+      - Wed, 26 Nov 2014 18:53:55 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM f6fab3b798be\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 0e502fcaab6d\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        bf03d6ddcc43\\n\"}\r\n{\"stream\":\"Successfully built 0e502fcaab6d\\n\"}\r\n"
+        ---\\u003e 186a09beeb91\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        6e6c4fd94060\\n\"}\r\n{\"stream\":\"Successfully built 186a09beeb91\\n\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:52 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:55 GMT
 - request:
     method: get
     uri: https://192.168.59.103:2376/v1.15/images/json
@@ -182,11 +182,11 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:52 GMT
+      - Wed, 26 Nov 2014 18:53:55 GMT
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1416883912,"Id":"0e502fcaab6dd56953aad610f7aa48533e01330af9427b8b90af75b88fadd9d0","ParentId":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":85100543}
+        [{"Created":1417028035,"Id":"186a09beeb91b710aa99f0cebde4cd8435935edc0e0e09772b5c26eb335cfa92","ParentId":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":85100543}
         ,{"Created":1416799251,"Id":"08e20b3475072326a5f6855b4bca4fe53680d025f379eb54c5076de119cae17b","ParentId":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","RepoTags":["tianon/true:latest"],"Size":0,"VirtualSize":125}
         ,{"Created":1415864019,"Id":"74f5b38a45c97043cdf0082b8e8dd002497ab6b03388cdb2f20bafb7468ad55b","ParentId":"31ae66be94f160a92e1e757ab9a66aa7183af55183080576fb93a52cbce9e0cd","RepoTags":["registry:0.9.0"],"Size":0,"VirtualSize":411649756}
         ,{"Created":1415863849,"Id":"d9925ba888d4dba2d9b22273d261155fe3b2a4e6cfa5db44e4abe5ac8e311efa","ParentId":"4abfff610473315c2fb7a6278c924948ba877fe6630ad197f734572b7636188e","RepoTags":["registry:0.8.1"],"Size":0,"VirtualSize":430388853}
@@ -200,10 +200,10 @@ http_interactions:
         ,{"Created":1371157430,"Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","ParentId":"","RepoTags":["scratch:latest"],"Size":0,"VirtualSize":0}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:52 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:55 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/0e502fcaab6d
+    uri: https://192.168.59.103:2376/v1.15/images/186a09beeb91
     body:
       encoding: US-ASCII
       string: ''
@@ -220,14 +220,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:53 GMT
+      - Wed, 26 Nov 2014 18:53:55 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"0e502fcaab6dd56953aad610f7aa48533e01330af9427b8b90af75b88fadd9d0"}
+        [{"Deleted":"186a09beeb91b710aa99f0cebde4cd8435935edc0e0e09772b5c26eb335cfa92"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:52 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:55 GMT
 recorded_with: VCR 2.9.3

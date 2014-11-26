@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"742166f46ff43c3f97003ed2d7fd0fca8abd95b0f21b2940fa4d5e882ed45917","Warnings":null}
+        {"Id":"8b3bfa87e030265f12a41c2649e839d19b8679c26e75aa145da27065621c9474","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:19 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/742166f46ff43c3f97003ed2d7fd0fca8abd95b0f21b2940fa4d5e882ed45917/logs?stdout=1
+    uri: https://192.168.59.103:2376/v1.15/containers/8b3bfa87e030265f12a41c2649e839d19b8679c26e75aa145da27065621c9474/logs?stdout=1
     body:
       encoding: US-ASCII
       string: ''
@@ -45,7 +45,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -54,38 +54,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:19 GMT
-- request:
-    method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/742166f46ff43c3f97003ed2d7fd0fca8abd95b0f21b2940fa4d5e882ed45917/wait
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.15.0
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
-      Content-Length:
-      - '17'
-    body:
-      encoding: UTF-8
-      string: |
-        {"StatusCode":0}
-    http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:19 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/742166f46ff43c3f97003ed2d7fd0fca8abd95b0f21b2940fa4d5e882ed45917
+    uri: https://192.168.59.103:2376/v1.15/containers/8b3bfa87e030265f12a41c2649e839d19b8679c26e75aa145da27065621c9474
     body:
       encoding: US-ASCII
       string: ''
@@ -100,10 +72,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:19 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 recorded_with: VCR 2.9.3

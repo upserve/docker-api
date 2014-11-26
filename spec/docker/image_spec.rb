@@ -31,6 +31,14 @@ describe Docker::Image do
         expect(Docker::Image.all.map(&:id)).to_not include(id)
       end
     end
+
+    context 'when a valid tag is given' do
+      it 'untags the Image'
+    end
+
+    context 'when an invalid tag is given' do
+      it 'raises an error'
+    end
   end
 
   describe '#insert_local' do
@@ -134,6 +142,10 @@ describe Docker::Image do
 
     it 'pushes the Image', :vcr do
       image.push(credentials)
+    end
+
+    context 'when a tag is specified' do
+      it 'pushes that specific tag'
     end
 
     context 'when there are no credentials' do

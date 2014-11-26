@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:04 GMT
+      - Wed, 26 Nov 2014 18:54:04 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"Pulling repository <USERNAME>/scratch\"}\r\n{\"status\":\"Pulling
@@ -32,7 +32,7 @@ http_interactions:
         complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Status:
         Image is up to date for <USERNAME>/scratch\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:06 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:07 GMT
 - request:
     method: delete
     uri: https://192.168.59.103:2376/v1.15/images/<USERNAME>/scratch?noprune=true
@@ -52,7 +52,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:06 GMT
+      - Wed, 26 Nov 2014 18:54:07 GMT
       Content-Length:
       - '42'
     body:
@@ -61,5 +61,5 @@ http_interactions:
         [{"Untagged":"<USERNAME>/scratch:latest"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:06 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:07 GMT
 recorded_with: VCR 2.9.3

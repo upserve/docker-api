@@ -36,7 +36,7 @@ describe Docker::Container do
 
   describe '#streaming_logs' do
     subject { described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy') }
-    after(:each) { subject.tap(&:wait).remove }
+    after(:each) { subject.remove }
 
     context "when not selecting any stream" do
       let(:non_destination) { subject.logs }
@@ -56,7 +56,7 @@ describe Docker::Container do
 
   describe '#logs' do
     subject { described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy') }
-    after(:each) { subject.tap(&:wait).remove }
+    after(:each) { subject.remove }
 
     context "when not selecting any stream" do
       let(:non_destination) { subject.logs }
@@ -265,6 +265,55 @@ describe Docker::Container do
     end
   end
 
+  describe '#exec' do
+    subject { described_class.create('Cmd' => %w[sleep 20], 'Image' => 'debian:wheezy').start }
+
+    context 'when passed only a command' do
+      let(:output) { subject.exec(['bash','-c','sleep 2; echo hello']) }
+
+      it 'returns the stdout/stderr messages', :vcr do
+        expect(output).to eq([["hello\n"], []])
+      end
+    end
+
+    context 'when detach is true' do
+      let(:output) { subject.exec('date', detach: true) }
+
+      it 'returns the Docker::Exec object', :vcr do
+        expect(output).to be_a Docker::Exec
+        expect(output.id).to_not be_nil
+      end
+    end
+
+    context 'when passed a block' do
+      it 'streams the stdout/stderr messages', :vcr do
+        chunk = nil
+        subject.exec(['bash','-c','sleep 2; echo hello']) do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("hello\n")
+      end
+    end
+
+    context 'when stdin object is passed' do
+      let(:output) { subject.exec('cat', stdin: StringIO.new("hello")) }
+
+      it 'returns the stdout/stderr messages', :vcr do
+        skip 'HTTP socket hijacking not compatible with VCR'
+        expect(output).to eq([["hello"],[]])
+      end
+    end
+
+    context 'when tty is true' do
+      let(:command) { ["bash", "-c", "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"] }
+      let(:output) { subject.exec(command, tty: true) }
+
+      it 'returns the raw stdout/stderr output', :vcr do
+        expect(output).to eq([["I'm a TTY!"], []])
+      end
+    end
+  end
+
   describe '#kill' do
     let(:command) { ['/bin/bash', '-c', 'while [ 1 ]; do echo hello; done'] }
     subject { described_class.create('Cmd' => command, 'Image' => 'debian:wheezy') }
@@ -325,7 +374,7 @@ describe Docker::Container do
     subject { described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy') }
 
     before { subject.start }
-    after { subject.tap(&:wait).remove }
+    after { subject.kill!.remove }
 
     it 'restarts the container', :vcr do
       expect(described_class.all.map(&:id)).to be_any { |id|

@@ -286,6 +286,32 @@ container.commit
 container.run('pwd', 10)
 # => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
+# Run an Exec instance inside the container and capture its output
+container.exec('date')
+# => [["Wed Nov 26 11:10:30 CST 2014\n"], []]
+
+# Launch an Exec instance without capturing its output
+container.exec('./my_service', detach: true)
+# => Docker::Exec { :id => be4eaeb8d28a, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
+
+# Parse the output of an Exec instance
+container.exec('find / -name *') { |stream, chunk| puts "#{stream}: #{chunk}" }
+stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
+# => [[], ["2013/10/30 17:16:24 Unable to locate find / -name *\n"]]
+
+# Run an Exec instance by grab only the STDOUT output
+container.exec('date', stderr: false)
+# => [["Wed Nov 26 11:10:30 CST 2014\n"], []]
+
+# Pass input to an Exec instance command via Stdin
+container.exec('cat', stdin: StringIO.new("foo\nbar\n"))
+# => [["foo\nbar\n"], []]
+
+# Get the raw stream of data from an Exec instance
+command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"]
+container.exec(command, tty: true)
+# => [["I'm a TTY!"], []]
+
 # Delete a Container.
 container.delete(:force => true)
 # => nil
@@ -340,4 +366,3 @@ License
 -----
 
 This program is licensed under the MIT license. See LICENSE for details.
-

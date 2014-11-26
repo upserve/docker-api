@@ -24,6 +24,7 @@ module Docker
   require 'docker/base'
   require 'docker/container'
   require 'docker/event'
+  require 'docker/exec'
   require 'docker/image'
   require 'docker/messages'
   require 'docker/util'

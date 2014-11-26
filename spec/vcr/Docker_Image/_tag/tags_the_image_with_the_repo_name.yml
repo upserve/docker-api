@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:57 GMT
+      - Wed, 26 Nov 2014 18:53:57 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,7 +28,7 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:56 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:57 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/images/f6fab3b798be/tag?force=true&repo=teh
@@ -46,7 +46,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:57 GMT
+      - Wed, 26 Nov 2014 18:53:57 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -55,7 +55,7 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:56 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:57 GMT
 - request:
     method: delete
     uri: https://192.168.59.103:2376/v1.15/images/teh:latest?noprune=true
@@ -75,7 +75,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:57 GMT
+      - Wed, 26 Nov 2014 18:53:57 GMT
       Content-Length:
       - '28'
     body:
@@ -84,5 +84,5 @@ http_interactions:
         [{"Untagged":"teh:latest"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:56 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:57 GMT
 recorded_with: VCR 2.9.3

@@ -25,7 +25,7 @@ http_interactions:
       Vary:
       - Accept
       Date:
-      - Tue, 25 Nov 2014 02:52:07 GMT
+      - Wed, 26 Nov 2014 18:54:08 GMT
       Cache-Control:
       - public, max-age=0
       Last-Modified:
@@ -42,7 +42,7 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:07 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:08 GMT
 - request:
     method: get
     uri: http://f.cl.ly/items/1e182r1M1M0H3y20413k/tianon_true.tar
@@ -62,11 +62,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - jWVbva3piZkGIijVSO9x0OYi8NUoDdCvoJkOqGK+GpqAiYyXN52OvIsNy3fHVn9Q
+      - hIXuNCT7yPjY4eU/NdbIAY+stTcoYb0BjeKKDlCkdTiWjfUrxCfc7Y26DaUokapI05Rj2zIlvR0=
       X-Amz-Request-Id:
-      - A0CB6566AACC3254
+      - 28E261434403E2EA
       Date:
-      - Tue, 25 Nov 2014 02:52:08 GMT
+      - Wed, 26 Nov 2014 18:54:10 GMT
       Last-Modified:
       - Fri, 21 Nov 2014 01:29:01 GMT
       Etag:
@@ -288,7 +288,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:07 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:09 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/images/create?fromSrc=-
@@ -310,15 +310,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:08 GMT
+      - Wed, 26 Nov 2014 18:54:09 GMT
     body:
       encoding: UTF-8
-      string: "{\"status\":\"b1edb67dc31fb5983bdce5e9b579621d677f5afbd14901797612df370d5ff449\"}\r\n"
+      string: "{\"status\":\"9be50aa9310bc9d79a4d292241b90a4434673ce2172eb3826c7c2a4f997b7774\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:07 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:09 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/b1edb67dc31fb5983bdce5e9b579621d677f5afbd14901797612df370d5ff449?noprune=true
+    uri: https://192.168.59.103:2376/v1.15/images/9be50aa9310bc9d79a4d292241b90a4434673ce2172eb3826c7c2a4f997b7774?noprune=true
     body:
       encoding: US-ASCII
       string: ''
@@ -335,14 +335,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:08 GMT
+      - Wed, 26 Nov 2014 18:54:09 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"b1edb67dc31fb5983bdce5e9b579621d677f5afbd14901797612df370d5ff449"}
+        [{"Deleted":"9be50aa9310bc9d79a4d292241b90a4434673ce2172eb3826c7c2a4f997b7774"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:07 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:09 GMT
 recorded_with: VCR 2.9.3

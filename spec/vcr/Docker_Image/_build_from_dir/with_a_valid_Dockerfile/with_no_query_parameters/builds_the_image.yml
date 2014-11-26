@@ -23,21 +23,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:15 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e f90405e9b1c5\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        02df156095d4\\n\"}\r\n{\"stream\":\"Successfully built f90405e9b1c5\\n\"}\r\n"
+        ---\\u003e 0cead7c1debc\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        296b36df468b\\n\"}\r\n{\"stream\":\"Successfully built 0cead7c1debc\\n\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:12 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:15 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/containers/create
     body:
       encoding: UTF-8
-      string: '{"Image":"f90405e9b1c5","Cmd":["cat","/Dockerfile"]}'
+      string: '{"Image":"0cead7c1debc","Cmd":["cat","/Dockerfile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -51,18 +51,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:16 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"78cf629646ee93b9c064b5de35e6ceab8abf5193083e0818a7e4269380c7e102","Warnings":null}
+        {"Id":"286302b11c039b74bc5becda91749223efdcb76bd73d324d8d7f31b068ba7c91","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:12 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:15 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/78cf629646ee93b9c064b5de35e6ceab8abf5193083e0818a7e4269380c7e102/start
+    uri: https://192.168.59.103:2376/v1.15/containers/286302b11c039b74bc5becda91749223efdcb76bd73d324d8d7f31b068ba7c91/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -77,15 +77,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:16 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:12 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:16 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/78cf629646ee93b9c064b5de35e6ceab8abf5193083e0818a7e4269380c7e102/logs?stdout=true
+    uri: https://192.168.59.103:2376/v1.15/containers/286302b11c039b74bc5becda91749223efdcb76bd73d324d8d7f31b068ba7c91/logs?stdout=true
     body:
       encoding: US-ASCII
       string: ''
@@ -100,7 +100,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:16 GMT
       Content-Type:
       - application/octet-stream
     body:
@@ -108,10 +108,10 @@ http_interactions:
       string: !binary |-
         AQAAAAAAABNGUk9NIGRlYmlhbjp3aGVlenkKAQAAAAAAAAhBREQgLyAvCg==
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:13 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:16 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/78cf629646ee93b9c064b5de35e6ceab8abf5193083e0818a7e4269380c7e102/wait
+    uri: https://192.168.59.103:2376/v1.15/containers/286302b11c039b74bc5becda91749223efdcb76bd73d324d8d7f31b068ba7c91/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -128,7 +128,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:16 GMT
       Content-Length:
       - '17'
     body:
@@ -136,10 +136,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:13 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:16 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/78cf629646ee93b9c064b5de35e6ceab8abf5193083e0818a7e4269380c7e102
+    uri: https://192.168.59.103:2376/v1.15/containers/286302b11c039b74bc5becda91749223efdcb76bd73d324d8d7f31b068ba7c91
     body:
       encoding: US-ASCII
       string: ''
@@ -154,15 +154,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:16 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:13 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:16 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/f90405e9b1c5?noprune=true
+    uri: https://192.168.59.103:2376/v1.15/images/0cead7c1debc?noprune=true
     body:
       encoding: US-ASCII
       string: ''
@@ -179,14 +179,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:13 GMT
+      - Wed, 26 Nov 2014 18:54:16 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"f90405e9b1c5dbe42d4e152bd26e05be33baa1d57e56778be683d477389baf3d"}
+        [{"Deleted":"0cead7c1debc9d7360acb3b0ee427ec10e4d7867fb0020ac8adddd623606376b"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:13 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:16 GMT
 recorded_with: VCR 2.9.3

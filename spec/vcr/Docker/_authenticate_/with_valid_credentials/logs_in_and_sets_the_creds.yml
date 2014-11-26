@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:52:17 GMT
+      - Wed, 26 Nov 2014 18:54:20 GMT
       Content-Length:
       - '29'
     body:
@@ -27,5 +27,5 @@ http_interactions:
       string: |
         {"Status":"Login Succeeded"}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:52:16 GMT
+  recorded_at: Wed, 26 Nov 2014 18:54:20 GMT
 recorded_with: VCR 2.9.3

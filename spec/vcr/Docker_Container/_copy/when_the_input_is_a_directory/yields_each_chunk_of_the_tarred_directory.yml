@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:50:27 GMT
+      - Wed, 26 Nov 2014 18:52:51 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,7 +28,7 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:26 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:51 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/containers/create
@@ -48,18 +48,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:50:27 GMT
+      - Wed, 26 Nov 2014 18:52:51 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"eb7fddb3b56cf3c390f85d504624747f353e2f7280f9fcca5f29be859534d9e2","Warnings":null}
+        {"Id":"427dbb29288d1bb94b538cd987fd4bfea13438be86518eb526830525319fe781","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:26 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:51 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/eb7fddb3b56cf3c390f85d504624747f353e2f7280f9fcca5f29be859534d9e2/start
+    uri: https://192.168.59.103:2376/v1.15/containers/427dbb29288d1bb94b538cd987fd4bfea13438be86518eb526830525319fe781/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -74,15 +74,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:50:27 GMT
+      - Wed, 26 Nov 2014 18:52:51 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:26 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:51 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/eb7fddb3b56cf3c390f85d504624747f353e2f7280f9fcca5f29be859534d9e2/wait
+    uri: https://192.168.59.103:2376/v1.15/containers/427dbb29288d1bb94b538cd987fd4bfea13438be86518eb526830525319fe781/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -99,7 +99,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:50:27 GMT
+      - Wed, 26 Nov 2014 18:52:51 GMT
       Content-Length:
       - '17'
     body:
@@ -107,10 +107,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:26 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:51 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/eb7fddb3b56cf3c390f85d504624747f353e2f7280f9fcca5f29be859534d9e2/copy
+    uri: https://192.168.59.103:2376/v1.15/containers/427dbb29288d1bb94b538cd987fd4bfea13438be86518eb526830525319fe781/copy
     body:
       encoding: UTF-8
       string: '{"Resource":"/etc/logrotate.d"}'
@@ -127,7 +127,7 @@ http_interactions:
       Content-Type:
       - application/x-tar
       Date:
-      - Tue, 25 Nov 2014 02:50:27 GMT
+      - Wed, 26 Nov 2014 18:52:51 GMT
     body:
       encoding: UTF-8
       string: !binary |-
@@ -212,10 +212,10 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:27 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:51 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/eb7fddb3b56cf3c390f85d504624747f353e2f7280f9fcca5f29be859534d9e2
+    uri: https://192.168.59.103:2376/v1.15/containers/427dbb29288d1bb94b538cd987fd4bfea13438be86518eb526830525319fe781
     body:
       encoding: US-ASCII
       string: ''
@@ -230,10 +230,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:50:27 GMT
+      - Wed, 26 Nov 2014 18:52:51 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:27 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:51 GMT
 recorded_with: VCR 2.9.3

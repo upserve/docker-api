@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:50:59 GMT
+      - Wed, 26 Nov 2014 18:53:21 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"4aefd28e305fa8a3caec1327cf91cc4d4cd633594350dc8900e0927cf5056b79","Warnings":null}
+        {"Id":"9a96d2267953beeccc2f8adf402687ac28063b2eb478280e1e6d9482a6fc3cbb","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:58 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:20 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/4aefd28e305fa8a3caec1327cf91cc4d4cd633594350dc8900e0927cf5056b79/start
+    uri: https://192.168.59.103:2376/v1.15/containers/9a96d2267953beeccc2f8adf402687ac28063b2eb478280e1e6d9482a6fc3cbb/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -45,15 +45,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:00 GMT
+      - Wed, 26 Nov 2014 18:53:21 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:59 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:21 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/4aefd28e305fa8a3caec1327cf91cc4d4cd633594350dc8900e0927cf5056b79/wait
+    uri: https://192.168.59.103:2376/v1.15/containers/9a96d2267953beeccc2f8adf402687ac28063b2eb478280e1e6d9482a6fc3cbb/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -70,7 +70,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:00 GMT
+      - Wed, 26 Nov 2014 18:53:21 GMT
       Content-Length:
       - '17'
     body:
@@ -78,10 +78,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:59 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:21 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/commit?container=4aefd28e
+    uri: https://192.168.59.103:2376/v1.15/commit?container=9a96d226
     body:
       encoding: UTF-8
       string: 'null'
@@ -98,21 +98,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:00 GMT
+      - Wed, 26 Nov 2014 18:53:21 GMT
       Content-Length:
       - '74'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801"}
+        {"Id":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d"}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:59 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:21 GMT
 - request:
     method: post
     uri: https://192.168.59.103:2376/v1.15/containers/create
     body:
       encoding: UTF-8
-      string: '{"Image":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801","Cmd":["ls"]}'
+      string: '{"Image":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d","Cmd":["ls"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -126,18 +126,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:00 GMT
+      - Wed, 26 Nov 2014 18:53:22 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7","Warnings":null}
+        {"Id":"10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:59 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:21 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7/start
+    uri: https://192.168.59.103:2376/v1.15/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -152,15 +152,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:00 GMT
+      - Wed, 26 Nov 2014 18:53:22 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7/wait
+    uri: https://192.168.59.103:2376/v1.15/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0/wait
     body:
       encoding: US-ASCII
       string: ''
@@ -177,7 +177,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:22 GMT
       Content-Length:
       - '17'
     body:
@@ -185,10 +185,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/4aefd28e305fa8a3caec1327cf91cc4d4cd633594350dc8900e0927cf5056b79
+    uri: https://192.168.59.103:2376/v1.15/containers/9a96d2267953beeccc2f8adf402687ac28063b2eb478280e1e6d9482a6fc3cbb
     body:
       encoding: US-ASCII
       string: ''
@@ -203,15 +203,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:22 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7/json
+    uri: https://192.168.59.103:2376/v1.15/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0/json
     body:
       encoding: US-ASCII
       string: ''
@@ -228,18 +228,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:22 GMT
       Content-Length:
-      - '1864'
+      - '1881'
     body:
       encoding: UTF-8
       string: |
-        {"Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["ls"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"b05b52fffa19","Image":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-25T02:51:00.431363433Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"VolumesFrom":null},"HostnamePath":"/mnt/sda1/var/lib/docker/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7/hostname","HostsPath":"/mnt/sda1/var/lib/docker/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7/hosts","Id":"b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7","Image":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801","MountLabel":"","Name":"/sleepy_bartik","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"ls","ProcessLabel":"","ResolvConfPath":"/mnt/sda1/var/lib/docker/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7/resolv.conf","State":{"ExitCode":0,"FinishedAt":"2014-11-25T02:51:01.080190684Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"2014-11-25T02:51:00.94091759Z"},"Volumes":{},"VolumesRW":{}}
+        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["ls"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"10ba36a12dfd","Image":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-26T18:53:21.969441563Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"/mnt/sda1/var/lib/docker/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0/hostname","HostsPath":"/mnt/sda1/var/lib/docker/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0/hosts","Id":"10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0","Image":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d","MountLabel":"","Name":"/high_pare","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"ls","ProcessLabel":"","ResolvConfPath":"/mnt/sda1/var/lib/docker/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0/resolv.conf","State":{"ExitCode":0,"FinishedAt":"2014-11-26T18:53:22.83262926Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"2014-11-26T18:53:22.714286469Z"},"Volumes":{},"VolumesRW":{}}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/b05b52fffa19d9b2a5af261080a326b5fb92ba580f977f8bd20d89a0714340e7
+    uri: https://192.168.59.103:2376/v1.15/containers/10ba36a12dfd3e60d6e5249ccd8adfc6dc50149f49ae29f8c158160e29bcfcd0
     body:
       encoding: US-ASCII
       string: ''
@@ -254,15 +254,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:23 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/images/6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801/json
+    uri: https://192.168.59.103:2376/v1.15/images/54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d/json
     body:
       encoding: US-ASCII
       string: ''
@@ -279,18 +279,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:23 GMT
       Content-Length:
-      - '1335'
+      - '1297'
     body:
       encoding: UTF-8
       string: |
-        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"","Image":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"4aefd28e305fa8a3caec1327cf91cc4d4cd633594350dc8900e0927cf5056b79","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"4aefd28e305f","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-25T02:51:00.281644687Z","DockerVersion":"1.3.1","Id":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801","Os":"linux","Parent":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Size":0,"VirtualSize":85100505}
+        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"","Image":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"9a96d2267953beeccc2f8adf402687ac28063b2eb478280e1e6d9482a6fc3cbb","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"9a96d2267953","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-26T18:53:21.776135245Z","DockerVersion":"1.3.2","Id":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d","Os":"linux","Parent":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Size":0,"VirtualSize":85100505}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/images/6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801/history
+    uri: https://192.168.59.103:2376/v1.15/images/54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d/history
     body:
       encoding: US-ASCII
       string: ''
@@ -307,22 +307,22 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:23 GMT
       Content-Length:
       - '695'
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1416883860,"CreatedBy":"pwd","Id":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801","Size":0,"Tags":null}
+        [{"Created":1417028001,"CreatedBy":"pwd","Id":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d","Size":0,"Tags":null}
         ,{"Created":1415306638,"CreatedBy":"/bin/sh -c #(nop) CMD [/bin/bash]","Id":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Size":0,"Tags":["debian:wheezy"]}
         ,{"Created":1415306636,"CreatedBy":"/bin/sh -c #(nop) ADD file:01b419e635eb6bec686cabe0e261c4f3fb4dc206f4584ac01b21059a5d2f8b3b in /","Id":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Size":85100505,"Tags":null}
         ,{"Created":1371157430,"CreatedBy":"","Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","Size":0,"Tags":["scratch:latest"]}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/images/6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801/json
+    uri: https://192.168.59.103:2376/v1.15/images/54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d/json
     body:
       encoding: US-ASCII
       string: ''
@@ -339,18 +339,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:23 GMT
       Content-Length:
-      - '1335'
+      - '1297'
     body:
       encoding: UTF-8
       string: |
-        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"","Image":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"4aefd28e305fa8a3caec1327cf91cc4d4cd633594350dc8900e0927cf5056b79","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"4aefd28e305f","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-25T02:51:00.281644687Z","DockerVersion":"1.3.1","Id":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801","Os":"linux","Parent":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Size":0,"VirtualSize":85100505}
+        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"","Image":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"9a96d2267953beeccc2f8adf402687ac28063b2eb478280e1e6d9482a6fc3cbb","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["pwd"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"9a96d2267953","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-26T18:53:21.776135245Z","DockerVersion":"1.3.2","Id":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d","Os":"linux","Parent":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Size":0,"VirtualSize":85100505}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:22 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801?noprune=true
+    uri: https://192.168.59.103:2376/v1.15/images/54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d?noprune=true
     body:
       encoding: US-ASCII
       string: ''
@@ -367,14 +367,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:51:01 GMT
+      - Wed, 26 Nov 2014 18:53:23 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"6c9e86b9032250878e3caff51a10e4d51d6a45c51d1d04f1f0439684e4449801"}
+        [{"Deleted":"54717c9d5666e7c8e661f09c5b8e8ccddcd253d1af2dddbe8a4c8e7e8d002b9d"}
         ]
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:51:00 GMT
+  recorded_at: Wed, 26 Nov 2014 18:53:23 GMT
 recorded_with: VCR 2.9.3

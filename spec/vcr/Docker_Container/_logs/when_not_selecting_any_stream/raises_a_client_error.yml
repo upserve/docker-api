@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d","Warnings":null}
+        {"Id":"a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888","Warnings":null}
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:43 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d/logs
+    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
     body:
       encoding: US-ASCII
       string: ''
@@ -47,7 +47,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '52'
     body:
@@ -55,10 +55,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d/logs
+    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
     body:
       encoding: US-ASCII
       string: ''
@@ -75,7 +75,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '52'
     body:
@@ -83,10 +83,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d/logs
+    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
     body:
       encoding: US-ASCII
       string: ''
@@ -103,7 +103,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '52'
     body:
@@ -111,10 +111,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d/logs
+    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
     body:
       encoding: US-ASCII
       string: ''
@@ -131,7 +131,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
       Content-Length:
       - '52'
     body:
@@ -139,38 +139,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
-- request:
-    method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d/wait
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.15.0
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
-      Content-Length:
-      - '17'
-    body:
-      encoding: UTF-8
-      string: |
-        {"StatusCode":0}
-    http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/51e6f54bd66a200c744a37cb63bac726cc4611c92fbc3f1dce689b0197758f1d
+    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888
     body:
       encoding: US-ASCII
       string: ''
@@ -185,10 +157,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 25 Nov 2014 02:50:19 GMT
+      - Wed, 26 Nov 2014 18:52:44 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 25 Nov 2014 02:50:18 GMT
+  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
 recorded_with: VCR 2.9.3
