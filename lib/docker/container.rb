@@ -79,12 +79,19 @@ class Docker::Container
     hash = Docker::Util.parse_json(connection.post('/commit',
                                                    options,
                                                    :body => config.to_json))
-    Docker::Image.send(:new, self.connection, hash)
+    _create_image(self.connection, hash)
   end
+
+  # allows subclasses to delegate to their own friends
+  def _create_image(cnxn, hash)
+    Docker::Image.send(:new, cnxn, hash)
+  end
+  private :_create_image
 
   # Return a String representation of the Container.
   def to_s
-    "Docker::Container { :id => #{self.id}, :connection => #{self.connection} }"
+    "#{self.class.name} { :id => #{self.id}, "\
+      ":connection => #{self.connection} }"
   end
 
   # #json returns information about the Container, #changes returns a list of
