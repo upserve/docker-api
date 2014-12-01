@@ -23,10 +23,14 @@ class Docker::Image
 
   # Push the Image to the Docker registry.
   def push(creds = nil, options = {})
-    repo_tag = info['RepoTags'].first
+    repo_tag = options.delete(:repo_tag){ info['RepoTags'].first }
     raise ArgumentError "Image is untagged" if repo_tag.nil?
     repo, tag = Docker::Util.parse_repo_tag(repo_tag)
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
+    unless info['RepoTags'].any?{|rt| rt =~ /^#{repo_tag}(:.*)?$/ }
+      raise(ArgumentError,
+        "Image does not have tag '#{repo_tag}': #{info['RepoTags']}")
+    end
 
     credentials = creds || Docker.creds || {}
     headers = Docker::Util.build_auth_header(credentials)

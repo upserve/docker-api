@@ -150,6 +150,23 @@ describe Docker::Image do
         expect { image.push }.to_not raise_error
       end
     end
+
+    context 'given a destination' do
+      it 'pushes to it', :vcr do
+        new_image.tag(repo: 'elsebody/base2', tag: 'alternate')
+        new_image.push(credentials, repo_tag: 'elsebody/base2:alternate')
+      end
+      it 'pushes all given the empty tag', :vcr do
+        new_image.tag(repo: 'elsebody/base2', tag: 'alternate')
+        new_image.push(credentials, repo_tag: 'elsebody/base2')
+      end
+      it 'fails if it lacks that tag', :vcr do
+        new_image.tag(repo: 'elsebody/base2', tag: 'alternate')
+        expect {
+          new_image.push(credentials, repo_tag: 'elsebody/base2:alt')
+        }.to raise_error(Docker::Error::ArgumentError, /does not have tag/)
+      end
+    end
   end
 
   describe '#tag' do
