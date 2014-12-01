@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/images/create?fromImage=debian%3Awheezy
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:04 GMT
+      - Mon, 01 Dec 2014 16:37:43 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,10 +28,10 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:04 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:43 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/images/json?all=true
+    uri: "<DOCKER_HOST>/v1.15/images/json?all=true"
     body:
       encoding: US-ASCII
       string: ''
@@ -48,7 +48,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:04 GMT
+      - Mon, 01 Dec 2014 16:37:43 GMT
     body:
       encoding: UTF-8
       string: |-
@@ -85,8 +85,8 @@ http_interactions:
         ,{"Created":1415306636,"Id":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","ParentId":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":85100505,"VirtualSize":85100505}
         ,{"Created":1414177799,"Id":"74dc9d28a649ac161e2a70d84190fe576f77f403f2565012f07bd68d638d291a","ParentId":"00bcc0fe318f87107ed0db582ed109899506cd2cde230505ea11a5c400e9ac7a","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":426413472}
         ,{"Created":1414177799,"Id":"c723c9b95ac05c29c3e96b0b02e8fcf12096d850306b776a17877ee061daf49f","ParentId":"74dc9d28a649ac161e2a70d84190fe576f77f403f2565012f07bd68d638d291a","RepoTags":["registry:0.7.3"],"Size":0,"VirtualSize":426413472}
-        ,{"Created":1414177798,"Id":"96490e2b34642fabcdf6c4c157bd07be2caf4a71b9bd42c27386a1ff28d94d0c","ParentId":"1168ef7bd438745360d3506a6182ed73fec60bfea4181732dd75d6447016f012","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":426413472}
         ,{"Created":1414177798,"Id":"00bcc0fe318f87107ed0db582ed109899506cd2cde230505ea11a5c400e9ac7a","ParentId":"96490e2b34642fabcdf6c4c157bd07be2caf4a71b9bd42c27386a1ff28d94d0c","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":426413472}
+        ,{"Created":1414177798,"Id":"96490e2b34642fabcdf6c4c157bd07be2caf4a71b9bd42c27386a1ff28d94d0c","ParentId":"1168ef7bd438745360d3506a6182ed73fec60bfea4181732dd75d6447016f012","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":426413472}
         ,{"Created":1414177797,"Id":"1168ef7bd438745360d3506a6182ed73fec60bfea4181732dd75d6447016f012","ParentId":"a9c8dae074b96475a0775e199f79e456f0ee9a8288164e0b84fcc65ca163432e","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":20135062,"VirtualSize":426413472}
         ,{"Created":1414177667,"Id":"a9c8dae074b96475a0775e199f79e456f0ee9a8288164e0b84fcc65ca163432e","ParentId":"17b869d7773564fa1ca26ef3aa5b3a9e615dabd1a433a4a00848c0c9790096fe","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":8437018,"VirtualSize":406278410}
         ,{"Created":1414177663,"Id":"4627c1e0f2389a25dce44361dba566542607509b4fec86cc7fae9f6bb93dc2eb","ParentId":"6ffb25246d5531cdbf15ac250dcf0d10fca544944eaf7386b4cff8577488f258","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1657815,"VirtualSize":397841319}
@@ -95,8 +95,8 @@ http_interactions:
         ,{"Created":1414174623,"Id":"bee70978874ce288a546770e762196041c90d5b0c0ef7e0c3d2e551d79417701","ParentId":"881f05ab63649f7d4b4ab048a2e01725c6a2d45f8866807bdb7766e28cdf224e","RepoTags":["registry:0.6.9"],"Size":0,"VirtualSize":462038905}
         ,{"Created":1414174623,"Id":"74583b71c35c28e06e11e0af0193351b852f3e9466a7b2c19a3add9a8528ee57","ParentId":"0909821a1551e63f5b169edaa3fa460134d86aa0ed5e6ed3acb4f50afa98002d","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":462038905}
         ,{"Created":1414174622,"Id":"0909821a1551e63f5b169edaa3fa460134d86aa0ed5e6ed3acb4f50afa98002d","ParentId":"ad702f54c76e4d5e1fb47f9efc355c871f7087ae772ca0fafeedad8185d17058","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":34915187,"VirtualSize":462038905}
-        ,{"Created":1414174578,"Id":"29b16b1bfd162dd7b35cb98a72ad44108361bede4e42679e01dd8aa15aa1fe0f","ParentId":"f6d75c7fe58a905c14381100921562877d06a759acc70fbda6d3863796e0f003","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1613702,"VirtualSize":427123645}
         ,{"Created":1414174578,"Id":"ad702f54c76e4d5e1fb47f9efc355c871f7087ae772ca0fafeedad8185d17058","ParentId":"29b16b1bfd162dd7b35cb98a72ad44108361bede4e42679e01dd8aa15aa1fe0f","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":73,"VirtualSize":427123718}
+        ,{"Created":1414174578,"Id":"29b16b1bfd162dd7b35cb98a72ad44108361bede4e42679e01dd8aa15aa1fe0f","ParentId":"f6d75c7fe58a905c14381100921562877d06a759acc70fbda6d3863796e0f003","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1613702,"VirtualSize":427123645}
         ,{"Created":1414126280,"Id":"6ffb25246d5531cdbf15ac250dcf0d10fca544944eaf7386b4cff8577488f258","ParentId":"9fe54074b35a3dd77eb2ffe2edf9226645e71fe292964b6d662a4010e695d9b8","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":41247201,"VirtualSize":396183504}
         ,{"Created":1414126257,"Id":"9fe54074b35a3dd77eb2ffe2edf9226645e71fe292964b6d662a4010e695d9b8","ParentId":"cd72e4fcfd16a48d617cc8fe6c692400b55c3dd013a357f485a08a820f1f75ab","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":135294909,"VirtualSize":354936303}
         ,{"Created":1414126216,"Id":"cd72e4fcfd16a48d617cc8fe6c692400b55c3dd013a357f485a08a820f1f75ab","ParentId":"57b5d5cb0bfe239f714f9a00439d7774f3b3359270f81ea74b41dbd7775eb46a","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":219641394}
@@ -119,16 +119,16 @@ http_interactions:
         ,{"Created":1412196367,"Id":"df7546f9f060a2268024c8a230d8639878585defcc1bc6f79d2728a13957871b","ParentId":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":0}
         ,{"Created":1403128415,"Id":"195eb90b534950d334188c3627f860fbdf898e224d8a0a11ec54ff453175e081","ParentId":"209ea56fda6dc2fb013e4d1e40cb678b2af91d1b54a71529f7df0bd867adc961","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":4411741,"VirtualSize":184716170}
         ,{"Created":1403128408,"Id":"209ea56fda6dc2fb013e4d1e40cb678b2af91d1b54a71529f7df0bd867adc961","ParentId":"0f4aac48388f5d65a725ccf8e7caada42f136026c566528a5ee9b02467dac90a","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":74007417,"VirtualSize":180304429}
-        ,{"Created":1403128396,"Id":"fae16849ebe23b48f2bedcc08aaabd45408c62b531ffd8d3088592043d5e7364","ParentId":"f127542f0b6191e99bb015b672f5cf48fa79d974784ac8090b11aeac184eaaff","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":189999,"VirtualSize":106295125}
         ,{"Created":1403128396,"Id":"0f4aac48388f5d65a725ccf8e7caada42f136026c566528a5ee9b02467dac90a","ParentId":"fae16849ebe23b48f2bedcc08aaabd45408c62b531ffd8d3088592043d5e7364","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":1887,"VirtualSize":106297012}
+        ,{"Created":1403128396,"Id":"fae16849ebe23b48f2bedcc08aaabd45408c62b531ffd8d3088592043d5e7364","ParentId":"f127542f0b6191e99bb015b672f5cf48fa79d974784ac8090b11aeac184eaaff","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":189999,"VirtualSize":106295125}
         ,{"Created":1403128393,"Id":"f127542f0b6191e99bb015b672f5cf48fa79d974784ac8090b11aeac184eaaff","ParentId":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":106105126,"VirtualSize":106105126}
         ,{"Created":1371157430,"Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","ParentId":"","RepoTags":["scratch:latest"],"Size":0,"VirtualSize":0}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:04 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:43 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/images/f6fab3b798be/json
+    uri: "<DOCKER_HOST>/v1.15/images/f6fab3b798be/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -145,7 +145,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:04 GMT
+      - Mon, 01 Dec 2014 16:37:43 GMT
       Content-Length:
       - '1460'
     body:
@@ -153,5 +153,5 @@ http_interactions:
       string: |
         {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/bash"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"064f0e1ce709","Image":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"418e851cf98f783363d17a6b469d7e9f5768298d6596b357592562c77d2b5323","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/sh","-c","#(nop) CMD [/bin/bash]"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"064f0e1ce709","Image":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-06T20:43:58.384012961Z","DockerVersion":"1.3.0","Id":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Os":"linux","Parent":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Size":0,"VirtualSize":85100505}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:04 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:43 GMT
 recorded_with: VCR 2.9.3

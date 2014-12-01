@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/build
+    uri: "<DOCKER_HOST>/v1.15/build"
     body:
       encoding: US-ASCII
       string: ''
@@ -23,21 +23,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:17 GMT
+      - Mon, 01 Dec 2014 16:37:56 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e b615046461ee\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        76cbff48334e\\n\"}\r\n{\"stream\":\"Successfully built b615046461ee\\n\"}\r\n"
+        ---\\u003e 4af1204f05bf\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        176c935d3587\\n\"}\r\n{\"stream\":\"Successfully built 4af1204f05bf\\n\"}\r\n"
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:17 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:56 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/create
+    uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
-      string: '{"Image":"b615046461ee","Cmd":["cat","/Dockerfile"]}'
+      string: '{"Image":"4af1204f05bf","Cmd":["cat","/Dockerfile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -51,18 +51,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:18 GMT
+      - Mon, 01 Dec 2014 16:37:56 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"40bccf3e407a2796b2ff7b2707dc446880f0b3dcd1e44a31bd54a1fc49c84cbc","Warnings":null}
+        {"Id":"7878b22cf16f282c44a87bbf31fb28be83c32347cfd7f405f261384e44ee1c0a","Warnings":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:17 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:56 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/40bccf3e407a2796b2ff7b2707dc446880f0b3dcd1e44a31bd54a1fc49c84cbc/wait
+    uri: "<DOCKER_HOST>/v1.15/containers/7878b22cf16f282c44a87bbf31fb28be83c32347cfd7f405f261384e44ee1c0a/wait"
     body:
       encoding: US-ASCII
       string: ''
@@ -79,7 +79,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:18 GMT
+      - Mon, 01 Dec 2014 16:37:56 GMT
       Content-Length:
       - '17'
     body:
@@ -87,10 +87,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:17 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:56 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/40bccf3e407a2796b2ff7b2707dc446880f0b3dcd1e44a31bd54a1fc49c84cbc
+    uri: "<DOCKER_HOST>/v1.15/containers/7878b22cf16f282c44a87bbf31fb28be83c32347cfd7f405f261384e44ee1c0a"
     body:
       encoding: US-ASCII
       string: ''
@@ -105,15 +105,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:54:18 GMT
+      - Mon, 01 Dec 2014 16:37:56 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:17 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:56 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/b615046461ee?noprune=true
+    uri: "<DOCKER_HOST>/v1.15/images/4af1204f05bf?noprune=true"
     body:
       encoding: US-ASCII
       string: ''
@@ -130,14 +130,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:18 GMT
+      - Mon, 01 Dec 2014 16:37:56 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"b615046461ee72932b24ea6895ccd110cd4a2b9e229d41934121d8bf7d8a087e"}
+        [{"Deleted":"4af1204f05bf3b9fc7b42e9a50195d69fd83ec696bf97b3459ac30c2eb536ed0"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:18 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:56 GMT
 recorded_with: VCR 2.9.3

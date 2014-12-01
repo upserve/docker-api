@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/create
+    uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
       string: '{"Cmd":["test","-d","/foo"],"Image":"debian:wheezy","Volumes":{"/foo":{}}}'
@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:52:58 GMT
+      - Mon, 01 Dec 2014 16:36:47 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"21acafea5ba4dcb2c6ee9554d1c79f0c47f647abf7af9b4c16cdf0d382cd14f6","Warnings":null}
+        {"Id":"f3ed26c45d2019382bc8471facf1529f16fa710c818603365f45a327993982f8","Warnings":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:58 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:47 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/21acafea5ba4dcb2c6ee9554d1c79f0c47f647abf7af9b4c16cdf0d382cd14f6/start
+    uri: "<DOCKER_HOST>/v1.15/containers/f3ed26c45d2019382bc8471facf1529f16fa710c818603365f45a327993982f8/start"
     body:
       encoding: UTF-8
       string: '{"Binds":["/tmp:/foo"]}'
@@ -45,15 +45,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:52:59 GMT
+      - Mon, 01 Dec 2014 16:36:48 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:58 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:48 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/json
+    uri: "<DOCKER_HOST>/v1.15/containers/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -70,21 +70,20 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:52:59 GMT
+      - Mon, 01 Dec 2014 16:36:48 GMT
       Content-Length:
-      - '699'
+      - '494'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"test -d /foo","Created":1417027978,"Id":"21acafea5ba4dcb2c6ee9554d1c79f0c47f647abf7af9b4c16cdf0d382cd14f6","Image":"debian:wheezy","Names":["/kickass_perlman"],"Ports":[],"Status":"Up Less than a second"}
-        ,{"Command":"docker-registry","Created":1417027962,"Id":"8671a52dacdb687192359dc98fb37884c7e8e59b683676a8775bf5cb3a8373c5","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 16 seconds"}
-        ,{"Command":"sleep 2000","Created":1417026517,"Id":"16eb39409d77c0a1e78d38d24704d4dc59630e187dc89c00e5c8b9553df8d816","Image":"debian:wheezy","Names":["/grave_hypatia"],"Ports":[],"Status":"Up 24 minutes"}
+        [{"Command":"test -d /foo","Created":1417451807,"Id":"f3ed26c45d2019382bc8471facf1529f16fa710c818603365f45a327993982f8","Image":"debian:wheezy","Names":["/ecstatic_ritchie"],"Ports":[],"Status":"Up Less than a second"}
+        ,{"Command":"docker-registry","Created":1417451791,"Id":"ef79699b8b71dd0534e8100d1bbfc922a066dd0beb1d44a8c3b560ce98b3f257","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 15 seconds"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:58 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:48 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/21acafea5ba4dcb2c6ee9554d1c79f0c47f647abf7af9b4c16cdf0d382cd14f6/wait
+    uri: "<DOCKER_HOST>/v1.15/containers/f3ed26c45d2019382bc8471facf1529f16fa710c818603365f45a327993982f8/wait"
     body:
       encoding: US-ASCII
       string: ''
@@ -101,7 +100,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:52:59 GMT
+      - Mon, 01 Dec 2014 16:36:48 GMT
       Content-Length:
       - '17'
     body:
@@ -109,10 +108,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:59 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:48 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/21acafea5ba4dcb2c6ee9554d1c79f0c47f647abf7af9b4c16cdf0d382cd14f6
+    uri: "<DOCKER_HOST>/v1.15/containers/f3ed26c45d2019382bc8471facf1529f16fa710c818603365f45a327993982f8"
     body:
       encoding: US-ASCII
       string: ''
@@ -127,10 +126,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:52:59 GMT
+      - Mon, 01 Dec 2014 16:36:48 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:59 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:48 GMT
 recorded_with: VCR 2.9.3

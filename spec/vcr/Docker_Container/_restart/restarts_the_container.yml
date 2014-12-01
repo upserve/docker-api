@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/create
+    uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
       string: '{"Cmd":["sleep","10"],"Image":"debian:wheezy"}'
@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:09 GMT
+      - Mon, 01 Dec 2014 16:36:58 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7","Warnings":null}
+        {"Id":"96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143","Warnings":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:09 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:58 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7/start
+    uri: "<DOCKER_HOST>/v1.15/containers/96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143/start"
     body:
       encoding: UTF-8
       string: "{}"
@@ -45,15 +45,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:10 GMT
+      - Mon, 01 Dec 2014 16:36:58 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:10 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:58 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/json
+    uri: "<DOCKER_HOST>/v1.15/containers/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -70,25 +70,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:10 GMT
+      - Mon, 01 Dec 2014 16:36:58 GMT
       Content-Length:
-      - '1504'
+      - '1303'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"sleep 10","Created":1417027989,"Id":"860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7","Image":"debian:wheezy","Names":["/cranky_fermi"],"Ports":[],"Status":"Up Less than a second"}
-        ,{"Command":"sleep 20","Created":1417027986,"Id":"f4d816f8332d86bdd60730fc9f50a5c29c1c2d57fd1004bd0813bad5bf4bd924","Image":"debian:wheezy","Names":["/furious_nobel"],"Ports":[],"Status":"Up 3 seconds"}
-        ,{"Command":"sleep 20","Created":1417027983,"Id":"7f32d945d9d688da0390856d560aa8f9f0b50789607dd1f8764bfa5afcd5eef4","Image":"debian:wheezy","Names":["/lonely_mclean"],"Ports":[],"Status":"Up 6 seconds"}
-        ,{"Command":"sleep 20","Created":1417027983,"Id":"b808bd04993493a645fad621c0ab3da238bfeb63dd40860d7a424ab4a1efe01e","Image":"debian:wheezy","Names":["/dreamy_brown"],"Ports":[],"Status":"Up 6 seconds"}
-        ,{"Command":"sleep 20","Created":1417027980,"Id":"9edbb2ab5df707a8a6843f10b167e461bdcd701cac2cff11562cd072031db399","Image":"debian:wheezy","Names":["/cranky_goodall"],"Ports":[],"Status":"Up 9 seconds"}
-        ,{"Command":"docker-registry","Created":1417027962,"Id":"8671a52dacdb687192359dc98fb37884c7e8e59b683676a8775bf5cb3a8373c5","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 27 seconds"}
-        ,{"Command":"sleep 2000","Created":1417026517,"Id":"16eb39409d77c0a1e78d38d24704d4dc59630e187dc89c00e5c8b9553df8d816","Image":"debian:wheezy","Names":["/grave_hypatia"],"Ports":[],"Status":"Up 24 minutes"}
+        [{"Command":"sleep 10","Created":1417451818,"Id":"96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143","Image":"debian:wheezy","Names":["/focused_blackwell"],"Ports":[],"Status":"Up Less than a second"}
+        ,{"Command":"sleep 20","Created":1417451815,"Id":"e7c1e17e059856d9c9f51703e42dc650be3a835f6b02504de097c43ae752da9e","Image":"debian:wheezy","Names":["/cocky_brown"],"Ports":[],"Status":"Up 3 seconds"}
+        ,{"Command":"sleep 20","Created":1417451812,"Id":"168fd203627095bed2ab4ac1c94f65c5419f99bcf3b8ef11d4f9112eb08e1ff7","Image":"debian:wheezy","Names":["/tender_fermi"],"Ports":[],"Status":"Up 5 seconds"}
+        ,{"Command":"sleep 20","Created":1417451812,"Id":"9089037ec4b2da19f5b3f88a12ca515e810cdcf5995bd3263616a7e4907a7049","Image":"debian:wheezy","Names":["/thirsty_pasteur"],"Ports":[],"Status":"Up 6 seconds"}
+        ,{"Command":"sleep 20","Created":1417451809,"Id":"b461a7fae8172f918aa57335f5b6c89978aa102353a36a08adaf383e2e6664ca","Image":"debian:wheezy","Names":["/thirsty_newton"],"Ports":[],"Status":"Up 9 seconds"}
+        ,{"Command":"docker-registry","Created":1417451791,"Id":"ef79699b8b71dd0534e8100d1bbfc922a066dd0beb1d44a8c3b560ce98b3f257","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 26 seconds"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:10 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:58 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7/stop
+    uri: "<DOCKER_HOST>/v1.15/containers/96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143/stop"
     body:
       encoding: UTF-8
       string: "{}"
@@ -103,15 +102,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:10 GMT
+      - Mon, 01 Dec 2014 16:36:58 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:10 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:58 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/json
+    uri: "<DOCKER_HOST>/v1.15/containers/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -128,24 +127,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:10 GMT
+      - Mon, 01 Dec 2014 16:36:59 GMT
       Content-Length:
-      - '1293'
+      - '1087'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"sleep 20","Created":1417027986,"Id":"f4d816f8332d86bdd60730fc9f50a5c29c1c2d57fd1004bd0813bad5bf4bd924","Image":"debian:wheezy","Names":["/furious_nobel"],"Ports":[],"Status":"Up 3 seconds"}
-        ,{"Command":"sleep 20","Created":1417027983,"Id":"7f32d945d9d688da0390856d560aa8f9f0b50789607dd1f8764bfa5afcd5eef4","Image":"debian:wheezy","Names":["/lonely_mclean"],"Ports":[],"Status":"Up 6 seconds"}
-        ,{"Command":"sleep 20","Created":1417027983,"Id":"b808bd04993493a645fad621c0ab3da238bfeb63dd40860d7a424ab4a1efe01e","Image":"debian:wheezy","Names":["/dreamy_brown"],"Ports":[],"Status":"Up 6 seconds"}
-        ,{"Command":"sleep 20","Created":1417027980,"Id":"9edbb2ab5df707a8a6843f10b167e461bdcd701cac2cff11562cd072031db399","Image":"debian:wheezy","Names":["/cranky_goodall"],"Ports":[],"Status":"Up 9 seconds"}
-        ,{"Command":"docker-registry","Created":1417027962,"Id":"8671a52dacdb687192359dc98fb37884c7e8e59b683676a8775bf5cb3a8373c5","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 27 seconds"}
-        ,{"Command":"sleep 2000","Created":1417026517,"Id":"16eb39409d77c0a1e78d38d24704d4dc59630e187dc89c00e5c8b9553df8d816","Image":"debian:wheezy","Names":["/grave_hypatia"],"Ports":[],"Status":"Up 24 minutes"}
+        [{"Command":"sleep 20","Created":1417451815,"Id":"e7c1e17e059856d9c9f51703e42dc650be3a835f6b02504de097c43ae752da9e","Image":"debian:wheezy","Names":["/cocky_brown"],"Ports":[],"Status":"Up 3 seconds"}
+        ,{"Command":"sleep 20","Created":1417451812,"Id":"168fd203627095bed2ab4ac1c94f65c5419f99bcf3b8ef11d4f9112eb08e1ff7","Image":"debian:wheezy","Names":["/tender_fermi"],"Ports":[],"Status":"Up 6 seconds"}
+        ,{"Command":"sleep 20","Created":1417451812,"Id":"9089037ec4b2da19f5b3f88a12ca515e810cdcf5995bd3263616a7e4907a7049","Image":"debian:wheezy","Names":["/thirsty_pasteur"],"Ports":[],"Status":"Up 6 seconds"}
+        ,{"Command":"sleep 20","Created":1417451809,"Id":"b461a7fae8172f918aa57335f5b6c89978aa102353a36a08adaf383e2e6664ca","Image":"debian:wheezy","Names":["/thirsty_newton"],"Ports":[],"Status":"Up 9 seconds"}
+        ,{"Command":"docker-registry","Created":1417451791,"Id":"ef79699b8b71dd0534e8100d1bbfc922a066dd0beb1d44a8c3b560ce98b3f257","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 26 seconds"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:10 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:58 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7/restart?t=10
+    uri: "<DOCKER_HOST>/v1.15/containers/96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143/restart?t=10"
     body:
       encoding: UTF-8
       string: "{}"
@@ -160,15 +158,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:11 GMT
+      - Mon, 01 Dec 2014 16:36:59 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:10 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:59 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/json
+    uri: "<DOCKER_HOST>/v1.15/containers/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -185,25 +183,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:11 GMT
+      - Mon, 01 Dec 2014 16:36:59 GMT
       Content-Length:
-      - '1505'
+      - '1303'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"sleep 10","Created":1417027989,"Id":"860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7","Image":"debian:wheezy","Names":["/cranky_fermi"],"Ports":[],"Status":"Up Less than a second"}
-        ,{"Command":"sleep 20","Created":1417027986,"Id":"f4d816f8332d86bdd60730fc9f50a5c29c1c2d57fd1004bd0813bad5bf4bd924","Image":"debian:wheezy","Names":["/furious_nobel"],"Ports":[],"Status":"Up 4 seconds"}
-        ,{"Command":"sleep 20","Created":1417027983,"Id":"7f32d945d9d688da0390856d560aa8f9f0b50789607dd1f8764bfa5afcd5eef4","Image":"debian:wheezy","Names":["/lonely_mclean"],"Ports":[],"Status":"Up 7 seconds"}
-        ,{"Command":"sleep 20","Created":1417027983,"Id":"b808bd04993493a645fad621c0ab3da238bfeb63dd40860d7a424ab4a1efe01e","Image":"debian:wheezy","Names":["/dreamy_brown"],"Ports":[],"Status":"Up 7 seconds"}
-        ,{"Command":"sleep 20","Created":1417027980,"Id":"9edbb2ab5df707a8a6843f10b167e461bdcd701cac2cff11562cd072031db399","Image":"debian:wheezy","Names":["/cranky_goodall"],"Ports":[],"Status":"Up 10 seconds"}
-        ,{"Command":"docker-registry","Created":1417027962,"Id":"8671a52dacdb687192359dc98fb37884c7e8e59b683676a8775bf5cb3a8373c5","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 28 seconds"}
-        ,{"Command":"sleep 2000","Created":1417026517,"Id":"16eb39409d77c0a1e78d38d24704d4dc59630e187dc89c00e5c8b9553df8d816","Image":"debian:wheezy","Names":["/grave_hypatia"],"Ports":[],"Status":"Up 24 minutes"}
+        [{"Command":"sleep 10","Created":1417451818,"Id":"96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143","Image":"debian:wheezy","Names":["/focused_blackwell"],"Ports":[],"Status":"Up Less than a second"}
+        ,{"Command":"sleep 20","Created":1417451815,"Id":"e7c1e17e059856d9c9f51703e42dc650be3a835f6b02504de097c43ae752da9e","Image":"debian:wheezy","Names":["/cocky_brown"],"Ports":[],"Status":"Up 3 seconds"}
+        ,{"Command":"sleep 20","Created":1417451812,"Id":"168fd203627095bed2ab4ac1c94f65c5419f99bcf3b8ef11d4f9112eb08e1ff7","Image":"debian:wheezy","Names":["/tender_fermi"],"Ports":[],"Status":"Up 6 seconds"}
+        ,{"Command":"sleep 20","Created":1417451812,"Id":"9089037ec4b2da19f5b3f88a12ca515e810cdcf5995bd3263616a7e4907a7049","Image":"debian:wheezy","Names":["/thirsty_pasteur"],"Ports":[],"Status":"Up 7 seconds"}
+        ,{"Command":"sleep 20","Created":1417451809,"Id":"b461a7fae8172f918aa57335f5b6c89978aa102353a36a08adaf383e2e6664ca","Image":"debian:wheezy","Names":["/thirsty_newton"],"Ports":[],"Status":"Up 9 seconds"}
+        ,{"Command":"docker-registry","Created":1417451791,"Id":"ef79699b8b71dd0534e8100d1bbfc922a066dd0beb1d44a8c3b560ce98b3f257","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 27 seconds"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:10 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:59 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7/kill
+    uri: "<DOCKER_HOST>/v1.15/containers/96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143/kill"
     body:
       encoding: US-ASCII
       string: ''
@@ -218,15 +215,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:11 GMT
+      - Mon, 01 Dec 2014 16:36:59 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:11 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:59 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/860a7b7fb659227b3f48b6c4d285797ce22bc1cde484a8f042ec543d6a4de5a7
+    uri: "<DOCKER_HOST>/v1.15/containers/96f83a1c6e63791c165e4b5d5f40a9f575eb34a85f38cee97e9de6a16179e143"
     body:
       encoding: US-ASCII
       string: ''
@@ -241,10 +238,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:11 GMT
+      - Mon, 01 Dec 2014 16:36:59 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:11 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:59 GMT
 recorded_with: VCR 2.9.3

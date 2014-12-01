@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/create?name=bob
+    uri: "<DOCKER_HOST>/v1.15/containers/create?name=bob"
     body:
       encoding: UTF-8
       string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:34 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"810d10df06640f68c73f0a5695975d21078f67a5cc9d67de6aa0b9a8f95ad277","Warnings":null}
+        {"Id":"f28bbbec7cbbc09ac0873a18e1f0396843a691422cb2790accfafa38cf547004","Warnings":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:34 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/810d10df06640f68c73f0a5695975d21078f67a5cc9d67de6aa0b9a8f95ad277/json
+    uri: "<DOCKER_HOST>/v1.15/containers/f28bbbec7cbbc09ac0873a18e1f0396843a691422cb2790accfafa38cf547004/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -47,18 +47,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:34 GMT
       Content-Length:
       - '1486'
     body:
       encoding: UTF-8
       string: |
-        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"810d10df0664","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-26T18:52:44.708339372Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"810d10df06640f68c73f0a5695975d21078f67a5cc9d67de6aa0b9a8f95ad277","Image":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","MountLabel":"","Name":"/bob","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"true","ProcessLabel":"","ResolvConfPath":"","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":null,"VolumesRW":null}
+        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"f28bbbec7cbb","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-12-01T16:36:34.217293539Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"f28bbbec7cbbc09ac0873a18e1f0396843a691422cb2790accfafa38cf547004","Image":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","MountLabel":"","Name":"/bob","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"true","ProcessLabel":"","ResolvConfPath":"","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":null,"VolumesRW":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:34 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/810d10df06640f68c73f0a5695975d21078f67a5cc9d67de6aa0b9a8f95ad277
+    uri: "<DOCKER_HOST>/v1.15/containers/f28bbbec7cbbc09ac0873a18e1f0396843a691422cb2790accfafa38cf547004"
     body:
       encoding: US-ASCII
       string: ''
@@ -73,10 +73,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:34 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:34 GMT
 recorded_with: VCR 2.9.3

@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/images/create?fromImage=debian%3Awheezy
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:52 GMT
+      - Mon, 01 Dec 2014 16:37:32 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,17 +28,17 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:51 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:32 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/build
+    uri: "<DOCKER_HOST>/v1.15/build"
     body:
       encoding: UTF-8
       string: !binary |-
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADEyNDM1NDIwNjc3ADAxMjYxNwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNDM3MTE0NTE0ADAxMjYwNwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -60,8 +60,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFJha2VmaWxlAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMjc0NQAxMjQzNTQyMDY3
-        NwAwMTMwMDEAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMjcwNgAxMjQzNzExNDUx
+        NAAwMTI3NjYAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -74,39 +74,39 @@ http_interactions:
         ICdkb2NrZXInCnJlcXVpcmUgJ3JzcGVjL2NvcmUvcmFrZV90YXNrJwpyZXF1
         aXJlICdjYW5lL3Jha2VfdGFzaycKCnRhc2sgOmRlZmF1bHQgPT4gWzpzcGVj
         LCA6cXVhbGl0eV0KClJTcGVjOjpDb3JlOjpSYWtlVGFzay5uZXcgZG8gfHR8
-        CiAgdC5wYXR0ZXJuID0gJ3NwZWMvKiovKl9zcGVjLnJiJwogICN0LnBhdHRl
-        cm4gPSAnc3BlYy8qKi9jb250YWluZXJfc3BlYy5yYicKZW5kCgpDYW5lOjpS
-        YWtlVGFzay5uZXcoOnF1YWxpdHkpIGRvIHxjYW5lfAogIGNhbmUuY2FuZWZp
-        bGUgPSAnLmNhbmUnCmVuZAoKZGlyID0gRmlsZS5leHBhbmRfcGF0aChGaWxl
-        LmRpcm5hbWUoX19GSUxFX18pKQpuYW1lc3BhY2UgOnZjciBkbwogIGRlc2Mg
-        J1J1biB0aGUgZnVsbCB0ZXN0IHN1aXRlIGZyb20gc2NyYXRjaCcKICB0YXNr
-        IDpzcGVjID0+IFs6dW5wYWNrLCA6cmVjb3JkXQoKICBkZXNjICdEb3dubG9h
-        ZCB0aGUgbmVjZXNzYXJ5IGJhc2UgaW1hZ2VzJwogIHRhc2sgOnVucGFjayBk
-        bwogICAgJXcoIHJlZ2lzdHJ5IGJ1c3lib3ggdGlhbm9uL3RydWUgc2NyYXRj
-        aCApLmVhY2ggZG8gfGltYWdlfAogICAgICBzeXN0ZW0gImRvY2tlciBwdWxs
-        ICN7aW1hZ2V9IgogICAgZW5kCiAgZW5kCgogIGRlc2MgJ1J1biBzcGVjIHRl
-        c3RzIGFuZCByZWNvcmQgVkNSIGNhc3NldHRlcycKICB0YXNrIDpyZWNvcmQg
-        ZG8KICAgIGJlZ2luCiAgICAgIEZpbGVVdGlscy5yZW1vdmVfZGlyKCIje2Rp
-        cn0vc3BlYy92Y3IiLCB0cnVlKQogICAgICByZWdpc3RyeSA9IERvY2tlcjo6
-        Q29udGFpbmVyLmNyZWF0ZSgKICAgICAgICAnbmFtZScgPT4gJ3JlZ2lzdHJ5
-        JywKICAgICAgICAnSW1hZ2UnID0+ICdyZWdpc3RyeScsCiAgICAgICAgJ0Vu
-        dicgPT4gWyJHVU5JQ09STl9PUFRTPVstLXByZWxvYWRdIl0sCiAgICAgICAg
-        J0V4cG9zZWRQb3J0cycgPT4gewogICAgICAgICAgJzUwMDAvdGNwJyA9PiB7
-        fQogICAgICAgIH0sCiAgICAgICAgJ0hvc3RDb25maWcnID0+IHsKICAgICAg
-        ICAgICdQb3J0QmluZGluZ3MnID0+IHsgJzUwMDAvdGNwJyA9PiBbeyAnSG9z
-        dFBvcnQnID0+ICc1MDAwJyB9XSB9CiAgICAgICAgfQogICAgICApCiAgICAg
-        IHJlZ2lzdHJ5LnN0YXJ0CiAgICAgIFJha2U6OlRhc2tbInNwZWMiXS5pbnZv
-        a2UKICAgIHJlc2N1ZQogICAgICAjIG5vdGhpbmcKICAgIGVuc3VyZQogICAg
-        ICByZWdpc3RyeS5raWxsIS5yZW1vdmUKICAgIGVuZAogIGVuZAplbmQKCmRl
-        c2MgJ1B1bGwgYW4gVWJ1bnR1IGltYWdlJwppbWFnZSAndWJ1bnR1OjEzLjEw
-        JyBkbwogIHB1dHMgIlB1bGxpbmcgdWJ1bnR1OjEzLjEwIgogIGltYWdlID0g
-        RG9ja2VyOjpJbWFnZS5jcmVhdGUoJ2Zyb21JbWFnZScgPT4gJ3VidW50dScs
-        ICd0YWcnID0+ICcxMy4xMCcpCiAgcHV0cyAiUHVsbGVkIHVidW50dToxMy4x
-        MCwgaW1hZ2UgaWQ6ICN7aW1hZ2UuaWR9IgplbmQKAAAAAAAAAAAAAAAAAAAA
+        CiAgdC5wYXR0ZXJuID0gJ3NwZWMvKiovKl9zcGVjLnJiJwplbmQKCkNhbmU6
+        OlJha2VUYXNrLm5ldyg6cXVhbGl0eSkgZG8gfGNhbmV8CiAgY2FuZS5jYW5l
+        ZmlsZSA9ICcuY2FuZScKZW5kCgpkaXIgPSBGaWxlLmV4cGFuZF9wYXRoKEZp
+        bGUuZGlybmFtZShfX0ZJTEVfXykpCm5hbWVzcGFjZSA6dmNyIGRvCiAgZGVz
+        YyAnUnVuIHRoZSBmdWxsIHRlc3Qgc3VpdGUgZnJvbSBzY3JhdGNoJwogIHRh
+        c2sgOnNwZWMgPT4gWzp1bnBhY2ssIDpyZWNvcmRdCgogIGRlc2MgJ0Rvd25s
+        b2FkIHRoZSBuZWNlc3NhcnkgYmFzZSBpbWFnZXMnCiAgdGFzayA6dW5wYWNr
+        IGRvCiAgICAldyggcmVnaXN0cnkgYnVzeWJveCB0aWFub24vdHJ1ZSBzY3Jh
+        dGNoICkuZWFjaCBkbyB8aW1hZ2V8CiAgICAgIHN5c3RlbSAiZG9ja2VyIHB1
+        bGwgI3tpbWFnZX0iCiAgICBlbmQKICBlbmQKCiAgZGVzYyAnUnVuIHNwZWMg
+        dGVzdHMgYW5kIHJlY29yZCBWQ1IgY2Fzc2V0dGVzJwogIHRhc2sgOnJlY29y
+        ZCBkbwogICAgYmVnaW4KICAgICAgRmlsZVV0aWxzLnJlbW92ZV9kaXIoIiN7
+        ZGlyfS9zcGVjL3ZjciIsIHRydWUpCiAgICAgIHJlZ2lzdHJ5ID0gRG9ja2Vy
+        OjpDb250YWluZXIuY3JlYXRlKAogICAgICAgICduYW1lJyA9PiAncmVnaXN0
+        cnknLAogICAgICAgICdJbWFnZScgPT4gJ3JlZ2lzdHJ5JywKICAgICAgICAn
+        RW52JyA9PiBbIkdVTklDT1JOX09QVFM9Wy0tcHJlbG9hZF0iXSwKICAgICAg
+        ICAnRXhwb3NlZFBvcnRzJyA9PiB7CiAgICAgICAgICAnNTAwMC90Y3AnID0+
+        IHt9CiAgICAgICAgfSwKICAgICAgICAnSG9zdENvbmZpZycgPT4gewogICAg
+        ICAgICAgJ1BvcnRCaW5kaW5ncycgPT4geyAnNTAwMC90Y3AnID0+IFt7ICdI
+        b3N0UG9ydCcgPT4gJzUwMDAnIH1dIH0KICAgICAgICB9CiAgICAgICkKICAg
+        ICAgcmVnaXN0cnkuc3RhcnQKICAgICAgUmFrZTo6VGFza1sic3BlYyJdLmlu
+        dm9rZQogICAgcmVzY3VlCiAgICAgICMgbm90aGluZwogICAgZW5zdXJlCiAg
+        ICAgIHJlZ2lzdHJ5LmtpbGwhLnJlbW92ZSBpZiByZWdpc3RyeQogICAgZW5k
+        CiAgZW5kCmVuZAoKZGVzYyAnUHVsbCBhbiBVYnVudHUgaW1hZ2UnCmltYWdl
+        ICd1YnVudHU6MTMuMTAnIGRvCiAgcHV0cyAiUHVsbGluZyB1YnVudHU6MTMu
+        MTAiCiAgaW1hZ2UgPSBEb2NrZXI6OkltYWdlLmNyZWF0ZSgnZnJvbUltYWdl
+        JyA9PiAndWJ1bnR1JywgJ3RhZycgPT4gJzEzLjEwJykKICBwdXRzICJQdWxs
+        ZWQgdWJ1bnR1OjEzLjEwLCBpbWFnZSBpZDogI3tpbWFnZS5pZH0iCmVuZAoA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAARG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAw
-        ADAwMDAwMDAwMDU3ADEyNDM1NDIwNjc3ADAxMzMyMAAgMAAAAAAAAAAAAAAA
+        ADAwMDAwMDAwMDU3ADEyNDM3MTE0NTE0ADAxMzMxMAAgMAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1
         c3RhcgAwMHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwA
@@ -162,23 +162,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:52 GMT
+      - Mon, 01 Dec 2014 16:37:32 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM f6fab3b798be\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e f80fe4fe4f8c\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        fa913b885c2b\\n\"}\r\n{\"stream\":\"Step 2 : ADD Rakefile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 3b921909d6b4\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        e02727f0b58a\\n\"}\r\n{\"stream\":\"Successfully built 3b921909d6b4\\n\"}\r\n"
+        ---\\u003e 4f8290a3f9e1\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        3b58618ff1ab\\n\"}\r\n{\"stream\":\"Step 2 : ADD Rakefile /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 5be7bdb91ca9\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        d30e6c02cb0f\\n\"}\r\n{\"stream\":\"Successfully built 5be7bdb91ca9\\n\"}\r\n"
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:52 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/create
+    uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
-      string: '{"Image":"3b921909d6b4","Cmd":["cat","/Gemfile","/Rakefile"]}'
+      string: '{"Image":"5be7bdb91ca9","Cmd":["cat","/Gemfile","/Rakefile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -192,18 +192,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:52 GMT
+      - Mon, 01 Dec 2014 16:37:33 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"597a6067c4690c2129d61becd838ced2bbaaa169c7bdb985772af177d13397a4","Warnings":null}
+        {"Id":"55e7f1a1105326270987b8cc3c93d7f37713a2ad3f12e29ea342106b482245ae","Warnings":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:52 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/597a6067c4690c2129d61becd838ced2bbaaa169c7bdb985772af177d13397a4/start
+    uri: "<DOCKER_HOST>/v1.15/containers/55e7f1a1105326270987b8cc3c93d7f37713a2ad3f12e29ea342106b482245ae/start"
     body:
       encoding: UTF-8
       string: "{}"
@@ -218,15 +218,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:53 GMT
+      - Mon, 01 Dec 2014 16:37:33 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:52 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/597a6067c4690c2129d61becd838ced2bbaaa169c7bdb985772af177d13397a4/logs?stdout=true
+    uri: "<DOCKER_HOST>/v1.15/containers/55e7f1a1105326270987b8cc3c93d7f37713a2ad3f12e29ea342106b482245ae/logs?stdout=true"
     body:
       encoding: US-ASCII
       string: ''
@@ -241,7 +241,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:53 GMT
+      - Mon, 01 Dec 2014 16:37:33 GMT
       Content-Type:
       - application/octet-stream
     body:
@@ -256,48 +256,47 @@ http_interactions:
         AAAAAAAAI3Rhc2sgOmRlZmF1bHQgPT4gWzpzcGVjLCA6cXVhbGl0eV0KAQAA
         AAAAAAEKAQAAAAAAACFSU3BlYzo6Q29yZTo6UmFrZVRhc2submV3IGRvIHx0
         fAoBAAAAAAAAIiAgdC5wYXR0ZXJuID0gJ3NwZWMvKiovKl9zcGVjLnJiJwoB
-        AAAAAAAAKyAgI3QucGF0dGVybiA9ICdzcGVjLyoqL2NvbnRhaW5lcl9zcGVj
-        LnJiJwoBAAAAAAAABGVuZAoBAAAAAAAAAQoBAAAAAAAAJ0NhbmU6OlJha2VU
-        YXNrLm5ldyg6cXVhbGl0eSkgZG8gfGNhbmV8CgEAAAAAAAAaICBjYW5lLmNh
-        bmVmaWxlID0gJy5jYW5lJwoBAAAAAAAABGVuZAoBAAAAAAAAAQoBAAAAAAAA
-        L2RpciA9IEZpbGUuZXhwYW5kX3BhdGgoRmlsZS5kaXJuYW1lKF9fRklMRV9f
-        KSkKAQAAAAAAABJuYW1lc3BhY2UgOnZjciBkbwoBAAAAAAAALiAgZGVzYyAn
-        UnVuIHRoZSBmdWxsIHRlc3Qgc3VpdGUgZnJvbSBzY3JhdGNoJwoBAAAAAAAA
-        IyAgdGFzayA6c3BlYyA9PiBbOnVucGFjaywgOnJlY29yZF0KAQAAAAAAAAEK
-        AQAAAAAAACwgIGRlc2MgJ0Rvd25sb2FkIHRoZSBuZWNlc3NhcnkgYmFzZSBp
-        bWFnZXMnCgEAAAAAAAASICB0YXNrIDp1bnBhY2sgZG8KAQAAAAAAAD8gICAg
-        JXcoIHJlZ2lzdHJ5IGJ1c3lib3ggdGlhbm9uL3RydWUgc2NyYXRjaCApLmVh
-        Y2ggZG8gfGltYWdlfAoBAAAAAAAAJCAgICAgIHN5c3RlbSAiZG9ja2VyIHB1
-        bGwgI3tpbWFnZX0iCgEAAAAAAAAIICAgIGVuZAoBAAAAAAAABiAgZW5kCgEA
-        AAAAAAABCgEAAAAAAAAxICBkZXNjICdSdW4gc3BlYyB0ZXN0cyBhbmQgcmVj
-        b3JkIFZDUiBjYXNzZXR0ZXMnCgEAAAAAAAASICB0YXNrIDpyZWNvcmQgZG8K
-        AQAAAAAAAAogICAgYmVnaW4KAQAAAAAAADQgICAgICBGaWxlVXRpbHMucmVt
-        b3ZlX2RpcigiI3tkaXJ9L3NwZWMvdmNyIiwgdHJ1ZSkKAQAAAAAAACsgICAg
-        ICByZWdpc3RyeSA9IERvY2tlcjo6Q29udGFpbmVyLmNyZWF0ZSgKAQAAAAAA
-        AB4gICAgICAgICduYW1lJyA9PiAncmVnaXN0cnknLAoBAAAAAAAAHyAgICAg
-        ICAgJ0ltYWdlJyA9PiAncmVnaXN0cnknLAoBAAAAAAAAMCAgICAgICAgJ0Vu
-        dicgPT4gWyJHVU5JQ09STl9PUFRTPVstLXByZWxvYWRdIl0sCgEAAAAAAAAc
-        ICAgICAgICAnRXhwb3NlZFBvcnRzJyA9PiB7CgEAAAAAAAAbICAgICAgICAg
-        ICc1MDAwL3RjcCcgPT4ge30KAQAAAAAAAAsgICAgICAgIH0sCgEAAAAAAAAa
-        ICAgICAgICAnSG9zdENvbmZpZycgPT4gewoBAAAAAAAASSAgICAgICAgICAn
-        UG9ydEJpbmRpbmdzJyA9PiB7ICc1MDAwL3RjcCcgPT4gW3sgJ0hvc3RQb3J0
-        JyA9PiAnNTAwMCcgfV0gfQoBAAAAAAAACiAgICAgICAgfQoBAAAAAAAACCAg
-        ICAgICkKAQAAAAAAABUgICAgICByZWdpc3RyeS5zdGFydAoBAAAAAAAAICAg
-        ICAgIFJha2U6OlRhc2tbInNwZWMiXS5pbnZva2UKAQAAAAAAAAsgICAgcmVz
-        Y3VlCgEAAAAAAAAQICAgICAgIyBub3RoaW5nCgEAAAAAAAALICAgIGVuc3Vy
-        ZQoBAAAAAAAAHCAgICAgIHJlZ2lzdHJ5LmtpbGwhLnJlbW92ZQoBAAAAAAAA
-        CCAgICBlbmQKAQAAAAAAAAYgIGVuZAoBAAAAAAAABGVuZAoBAAAAAAAAAQoB
-        AAAAAAAAHGRlc2MgJ1B1bGwgYW4gVWJ1bnR1IGltYWdlJwoBAAAAAAAAGGlt
-        YWdlICd1YnVudHU6MTMuMTAnIGRvCgEAAAAAAAAeICBwdXRzICJQdWxsaW5n
-        IHVidW50dToxMy4xMCIKAQAAAAAAAEogIGltYWdlID0gRG9ja2VyOjpJbWFn
-        ZS5jcmVhdGUoJ2Zyb21JbWFnZScgPT4gJ3VidW50dScsICd0YWcnID0+ICcx
-        My4xMCcpCgEAAAAAAAA0ICBwdXRzICJQdWxsZWQgdWJ1bnR1OjEzLjEwLCBp
-        bWFnZSBpZDogI3tpbWFnZS5pZH0iCgEAAAAAAAAEZW5kCg==
+        AAAAAAAABGVuZAoBAAAAAAAAAQoBAAAAAAAAJ0NhbmU6OlJha2VUYXNrLm5l
+        dyg6cXVhbGl0eSkgZG8gfGNhbmV8CgEAAAAAAAAaICBjYW5lLmNhbmVmaWxl
+        ID0gJy5jYW5lJwoBAAAAAAAABGVuZAoBAAAAAAAAAQoBAAAAAAAAL2RpciA9
+        IEZpbGUuZXhwYW5kX3BhdGgoRmlsZS5kaXJuYW1lKF9fRklMRV9fKSkKAQAA
+        AAAAABJuYW1lc3BhY2UgOnZjciBkbwoBAAAAAAAALiAgZGVzYyAnUnVuIHRo
+        ZSBmdWxsIHRlc3Qgc3VpdGUgZnJvbSBzY3JhdGNoJwoBAAAAAAAAIyAgdGFz
+        ayA6c3BlYyA9PiBbOnVucGFjaywgOnJlY29yZF0KAQAAAAAAAAEKAQAAAAAA
+        ACwgIGRlc2MgJ0Rvd25sb2FkIHRoZSBuZWNlc3NhcnkgYmFzZSBpbWFnZXMn
+        CgEAAAAAAAASICB0YXNrIDp1bnBhY2sgZG8KAQAAAAAAAD8gICAgJXcoIHJl
+        Z2lzdHJ5IGJ1c3lib3ggdGlhbm9uL3RydWUgc2NyYXRjaCApLmVhY2ggZG8g
+        fGltYWdlfAoBAAAAAAAAJCAgICAgIHN5c3RlbSAiZG9ja2VyIHB1bGwgI3tp
+        bWFnZX0iCgEAAAAAAAAIICAgIGVuZAoBAAAAAAAABiAgZW5kCgEAAAAAAAAB
+        CgEAAAAAAAAxICBkZXNjICdSdW4gc3BlYyB0ZXN0cyBhbmQgcmVjb3JkIFZD
+        UiBjYXNzZXR0ZXMnCgEAAAAAAAASICB0YXNrIDpyZWNvcmQgZG8KAQAAAAAA
+        AAogICAgYmVnaW4KAQAAAAAAADQgICAgICBGaWxlVXRpbHMucmVtb3ZlX2Rp
+        cigiI3tkaXJ9L3NwZWMvdmNyIiwgdHJ1ZSkKAQAAAAAAACsgICAgICByZWdp
+        c3RyeSA9IERvY2tlcjo6Q29udGFpbmVyLmNyZWF0ZSgKAQAAAAAAAB4gICAg
+        ICAgICduYW1lJyA9PiAncmVnaXN0cnknLAoBAAAAAAAAHyAgICAgICAgJ0lt
+        YWdlJyA9PiAncmVnaXN0cnknLAoBAAAAAAAAMCAgICAgICAgJ0VudicgPT4g
+        WyJHVU5JQ09STl9PUFRTPVstLXByZWxvYWRdIl0sCgEAAAAAAAAcICAgICAg
+        ICAnRXhwb3NlZFBvcnRzJyA9PiB7CgEAAAAAAAAbICAgICAgICAgICc1MDAw
+        L3RjcCcgPT4ge30KAQAAAAAAAAsgICAgICAgIH0sCgEAAAAAAAAaICAgICAg
+        ICAnSG9zdENvbmZpZycgPT4gewoBAAAAAAAASSAgICAgICAgICAnUG9ydEJp
+        bmRpbmdzJyA9PiB7ICc1MDAwL3RjcCcgPT4gW3sgJ0hvc3RQb3J0JyA9PiAn
+        NTAwMCcgfV0gfQoBAAAAAAAACiAgICAgICAgfQoBAAAAAAAACCAgICAgICkK
+        AQAAAAAAABUgICAgICByZWdpc3RyeS5zdGFydAoBAAAAAAAAICAgICAgIFJh
+        a2U6OlRhc2tbInNwZWMiXS5pbnZva2UKAQAAAAAAAAsgICAgcmVzY3VlCgEA
+        AAAAAAAQICAgICAgIyBub3RoaW5nCgEAAAAAAAALICAgIGVuc3VyZQoBAAAA
+        AAAAKCAgICAgIHJlZ2lzdHJ5LmtpbGwhLnJlbW92ZSBpZiByZWdpc3RyeQoB
+        AAAAAAAACCAgICBlbmQKAQAAAAAAAAYgIGVuZAoBAAAAAAAABGVuZAoBAAAA
+        AAAAAQoBAAAAAAAAHGRlc2MgJ1B1bGwgYW4gVWJ1bnR1IGltYWdlJwoBAAAA
+        AAAAGGltYWdlICd1YnVudHU6MTMuMTAnIGRvCgEAAAAAAAAeICBwdXRzICJQ
+        dWxsaW5nIHVidW50dToxMy4xMCIKAQAAAAAAAEogIGltYWdlID0gRG9ja2Vy
+        OjpJbWFnZS5jcmVhdGUoJ2Zyb21JbWFnZScgPT4gJ3VidW50dScsICd0YWcn
+        ID0+ICcxMy4xMCcpCgEAAAAAAAA0ICBwdXRzICJQdWxsZWQgdWJ1bnR1OjEz
+        LjEwLCBpbWFnZSBpZDogI3tpbWFnZS5pZH0iCgEAAAAAAAAEZW5kCg==
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:52 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/597a6067c4690c2129d61becd838ced2bbaaa169c7bdb985772af177d13397a4/wait
+    uri: "<DOCKER_HOST>/v1.15/containers/55e7f1a1105326270987b8cc3c93d7f37713a2ad3f12e29ea342106b482245ae/wait"
     body:
       encoding: US-ASCII
       string: ''
@@ -314,7 +313,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:53 GMT
+      - Mon, 01 Dec 2014 16:37:33 GMT
       Content-Length:
       - '17'
     body:
@@ -322,10 +321,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:53 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/597a6067c4690c2129d61becd838ced2bbaaa169c7bdb985772af177d13397a4
+    uri: "<DOCKER_HOST>/v1.15/containers/55e7f1a1105326270987b8cc3c93d7f37713a2ad3f12e29ea342106b482245ae"
     body:
       encoding: US-ASCII
       string: ''
@@ -340,15 +339,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:53:53 GMT
+      - Mon, 01 Dec 2014 16:37:33 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:53 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/3b921909d6b4
+    uri: "<DOCKER_HOST>/v1.15/images/5be7bdb91ca9"
     body:
       encoding: US-ASCII
       string: ''
@@ -365,15 +364,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:53:53 GMT
+      - Mon, 01 Dec 2014 16:37:33 GMT
       Content-Length:
       - '161'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"3b921909d6b444cb5dd1b01e0cb5c734c66848149701ce4df5060a424436cad1"}
-        ,{"Deleted":"f80fe4fe4f8c97fe5d01598afa6f4c0c7bf54b4bb2b7189a20dad8324f8f7ab1"}
+        [{"Deleted":"5be7bdb91ca9596cc4c7fd613d87e8d37b9727c599a354868516d03cfd2e3ff6"}
+        ,{"Deleted":"4f8290a3f9e1e5587c73b8ab79538123d02c2205ba536adc76fb3f316a61df4c"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:53:53 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
 recorded_with: VCR 2.9.3

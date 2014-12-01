@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/containers/create
+    uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
       string: '{"Cmd":"echo hello","Image":"debian:wheezy"}'
@@ -19,18 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:33 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888","Warnings":null}
+        {"Id":"60b6a083cacf4e7a3db2eeda6150d7fa45cb35b91f007af2a491e566e8f16a94","Warnings":null}
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:43 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:33 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
+    uri: "<DOCKER_HOST>/v1.15/containers/60b6a083cacf4e7a3db2eeda6150d7fa45cb35b91f007af2a491e566e8f16a94/logs"
     body:
       encoding: US-ASCII
       string: ''
@@ -47,7 +47,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:33 GMT
       Content-Length:
       - '52'
     body:
@@ -55,10 +55,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:33 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
+    uri: "<DOCKER_HOST>/v1.15/containers/60b6a083cacf4e7a3db2eeda6150d7fa45cb35b91f007af2a491e566e8f16a94/logs"
     body:
       encoding: US-ASCII
       string: ''
@@ -75,7 +75,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:33 GMT
       Content-Length:
       - '52'
     body:
@@ -83,10 +83,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:33 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
+    uri: "<DOCKER_HOST>/v1.15/containers/60b6a083cacf4e7a3db2eeda6150d7fa45cb35b91f007af2a491e566e8f16a94/logs"
     body:
       encoding: US-ASCII
       string: ''
@@ -103,7 +103,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:33 GMT
       Content-Length:
       - '52'
     body:
@@ -111,10 +111,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:33 GMT
 - request:
     method: get
-    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888/logs
+    uri: "<DOCKER_HOST>/v1.15/containers/60b6a083cacf4e7a3db2eeda6150d7fa45cb35b91f007af2a491e566e8f16a94/logs"
     body:
       encoding: US-ASCII
       string: ''
@@ -131,7 +131,7 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:33 GMT
       Content-Length:
       - '52'
     body:
@@ -139,10 +139,10 @@ http_interactions:
       string: |
         Bad parameters: you must choose at least one stream
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:33 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/containers/a393c94214f89ee40cbcc992ea2055ddec803567f8e5e12b9d8b2163b5c0a888
+    uri: "<DOCKER_HOST>/v1.15/containers/60b6a083cacf4e7a3db2eeda6150d7fa45cb35b91f007af2a491e566e8f16a94"
     body:
       encoding: US-ASCII
       string: ''
@@ -157,10 +157,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Wed, 26 Nov 2014 18:52:44 GMT
+      - Mon, 01 Dec 2014 16:36:33 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:52:44 GMT
+  recorded_at: Mon, 01 Dec 2014 16:36:33 GMT
 recorded_with: VCR 2.9.3

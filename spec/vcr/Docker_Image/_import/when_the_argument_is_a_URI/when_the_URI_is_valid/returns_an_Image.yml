@@ -25,7 +25,7 @@ http_interactions:
       Vary:
       - Accept
       Date:
-      - Wed, 26 Nov 2014 18:54:08 GMT
+      - Mon, 01 Dec 2014 16:37:48 GMT
       Cache-Control:
       - public, max-age=0
       Last-Modified:
@@ -42,7 +42,7 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:08 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:48 GMT
 - request:
     method: get
     uri: http://f.cl.ly/items/1e182r1M1M0H3y20413k/tianon_true.tar
@@ -62,11 +62,11 @@ http_interactions:
       message: OK
     headers:
       X-Amz-Id-2:
-      - hIXuNCT7yPjY4eU/NdbIAY+stTcoYb0BjeKKDlCkdTiWjfUrxCfc7Y26DaUokapI05Rj2zIlvR0=
+      - TogvokaZSP7a+RHrVI+VhZk+qMcLBhVazB6IuJgWKkdQOy1UbiiKJadyYCyrC096
       X-Amz-Request-Id:
-      - 28E261434403E2EA
+      - BC05CF2D597A03A8
       Date:
-      - Wed, 26 Nov 2014 18:54:10 GMT
+      - Mon, 01 Dec 2014 16:37:49 GMT
       Last-Modified:
       - Fri, 21 Nov 2014 01:29:01 GMT
       Etag:
@@ -288,10 +288,10 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:09 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:48 GMT
 - request:
     method: post
-    uri: https://192.168.59.103:2376/v1.15/images/create?fromSrc=-
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromSrc=-"
     body:
       encoding: US-ASCII
       string: ''
@@ -310,15 +310,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:09 GMT
+      - Mon, 01 Dec 2014 16:37:48 GMT
     body:
       encoding: UTF-8
-      string: "{\"status\":\"9be50aa9310bc9d79a4d292241b90a4434673ce2172eb3826c7c2a4f997b7774\"}\r\n"
+      string: "{\"status\":\"67736eae49395f60933c9e061dbebca2af7ffb44ff8529052c4c52a6abb505a6\"}\r\n"
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:09 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:48 GMT
 - request:
     method: delete
-    uri: https://192.168.59.103:2376/v1.15/images/9be50aa9310bc9d79a4d292241b90a4434673ce2172eb3826c7c2a4f997b7774?noprune=true
+    uri: "<DOCKER_HOST>/v1.15/images/67736eae49395f60933c9e061dbebca2af7ffb44ff8529052c4c52a6abb505a6?noprune=true"
     body:
       encoding: US-ASCII
       string: ''
@@ -335,14 +335,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Wed, 26 Nov 2014 18:54:09 GMT
+      - Mon, 01 Dec 2014 16:37:48 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"9be50aa9310bc9d79a4d292241b90a4434673ce2172eb3826c7c2a4f997b7774"}
+        [{"Deleted":"67736eae49395f60933c9e061dbebca2af7ffb44ff8529052c4c52a6abb505a6"}
         ]
     http_version: 
-  recorded_at: Wed, 26 Nov 2014 18:54:09 GMT
+  recorded_at: Mon, 01 Dec 2014 16:37:48 GMT
 recorded_with: VCR 2.9.3
