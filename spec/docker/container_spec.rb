@@ -267,6 +267,7 @@ describe Docker::Container do
 
   describe '#exec' do
     subject { described_class.create('Cmd' => %w[sleep 20], 'Image' => 'debian:wheezy').start }
+    after { subject.kill!.remove }
 
     context 'when passed only a command' do
       let(:output) { subject.exec(['bash','-c','sleep 2; echo hello']) }

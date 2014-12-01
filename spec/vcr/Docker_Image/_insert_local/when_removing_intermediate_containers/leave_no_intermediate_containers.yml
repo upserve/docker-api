@@ -19,20 +19,16 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:33 GMT
+      - Mon, 01 Dec 2014 18:08:42 GMT
       Content-Length:
-      - '1143'
+      - '279'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"sleep 20","Created":1417451815,"Id":"e7c1e17e059856d9c9f51703e42dc650be3a835f6b02504de097c43ae752da9e","Image":"debian:wheezy","Names":["/cocky_brown"],"Ports":[],"Status":"Exited (0) 18 seconds ago"}
-        ,{"Command":"sleep 20","Created":1417451812,"Id":"168fd203627095bed2ab4ac1c94f65c5419f99bcf3b8ef11d4f9112eb08e1ff7","Image":"debian:wheezy","Names":["/tender_fermi"],"Ports":[],"Status":"Exited (0) 20 seconds ago"}
-        ,{"Command":"sleep 20","Created":1417451812,"Id":"9089037ec4b2da19f5b3f88a12ca515e810cdcf5995bd3263616a7e4907a7049","Image":"debian:wheezy","Names":["/thirsty_pasteur"],"Ports":[],"Status":"Exited (0) 21 seconds ago"}
-        ,{"Command":"sleep 20","Created":1417451809,"Id":"b461a7fae8172f918aa57335f5b6c89978aa102353a36a08adaf383e2e6664ca","Image":"debian:wheezy","Names":["/thirsty_newton"],"Ports":[],"Status":"Exited (0) 24 seconds ago"}
-        ,{"Command":"docker-registry","Created":1417451791,"Id":"ef79699b8b71dd0534e8100d1bbfc922a066dd0beb1d44a8c3b560ce98b3f257","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up About a minute"}
+        [{"Command":"docker-registry","Created":1417457257,"Id":"1a8fb3a8c0a99b779389680f7bd5547f5bb1520dfd061932ff6fbef9cc2a7679","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up About a minute"}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:33 GMT
+  recorded_at: Mon, 01 Dec 2014 18:08:42 GMT
 - request:
     method: post
     uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
@@ -52,7 +48,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:34 GMT
+      - Mon, 01 Dec 2014 18:08:42 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -61,7 +57,7 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:34 GMT
+  recorded_at: Mon, 01 Dec 2014 18:08:42 GMT
 - request:
     method: post
     uri: "<DOCKER_HOST>/v1.15/build?rm=true"
@@ -71,7 +67,7 @@ http_interactions:
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADEyNDM3MTE0NTE2ADAxMjYxMQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNDM3MTI3MjUyADAxMjYxMgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -93,8 +89,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjQzNzExNDUx
-        NgAwMTMzMDIAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjQzNzEyNzI1
+        MgAwMTMzMDMAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -150,15 +146,15 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:34 GMT
+      - Mon, 01 Dec 2014 18:08:43 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM f6fab3b798be\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e c97baf6814f0\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        e1f7fdfd6995\\n\"}\r\n{\"stream\":\"Successfully built c97baf6814f0\\n\"}\r\n"
+        ---\\u003e 4ee7d06459a7\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        a3394feb86b9\\n\"}\r\n{\"stream\":\"Successfully built 4ee7d06459a7\\n\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:34 GMT
+  recorded_at: Mon, 01 Dec 2014 18:08:43 GMT
 - request:
     method: get
     uri: "<DOCKER_HOST>/v1.15/containers/json?all=true"
@@ -178,23 +174,19 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:34 GMT
+      - Mon, 01 Dec 2014 18:08:43 GMT
       Content-Length:
-      - '1143'
+      - '279'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"sleep 20","Created":1417451815,"Id":"e7c1e17e059856d9c9f51703e42dc650be3a835f6b02504de097c43ae752da9e","Image":"debian:wheezy","Names":["/cocky_brown"],"Ports":[],"Status":"Exited (0) 18 seconds ago"}
-        ,{"Command":"sleep 20","Created":1417451812,"Id":"168fd203627095bed2ab4ac1c94f65c5419f99bcf3b8ef11d4f9112eb08e1ff7","Image":"debian:wheezy","Names":["/tender_fermi"],"Ports":[],"Status":"Exited (0) 21 seconds ago"}
-        ,{"Command":"sleep 20","Created":1417451812,"Id":"9089037ec4b2da19f5b3f88a12ca515e810cdcf5995bd3263616a7e4907a7049","Image":"debian:wheezy","Names":["/thirsty_pasteur"],"Ports":[],"Status":"Exited (0) 22 seconds ago"}
-        ,{"Command":"sleep 20","Created":1417451809,"Id":"b461a7fae8172f918aa57335f5b6c89978aa102353a36a08adaf383e2e6664ca","Image":"debian:wheezy","Names":["/thirsty_newton"],"Ports":[],"Status":"Exited (0) 24 seconds ago"}
-        ,{"Command":"docker-registry","Created":1417451791,"Id":"ef79699b8b71dd0534e8100d1bbfc922a066dd0beb1d44a8c3b560ce98b3f257","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up About a minute"}
+        [{"Command":"docker-registry","Created":1417457257,"Id":"1a8fb3a8c0a99b779389680f7bd5547f5bb1520dfd061932ff6fbef9cc2a7679","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up About a minute"}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:34 GMT
+  recorded_at: Mon, 01 Dec 2014 18:08:43 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/images/c97baf6814f0"
+    uri: "<DOCKER_HOST>/v1.15/images/4ee7d06459a7"
     body:
       encoding: US-ASCII
       string: ''
@@ -211,14 +203,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:34 GMT
+      - Mon, 01 Dec 2014 18:08:43 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"c97baf6814f07f06fcdb752a85c653d967ac8a1765bb7f6350012b23d58d5b63"}
+        [{"Deleted":"4ee7d06459a73acff6484f4788fc55cb37c3d054c468f68780d8716c0069cac7"}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:34 GMT
+  recorded_at: Mon, 01 Dec 2014 18:08:43 GMT
 recorded_with: VCR 2.9.3

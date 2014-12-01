@@ -23,23 +23,23 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:34 GMT
+      - Mon, 01 Dec 2014 18:07:40 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : RUN printf '#! /bin/sh\\\\nwhile
         true\\\\ndo\\\\ntrue\\\\ndone\\\\n' \\u003e /while \\u0026\\u0026 chmod +x
-        /while\\n\"}\r\n{\"stream\":\" ---\\u003e Running in aa9373a04770\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 6cd21f4ea2f3\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        aa9373a04770\\n\"}\r\n{\"stream\":\"Successfully built 6cd21f4ea2f3\\n\"}\r\n"
+        /while\\n\"}\r\n{\"stream\":\" ---\\u003e Running in a34c1befdcb5\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 07c0eb630a6b\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        a34c1befdcb5\\n\"}\r\n{\"stream\":\"Successfully built 07c0eb630a6b\\n\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:35 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:40 GMT
 - request:
     method: post
     uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
-      string: '{"Image":"6cd21f4ea2f3","Cmd":["/while"]}'
+      string: '{"Image":"07c0eb630a6b","Cmd":["/while"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -53,18 +53,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:35 GMT
+      - Mon, 01 Dec 2014 18:07:41 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"f607f1f8b8c19566015346bf9be52a04bcd53b1700a90d7cafbdca1ed334fdc3","Warnings":null}
+        {"Id":"7fe08fba1ff6ef5151e7cb9644beca8ec3acab441f281a81a998165f2f0e11c0","Warnings":null}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:35 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:41 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/f607f1f8b8c19566015346bf9be52a04bcd53b1700a90d7cafbdca1ed334fdc3/start"
+    uri: "<DOCKER_HOST>/v1.15/containers/7fe08fba1ff6ef5151e7cb9644beca8ec3acab441f281a81a998165f2f0e11c0/start"
     body:
       encoding: UTF-8
       string: "{}"
@@ -79,15 +79,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:36:36 GMT
+      - Mon, 01 Dec 2014 18:07:41 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:36 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:41 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/f607f1f8b8c19566015346bf9be52a04bcd53b1700a90d7cafbdca1ed334fdc3/top"
+    uri: "<DOCKER_HOST>/v1.15/containers/7fe08fba1ff6ef5151e7cb9644beca8ec3acab441f281a81a998165f2f0e11c0/top"
     body:
       encoding: US-ASCII
       string: ''
@@ -104,18 +104,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:37 GMT
+      - Mon, 01 Dec 2014 18:07:42 GMT
       Content-Length:
-      - '90'
+      - '91'
     body:
       encoding: UTF-8
       string: |
-        {"Processes":[["907","root","{while} /bin/sh /while"]],"Titles":["PID","USER","COMMAND"]}
+        {"Processes":[["4308","root","{while} /bin/sh /while"]],"Titles":["PID","USER","COMMAND"]}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:37 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:42 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/f607f1f8b8c19566015346bf9be52a04bcd53b1700a90d7cafbdca1ed334fdc3/kill"
+    uri: "<DOCKER_HOST>/v1.15/containers/7fe08fba1ff6ef5151e7cb9644beca8ec3acab441f281a81a998165f2f0e11c0/kill"
     body:
       encoding: US-ASCII
       string: ''
@@ -130,15 +130,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:36:37 GMT
+      - Mon, 01 Dec 2014 18:07:42 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:37 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:42 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/f607f1f8b8c19566015346bf9be52a04bcd53b1700a90d7cafbdca1ed334fdc3"
+    uri: "<DOCKER_HOST>/v1.15/containers/7fe08fba1ff6ef5151e7cb9644beca8ec3acab441f281a81a998165f2f0e11c0"
     body:
       encoding: US-ASCII
       string: ''
@@ -153,15 +153,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:36:37 GMT
+      - Mon, 01 Dec 2014 18:07:42 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:37 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:42 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/images/6cd21f4ea2f3"
+    uri: "<DOCKER_HOST>/v1.15/images/07c0eb630a6b"
     body:
       encoding: US-ASCII
       string: ''
@@ -178,14 +178,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:37 GMT
+      - Mon, 01 Dec 2014 18:07:43 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"6cd21f4ea2f32879ea273be581e67fc97c6b46d1275f62619d51d2cd1731e8f6"}
+        [{"Deleted":"07c0eb630a6b22dfcef22162d53c6a7f97247bf817c02e9c04dc9cb2fc1aaecc"}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:37 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:42 GMT
 recorded_with: VCR 2.9.3

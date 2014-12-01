@@ -23,21 +23,21 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:54 GMT
+      - Mon, 01 Dec 2014 18:09:01 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD / /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 42f783e6c236\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        3a1ba474304f\\n\"}\r\n{\"stream\":\"Successfully built 42f783e6c236\\n\"}\r\n"
+        ---\\u003e 0623763b67d6\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        210af52f3046\\n\"}\r\n{\"stream\":\"Successfully built 0623763b67d6\\n\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:54 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:01 GMT
 - request:
     method: post
     uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
-      string: '{"Image":"42f783e6c236","Cmd":["cat","/Dockerfile"]}'
+      string: '{"Image":"0623763b67d6","Cmd":["cat","/Dockerfile"]}'
     headers:
       User-Agent:
       - Swipely/Docker-API 1.15.0
@@ -51,18 +51,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:54 GMT
+      - Mon, 01 Dec 2014 18:09:01 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"f9945ead737e6fc52e601bd3377b4ed81963b099b4759dacdcc52f801b155e3f","Warnings":null}
+        {"Id":"ff21506bd232df598706ece5927105993e5a5c9292cd0e03883bd56a52007b5a","Warnings":null}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:54 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:01 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/f9945ead737e6fc52e601bd3377b4ed81963b099b4759dacdcc52f801b155e3f/start"
+    uri: "<DOCKER_HOST>/v1.15/containers/ff21506bd232df598706ece5927105993e5a5c9292cd0e03883bd56a52007b5a/start"
     body:
       encoding: UTF-8
       string: "{}"
@@ -77,15 +77,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:37:55 GMT
+      - Mon, 01 Dec 2014 18:09:02 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:55 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:01 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/f9945ead737e6fc52e601bd3377b4ed81963b099b4759dacdcc52f801b155e3f/logs?stdout=true"
+    uri: "<DOCKER_HOST>/v1.15/containers/ff21506bd232df598706ece5927105993e5a5c9292cd0e03883bd56a52007b5a/logs?stdout=true"
     body:
       encoding: US-ASCII
       string: ''
@@ -100,7 +100,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:37:55 GMT
+      - Mon, 01 Dec 2014 18:09:02 GMT
       Content-Type:
       - application/octet-stream
     body:
@@ -108,10 +108,10 @@ http_interactions:
       string: !binary |-
         AQAAAAAAABNGUk9NIGRlYmlhbjp3aGVlenkKAQAAAAAAAAhBREQgLyAvCg==
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:55 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:02 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/f9945ead737e6fc52e601bd3377b4ed81963b099b4759dacdcc52f801b155e3f/wait"
+    uri: "<DOCKER_HOST>/v1.15/containers/ff21506bd232df598706ece5927105993e5a5c9292cd0e03883bd56a52007b5a/wait"
     body:
       encoding: US-ASCII
       string: ''
@@ -128,7 +128,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:55 GMT
+      - Mon, 01 Dec 2014 18:09:02 GMT
       Content-Length:
       - '17'
     body:
@@ -136,10 +136,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:55 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:02 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/f9945ead737e6fc52e601bd3377b4ed81963b099b4759dacdcc52f801b155e3f"
+    uri: "<DOCKER_HOST>/v1.15/containers/ff21506bd232df598706ece5927105993e5a5c9292cd0e03883bd56a52007b5a"
     body:
       encoding: US-ASCII
       string: ''
@@ -154,15 +154,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:37:55 GMT
+      - Mon, 01 Dec 2014 18:09:02 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:55 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:02 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/images/42f783e6c236?noprune=true"
+    uri: "<DOCKER_HOST>/v1.15/images/0623763b67d6?noprune=true"
     body:
       encoding: US-ASCII
       string: ''
@@ -179,14 +179,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:37:55 GMT
+      - Mon, 01 Dec 2014 18:09:02 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"42f783e6c236a97a8b037500bcac78d35d25ab479de8c60f5bb6f96b19400856"}
+        [{"Deleted":"0623763b67d6f36b33e8875a05142eb20889126527f252034db6e7bf71cc8acd"}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:37:55 GMT
+  recorded_at: Mon, 01 Dec 2014 18:09:02 GMT
 recorded_with: VCR 2.9.3

@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:40 GMT
+      - Mon, 01 Dec 2014 18:07:45 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -28,7 +28,7 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:40 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:45 GMT
 - request:
     method: post
     uri: "<DOCKER_HOST>/v1.15/containers/create"
@@ -48,18 +48,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:40 GMT
+      - Mon, 01 Dec 2014 18:07:46 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"af1446c71dec5c5d04c774bb8a0d488747cd5111b8cdec1873a546caca3be836","Warnings":null}
+        {"Id":"e83576451b0fa9dd7551640d45dd242d4377b610a06809b426c25c248cb0a46a","Warnings":null}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:40 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:46 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/af1446c71dec5c5d04c774bb8a0d488747cd5111b8cdec1873a546caca3be836/start"
+    uri: "<DOCKER_HOST>/v1.15/containers/e83576451b0fa9dd7551640d45dd242d4377b610a06809b426c25c248cb0a46a/start"
     body:
       encoding: UTF-8
       string: "{}"
@@ -74,15 +74,15 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:36:40 GMT
+      - Mon, 01 Dec 2014 18:07:46 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:40 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:46 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/af1446c71dec5c5d04c774bb8a0d488747cd5111b8cdec1873a546caca3be836/wait"
+    uri: "<DOCKER_HOST>/v1.15/containers/e83576451b0fa9dd7551640d45dd242d4377b610a06809b426c25c248cb0a46a/wait"
     body:
       encoding: US-ASCII
       string: ''
@@ -99,7 +99,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 16:36:40 GMT
+      - Mon, 01 Dec 2014 18:07:46 GMT
       Content-Length:
       - '17'
     body:
@@ -107,10 +107,10 @@ http_interactions:
       string: |
         {"StatusCode":0}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:40 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:46 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/af1446c71dec5c5d04c774bb8a0d488747cd5111b8cdec1873a546caca3be836/copy"
+    uri: "<DOCKER_HOST>/v1.15/containers/e83576451b0fa9dd7551640d45dd242d4377b610a06809b426c25c248cb0a46a/copy"
     body:
       encoding: UTF-8
       string: '{"Resource":"/etc/logrotate.d"}'
@@ -127,7 +127,7 @@ http_interactions:
       Content-Type:
       - application/x-tar
       Date:
-      - Mon, 01 Dec 2014 16:36:40 GMT
+      - Mon, 01 Dec 2014 18:07:46 GMT
     body:
       encoding: UTF-8
       string: !binary |-
@@ -212,10 +212,10 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:40 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:46 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/af1446c71dec5c5d04c774bb8a0d488747cd5111b8cdec1873a546caca3be836"
+    uri: "<DOCKER_HOST>/v1.15/containers/e83576451b0fa9dd7551640d45dd242d4377b610a06809b426c25c248cb0a46a"
     body:
       encoding: US-ASCII
       string: ''
@@ -230,10 +230,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 16:36:41 GMT
+      - Mon, 01 Dec 2014 18:07:46 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 16:36:41 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:46 GMT
 recorded_with: VCR 2.9.3

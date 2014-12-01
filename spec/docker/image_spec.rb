@@ -91,10 +91,10 @@ describe Docker::Image do
     end
 
     context 'when there are multiple files passed' do
-      let(:file) { ["#{project_dir}/Gemfile", "#{project_dir}/Rakefile"] }
+      let(:file) { ["#{project_dir}/Gemfile", "#{project_dir}/LICENSE"] }
       let(:gemfile) { File.read('Gemfile') }
-      let(:rakefile) { File.read('Rakefile') }
-      let(:container) { new_image.run('cat /Gemfile /Rakefile') }
+      let(:license) { File.read('LICENSE') }
+      let(:container) { new_image.run('cat /Gemfile /LICENSE') }
       let(:response) {
         container.streaming_logs(stdout: true)
       }
@@ -104,7 +104,7 @@ describe Docker::Image do
       end
 
       it 'creates a new Image that has each file', :vcr do
-        expect(response).to eq("#{gemfile}#{rakefile}")
+        expect(response).to eq("#{gemfile}#{license}")
       end
     end
 
@@ -247,7 +247,7 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'tduffield/scratch') }
+      let(:image) { subject.create('fromImage' => 'swipely/scratch') }
       let(:creds) {
         {
           :username => ENV['DOCKER_API_USER'],
@@ -257,7 +257,7 @@ describe Docker::Image do
       }
 
       before { Docker.creds = creds }
-      after { image.remove(:name => 'tduffield/scratch', :noprune => true) }
+      after { image.remove(:name => 'swipely/scratch', :noprune => true) }
 
       it 'sets the id and sends Docker.creds', :vcr do
         expect(image).to be_a Docker::Image
@@ -364,7 +364,7 @@ describe Docker::Image do
       end
 
       context 'when the URI is valid' do
-        let(:uri) { 'http://i.tomduffield.com/YdPT/tianon_true.tar' }
+        let(:uri) { 'http://swipely-pub.s3.amazonaws.com/tianon_true.tar' }
         let(:import) { subject.import(uri) }
         after { import.remove(:noprune => true) }
 
