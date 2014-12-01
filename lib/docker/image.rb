@@ -148,8 +148,7 @@ class Docker::Image
       body = connection.post(
         '/images/create',
          options.merge('fromSrc' => '-'),
-         :headers => { 'Content-Type' => 'application/tar',
-                       'Transfer-Encoding' => 'chunked' },
+         :headers => { 'Content-Type' => 'application/tar', 'Transfer-Encoding' => 'chunked' },
          &block
       )
       new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
