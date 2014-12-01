@@ -76,7 +76,10 @@ describe Docker::Image do
 
     context 'when a direcory is passed' do
       let(:new_image) {
-        subject.insert_local('localPath' => "#{project_dir}/lib", 'outputPath' => '/lib')
+        subject.insert_local(
+          'localPath' => "#{project_dir}/lib",
+          'outputPath' => '/lib'
+        )
       }
       let(:container) { new_image.run('ls -a /lib/docker') }
       let(:response) { container.streaming_logs(stdout: true) }
@@ -431,7 +434,10 @@ describe Docker::Image do
 
       context 'with specifying a repo in the query parameters' do
         let(:image) {
-          subject.build("FROM debian:wheezy\nRUN true\n", "t" => "#{ENV['DOCKER_API_USER']}/debian:true")
+          subject.build(
+            "FROM debian:wheezy\nRUN true\n",
+            "t" => "#{ENV['DOCKER_API_USER']}/debian:true"
+          )
         }
         after { image.remove(:noprune => true) }
 
@@ -440,7 +446,9 @@ describe Docker::Image do
           expect(image.id).to_not be_nil
           expect(image.connection).to be_a Docker::Connection
           image.refresh!
-          expect(image.info["RepoTags"]).to eq(["#{ENV['DOCKER_API_USER']}/debian:true"])
+          expect(image.info["RepoTags"]).to eq(
+            ["#{ENV['DOCKER_API_USER']}/debian:true"]
+          )
         end
       end
 
@@ -489,7 +497,9 @@ describe Docker::Image do
         it 'builds the image and tags it', :vcr do
           expect(output).to eq(docker_file.read)
           image.refresh!
-          expect(image.info["RepoTags"]).to eq(["#{ENV['DOCKER_API_USER']}/debian:from_dir"])
+          expect(image.info["RepoTags"]).to eq(
+            ["#{ENV['DOCKER_API_USER']}/debian:from_dir"]
+          )
         end
       end
 

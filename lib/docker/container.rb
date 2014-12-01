@@ -93,7 +93,8 @@ class Docker::Container
       # If attaching to stdin, we must hijack the underlying TCP connection
       # so we can stream stdin to the remote Docker process
       opts[:stdin] = true
-      excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block, msgs, tty)
+      excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block,
+        msgs, tty)
     else
       excon_params[:response_block] = Docker::Util.attach_for(block, msgs, tty)
     end
@@ -139,7 +140,7 @@ class Docker::Container
 
   def streaming_logs(opts = {}, &block)
     msgs = Docker::Messages.new
-    excon_params = { response_block: Docker::Util.attach_for(block, msgs, false) }
+    excon_params = {response_block: Docker::Util.attach_for(block, msgs, false)}
 
     connection.get(path_for(:logs), opts, excon_params)
     msgs.all_messages.join

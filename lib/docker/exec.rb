@@ -19,7 +19,8 @@ class Docker::Exec
   # @return [Docker::Exec] self
   def self.create(options = {}, conn = Docker.connection)
     container = options.delete('Container')
-    resp = conn.post("/containers/#{container}/exec", {}, :body => options.to_json)
+    resp = conn.post("/containers/#{container}/exec", {},
+      :body => options.to_json)
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)
   end
@@ -52,9 +53,11 @@ class Docker::Exec
     msgs = Docker::Messages.new
     unless detached
       if stdin
-        excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block, msgs, tty)
+        excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block,
+          msgs, tty)
       else
-        excon_params[:response_block] = Docker::Util.attach_for(block, msgs, tty)
+        excon_params[:response_block] = Docker::Util.attach_for(block,
+          msgs, tty)
       end
     end
 

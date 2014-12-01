@@ -47,7 +47,7 @@ module Docker::Util
   def debug(msg)
     Docker.logger.debug(msg) if Docker.logger
   end
-  
+
   def hijack_for(stdin, block, msg_stack, tty)
     attach_block = attach_for(block, msg_stack, tty)
 

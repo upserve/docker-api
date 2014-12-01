@@ -24,7 +24,9 @@ describe Docker::Container do
   end
 
   describe '#json' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+    }
     let(:description) { subject.json }
     after(:each) { subject.remove }
 
@@ -35,7 +37,9 @@ describe Docker::Container do
   end
 
   describe '#streaming_logs' do
-    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
+    }
     after(:each) { subject.remove }
 
     context "when not selecting any stream" do
@@ -55,7 +59,9 @@ describe Docker::Container do
   end
 
   describe '#logs' do
-    subject { described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
+    }
     after(:each) { subject.remove }
 
     context "when not selecting any stream" do
@@ -76,7 +82,10 @@ describe Docker::Container do
 
   describe '#create' do
     subject {
-      described_class.create({'Cmd' => %w[true], 'Image' => 'debian:wheezy'}.merge(opts))
+      described_class.create({
+        'Cmd' => %w[true],
+        'Image' => 'debian:wheezy'
+      }.merge(opts))
     }
 
     context 'when creating a container named bob' do
@@ -91,7 +100,10 @@ describe Docker::Container do
 
   describe '#changes' do
     subject {
-      described_class.create('Cmd' => %w[rm -rf /root], 'Image' => 'debian:wheezy')
+      described_class.create(
+        'Cmd' => %w[rm -rf /root],
+        'Image' => 'debian:wheezy'
+      )
     }
     let(:changes) { subject.changes }
 
@@ -176,7 +188,12 @@ describe Docker::Container do
   end
 
   describe '#attach' do
-    subject { described_class.create('Cmd' => ['bash','-c','sleep 2; echo hello'], 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create(
+        'Cmd' => ['bash','-c','sleep 2; echo hello'],
+        'Image' => 'debian:wheezy'
+      )
+    }
 
     before { subject.start }
     after(:each) { subject.stop.remove }
@@ -250,7 +267,9 @@ describe Docker::Container do
   end
 
   describe '#stop' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+    }
 
     before { subject.tap(&:start).stop('timeout' => '10') }
     after { subject.remove }
@@ -266,7 +285,12 @@ describe Docker::Container do
   end
 
   describe '#exec' do
-    subject { described_class.create('Cmd' => %w[sleep 20], 'Image' => 'debian:wheezy').start }
+    subject {
+      described_class.create(
+        'Cmd' => %w[sleep 20],
+        'Image' => 'debian:wheezy'
+      ).start
+    }
     after { subject.kill!.remove }
 
     context 'when passed only a command' do
@@ -306,7 +330,10 @@ describe Docker::Container do
     end
 
     context 'when tty is true' do
-      let(:command) { ["bash", "-c", "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"] }
+      let(:command) { [
+        "bash", "-c",
+        "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"
+      ] }
       let(:output) { subject.exec(command, tty: true) }
 
       it 'returns the raw stdout/stderr output', :vcr do
@@ -317,7 +344,9 @@ describe Docker::Container do
 
   describe '#kill' do
     let(:command) { ['/bin/bash', '-c', 'while [ 1 ]; do echo hello; done'] }
-    subject { described_class.create('Cmd' => command, 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => command, 'Image' => 'debian:wheezy')
+    }
 
     before { subject.start }
     after(:each) {subject.remove }
@@ -361,7 +390,9 @@ describe Docker::Container do
   end
 
   describe '#delete' do
-    subject { described_class.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+    }
 
     it 'deletes the container', :vcr do
       subject.delete(:force => true)
@@ -372,7 +403,9 @@ describe Docker::Container do
   end
 
   describe '#restart' do
-    subject { described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy')
+    }
 
     before { subject.start }
     after { subject.kill!.remove }
@@ -394,7 +427,10 @@ describe Docker::Container do
 
   describe '#pause' do
     subject {
-      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'debian:wheezy').start
+      described_class.create(
+        'Cmd' => %w[sleep 50],
+        'Image' => 'debian:wheezy'
+      ).start
     }
     after { subject.unpause.kill!.remove }
 
@@ -406,7 +442,10 @@ describe Docker::Container do
 
   describe '#unpause' do
     subject {
-      described_class.create('Cmd' => %w[sleep 50], 'Image' => 'debian:wheezy').start
+      described_class.create(
+        'Cmd' => %w[sleep 50],
+        'Image' => 'debian:wheezy'
+      ).start
     }
     before { subject.pause }
     after { subject.kill!.remove }
@@ -420,8 +459,12 @@ describe Docker::Container do
   end
 
   describe '#wait' do
-    subject { described_class.create('Cmd' => %w[tar nonsense],
-                                     'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create(
+        'Cmd' => %w[tar nonsense],
+        'Image' => 'debian:wheezy'
+      )
+    }
 
     before { subject.start }
     after(:each) { subject.remove }
@@ -443,7 +486,7 @@ describe Docker::Container do
       #
       #   it 'raises a ServerError', :vcr do
       #     skip "VCR doesn't like to record errors"
-      #     expect { subject.wait(4) }.to raise_error(Docker::Error::TimeoutError)
+      #     expect{subject.wait(4)}.to raise_error(Docker::Error::TimeoutError)
       #   end
       # end
     end
@@ -486,7 +529,9 @@ describe Docker::Container do
   end
 
   describe '#commit' do
-    subject { described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy') }
+    subject {
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+    }
     let(:image) { subject.commit }
 
     before { subject.start }
@@ -584,7 +629,9 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy') }
+      let(:container) {
+        subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+      }
       after { container.remove }
 
       it 'materializes the Container into a Docker::Container', :vcr do
@@ -614,7 +661,9 @@ describe Docker::Container do
     end
 
     context 'when the HTTP response is a 200' do
-      let(:container) { subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy') }
+      let(:container) {
+        subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+      }
       before { container }
       after { container.remove }
 

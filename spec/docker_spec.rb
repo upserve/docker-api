@@ -21,7 +21,8 @@ describe Docker do
 
     context "when the DOCKER_* ENV variables are set" do
       before do
-        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return('unixs:///var/run/not-docker.sock')
+        allow(ENV).to receive(:[]).with('DOCKER_URL')
+          .and_return('unixs:///var/run/not-docker.sock')
         allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return(nil)
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
@@ -48,7 +49,8 @@ describe Docker do
     context "when the DOCKER_HOST ENV variable is set" do
       before do
         allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
-        allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
@@ -60,8 +62,10 @@ describe Docker do
 
     context "DOCKER_URL should take precedence over DOCKER_HOST" do
       before do
-        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return('tcp://someotherserver:8103')
-        allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_URL')
+          .and_return('tcp://someotherserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
@@ -74,8 +78,10 @@ describe Docker do
     context "when the DOCKER_CERT_PATH and DOCKER_HOST ENV variables are set" do
       before do
         allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
-        allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return('tcp://someserver:8103')
-        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return('/boot2dockert/cert/path')
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH')
+          .and_return('/boot2dockert/cert/path')
         Docker.reset!
       end
 

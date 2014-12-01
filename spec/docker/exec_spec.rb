@@ -26,7 +26,12 @@ describe Docker::Exec do
     subject { described_class }
 
     context 'when the HTTP request returns a 201' do
-      let(:container) { Docker::Container.create('Cmd' => %w[sleep 5], 'Image' => 'debian:wheezy').start! }
+      let(:container) {
+        Docker::Container.create(
+          'Cmd' => %w[sleep 5],
+          'Image' => 'debian:wheezy'
+        ).start!
+      }
       let(:options) do
         {
           'AttachStdin' => false,
@@ -66,7 +71,12 @@ describe Docker::Exec do
   end
 
   describe '#start!' do
-    let(:container) { Docker::Container.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy').start! }
+    let(:container) {
+      Docker::Container.create(
+        'Cmd' => %w[sleep 10],
+        'Image' => 'debian:wheezy'
+      ).start!
+    }
 
     context 'when the exec instance does not exist' do
       subject do
@@ -74,13 +84,19 @@ describe Docker::Exec do
       end
 
       it 'raises an error', :vcr do
-        skip 'The Docker API returns a 200 even though this is an error (docker/docker#9341)'
+        skip 'The Docker API returns a 200 (docker/docker#9341)'
         expect { subject.start! }.to raise_error(Docker::Error::NotFoundError)
       end
     end
 
     context 'when :detach is set to false' do
-      subject { described_class.create('Container' => container.id, 'AttachStdout' => true, 'Cmd' => ['bash','-c','sleep 2; echo hello']) }
+      subject {
+        described_class.create(
+          'Container' => container.id,
+          'AttachStdout' => true,
+          'Cmd' => ['bash','-c','sleep 2; echo hello']
+        )
+      }
       after { container.kill!.remove }
 
       it 'returns the stdout and stderr messages', :vcr do
@@ -99,7 +115,9 @@ describe Docker::Exec do
     end
 
     context 'when :detach is set to true' do
-      subject { described_class.create('Container' => container.id, 'Cmd' => %w[date]) }
+      subject {
+        described_class.create('Container' => container.id, 'Cmd' => %w[date])
+      }
       after { container.kill!.remove }
 
       it 'returns empty stdout and stderr messages', :vcr do
@@ -108,18 +126,22 @@ describe Docker::Exec do
     end
 
     context 'when the command has already run' do
-      subject { described_class.create('Container' => container.id, 'Cmd' => ['date']) }
+      subject {
+        described_class.create('Container' => container.id, 'Cmd' => ['date'])
+      }
       before { subject.start! }
       after { container.kill!.remove }
 
       it 'raises an error', :vcr do
-        skip 'The Docker API returns a 200 even though this is an error (docker/docker#9341)'
+        skip 'The Docker API returns a 200 (docker/docker#9341)'
         expect { subject.start! }.to raise_error(Docker::Error::NotFoundError)
       end
     end
 
     context 'when the HTTP request returns a 201' do
-      subject { described_class.create('Container' => container.id, 'Cmd' => ['date']) }
+      subject {
+        described_class.create('Container' => container.id, 'Cmd' => ['date'])
+      }
       after { container.kill!.remove }
 
       it 'starts the exec instance', :vcr do
@@ -129,7 +151,12 @@ describe Docker::Exec do
   end
 
   describe '#resize' do
-    let(:container) { Docker::Container.create('Cmd' => %w[sleep 20], 'Image' => 'debian:wheezy').start! }
+    let(:container) {
+      Docker::Container.create(
+        'Cmd' => %w[sleep 20],
+        'Image' => 'debian:wheezy'
+      ).start!
+    }
 
     context 'when exec instance has TTY enabled' do
       let(:instance) do
@@ -162,7 +189,7 @@ describe Docker::Exec do
       end
 
       it 'raises an error', :vcr do
-        skip 'The Docker API returns a 200 even though this is an error (docker/docker#9341)'
+        skip 'The Docker API returns a 200 (docker/docker#9341)'
         expect { subject.resize }.to raise_error(Docker::Error::NotFoundError)
       end
     end
