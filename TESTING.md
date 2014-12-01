@@ -34,7 +34,7 @@ This repository comes with five Rake commands to assist in your testing of the c
 This command will run Rspec tests normally on your local system. Be careful that VCR will behave "weirdly" if you currently have the Docker daemon running.
 
 ## `rake quality`
-This command
+This command runs a code quality threshold checker to hinder bad code.
 
 ## `rake vcr`
 This gem uses [VCR](https://relishapp.com/vcr/vcr) to record and replay HTTP requests made to the Docker API. The `vcr` namespace is used to record and replay spec tests inside of a Docker container. This will allow each developer to run and rerecord VCR cassettes in a consistent environment.
@@ -45,11 +45,11 @@ Certain Rspec tests will require your credentials to the Docker Hub. If you do n
 ```shell
 export DOCKER_API_USER='your_docker_hub_user'
 export DOCKER_API_PASS='your_docker_hub_password'
-export DOCKER_API_EAMIL='your_docker_hub_email_address'
+export DOCKER_API_EMAIL='your_docker_hub_email_address'
 ```
 
 ### `rake vcr:spec`
-This command will download the necessary Docker images and then run the Rspec tests while recording your VCR cassettes. 
+This command will download the necessary Docker images and then run the Rspec tests while recording your VCR cassettes.
 
 ### `rake vcr:unpack`
 This command will download the necessary Docker image.
