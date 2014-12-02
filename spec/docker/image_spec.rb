@@ -42,6 +42,8 @@ describe Docker::Image do
   end
 
   describe '#insert_local' do
+    include_context "local paths"
+
     subject { described_class.create('fromImage' => 'debian:wheezy') }
 
     let(:rm) { false }
@@ -60,7 +62,7 @@ describe Docker::Image do
     end
 
     context 'when the local file does exist' do
-      let(:file) { "#{project_dir}/Gemfile" }
+      let(:file) { File.join(project_dir, 'Gemfile') }
       let(:gemfile) { File.read('Gemfile') }
       let(:container) { new_image.run('cat /Gemfile') }
       after do
@@ -77,7 +79,7 @@ describe Docker::Image do
     context 'when a direcory is passed' do
       let(:new_image) {
         subject.insert_local(
-          'localPath' => "#{project_dir}/lib",
+          'localPath' => File.join(project_dir, 'lib'),
           'outputPath' => '/lib'
         )
       }
@@ -94,7 +96,9 @@ describe Docker::Image do
     end
 
     context 'when there are multiple files passed' do
-      let(:file) { ["#{project_dir}/Gemfile", "#{project_dir}/LICENSE"] }
+      let(:file) {
+        [File.join(project_dir, 'Gemfile'), File.join(project_dir, 'LICENSE')]
+      }
       let(:gemfile) { File.read('Gemfile') }
       let(:license) { File.read('LICENSE') }
       let(:container) { new_image.run('cat /Gemfile /LICENSE') }
@@ -113,7 +117,7 @@ describe Docker::Image do
 
     context 'when removing intermediate containers' do
       let(:rm) { true }
-      let(:file) { "#{project_dir}/Gemfile" }
+      let(:file) { File.join(project_dir, 'Gemfile') }
       after(:each) { new_image.remove }
 
       it 'leave no intermediate containers', :vcr do
@@ -336,6 +340,8 @@ describe Docker::Image do
   end
 
   describe '.import' do
+    include_context "local paths"
+
     subject { described_class }
 
     context 'when the file does not exist' do
@@ -348,7 +354,7 @@ describe Docker::Image do
     end
 
     context 'when the file does exist' do
-      let(:file) { "#{project_dir}/spec/fixtures/export.tar" }
+      let(:file) { File.join(project_dir, 'spec', 'fixtures', 'export.tar') }
       let(:import) { subject.import(file) }
       after { import.remove(:noprune => true) }
 
