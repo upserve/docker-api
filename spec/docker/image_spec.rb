@@ -8,7 +8,7 @@ describe Docker::Image do
     let(:connection) { Docker.connection }
 
     let(:info) do
-      {"id" => "bf119e2", "Repository" => "base", "Tag" => "latest",
+      {"id" => "bf119e2", "Repository" => "debian", "Tag" => "wheezy",
         "Created" => 1364102658, "Size" => 24653, "VirtualSize" => 180116135}
     end
 
@@ -21,17 +21,30 @@ describe Docker::Image do
   end
 
   describe '#remove' do
-    let(:id) { subject.id }
-    subject { described_class.create('fromImage' => 'base') }
 
-    it 'removes the Image', :vcr do
-      subject.remove(:force => true)
-      expect(Docker::Image.all.map(&:id)).to_not include(id)
+    context 'when no name is given' do
+      let(:id) { subject.id }
+      subject { described_class.create('fromImage' => 'busybox') }
+
+      it 'removes the Image', :vcr do
+        subject.remove(:force => true)
+        expect(Docker::Image.all.map(&:id)).to_not include(id)
+      end
+    end
+
+    context 'when a valid tag is given' do
+      it 'untags the Image'
+    end
+
+    context 'when an invalid tag is given' do
+      it 'raises an error'
     end
   end
 
   describe '#insert_local' do
-    subject { described_class.build('from base') }
+    include_context "local paths"
+
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
 
     let(:rm) { false }
     let(:new_image) {
@@ -49,23 +62,33 @@ describe Docker::Image do
     end
 
     context 'when the local file does exist' do
-      let(:file) { './Gemfile' }
+      let(:file) { File.join(project_dir, 'Gemfile') }
       let(:gemfile) { File.read('Gemfile') }
+      let(:container) { new_image.run('cat /Gemfile') }
+      after do
+        container.tap(&:wait).remove
+        new_image.remove
+      end
 
       it 'creates a new Image that has that file', :vcr do
-        chunk = nil
-        new_image.run('cat /Gemfile').attach { |stream, c|
-          chunk ||= c
-        }
-        expect(chunk).to eq(gemfile)
+        output = container.streaming_logs(stdout: true)
+        expect(output).to eq(gemfile)
       end
     end
 
     context 'when a direcory is passed' do
       let(:new_image) {
-        subject.insert_local('localPath' => './lib', 'outputPath' => '/lib')
+        subject.insert_local(
+          'localPath' => File.join(project_dir, 'lib'),
+          'outputPath' => '/lib'
+        )
       }
-      let(:response) { new_image.run('ls -a /lib/docker').attach.flatten.first }
+      let(:container) { new_image.run('ls -a /lib/docker') }
+      let(:response) { container.streaming_logs(stdout: true) }
+      after do
+        container.tap(&:wait).remove
+        new_image.remove
+      end
 
       it 'inserts the directory', :vcr do
         expect(response.split("\n").sort).to eq(Dir.entries('lib/docker').sort)
@@ -73,21 +96,29 @@ describe Docker::Image do
     end
 
     context 'when there are multiple files passed' do
-      let(:file) { ['./Gemfile', './Rakefile'] }
-      let(:gemfile) { File.read('Gemfile') }
-      let(:rakefile) { File.read('Rakefile') }
-      let(:response) {
-        new_image.run('cat /Gemfile /Rakefile').attach
+      let(:file) {
+        [File.join(project_dir, 'Gemfile'), File.join(project_dir, 'LICENSE')]
       }
+      let(:gemfile) { File.read('Gemfile') }
+      let(:license) { File.read('LICENSE') }
+      let(:container) { new_image.run('cat /Gemfile /LICENSE') }
+      let(:response) {
+        container.streaming_logs(stdout: true)
+      }
+      after do
+        container.tap(&:wait).remove
+        new_image.remove
+      end
 
       it 'creates a new Image that has each file', :vcr do
-        expect(response).to eq([[gemfile, rakefile],[]])
+        expect(response).to eq("#{gemfile}#{license}")
       end
     end
 
     context 'when removing intermediate containers' do
       let(:rm) { true }
-      let(:file) { './Gemfile' }
+      let(:file) { File.join(project_dir, 'Gemfile') }
+      after(:each) { new_image.remove }
 
       it 'leave no intermediate containers', :vcr do
         expect { new_image }.to change {
@@ -104,47 +135,29 @@ describe Docker::Image do
   describe '#push' do
     let(:credentials) {
       {
-        'username' => 'nahiluhmot',
-        'password' => '******',
+        'username' => ENV['DOCKER_API_USER'],
+        'password' => ENV['DOCKER_API_PASS'],
         'serveraddress' => 'https://index.docker.io/v1',
-        'email'    => 'tomhulihan@swipely.com'
+        'email'    => ENV['DOCKER_API_EMAIL']
       }
     }
-    let(:base_image) {
-      described_class.create('fromImage' => 'base')
+    let(:repo_tag) { "#{ENV['DOCKER_API_USER']}/true" }
+    let(:image) {
+      described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
     }
-    let(:container) {
-      base_image.run('true')
-    }
-    let(:new_image) {
-      container.commit('repo' => 'nahiluhmot/base2')
-      Docker::Image.all(:all => true).select { |image|
-        image.info['RepoTags'].include?('nahiluhmot/base2:latest')
-      }.first
-    }
+    after { image.remove(:name => repo_tag, :noprune => true) }
 
     it 'pushes the Image', :vcr do
-      new_image.push(credentials)
+      image.push(credentials)
+    end
+
+    context 'when a tag is specified' do
+      it 'pushes that specific tag'
     end
 
     context 'when there are no credentials' do
       let(:credentials) { nil }
-      let(:image) {
-        Docker::Image.create('fromImage' => 'registry', 'tag' => 'latest')
-      }
-
-      let(:container) { Docker::Container.create('Image' => image.id) }
-
-      before do
-        opts = {
-          "PortBindings" => {
-            "5000/tcp" => [{"HostPort" => "5000"}]
-          }
-        }
-        container.start!(opts)
-        sleep 10 # for some reason the registry isn't ready right away
-        image.tag('repo' => 'localhost:5000/registry', 'tag' => 'test')
-      end
+      let(:repo_tag) { "localhost:5000/true" }
 
       it 'still pushes', :vcr do
         expect { image.push }.to_not raise_error
@@ -153,16 +166,17 @@ describe Docker::Image do
   end
 
   describe '#tag' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
+    after { subject.remove(:name => 'teh:latest', :noprune => true) }
 
     it 'tags the image with the repo name', :vcr do
-      subject.tag(:repo => :base2, :force => true)
-      expect(subject.info['RepoTags']).to include 'base2:latest'
+      subject.tag(:repo => :teh, :force => true)
+      expect(subject.info['RepoTags']).to include 'teh:latest'
     end
   end
 
   describe '#json' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
     let(:json) { subject.json }
 
     it 'returns additional information about image image', :vcr do
@@ -172,7 +186,7 @@ describe Docker::Image do
   end
 
   describe '#history' do
-    subject { described_class.create('fromImage' => 'base') }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
     let(:history) { subject.history }
 
     it 'returns the history of the Image', :vcr do
@@ -183,48 +197,51 @@ describe Docker::Image do
   end
 
   describe '#run' do
-    subject { described_class.create('fromImage' => 'base') }
-    let(:output) { subject.run(cmd).attach }
+    subject { described_class.create('fromImage' => 'debian:wheezy') }
+    let(:container) { subject.run(cmd) }
+    let(:output) { container.streaming_logs(stdout: true) }
 
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
+      after { container.tap(&:wait).remove }
+
       it 'splits the String by spaces and creates a new Container' do
-        expect(output).to eq([["ld-linux-x86-64.so.2\n"],[]])
+        expect(output).to eq("ld-linux-x86-64.so.2\n")
       end
     end
 
     context 'when the argument is an Array' do
       let(:cmd) { %w[which pwd] }
+      after { container.tap(&:wait).remove }
 
       it 'creates a new Container', :vcr do
-        expect(output).to eq([["/bin/pwd\n"],[]])
+        expect(output).to eq("/bin/pwd\n")
       end
     end
 
     context 'when the argument is nil', :vcr  do
       let(:cmd) { nil }
-      context 'no command configured in image'do
+      context 'no command configured in image' do
+        subject { described_class.create('fromImage' => 'scratch') }
         it 'should raise an error if no command is specified' do
-          expect {output}.to raise_error(Docker::Error::ServerError,
+          expect {container}.to raise_error(Docker::Error::ServerError,
                                          "No command specified.")
         end
       end
 
       context "command configured in image" do
-        let(:container) {Docker::Container.create('Cmd' => %w[true],
-                                                  'Image' => 'base')}
-        subject { container.commit('run' => {"Cmd" => %w[pwd]}) }
+        let(:cmd) { 'pwd' }
+        after { container.tap(&:wait).remove }
 
         it 'should normally show result if image has Cmd configured' do
-          skip 'The docs say this should work, but it clearly does not'
-          expect(output).to eql [["/\n"],[]]
+          expect(output).to eql "/\n"
         end
       end
     end
   end
 
   describe '#refresh!' do
-    let(:image) { Docker::Image.create('fromImage' => 'base') }
+    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
 
     it 'updates the @info hash', :vcr do
       size = image.info.size
@@ -237,16 +254,17 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'ubuntu') }
+      let(:image) { subject.create('fromImage' => 'swipely/scratch') }
       let(:creds) {
         {
-          :username => 'tlunter',
-          :password => '************',
-          :email => 'tlunter@gmail.com'
+          :username => ENV['DOCKER_API_USER'],
+          :password => ENV['DOCKER_API_PASS'],
+          :email => ENV['DOCKER_API_EMAIL']
         }
       }
 
       before { Docker.creds = creds }
+      after { image.remove(:name => 'swipely/scratch', :noprune => true) }
 
       it 'sets the id and sends Docker.creds', :vcr do
         expect(image).to be_a Docker::Image
@@ -264,7 +282,7 @@ describe Docker::Image do
     let(:image) { subject.get(image_name) }
 
     context 'when the image does exist' do
-      let(:image_name) { 'base' }
+      let(:image_name) { 'debian:wheezy' }
 
       it 'returns the new image', :vcr do
         expect(image).to be_a Docker::Image
@@ -295,7 +313,7 @@ describe Docker::Image do
     let(:exists) { subject.exist?(image_name) }
 
     context 'when the image does exist' do
-      let(:image_name) { 'base' }
+      let(:image_name) { 'debian:wheezy' }
 
       it 'returns true', :vcr do
         expect(exists).to eq(true)
@@ -322,6 +340,8 @@ describe Docker::Image do
   end
 
   describe '.import' do
+    include_context "local paths"
+
     subject { described_class }
 
     context 'when the file does not exist' do
@@ -334,15 +354,11 @@ describe Docker::Image do
     end
 
     context 'when the file does exist' do
-      let(:file) { 'spec/fixtures/export.tar' }
-      let(:body) { StringIO.new }
-
-      before do
-        allow(Docker::Image).to receive(:open).with(file).and_yield(body)
-      end
+      let(:file) { File.join(project_dir, 'spec', 'fixtures', 'export.tar') }
+      let(:import) { subject.import(file) }
+      after { import.remove(:noprune => true) }
 
       it 'creates the Image', :vcr do
-        import = subject.import(file)
         expect(import).to be_a Docker::Image
         expect(import.id).to_not be_nil
       end
@@ -357,12 +373,13 @@ describe Docker::Image do
       end
 
       context 'when the URI is valid' do
-        let(:uri) { 'http://swipely-pub.s3.amazonaws.com/ubuntu.tar' }
+        let(:uri) { 'http://swipely-pub.s3.amazonaws.com/tianon_true.tar' }
+        let(:import) { subject.import(uri) }
+        after { import.remove(:noprune => true) }
 
         it 'returns an Image', :vcr do
-          image = subject.import(uri)
-          expect(image).to be_a Docker::Image
-          expect(image.id).to_not be_nil
+          expect(import).to be_a Docker::Image
+          expect(import.id).to_not be_nil
         end
       end
     end
@@ -372,7 +389,7 @@ describe Docker::Image do
     subject { described_class }
 
     let(:images) { subject.all(:all => true) }
-    before { subject.create('fromImage' => 'base') }
+    before { subject.create('fromImage' => 'debian:wheezy') }
 
     it 'materializes each Image into a Docker::Image', :vcr do
       images.each do |image|
@@ -412,7 +429,7 @@ describe Docker::Image do
 
     context 'with a valid Dockerfile' do
       context 'without query parameters' do
-        let(:image) { subject.build("from base\n") }
+        let(:image) { subject.build("FROM debian:wheezy\n") }
 
         it 'builds an image', :vcr do
           expect(image).to be_a Docker::Image
@@ -423,25 +440,31 @@ describe Docker::Image do
 
       context 'with specifying a repo in the query parameters' do
         let(:image) {
-          subject.build("from base\nrun true\n", "t" => "swipely/base")
+          subject.build(
+            "FROM debian:wheezy\nRUN true\n",
+            "t" => "#{ENV['DOCKER_API_USER']}/debian:true"
+          )
         }
-        let(:images) { subject.all }
+        after { image.remove(:noprune => true) }
 
         it 'builds an image and tags it', :vcr do
           expect(image).to be_a Docker::Image
           expect(image.id).to_not be_nil
           expect(image.connection).to be_a Docker::Connection
-          expect(images.first.info["RepoTags"]).to eq(["swipely/base:latest"])
+          image.refresh!
+          expect(image.info["RepoTags"]).to eq(
+            ["#{ENV['DOCKER_API_USER']}/debian:true"]
+          )
         end
       end
 
       context 'with a block capturing build output' do
         let(:build_output) { "" }
         let(:block) { Proc.new { |chunk| build_output << chunk } }
-        let!(:image) { subject.build("FROM base\n", &block) }
+        let!(:image) { subject.build("FROM debian:wheezy\n", &block) }
 
         it 'calls the block and passes build output', :vcr do
-          expect(build_output).to match(/Step 0 : FROM base/)
+          expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
         end
       end
     end
@@ -463,20 +486,26 @@ describe Docker::Image do
                                  'Cmd' => %w[cat /Dockerfile])
       end
       let(:output) { container.tap(&:start)
-                              .attach(:stderr => true) }
-      let(:images) { subject.all }
+                              .streaming_logs(stdout: true) }
+      after(:each) do
+        container.tap(&:wait).remove
+        image.remove(:noprune => true)
+      end
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
-          expect(output).to eq([[docker_file.read],[]])
+          expect(output).to eq(docker_file.read)
         end
       end
 
       context 'with specifying a repo in the query parameters' do
-        let(:opts) { { "t" => "swipely/base2" } }
+        let(:opts) { { "t" => "#{ENV['DOCKER_API_USER']}/debian:from_dir" } }
         it 'builds the image and tags it', :vcr do
-          expect(output).to eq([[docker_file.read],[]])
-          expect(images.first.info["RepoTags"]).to eq(["swipely/base2:latest"])
+          expect(output).to eq(docker_file.read)
+          image.refresh!
+          expect(image.info["RepoTags"]).to eq(
+            ["#{ENV['DOCKER_API_USER']}/debian:from_dir"]
+          )
         end
       end
 
@@ -486,16 +515,16 @@ describe Docker::Image do
 
         it 'calls the block and passes build output', :vcr do
           image # Create the image variable, which is lazy-loaded by Rspec
-          expect(build_output).to match(/Step 0 : from base/)
+          expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
         end
       end
 
       context 'with credentials passed' do
         let(:creds) {
           {
-            :username => 'nahiluhmot',
-            :password => '*********',
-            :email => 'hulihan.tom159@gmail.com',
+            :username => ENV['DOCKER_API_USER'],
+            :password => ENV['DOCKER_API_PASS'],
+            :email => ENV['DOCKER_API_EMAIL'],
             :serveraddress => 'https://index.docker.io/v1'
           }
         }

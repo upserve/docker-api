@@ -1,2 +1,2 @@
-from base
-add / /
+FROM debian:wheezy
+ADD / /

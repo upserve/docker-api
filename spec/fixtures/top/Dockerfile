@@ -1,2 +1,2 @@
-from base
-run printf '#! /bin/sh\nwhile true\ndo\ntrue\ndone\n' > /while && chmod +x /while
+FROM debian:wheezy
+RUN printf '#! /bin/sh\nwhile true\ndo\ntrue\ndone\n' > /while && chmod +x /while

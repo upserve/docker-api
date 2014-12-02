@@ -24,6 +24,7 @@ module Docker
   require 'docker/base'
   require 'docker/container'
   require 'docker/event'
+  require 'docker/exec'
   require 'docker/image'
   require 'docker/messages'
   require 'docker/util'
@@ -78,6 +79,12 @@ module Docker
     @connection ||= Connection.new(url, options)
   end
 
+  def reset!
+    @url = nil
+    @options = nil
+    reset_connection!
+  end
+
   def reset_connection!
     @connection = nil
   end
@@ -113,6 +120,6 @@ module Docker
 
   module_function :default_socket_url, :env_url, :url, :url=, :env_options,
                   :options, :options=, :creds, :creds=, :logger, :logger=,
-                  :connection, :reset_connection!, :version, :info,
+                  :connection, :reset!, :reset_connection!, :version, :info,
                   :authenticate!, :validate_version!
 end

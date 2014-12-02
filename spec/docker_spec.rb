@@ -3,21 +3,17 @@ require 'spec_helper'
 describe Docker do
   subject { Docker }
 
-  before do
-    ENV['DOCKER_URL'] = nil
-    ENV['DOCKER_HOST'] = nil
-    ENV['DOCKER_CERT_PATH'] = nil
-  end
-
   it { should be_a Module }
 
   context 'default url and connection' do
-    before do
-      Docker.url = nil
-      Docker.options = nil
-    end
-
     context "when the DOCKER_* ENV variables aren't set" do
+      before do
+        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
+        Docker.reset!
+      end
+
       its(:options) { should == {} }
       its(:url) { should == 'unix:///var/run/docker.sock' }
       its(:connection) { should be_a Docker::Connection }
@@ -25,8 +21,11 @@ describe Docker do
 
     context "when the DOCKER_* ENV variables are set" do
       before do
-        ENV['DOCKER_URL'] = 'unixs:///var/run/not-docker.sock'
-        Docker.options = nil
+        allow(ENV).to receive(:[]).with('DOCKER_URL')
+          .and_return('unixs:///var/run/not-docker.sock')
+        allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
+        Docker.reset!
       end
 
       its(:options) { should == {} }
@@ -36,8 +35,10 @@ describe Docker do
 
     context "when the DOCKER_HOST is set and uses default tcp://" do
       before do
-        ENV['DOCKER_HOST'] = 'tcp://'
-        Docker.options = nil
+        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_HOST').and_return('tcp://')
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
+        Docker.reset!
       end
 
       its(:options) { should == {} }
@@ -47,8 +48,11 @@ describe Docker do
 
     context "when the DOCKER_HOST ENV variable is set" do
       before do
-        ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
-        Docker.options = nil
+        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
+        Docker.reset!
       end
 
       its(:options) { should == {} }
@@ -58,9 +62,12 @@ describe Docker do
 
     context "DOCKER_URL should take precedence over DOCKER_HOST" do
       before do
-        ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
-        ENV['DOCKER_URL'] = 'tcp://someotherserver:8103'
-        Docker.options = nil
+        allow(ENV).to receive(:[]).with('DOCKER_URL')
+          .and_return('tcp://someotherserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
+        Docker.reset!
       end
 
       its(:options) { should == {} }
@@ -70,9 +77,12 @@ describe Docker do
 
     context "when the DOCKER_CERT_PATH and DOCKER_HOST ENV variables are set" do
       before do
-        ENV['DOCKER_HOST'] = 'tcp://someserver:8103'
-        ENV['DOCKER_CERT_PATH'] = '/boot2dockert/cert/path'
-        Docker.options = nil
+        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH')
+          .and_return('/boot2dockert/cert/path')
+        Docker.reset!
       end
 
       its(:options) {
@@ -137,7 +147,7 @@ describe Docker do
     let(:keys) do
       %w(Containers Debug Driver DriverStatus ExecutionDriver IPv4Forwarding
          Images IndexServerAddress InitPath InitSha1 KernelVersion MemoryLimit
-         NEventsListener NFd NGoroutines SwapLimit)
+         NEventsListener NFd NGoroutines OperatingSystem SwapLimit)
     end
 
     it 'returns the info as a Hash', :vcr do
@@ -162,9 +172,9 @@ describe Docker do
       # cassette to match these credentials
       let(:credentials) {
         {
-          :username      => 'tlunter',
-          :password      => '************',
-          :email         => 'tlunter@gmail.com',
+          :username      => ENV['DOCKER_API_USER'],
+          :password      => ENV['DOCKER_API_PASS'],
+          :email         => ENV['DOCKER_API_EMAIL'],
           :serveraddress => 'https://index.docker.io/v1/'
         }
       }

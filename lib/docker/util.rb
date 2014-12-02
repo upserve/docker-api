@@ -5,6 +5,85 @@ module Docker::Util
 
   module_function
 
+  # Attaches to a HTTP stream
+  #
+  # @param block
+  # @param msg_stack [Docker::Messages]
+  # @param tty [boolean]
+  def attach_for(block, msg_stack, tty = false)
+    # If TTY is enabled expect raw data and append to stdout
+    if tty
+      attach_for_tty(block, msg_stack)
+    else
+      attach_for_multiplex(block, msg_stack)
+    end
+  end
+
+  def attach_for_tty(block, msg_stack)
+    return lambda do |c,r,t|
+      msg_stack.stdout_messages << c
+      msg_stack.all_messages << c
+      block.call c if block
+    end
+  end
+
+  def attach_for_multiplex(block, msg_stack)
+    messages = Docker::Messages.new
+    lambda do |c,r,t|
+      messages = messages.decipher_messages(c)
+      msg_stack.append(messages)
+
+      unless block.nil?
+        messages.stdout_messages.each do |msg|
+          block.call(:stdout, msg)
+        end
+        messages.stderr_messages.each do |msg|
+          block.call(:stderr, msg)
+        end
+      end
+    end
+  end
+
+  def debug(msg)
+    Docker.logger.debug(msg) if Docker.logger
+  end
+
+  def hijack_for(stdin, block, msg_stack, tty)
+    attach_block = attach_for(block, msg_stack, tty)
+
+    lambda do |socket|
+      debug "hijack: hijacking the HTTP socket"
+      threads = []
+
+      debug "hijack: starting stdin copy thread"
+      threads << Thread.start do
+        debug "hijack: copying stdin => socket"
+        IO.copy_stream stdin, socket
+
+        debug "hijack: closing write end of hijacked socket"
+        socket.close_write
+      end
+
+      debug "hijack: starting hijacked socket read thread"
+      threads << Thread.start do
+        debug "hijack: reading from hijacked socket"
+
+        begin
+          while chunk = socket.readpartial(512)
+            debug "hijack: got #{chunk.bytesize} bytes from hijacked socket"
+            attach_block.call chunk, nil, nil
+          end
+        rescue EOFError
+        end
+
+        debug "hijack: killing stdin copy thread"
+        threads.first.kill
+      end
+
+      threads.each(&:join)
+    end
+  end
+
   def parse_json(body)
     JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
   rescue JSON::ParserError => ex

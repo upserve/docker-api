@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/containers/create
+    uri: "<DOCKER_HOST>/v1.15/containers/create"
     body:
       encoding: UTF-8
-      string: '{"Cmd":["true"],"Image":"base"}'
+      string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -19,26 +19,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 19:44:44 GMT
+      - Mon, 01 Dec 2014 18:07:54 GMT
       Content-Length:
       - '90'
-      Connection:
-      - close
     body:
       encoding: UTF-8
       string: |
-        {"Id":"51540acbefe569857cb71839e23cd88fe47b56fcc241bcb8af0c4ae7998ef12d","Warnings":null}
+        {"Id":"7d1d8ec8182f78f545f2a685230e62db82327f9be8a10d247465c982591cb5d1","Warnings":null}
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:44:44 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:54 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/containers/51540acbefe569857cb71839e23cd88fe47b56fcc241bcb8af0c4ae7998ef12d/start
+    uri: "<DOCKER_HOST>/v1.15/containers/7d1d8ec8182f78f545f2a685230e62db82327f9be8a10d247465c982591cb5d1/start"
     body:
       encoding: UTF-8
-      string: '{}'
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -47,23 +45,21 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Thu, 26 Jun 2014 19:44:44 GMT
-      Connection:
-      - close
+      - Mon, 01 Dec 2014 18:07:54 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:44:44 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:54 GMT
 - request:
     method: post
-    uri: unix:///var/run/docker.sock/v1.12/containers/51540acbefe569857cb71839e23cd88fe47b56fcc241bcb8af0c4ae7998ef12d/stop?t=10
+    uri: "<DOCKER_HOST>/v1.15/containers/7d1d8ec8182f78f545f2a685230e62db82327f9be8a10d247465c982591cb5d1/stop?t=10"
     body:
       encoding: UTF-8
-      string: '{}'
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - application/json
   response:
@@ -72,23 +68,21 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Thu, 26 Jun 2014 19:44:45 GMT
-      Connection:
-      - close
+      - Mon, 01 Dec 2014 18:07:54 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:44:45 GMT
+  recorded_at: Mon, 01 Dec 2014 18:07:54 GMT
 - request:
     method: get
-    uri: unix:///var/run/docker.sock/v1.12/containers/json?all=true
+    uri: "<DOCKER_HOST>/v1.15/containers/json?all=true"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.11.2
+      - Swipely/Docker-API 1.15.0
       Content-Type:
       - text/plain
   response:
@@ -99,90 +93,67 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 26 Jun 2014 19:44:45 GMT
-      Connection:
-      - close
-      Transfer-Encoding:
-      - ''
-    body:
-      encoding: UTF-8
-      string: |-
-        [{"Command":"true","Created":1403811884,"Id":"51540acbefe569857cb71839e23cd88fe47b56fcc241bcb8af0c4ae7998ef12d","Image":"base:latest","Names":["/condescending_shockley"],"Ports":[],"Status":"Exited (2) Less than a second ago"}
-        ,{"Command":"test -d /foo","Created":1403811874,"Id":"8ca74b5b1eb86837a183544a09672418b8f94ffebfc2e4734b997cc444b90a84","Image":"base:latest","Names":["/sad_bohr"],"Ports":[],"Status":"Exited (0) 10 seconds ago"}
-        ,{"Command":"pwd","Created":1403811850,"Id":"f67711bda71de43c2d9998990ee1442023e71ccd30775adcc5e115293351292f","Image":"base:latest","Names":["/distracted_darwin"],"Ports":[],"Status":"Exited (0) 33 seconds ago"}
-        ,{"Command":"pwd","Created":1403811845,"Id":"91edd209b1419fd60a4da8e31b1d17d4b060400077b6b00cf855004e28e60cd1","Image":"base:latest","Names":["/naughty_hoover"],"Ports":[],"Status":"Exited (0) 39 seconds ago"}
-        ,{"Command":"rm -rf / --no-preserve-root","Created":1403811822,"Id":"ac19ec0a08d3beb57e4eff6e978a6bea402ea2e6cdfd06dd2d8826e24fc1bc22","Image":"base:latest","Names":["/silly_leakey"],"Ports":[],"Status":"Exited (1) About a minute ago"}
-        ,{"Command":"touch /test","Created":1403811805,"Id":"e94213e6d92bbc20ba9b4fb299902a0edb7e60e78f6183ed39d35c4d0b83f395","Image":"base:latest","Names":["/nostalgic_curie"],"Ports":[],"Status":"Exited (0) About a minute ago"}
-        ,{"Command":"touch /test","Created":1403811798,"Id":"e36507d15801857e28153923c2968f77112a40aa5df02251ee7ef83d0db9097a","Image":"base:latest","Names":["/sad_shockley"],"Ports":[],"Status":"Exited (0) About a minute ago"}
-        ,{"Command":"/while","Created":1403811778,"Id":"e3ef53f0c6fc463801a85b9c8d9b2fe348600c2e529c59fa0592da739912224d","Image":"41b70f59d9b6","Names":["/sleepy_yonath"],"Ports":[],"Status":"Up About a minute"}
-        ,{"Command":"rm -rf /root","Created":1403811759,"Id":"6fc279ae9f0858a7d0fd877f6df7f81e6487848af95712ec9dd1f12e587d24ce","Image":"base:latest","Names":["/trusting_galileo"],"Ports":[],"Status":"Exited (0) 2 minutes ago"}
-        ,{"Command":"true","Created":1403811740,"Id":"36912cef208b36a175e7f48dd3bffc5a698f7eb818b7bcbf56343209f8fc473b","Image":"base:latest","Names":["/bob"],"Ports":[],"Status":""}
-        ,{"Command":"echo hello","Created":1403811721,"Id":"bcdc58f638d20be4172508fc80d191317628d55f48eeb274abc9de5f9c2761d0","Image":"base:latest","Names":["/grave_bartik"],"Ports":[],"Status":""}
-        ,{"Command":"echo hello","Created":1403811717,"Id":"6968a8299df95ffad447a6b364d0cb9cfeb1bcc28d0ef09356f35bdeca57d953","Image":"base:latest","Names":["/goofy_fermat"],"Ports":[],"Status":""}
-        ,{"Command":"true","Created":1403811562,"Id":"cf367fe2a4eaf9908dd1f6c6d988b6b7391cebfbe827435ee7204659fa2d6ec1","Image":"base:latest","Names":["/thirsty_nobel"],"Ports":[],"Status":""}
-        ,{"Command":"/bin/sh -c 'exec docker-registry'","Created":1403809177,"Id":"5759e35c33773e7a1ecaee390fa7db4097f1030995282da972076979e345c709","Image":"localhost:5000/registry:test","Names":["/stupefied_meitner"],"Ports":[],"Status":"Exited (0) 14 minutes ago"}
-        ,{"Command":"/bin/sh -c 'exec docker-registry'","Created":1403809143,"Id":"a36c555f919ec5ccc717cbaf50c655dcc4db776c5bcbb92a4bb05f7e80ca32a1","Image":"localhost:5000/registry:test","Names":["/sharp_turing"],"Ports":[],"Status":"Exited (0) 45 minutes ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402430887,"Id":"bb24a1dbb5fa6e7204101e9f0e47c11944d3400d68076c0df9dbec40daef9a5e","Image":"795d6b82162f","Names":["/stupefied_morse"],"Ports":[{"IP":"0.0.0.0","PrivatePort":8080,"PublicPort":8080,"Type":"tcp"}],"Status":"Exited (-1) 2 weeks ago"}
-        ,{"Command":"bash","Created":1402430685,"Id":"6123f38072655a1587a67e4a7afc4cd4374a23e2dcc1e0f302ba67902ff2aa6c","Image":"795d6b82162f","Names":["/naughty_shockley"],"Ports":[{"IP":"0.0.0.0","PrivatePort":8080,"PublicPort":8080,"Type":"tcp"}],"Status":"Exited (130) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402430595,"Id":"0cb45d8388407844b0e4c9fc4b691d5a81f27a6ed75ac69c26aa9ebf37d9ecae","Image":"795d6b82162f","Names":["/angry_heisenberg"],"Ports":[{"IP":"0.0.0.0","PrivatePort":8080,"PublicPort":8080,"Type":"tcp"}],"Status":"Exited (-1) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402430547,"Id":"342f632dbf963b429e442b238a236ab3cf91885e71233d853dd2b405e32e4863","Image":"795d6b82162f","Names":["/jolly_heisenberg"],"Ports":[],"Status":"Exited (-1) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402430293,"Id":"3164a68c936d209a2b1e2da323b52e1b043bc17fbd41f06ae8a356bd6c06152b","Image":"24b631358e16","Names":["/agitated_wright"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402430143,"Id":"33ccfbb00c9717cb24818072db9752401c1e099d7447cf413b9ee571e1bcd012","Image":"2e68e4667d3f","Names":["/determined_bardeen"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429919,"Id":"cd063c45640ce588466f6d845e5a2fc25921f113a5ccbeefa9317fdcd8ee908a","Image":"76587bc93b7d","Names":["/boring_nobel"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/bash","Created":1402429676,"Id":"bbc878209d4d7b98fe044e02ea13850f19d95ce56fb1428de1a81e426e74a735","Image":"76587bc93b7d","Names":["/tender_goldstine"],"Ports":[],"Status":"Exited (1) 2 weeks ago"}
-        ,{"Command":"/bin/bash","Created":1402429664,"Id":"1d43aae6eb71e6b402f0df19509420fe15f8c1c097711dd97b9e41d55b6220c7","Image":"76587bc93b7d","Names":["/mad_tesla"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429649,"Id":"2c6c24d1f0da0d3021c60a9dcd9e648daf6be4a40642ab8cce35480cf931e648","Image":"76587bc93b7d","Names":["/pensive_rosalind"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429637,"Id":"cf21c9ae97e204c05748a596b3ebd2fc7e5793c33fd9ee787be78a2159d193fe","Image":"76587bc93b7d","Names":["/determined_ardinghelli"],"Ports":[{"IP":"0.0.0.0","PrivatePort":6379,"PublicPort":49160,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429619,"Id":"217b0f8aa6504f460de1ef2a559a8916c957a079adce597d3deb0c6046f2d7db","Image":"76587bc93b7d","Names":["/grave_torvalds"],"Ports":[{"IP":"0.0.0.0","PrivatePort":6379,"PublicPort":49159,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429610,"Id":"a7104142e02b3a64bf99e0489ed69eba92aaca2f1cb60ef8221bec7e90099263","Image":"76587bc93b7d","Names":["/thirsty_hoover"],"Ports":[{"IP":"127.0.0.1","PrivatePort":6379,"PublicPort":49158,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429596,"Id":"18c4d104ba348ae8af2a7f0ebbe1435011570dabcece81b10ba7f735bb52c142","Image":"76587bc93b7d","Names":["/backstabbing_mestorf"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429583,"Id":"c9e54634fc5c8fb250c9137092e8cc047ab7496655b6d656a6a387b5994e4a3e","Image":"0cf0d2c9f3c9","Names":["/high_goodall"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402429574,"Id":"1900baf794a5734e406ca6226d5a5f62d85f2ad3db0a886654f15e692729741a","Image":"0cf0d2c9f3c9","Names":["/agitated_kirch"],"Ports":[{"IP":"127.0.0.1","PrivatePort":6379,"PublicPort":49157,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402428859,"Id":"791283f719e9089e4c97ad5ea7096df317c5378db0255a7e9846830f326f11ad","Image":"0cf0d2c9f3c9","Names":["/romantic_fermi"],"Ports":[{"IP":"127.0.0.1","PrivatePort":6379,"PublicPort":49156,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402427020,"Id":"b32593d5dfb04c83db55e798f52ecc89f57102b5d672cde4f0b55d5f4d3b856c","Image":"0cf0d2c9f3c9","Names":["/naughty_euclid"],"Ports":[{"IP":"127.0.0.1","PrivatePort":6379,"PublicPort":49155,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402427017,"Id":"cdcab97cd8eeaeb8696024c92e28aedc182b2f3519e4e0445585f8fb501e44eb","Image":"0cf0d2c9f3c9","Names":["/high_lumiere"],"Ports":[],"Status":""}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402426976,"Id":"1e095cd0c96b76a1131dd47dc0c54c153200320647ba1643c0b6e4efd397f1b5","Image":"0cf0d2c9f3c9","Names":["/goofy_wozniak"],"Ports":[],"Status":""}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402426959,"Id":"53839f4d1e1c26db22b91db8e9ee2477822140c8397ebcdae627b5e4b4df27ce","Image":"0cf0d2c9f3c9","Names":["/drunk_ritchie"],"Ports":[],"Status":""}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402426953,"Id":"5906226b2dd64485bc917d7c7296bfba04589b0954fdf793f122236e04d0b58c","Image":"0cf0d2c9f3c9","Names":["/jolly_fermi"],"Ports":[],"Status":""}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402426945,"Id":"03ea0209a642de9adba85c2aea67802806eb23de7e9c3d886a9ab9cfcd708578","Image":"0cf0d2c9f3c9","Names":["/loving_wilson"],"Ports":[{"IP":"127.0.0.1","PrivatePort":6379,"PublicPort":49154,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402426934,"Id":"428e6478f665780fe3300d316b3789c92575bbe728e196b1a33655096dfb9baa","Image":"0cf0d2c9f3c9","Names":["/angry_rosalind"],"Ports":[{"IP":"0.0.0.0","PrivatePort":6379,"PublicPort":49153,"Type":"tcp"}],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle exec foreman start'","Created":1402426799,"Id":"fc77637ca9d934565017ebe326ed29263778443831b799977257c2fa4255e666","Image":"0cf0d2c9f3c9","Names":["/sharp_lovelace"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle install'","Created":1402425989,"Id":"dc372caeee6f2d1f797ca4986c1c917aef25285cf0a97f3453a9c8ee6de226ef","Image":"f39385fcb372","Names":["/cocky_galileo"],"Ports":[],"Status":"Exited (5) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'gem install atomic -v '1.1.10' --no-user-install'","Created":1402425859,"Id":"bff3f8dff516f8ec53890e52e30f07ea6a34887d12de2133e1ec2f03a47e7a33","Image":"e41a4fd75845","Names":["/thirsty_newton"],"Ports":[],"Status":"Exited (1) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'cd /app \u0026\u0026 bundle install'","Created":1402425808,"Id":"c7f35941f9683ee1d6b78b25e323d6678ed02a8390b48f7609fd506b7e1dbfe9","Image":"4d1584ae379a","Names":["/stupefied_heisenberg"],"Ports":[],"Status":"Exited (5) 2 weeks ago"}
-        ,{"Command":"/bin/sh -c 'gem install bundler --no-user-install'","Created":1402425760,"Id":"e1d25c1ddd9a471fdbc381b95820aba9f84b334efe9b815ffbf63cfca89399d7","Image":"e607630fc5e6","Names":["/insane_fermi"],"Ports":[],"Status":"Exited (0) 2 weeks ago"}
-        ]
-    http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:44:45 GMT
-- request:
-    method: get
-    uri: unix:///var/run/docker.sock/v1.12/containers/json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.11.2
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 26 Jun 2014 19:44:45 GMT
+      - Mon, 01 Dec 2014 18:07:54 GMT
       Content-Length:
-      - '206'
-      Connection:
-      - close
+      - '495'
     body:
       encoding: UTF-8
       string: |-
-        [{"Command":"/while","Created":1403811778,"Id":"e3ef53f0c6fc463801a85b9c8d9b2fe348600c2e529c59fa0592da739912224d","Image":"41b70f59d9b6","Names":["/sleepy_yonath"],"Ports":[],"Status":"Up About a minute"}
+        [{"Command":"true","Created":1417457274,"Id":"7d1d8ec8182f78f545f2a685230e62db82327f9be8a10d247465c982591cb5d1","Image":"debian:wheezy","Names":["/kickass_curie"],"Ports":[],"Status":"Exited (0) Less than a second ago"}
+        ,{"Command":"docker-registry","Created":1417457257,"Id":"1a8fb3a8c0a99b779389680f7bd5547f5bb1520dfd061932ff6fbef9cc2a7679","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 17 seconds"}
         ]
     http_version: 
-  recorded_at: Thu, 26 Jun 2014 19:44:45 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Mon, 01 Dec 2014 18:07:54 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.15/containers/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Dec 2014 18:07:54 GMT
+      Content-Length:
+      - '275'
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Command":"docker-registry","Created":1417457257,"Id":"1a8fb3a8c0a99b779389680f7bd5547f5bb1520dfd061932ff6fbef9cc2a7679","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up 17 seconds"}
+        ]
+    http_version: 
+  recorded_at: Mon, 01 Dec 2014 18:07:54 GMT
+- request:
+    method: delete
+    uri: "<DOCKER_HOST>/v1.15/containers/7d1d8ec8182f78f545f2a685230e62db82327f9be8a10d247465c982591cb5d1"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Mon, 01 Dec 2014 18:07:54 GMT
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 01 Dec 2014 18:07:54 GMT
+recorded_with: VCR 2.9.3
