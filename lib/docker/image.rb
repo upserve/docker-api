@@ -10,7 +10,7 @@ class Docker::Image
     opts = { 'Image' => self.id }
     opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
     begin
-      Docker::Container.create(opts, connection)
+      _create_container(opts, connection)
                        .tap(&:start!)
     rescue ServerError => ex
       if cmd
@@ -20,6 +20,12 @@ class Docker::Image
       end
     end
   end
+
+  # allows subclasses to delegate to their own friends
+  def _create_container(opts, connection)
+    Docker::Container.create(opts, connection)
+  end
+  private :_create_container
 
   # Push the Image to the Docker registry.
   def push(creds = nil, options = {})
@@ -70,7 +76,7 @@ class Docker::Image
 
   # Return a String representation of the Image.
   def to_s
-    "Docker::Image { :id => #{self.id}, :info => #{self.info.inspect}, "\
+    "#{self.class.name} { :id => #{self.id}, :info => #{self.info.inspect}, "\
       ":connection => #{self.connection} }"
   end
 
@@ -84,7 +90,7 @@ class Docker::Image
 
   # Update the @info hash, which is the only mutable state in this object.
   def refresh!
-    img = Docker::Image.all(:all => true).find { |image|
+    img = self.class.all(:all => true).find { |image|
       image.id.start_with?(self.id) || self.id.start_with?(image.id)
     }
     info.merge!(self.json)
