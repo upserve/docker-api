@@ -95,6 +95,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 ```
 
 ## Images
+
 Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/docker_remote_api_v1.12/#22-images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
 
 ```ruby
@@ -102,7 +103,7 @@ require 'docker'
 # => true
 
 # Create an Image.
-Docker::Image.create('fromImage' => 'base')
+image = Docker::Image.create('fromImage' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Insert a local file into an Image.
@@ -182,13 +183,14 @@ Docker::Image.search('term' => 'sshd')
 ```
 
 ## Containers
+
 Much like the Images, this object also has a one-to-one mapping with the [Containers](https://docs.docker.com/reference/api/docker_remote_api_v1.12/#21-containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
 
 ```ruby
 require 'docker'
 
 # Create a Container.
-Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
+container = Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Get more information about the Container.
@@ -271,6 +273,33 @@ container = Docker::Container.create('Image' => 'base', 'Cmd' => ['cat'], 'OpenS
 container.tap(&:start).attach(stdin: StringIO.new("foo\nbar\n"))
 # => [["foo\nbar\n"], []]
 
+# Similar to the stdout/stderr attach method, there is logs and streaming_logs
+
+# logs will only return after the container has exited. The output will be the raw output from the logs stream.
+# streaming_logs will collect the messages out of the multiplexed form and also execute a block on each line that comes in (block takes a stream and a chunk as arguments)
+
+# Raw logs from a TTY-enabled container after exit
+container.logs(stdout: true)
+# => "\e]0;root@8866c76564e8: /\aroot@8866c76564e8:/# echo 'i\b \bdocker-api'\r\ndocker-api\r\n\e]0;root@8866c76564e8: /\aroot@8866c76564e8:/# exit\r\n"
+
+# Logs from a non-TTY container with multiplex prefix
+container.logs(stdout: true)
+# => "\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00021\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00022\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00023\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00024\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00025\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00026\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00027\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00028\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u00029\n\u0001\u0000\u0000\u0000\u0000\u0000\u0000\u000310\n"
+
+# Streaming logs from non-TTY container removing multiplex prefix with a block printing out each line (block not possible with Container#logs)
+container.streaming_logs(stdout: true) { |stream, chunk| puts "#{stream}: #{chunk}" }
+stdout: 1
+stdout: 2
+stdout: 3
+stdout: 4
+stdout: 5
+stdout: 6
+stdout: 7
+stdout: 8
+stdout: 9
+stdout: 10
+# => "1\n\n2\n\n3\n\n4\n\n5\n\n6\n\n7\n\n8\n\n9\n\n10\n"
+
 # If the container has TTY enabled, set `tty => true` to get the raw stream:
 command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"]
 container = Docker::Container.create('Image' => 'ubuntu', 'Cmd' => command, 'Tty' => true)
@@ -324,6 +353,25 @@ Docker::Container.get('500f53b25e6e')
 Docker::Container.all(:all => true)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
+
+## Events
+
+```ruby
+require 'docker'
+
+# Action on a stream of events as they come in
+Docker::Event.stream { |event| puts event; break }
+Docker::Event { :status => create, :id => aeb8b55726df63bdd69d41e1b2650131d7ce32ca0d2fa5cbc75f24d0df34c7b0, :from => base:latest, :time => 1416958554 }
+# => nil
+
+# Action on all events after a given time (will execute the block for all events up till the current time, and wait to execute on any new events after)
+Docker::Event.since(1416958763) { |event| puts event; puts Time.now.to_i; break }
+Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdaef329043b409ecb97fb68d7e, :from => base:latest, :time => 1416958764 }
+1416959041
+# => nil
+```
+
+These methods are prone to read timeouts.  `Docker.options[:read_timeout]` will need to be made higher than 60 seconds if expecting a long time between events.
 
 ## Connecting to Multiple Servers
 
