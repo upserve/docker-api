@@ -357,6 +357,51 @@ image 'repo:new_tag' => 'repo:tag' do
 end
 ```
 
+## Tests and Style Checks
+
+Docker-api comes with a comprehensive suite of tests and style checks. We use Travis-ci.org to check that all pull requests pass and come with good coverage. To perform the same checks that Travis-CI will, just run
+
+```
+  rake
+```
+
+### Test Suite
+
+For just the correctness tests, run `rake spec`:
+
+```
+docker-api$ rake spec
+Docker::Connection
+  #initialize
+    when the first argument is not a String
+... (lots of happy green lines) ...
+Finished in 11.34 seconds (files took 0.43871 seconds to load)
+136 examples, 0 failures, 8 pending
+Coverage report generated for RSpec to /Users/flip/ics/book/big_data_for_chimps/examples/vendor/docker-api/coverage. 1260 / 1350 LOC (93.33%) covered.
+```
+
+You may also run an individual spec file using `rspec spec/docker/image_spec.rb`, but be sure to run a full `rake` before placing a pull request.
+
+Note that you must not have a value set for `$DOCKER_HOST` and friends, or you will see a host of "`An HTTP request has been made that VCR does not know how to handle`" errors. Instead, run `(unset DOCKER_HOST DOCKER_TLS_VERIFY DOCKER_CERT_PATH ; rake spec)`.
+
+### VCR Strategies
+
+If you add a new spec (which you should! even if that's the only thing in your patch! awesome!), you will need to mock the server requests/responses. For novel code paths, please record the output against a running server, and then inspect the resulting YAML file to obscure the Authorization header (an upcoming patch will help address this). If you are extending an existing test with a check for newly modified behavior, you may be better off assembling the YAML file from the many present examples. Do so very carefully however, as you may accidentally craft output that the server wouldn't.
+
+### Style Checks
+
+Successful projects follow a uniform coding style, but of course each follows a different uniform coding style. And some things that may seem arbitrary (such as trailing whitespace) become hassles for the maintainers (trailing whitespace causes spurious merge conflicts).
+
+To give you some prior assurance that your code matches the project's necessarily strong opinions, we use [Cane](https://github.com/square/cane) -- run it by executing `rake quality`. If you fail a check, then
+
+1. Sigh, address it, and ask yourself was that _really_ so bad?
+
+2. If so, put in the pull request with the failing check. Sure, travis will holler but that's what code review is for. Maybe we all decide together to whitelist that method with cane; maybe someone suggests a change that satisfies people and robot; or maybe it highlights a deeper issue: a rejection of a method's contents as too complex might be a signal that the method's interface is too complex.
+
+   But please do not
+
+3. Add a new exclusion to cane's checks in your pull requests. That should only happen following community discussion, and you can simply push a second commit to that branch if folks agree.
+
 ## Not supported (yet)
 
 *   Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/reference/api/docker_remote_api_v1.12/#get-a-tarball-containing-all-images-and-tags-in-a-repository
