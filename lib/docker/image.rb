@@ -100,8 +100,9 @@ class Docker::Image
       headers = !credentials.nil? && Docker::Util.build_auth_header(credentials)
       headers ||= {}
       body = conn.post('/images/create', opts, :headers => headers)
-      id = Docker::Util.fix_json(body).select { |m| m['id'] }.last['id']
-      new(conn, 'id' => id, :headers => headers)
+      json = Docker::Util.fix_json(body)
+      image = json.reverse_each.find { |el| el && el.key?('id') }
+      new(conn, 'id' => image && image.fetch('id'), :headers => headers)
     end
 
     # Return a specific image.
