@@ -22,7 +22,7 @@ namespace :vcr do
 
   desc 'Download the necessary base images'
   task :unpack do
-    %w( registry busybox tianon/true scratch ).each do |image|
+    %w( registry busybox tianon/true scratch debian:wheezy ).each do |image|
       system "docker pull #{image}"
     end
   end
