@@ -240,6 +240,16 @@ describe Docker::Image do
     end
   end
 
+  describe '#export' do
+    let(:image) { Docker::Image.get('busybox') }
+
+    it 'calls the class method', :vcr do
+      expect(Docker::Image).to receive(:export)
+        .with(image.id, 'busybox.tar', anything)
+      image.export('busybox.tar')
+    end
+  end
+
   describe '#refresh!' do
     let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
 
@@ -304,6 +314,28 @@ describe Docker::Image do
 
       it 'raises a not found error', :vcr do
         expect { image }.to raise_error(Docker::Error::NotFoundError)
+      end
+    end
+  end
+
+  describe '.export' do
+    include_context "local paths"
+
+    context 'when a filename is specified' do
+      let(:file) { "#{project_dir}/scratch.tar" }
+      after { FileUtils.remove(file) }
+
+      it 'exports tarball of image to specified file', :vcr do
+        Docker::Image.export('scratch', file)
+        expect(File.exist?(file)).to eq true
+        expect(File.read(file)).to_not be_nil
+      end
+    end
+
+    context 'when no filename is specified' do
+      it 'returns raw binary data as string', :vcr do
+        raw = Docker::Image.export('scratch:latest')
+        expect(raw).to_not be_nil
       end
     end
   end

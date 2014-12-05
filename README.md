@@ -139,6 +139,14 @@ image.run('ls -l')
 image.remove(:force => true)
 # => true
 
+# Export a single Docker Image to a file
+image.export('my_export.tar')
+# => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
+
+# Return the raw image binary data
+image.export
+# => "abiglongbinarystring" 
+
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
@@ -176,6 +184,15 @@ Docker::Image.get('df4f1bdecf40')
 # Check if an image with a given id exists on the server.
 Docker::Image.exist?('ef723dcdac09')
 # => true
+
+# Export multiple images to a single tarball
+names = %w( my_image1 my_image2:not_latest )
+Docker::Image.export(names, 'my_export.tar')
+# => nil 
+
+# Return the raw image binary data
+Docker::Image.export(names)
+# => "abiglongbinarystring" 
 
 # Search the Docker registry.
 Docker::Image.search('term' => 'sshd')
