@@ -248,6 +248,21 @@ describe Docker::Image do
       image.refresh!
       expect(image.info.size).to be > size
     end
+
+    context 'with an explicit connection' do
+      let(:connection) { Docker::Connection.new(Docker.url, Docker.options) }
+      let(:image) {
+        Docker::Image.create({'fromImage' => 'debian:wheezy'}, nil, connection)
+      }
+
+      it 'updates using the provided connection', :vcr do
+        expect(connection).to receive(:get)
+          .with('/images/json', all: true).ordered
+        expect(connection).to receive(:get)
+          .with("/images/#{image.id}/json", {}).ordered.and_call_original
+        image.refresh!
+      end
+    end
   end
 
   describe '.create' do
