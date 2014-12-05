@@ -145,7 +145,7 @@ image.save('my_export.tar')
 
 # Return the raw image binary data
 image.save
-# => "abiglongbinarystring" 
+# => "abiglongbinarystring"
 
 # Given a Container's export, creates a new Image.
 Docker::Image.import('some-export.tar')
@@ -188,12 +188,12 @@ Docker::Image.exist?('ef723dcdac09')
 # Export multiple images to a single tarball
 names = %w( my_image1 my_image2:not_latest )
 Docker::Image.save(names, 'my_export.tar')
-# => nil 
+# => nil
 
 # Return the raw image binary data
 names = %w( my_image1 my_image2:not_latest )
 Docker::Image.save(names)
-# => "abiglongbinarystring" 
+# => "abiglongbinarystring"
 
 # Search the Docker registry.
 Docker::Image.search('term' => 'sshd')
