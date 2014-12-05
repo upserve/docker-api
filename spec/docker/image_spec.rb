@@ -155,6 +155,19 @@ describe Docker::Image do
       it 'pushes that specific tag'
     end
 
+    context 'when the image was retrived by get' do
+      let(:image) {
+        described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
+        described_class.get(repo_tag)
+      }
+
+      context 'when no tag is specified' do
+        it 'looks up the first repo tag', :vcr do
+          expect { image.push }.to_not raise_error
+        end
+      end
+    end
+
     context 'when there are no credentials' do
       let(:credentials) { nil }
       let(:repo_tag) { "localhost:5000/true" }

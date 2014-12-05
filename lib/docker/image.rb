@@ -23,8 +23,8 @@ class Docker::Image
 
   # Push the Image to the Docker registry.
   def push(creds = nil, options = {})
-    repo_tag = options.delete(:repo_tag) || info['RepoTags'].first
-    raise ArgumentError "Image is untagged" if repo_tag.nil?
+    repo_tag = options.delete(:repo_tag) || ensure_repo_tags.first
+    raise ArgumentError, "Image is untagged" if repo_tag.nil?
     repo, tag = Docker::Util.parse_repo_tag(repo_tag)
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
 
@@ -239,6 +239,11 @@ end
     end
 
     dockerfile
+  end
+
+  def ensure_repo_tags
+    refresh! unless info.has_key?('RepoTags')
+    info['RepoTags']
   end
 
   # Generates the block to be passed as a reponse block to Excon. The returned
