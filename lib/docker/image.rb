@@ -82,6 +82,11 @@ class Docker::Image
     end
   end
 
+  # Save the image as a tarball
+  def save(filename = nil)
+    self.class.save(self.id, filename, connection)
+  end
+
   # Update the @info hash, which is the only mutable state in this object.
   def refresh!
     img = Docker::Image.all({:all => true}, connection).find { |image|
@@ -110,6 +115,37 @@ class Docker::Image
       image_json = conn.get("/images/#{URI.encode(id)}/json", opts)
       hash = Docker::Util.parse_json(image_json) || {}
       new(conn, hash)
+    end
+
+    # Save the raw binary representation or one or more Docker images
+    #
+    # @param names [String, Array#String] The image(s) you wish to save
+    # @param filename [String] The file to export the data to.
+    # @param conn [Docker::Connection] The Docker connection to use
+    #
+    # @return [NilClass, String] If filename is nil, return the string
+    # representation of the binary data. If the filename is not nil, then
+    # return nil.
+    def save(names, filename = nil, conn = Docker.connection)
+      # By using compare_by_identity we can create a Hash that has
+      # the same key multiple times.
+      query = {}
+      query.compare_by_identity
+      Array(names).each do |name|
+        query['names'] = URI.encode(name)
+      end
+
+      if filename
+        file = File.open(filename, 'wb')
+        conn.get(
+          '/images/get', query,
+          :response_block => response_block_for_save(file)
+        )
+        file.close
+        nil
+      else
+        conn.get('/images/get', query)
+      end
     end
 
     # Check if an image exists.
@@ -190,24 +226,24 @@ class Docker::Image
       new(connection,
           'id' => Docker::Util.extract_id(body),
           :headers => headers)
-  end
+    end
 
-  # Given a directory that contains a Dockerfile, builds an Image.
-  #
-  # If a block is passed, chunks of output produced by Docker will be passed
-  # to that block.
-  def build_from_dir(dir, opts = {}, connection = Docker.connection,
-                     creds = nil, &block)
+    # Given a directory that contains a Dockerfile, builds an Image.
+    #
+    # If a block is passed, chunks of output produced by Docker will be passed
+    # to that block.
+    def build_from_dir(dir, opts = {}, connection = Docker.connection,
+                       creds = nil, &block)
 
-    tar = Docker::Util.create_dir_tar(dir)
-    build_from_tar tar, opts, connection, creds, &block
-  ensure
-    unless tar.nil?
-      tar.close
-      FileUtils.rm(tar.path, force: true)
+      tar = Docker::Util.create_dir_tar(dir)
+      build_from_tar tar, opts, connection, creds, &block
+    ensure
+      unless tar.nil?
+        tar.close
+        FileUtils.rm(tar.path, force: true)
+      end
     end
   end
-end
 
   private
 
@@ -253,6 +289,14 @@ end
     lambda do |chunk, remaining, total|
       body << chunk
       yield chunk if block_given?
+    end
+  end
+
+  # Generates the block to be passed in to the save request. This lambda will
+  # append the streaming data to the file provided.
+  def self.response_block_for_save(file)
+    lambda do |chunk, remianing, total|
+      file << chunk
     end
   end
 end

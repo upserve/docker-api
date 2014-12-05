@@ -1,0 +1,64 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.15/images/busybox/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.16.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 05 Dec 2014 19:55:11 GMT
+      Content-Length:
+      - '1507'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJBcmNoaXRlY3R1cmUiOiJhbWQ2NCIsIkF1dGhvciI6IkrDqXLDtG1lIFBl
+        dGF6em9uaSBcdTAwM2NqZXJvbWVAZG9ja2VyLmNvbVx1MDAzZSIsIkNvbW1l
+        bnQiOiIiLCJDb25maWciOnsiQXR0YWNoU3RkZXJyIjpmYWxzZSwiQXR0YWNo
+        U3RkaW4iOmZhbHNlLCJBdHRhY2hTdGRvdXQiOmZhbHNlLCJDbWQiOlsiL2Jp
+        bi9zaCJdLCJDcHVTaGFyZXMiOjAsIkNwdXNldCI6IiIsIkRvbWFpbm5hbWUi
+        OiIiLCJFbnRyeXBvaW50IjpudWxsLCJFbnYiOlsiUEFUSD0vdXNyL2xvY2Fs
+        L3NiaW46L3Vzci9sb2NhbC9iaW46L3Vzci9zYmluOi91c3IvYmluOi9zYmlu
+        Oi9iaW4iXSwiRXhwb3NlZFBvcnRzIjpudWxsLCJIb3N0bmFtZSI6Ijg4ZjE4
+        ZjY3OGU1ZCIsIkltYWdlIjoiZTQzM2E2YzViMjc2YTMxYWEzOGJmNmVhYmE5
+        Y2QxY2ZkNjllYTMzZjcwNmVkNzJiM2YyMGJhZmRlNWNkODY0NCIsIk1lbW9y
+        eSI6MCwiTWVtb3J5U3dhcCI6MCwiTmV0d29ya0Rpc2FibGVkIjpmYWxzZSwi
+        T25CdWlsZCI6W10sIk9wZW5TdGRpbiI6ZmFsc2UsIlBvcnRTcGVjcyI6bnVs
+        bCwiU3RkaW5PbmNlIjpmYWxzZSwiVHR5IjpmYWxzZSwiVXNlciI6IiIsIlZv
+        bHVtZXMiOm51bGwsIldvcmtpbmdEaXIiOiIifSwiQ29udGFpbmVyIjoiOGU3
+        M2IyMzk2ODJmZTczMzM4MzIzZDlhZjgzZDNjNWFhNWJiN2QyMmEzZmU4NGNi
+        ZmNmNWY0N2U3NTZkNjYzNiIsIkNvbnRhaW5lckNvbmZpZyI6eyJBdHRhY2hT
+        dGRlcnIiOmZhbHNlLCJBdHRhY2hTdGRpbiI6ZmFsc2UsIkF0dGFjaFN0ZG91
+        dCI6ZmFsc2UsIkNtZCI6WyIvYmluL3NoIiwiLWMiLCIjKG5vcCkgQ01EIFsv
+        YmluL3NoXSJdLCJDcHVTaGFyZXMiOjAsIkNwdXNldCI6IiIsIkRvbWFpbm5h
+        bWUiOiIiLCJFbnRyeXBvaW50IjpudWxsLCJFbnYiOlsiUEFUSD0vdXNyL2xv
+        Y2FsL3NiaW46L3Vzci9sb2NhbC9iaW46L3Vzci9zYmluOi91c3IvYmluOi9z
+        YmluOi9iaW4iXSwiRXhwb3NlZFBvcnRzIjpudWxsLCJIb3N0bmFtZSI6Ijg4
+        ZjE4ZjY3OGU1ZCIsIkltYWdlIjoiZTQzM2E2YzViMjc2YTMxYWEzOGJmNmVh
+        YmE5Y2QxY2ZkNjllYTMzZjcwNmVkNzJiM2YyMGJhZmRlNWNkODY0NCIsIk1l
+        bW9yeSI6MCwiTWVtb3J5U3dhcCI6MCwiTmV0d29ya0Rpc2FibGVkIjpmYWxz
+        ZSwiT25CdWlsZCI6W10sIk9wZW5TdGRpbiI6ZmFsc2UsIlBvcnRTcGVjcyI6
+        bnVsbCwiU3RkaW5PbmNlIjpmYWxzZSwiVHR5IjpmYWxzZSwiVXNlciI6IiIs
+        IlZvbHVtZXMiOm51bGwsIldvcmtpbmdEaXIiOiIifSwiQ3JlYXRlZCI6IjIw
+        MTQtMTAtMDFUMjA6NDY6MDguOTE0Mjg4NDYxWiIsIkRvY2tlclZlcnNpb24i
+        OiIxLjIuMCIsIklkIjoiZTcyYWM2NjRmNGYwYzZhMDYxYWM0ZWYzMzI1NTdh
+        NzBkNjliMGM2MjRiNmFkZDM1ZjFjMTgxZmY3ZmZmMjI4NyIsIk9zIjoibGlu
+        dXgiLCJQYXJlbnQiOiJlNDMzYTZjNWIyNzZhMzFhYTM4YmY2ZWFiYTljZDFj
+        ZmQ2OWVhMzNmNzA2ZWQ3MmIzZjIwYmFmZGU1Y2Q4NjQ0IiwiU2l6ZSI6MCwi
+        VmlydHVhbFNpemUiOjI0MzMzMDN9Cg==
+    http_version: 
+  recorded_at: Fri, 05 Dec 2014 19:55:11 GMT
+recorded_with: VCR 2.9.3
