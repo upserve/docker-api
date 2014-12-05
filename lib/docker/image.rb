@@ -82,9 +82,9 @@ class Docker::Image
     end
   end
 
-  # Export the image as a tarball
-  def export(filename = nil)
-    self.class.export(self.id, filename, connection)
+  # Save the image as a tarball
+  def save(filename = nil)
+    self.class.save(self.id, filename, connection)
   end
 
   # Update the @info hash, which is the only mutable state in this object.
@@ -117,16 +117,16 @@ class Docker::Image
       new(conn, hash)
     end
 
-    # Export the raw binary representation or one or more Docker images
+    # Save the raw binary representation or one or more Docker images
     #
-    # @param names [String, Array#String] The image(s) you wish to export.
+    # @param names [String, Array#String] The image(s) you wish to save
     # @param filename [String] The file to export the data to.
     # @param conn [Docker::Connection] The Docker connection to use
     #
     # @return [NilClass, String] If filename is nil, return the string
     # representation of the binary data. If the filename is not nil, then
     # return nil.
-    def export(names, filename = nil, conn = Docker.connection)
+    def save(names, filename = nil, conn = Docker.connection)
       # By using compare_by_identity we can create a Hash that has
       # the same key multiple times.
       query = {}
@@ -139,7 +139,7 @@ class Docker::Image
         file = File.open(filename, 'wb')
         conn.get(
           '/images/get', query,
-          :response_block => response_block_for_export(file)
+          :response_block => response_block_for_save(file)
         )
         file.close
         nil
@@ -287,9 +287,9 @@ class Docker::Image
     end
   end
 
-  # Generates the block to be passed in to the export request. This lambda will
+  # Generates the block to be passed in to the save request. This lambda will
   # append the streaming data to the file provided.
-  def self.response_block_for_export(file)
+  def self.response_block_for_save(file)
     lambda do |chunk, remianing, total|
       file << chunk
     end

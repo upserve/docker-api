@@ -240,13 +240,13 @@ describe Docker::Image do
     end
   end
 
-  describe '#export' do
+  describe '#save' do
     let(:image) { Docker::Image.get('busybox') }
 
     it 'calls the class method', :vcr do
-      expect(Docker::Image).to receive(:export)
+      expect(Docker::Image).to receive(:save)
         .with(image.id, 'busybox.tar', anything)
-      image.export('busybox.tar')
+      image.save('busybox.tar')
     end
   end
 
@@ -318,7 +318,7 @@ describe Docker::Image do
     end
   end
 
-  describe '.export' do
+  describe '.save' do
     include_context "local paths"
 
     context 'when a filename is specified' do
@@ -326,7 +326,7 @@ describe Docker::Image do
       after { FileUtils.remove(file) }
 
       it 'exports tarball of image to specified file', :vcr do
-        Docker::Image.export('scratch', file)
+        Docker::Image.save('scratch', file)
         expect(File.exist?(file)).to eq true
         expect(File.read(file)).to_not be_nil
       end
@@ -334,7 +334,7 @@ describe Docker::Image do
 
     context 'when no filename is specified' do
       it 'returns raw binary data as string', :vcr do
-        raw = Docker::Image.export('scratch:latest')
+        raw = Docker::Image.save('scratch:latest')
         expect(raw).to_not be_nil
       end
     end

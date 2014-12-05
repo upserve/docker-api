@@ -140,11 +140,11 @@ image.remove(:force => true)
 # => true
 
 # Export a single Docker Image to a file
-image.export('my_export.tar')
+image.save('my_export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Return the raw image binary data
-image.export
+image.save
 # => "abiglongbinarystring" 
 
 # Given a Container's export, creates a new Image.
@@ -187,11 +187,12 @@ Docker::Image.exist?('ef723dcdac09')
 
 # Export multiple images to a single tarball
 names = %w( my_image1 my_image2:not_latest )
-Docker::Image.export(names, 'my_export.tar')
+Docker::Image.save(names, 'my_export.tar')
 # => nil 
 
 # Return the raw image binary data
-Docker::Image.export(names)
+names = %w( my_image1 my_image2:not_latest )
+Docker::Image.save(names)
 # => "abiglongbinarystring" 
 
 # Search the Docker registry.

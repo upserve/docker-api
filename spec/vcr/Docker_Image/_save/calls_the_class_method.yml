@@ -19,7 +19,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Dec 2014 18:39:48 GMT
+      - Fri, 05 Dec 2014 19:55:11 GMT
       Content-Length:
       - '1507'
     body:
@@ -60,5 +60,5 @@ http_interactions:
         ZmQ2OWVhMzNmNzA2ZWQ3MmIzZjIwYmFmZGU1Y2Q4NjQ0IiwiU2l6ZSI6MCwi
         VmlydHVhbFNpemUiOjI0MzMzMDN9Cg==
     http_version: 
-  recorded_at: Fri, 05 Dec 2014 18:39:47 GMT
+  recorded_at: Fri, 05 Dec 2014 19:55:11 GMT
 recorded_with: VCR 2.9.3
