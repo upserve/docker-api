@@ -1,0 +1,60 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.16.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 05 Dec 2014 17:19:26 GMT
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
+        exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
+        exists\",\"progressDetail\":{},\"id\":\"f10807909bc5\"}{\"status\":\"Already
+        exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
+        Image is up to date for debian:wheezy\"}\r\n"
+    http_version: 
+  recorded_at: Fri, 05 Dec 2014 17:19:23 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.15/images/f6fab3b798be/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.16.1
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 05 Dec 2014 17:19:26 GMT
+      Content-Length:
+      - '1498'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/bash"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"064f0e1ce709","Image":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"418e851cf98f783363d17a6b469d7e9f5768298d6596b357592562c77d2b5323","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/sh","-c","#(nop) CMD [/bin/bash]"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"064f0e1ce709","Image":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-06T20:43:58.384012961Z","DockerVersion":"1.3.0","Id":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Os":"linux","Parent":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Size":0,"VirtualSize":85100505}
+    http_version: 
+  recorded_at: Fri, 05 Dec 2014 17:19:23 GMT
+recorded_with: VCR 2.9.3
