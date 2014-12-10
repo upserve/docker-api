@@ -142,8 +142,9 @@ describe Docker::Image do
       }
     }
     let(:repo_tag) { "#{ENV['DOCKER_API_USER']}/true" }
+    let(:build_script) { "FROM tianon/true\nENV TRIVIAL CHANGE\n" }
     let(:image) {
-      described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
+      described_class.build(build_script, "t" => repo_tag).refresh!
     }
     after { image.remove(:name => repo_tag, :noprune => true) }
 
@@ -157,13 +158,13 @@ describe Docker::Image do
 
     context 'when the image was retrived by get' do
       let(:image) {
-        described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
+        described_class.build(build_script, "t" => repo_tag).refresh!
         described_class.get(repo_tag)
       }
 
       context 'when no tag is specified' do
         it 'looks up the first repo tag', :vcr do
-          expect { image.push }.to_not raise_error
+          expect { image.push(credentials) }.to_not raise_error
         end
       end
     end

@@ -69,7 +69,10 @@ http_interactions:
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM tianon/true\\n\"}\r\n{\"stream\":\" ---\\u003e
-        08e20b347507\\n\"}\r\n{\"stream\":\"Successfully built 08e20b347507\\n\"}\r\n"
+        69e7aca3d78e\\n\"}\r\n{\"stream\":\"Step 1 : ENV TRIVIAL CHANGE\\n\"}\r\n{\"stream\":\"
+        ---\\u003e Running in 6d0c01400c38\\n\"}\r\n{\"stream\":\" ---\\u003e b239f80471db\\n\"}\r\n{\"stream\":\"Removing
+        intermediate container 6d0c01400c38\\n\"}\r\n{\"stream\":\"Successfully built
+        b239f80471db\\n\"}\r\n"
     http_version: 
   recorded_at: Mon, 01 Dec 2014 18:08:44 GMT
 - request:
@@ -95,7 +98,8 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1416799251,"Id":"08e20b3475072326a5f6855b4bca4fe53680d025f379eb54c5076de119cae17b","ParentId":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","RepoTags":["tianon/true:latest","<USERNAME>/true:latest"],"Size":0,"VirtualSize":125}
+        [{"Created":1418178761,"Id":"b239f80471dbc0ee17ca34e648e4cc0b1013c740bccb621d6ad00edbc3f26dc7","ParentId":"69e7aca3d78e5c15557cb19a905bb432207d7f0e433ec592c60bb3b5aabffe85","RepoTags":["<USERNAME>/true:latest"],"Size":0,"VirtualSize":125}
+        ,{"Created":1417805428,"Id":"69e7aca3d78e5c15557cb19a905bb432207d7f0e433ec592c60bb3b5aabffe85","ParentId":"9d182a4ffb01e4ecfc5397bf9a989016e7ae6920f6e64a037db4c0a2f3c0e264","RepoTags":["tianon/true:latest"],"Size":0,"VirtualSize":125}
         ,{"Created":1416799251,"Id":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","ParentId":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":125,"VirtualSize":125}
         ,{"Created":1415864019,"Id":"74f5b38a45c97043cdf0082b8e8dd002497ab6b03388cdb2f20bafb7468ad55b","ParentId":"31ae66be94f160a92e1e757ab9a66aa7183af55183080576fb93a52cbce9e0cd","RepoTags":["registry:0.9.0"],"Size":0,"VirtualSize":411649756}
         ,{"Created":1415864018,"Id":"31ae66be94f160a92e1e757ab9a66aa7183af55183080576fb93a52cbce9e0cd","ParentId":"b3fd13d94685095ec1c1f8f0f371dde8be9a21f8f457d4d10e5ad72042a152af","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":0,"VirtualSize":411649756}
@@ -171,7 +175,7 @@ http_interactions:
   recorded_at: Mon, 01 Dec 2014 18:08:44 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/images/08e20b347507/json"
+    uri: "<DOCKER_HOST>/v1.15/images/b239f80471db/json"
     body:
       encoding: US-ASCII
       string: ''
@@ -194,12 +198,12 @@ http_interactions:
     body:
       encoding: UTF-8
       string: |
-        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"cb7d701676d5","Image":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"c21f74268c73d08aee59691b5b4b5771ca49cdc73dee76a3778cc214801da20e","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/sh","-c","#(nop) CMD [/true]"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"cb7d701676d5","Image":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-11-24T03:20:51.740435043Z","DockerVersion":"1.3.2","Id":"08e20b3475072326a5f6855b4bca4fe53680d025f379eb54c5076de119cae17b","Os":"linux","Parent":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","Size":0,"VirtualSize":125}
+        {"Architecture":"amd64","Author":"","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TRIVIAL=CHANGE"],"ExposedPorts":null,"Hostname":"0d1fedb580de","Image":"69e7aca3d78e5c15557cb19a905bb432207d7f0e433ec592c60bb3b5aabffe85","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"6d0c01400c38e0783f2be9f22d9ef47c1e8b56fa83085d4d7ea360e94916640f","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/sh","-c","#(nop) ENV TRIVIAL=CHANGE"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","TRIVIAL=CHANGE"],"ExposedPorts":null,"Hostname":"0d1fedb580de","Image":"69e7aca3d78e5c15557cb19a905bb432207d7f0e433ec592c60bb3b5aabffe85","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"SecurityOpt":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-12-10T02:32:41.527606628Z","DockerVersion":"1.3.1","Id":"b239f80471dbc0ee17ca34e648e4cc0b1013c740bccb621d6ad00edbc3f26dc7","Os":"linux","Parent":"69e7aca3d78e5c15557cb19a905bb432207d7f0e433ec592c60bb3b5aabffe85","Size":0,"VirtualSize":125}
     http_version: 
   recorded_at: Mon, 01 Dec 2014 18:08:44 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/images/tianon/true/push?tag=latest"
+    uri: "<DOCKER_HOST>/v1.15/images/<USERNAME>/true/push?tag=latest"
     body:
       encoding: US-ASCII
       string: ''
@@ -221,11 +225,23 @@ http_interactions:
       - Mon, 01 Dec 2014 18:08:44 GMT
     body:
       encoding: UTF-8
-      string: "{\"status\":\"The push refers to a repository [tianon/true] (len: 1)\"}\r\n{\"status\":\"Sending
-        image list\"}\r\n{\"errorDetail\":{\"message\":\"Error: Status 403 trying
-        to push repository tianon/true: \\\"Access denied, you don't have access to
-        this repo\\\"\"},\"error\":\"Error: Status 403 trying to push repository tianon/true:
-        \\\"Access denied, you don't have access to this repo\\\"\"}\r\n"
+      string: "{\"status\":\"The push refers to a repository [<USERNAME>/true] (len:
+        1)\"}\r\n{\"status\":\"Sending image list\"}\r\n{\"status\":\"Pushing repository
+        <USERNAME>/true (1 tags)\"}\r\n{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Image
+        already pushed, skipping\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"9d182a4ffb01\"}{\"status\":\"Image
+        already pushed, skipping\",\"progressDetail\":{},\"id\":\"9d182a4ffb01\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"69e7aca3d78e\"}{\"status\":\"Image
+        already pushed, skipping\",\"progressDetail\":{},\"id\":\"69e7aca3d78e\"}{\"status\":\"Pushing\",\"progressDetail\":{},\"id\":\"b239f80471db\"}{\"status\":\"Buffering
+        to disk\",\"progressDetail\":{\"current\":3072,\"start\":1418178781},\"progress\":\"3.072
+        kB\",\"id\":\"b239f80471db\"}{\"status\":\"Buffering to disk\",\"progressDetail\":{\"start\":1418178781},\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":512,\"total\":3072,\"start\":1418178781},\"progress\":\"[========\\u003e
+        \                                         ]    512 B/3.072 kB 3s\",\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1024,\"total\":3072,\"start\":1418178781},\"progress\":\"[================\\u003e
+        \                                 ] 1.024 kB/3.072 kB 1s\",\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":1536,\"total\":3072,\"start\":1418178781},\"progress\":\"[=========================\\u003e
+        \                        ] 1.536 kB/3.072 kB 0\",\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":2048,\"total\":3072,\"start\":1418178781},\"progress\":\"[=================================\\u003e
+        \                ] 2.048 kB/3.072 kB 0\",\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":2560,\"total\":3072,\"start\":1418178781},\"progress\":\"[=========================================\\u003e
+        \        ]  2.56 kB/3.072 kB 0\",\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":3072,\"total\":3072,\"start\":1418178781},\"progress\":\"[==================================================\\u003e]
+        3.072 kB/3.072 kB\",\"id\":\"b239f80471db\"}{\"status\":\"Pushing\",\"progressDetail\":{\"current\":3072,\"total\":3072,\"start\":1418178781},\"progress\":\"[==================================================\\u003e]
+        3.072 kB/3.072 kB\",\"id\":\"b239f80471db\"}{\"status\":\"Image successfully
+        pushed\",\"progressDetail\":{},\"id\":\"b239f80471db\"}{\"status\":\"Pushing
+        tag for rev [b239f80471db] on {https://cdn-registry-1.docker.io/v1/repositories/<USERNAME>/true/tags/latest}\"}\r\n"
     http_version: 
   recorded_at: Mon, 01 Dec 2014 18:08:45 GMT
 - request:
