@@ -22,17 +22,48 @@ class Docker::Image
   end
 
   # Push the Image to the Docker registry.
-  def push(creds = nil, options = {})
-    repo_tag = options.delete(:repo_tag) || ensure_repo_tags.first
-    raise ArgumentError, "Image is untagged" if repo_tag.nil?
-    repo, tag = Docker::Util.parse_repo_tag(repo_tag)
-    raise ArgumentError, "Image does not have a name to push." if repo.nil?
-
+  def push(creds = nil, options = {}, &callback)
+    repo, tag = valid_repo_tag(options)
     credentials = creds || Docker.creds || {}
     headers = Docker::Util.build_auth_header(credentials)
     opts = {:tag => tag}.merge(options)
-    connection.post("/images/#{repo}/push", opts, :headers => headers)
+    connection.post("/images/#{repo}/push", opts, :headers => headers,
+      :response_block => response_block_for_push(callback))
     self
+  rescue => err
+    case err.message
+    when /is already in progress/     # don't error
+      return self
+    when /Status (401|403|429) trying to push/i
+      raise Docker::Error::UnauthorizedError, err.message, err.backtrace
+    when /not found|No such id|No images found/i
+      raise Docker::Error::NotFoundError, err.message, err.backtrace
+    else
+      raise
+    end
+  end
+
+  def valid_repo_tag(options)
+    repo_tag = options.delete(:repo_tag) || ensure_repo_tags.first
+    raise ArgumentError, "Image is untagged" if repo_tag.nil?
+    # Accept a prefix match if no :tag given; demand exact match otherwise
+    unless info['RepoTags'].any?{|rt| rt =~ /^#{repo_tag}(:[\w\.\-]*)?$/ }
+      raise(ArgumentError, "Not named '#{repo_tag}': #{info['RepoTags']}")
+    end
+    repo, tag = Docker::Util.parse_repo_tag(repo_tag)
+    raise ArgumentError, "Image does not have a name to push." if repo.nil?
+    [repo, tag]
+  end
+  protected :valid_repo_tag
+
+  def response_block_for_push(callback)
+    lambda do |chunk, *_|
+      steps = Docker::Util.fix_json(chunk)
+      steps.each do |step|
+        raise step['error'] if step['error']
+        callback.call(step, self) if callback
+      end
+    end
   end
 
   # Tag the Image.
@@ -100,14 +131,34 @@ class Docker::Image
   class << self
 
     # Create a new Image.
-    def create(opts = {}, creds = nil, conn = Docker.connection)
+    def create(opts = {}, creds = nil, conn = Docker.connection, &callback)
       credentials = creds.nil? ? Docker.creds : creds.to_json
       headers = !credentials.nil? && Docker::Util.build_auth_header(credentials)
       headers ||= {}
-      body = conn.post('/images/create', opts, :headers => headers)
-      json = Docker::Util.fix_json(body)
-      image = json.reverse_each.find { |el| el && el.key?('id') }
-      new(conn, 'id' => image && image.fetch('id'), :headers => headers)
+
+      layer_ids = []
+      conn.post('/images/create', opts, :headers => headers,
+        :response_block => response_block_for_create(layer_ids, opts, callback))
+      new(conn, 'id' => layer_ids.last, :headers => headers)
+    rescue => err
+      case err.message
+      when /not found/i
+        raise Docker::Error::NotFoundError, err.message, err.backtrace
+      else
+        raise
+      end
+    end
+
+    def response_block_for_create(layer_ids, opts, callback)
+      lambda do |chunk, *_|
+        steps = Docker::Util.fix_json(chunk)
+        steps.each do |step|
+          # errors here are re-thrown by Excon, so re-re-rescue in the caller
+          raise step['error'] if step['error']
+          layer_ids << step['id'] if step['id']
+          callback.call(step, opts) if callback
+        end
+      end
     end
 
     # Return a specific image.

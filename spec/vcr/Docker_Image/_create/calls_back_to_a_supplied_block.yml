@@ -1,0 +1,65 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=swipely%2Fscratch"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+      X-Registry-Auth:
+      - eyJ1c2VybmFtZSI6InRkdWZmaWVsZCIsInBhc3N3b3JkIjoiaTlCZj5KZ3ZmYmpZL3NKV01jVTkiLCJlbWFpbCI6ImdpdGh1YkB0b21kdWZmaWVsZC5jb20ifQ==
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Dec 2014 18:08:52 GMT
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling repository swipely/scratch\"}\r\n{\"status\":\"Pulling
+        image (latest) from swipely/scratch\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Pulling
+        image (latest) from swipely/scratch, endpoint: https://registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Status:
+        Image is up to date for swipely/scratch\"}\r\n"
+    http_version: 
+  recorded_at: Mon, 01 Dec 2014 18:08:54 GMT
+- request:
+    method: delete
+    uri: "<DOCKER_HOST>/v1.15/images/swipely/scratch?noprune=true"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Dec 2014 18:08:54 GMT
+      Content-Length:
+      - '40'
+    body:
+      encoding: UTF-8
+      string: |-
+        [{"Untagged":"swipely/scratch:latest"}
+        ]
+    http_version: 
+  recorded_at: Mon, 01 Dec 2014 18:08:54 GMT
+recorded_with: VCR 2.9.3

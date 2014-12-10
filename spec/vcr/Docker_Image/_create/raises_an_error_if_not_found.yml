@@ -1,0 +1,32 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=swipely%2Fnonesuchimage"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.15.0
+      Content-Type:
+      - text/plain
+      X-Registry-Auth:
+      - eyJ1c2VybmFtZSI6InRkdWZmaWVsZCIsInBhc3N3b3JkIjoiaTlCZj5KZ3ZmYmpZL3NKV01jVTkiLCJlbWFpbCI6ImdpdGh1YkB0b21kdWZmaWVsZC5jb20ifQ==
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 01 Dec 2014 18:08:52 GMT
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling repository swipely/nonesuchimage\"}\r\n{\"errorDetail\":{\"message\":\"Error:
+        image swipely/nonesuchimage not found\"},\"error\":\"Error: image swipely/nonesuchimage
+        not found\"}\r\n"
+    http_version: 
+  recorded_at: Mon, 01 Dec 2014 18:08:54 GMT
+recorded_with: VCR 2.9.3
