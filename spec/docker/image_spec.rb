@@ -153,7 +153,12 @@ describe Docker::Image do
     end
 
     context 'when a tag is specified' do
-      it 'pushes that specific tag'
+      before { image.tag(repo: repo_tag, tag: 'also') }
+      after { image.remove(:name => "#{repo_tag}:also", :noprune => true) }
+
+      it 'pushes that specific tag', :vcr do
+        image.push(credentials, :repo_tag => "#{repo_tag}:also")
+      end
     end
 
     context 'when the image was retrived by get' do
@@ -167,6 +172,35 @@ describe Docker::Image do
           expect { image.push(credentials) }.to_not raise_error
         end
       end
+    end
+
+    it 'raises an error if not found', :vcr do
+      image.tag(repo: repo_tag, tag: 'also')
+      image.remove(:name => "#{repo_tag}:also", :noprune => true)
+      expect {
+        image.push(credentials, :repo_tag => "#{repo_tag}:also")
+      }.to raise_error(Docker::Error::NotFoundError)
+    end
+
+    it 'raises an error if alien name supplied', :vcr do
+      expect {
+        image.push(credentials, :repo_tag => "#{repo_tag}:nope")
+      }.to raise_error(Docker::Error::ArgumentError, /#{repo_tag}:nope/)
+    end
+
+    it 'raises an error if unauthorized', :vcr do
+      expect {
+        image.push(credentials.merge('username' => 'no_yuo'))
+      }.to raise_error(Docker::Error::UnauthorizedError)
+    end
+
+    it 'calls back to a supplied block', :vcr do
+      calls = 0
+      image.push(credentials) do |step, obj|
+        calls += 1 if (obj == image) &&
+          (step['status'] =~ /Pushing tag for rev/)
+      end
+      expect(calls).to eq(1)
     end
 
     context 'when there are no credentials' do
@@ -291,18 +325,18 @@ describe Docker::Image do
 
   describe '.create' do
     subject { described_class }
+    let(:creds) {
+      {
+        :username => ENV['DOCKER_API_USER'],
+        :password => ENV['DOCKER_API_PASS'],
+        :email => ENV['DOCKER_API_EMAIL']
+      }
+    }
+    before { Docker.creds = creds }
 
     context 'when the Image does not yet exist and the body is a Hash' do
       let(:image) { subject.create('fromImage' => 'swipely/scratch') }
-      let(:creds) {
-        {
-          :username => ENV['DOCKER_API_USER'],
-          :password => ENV['DOCKER_API_PASS'],
-          :email => ENV['DOCKER_API_EMAIL']
-        }
-      }
 
-      before { Docker.creds = creds }
       after { image.remove(:name => 'swipely/scratch', :noprune => true) }
 
       it 'sets the id and sends Docker.creds', :vcr do
@@ -314,6 +348,25 @@ describe Docker::Image do
         expect(image.info[:headers].keys).to include 'X-Registry-Auth'
       end
     end
+
+
+    it 'calls back to a supplied block', :vcr do
+      calls = 0
+      image = subject.create('fromImage' => 'swipely/scratch') do |step, obj|
+        puts step
+        calls += 1 if (obj['fromImage'] == 'swipely/scratch') &&
+          (step['status'] =~ /^Status: Image is up to date/)
+      end
+      expect(calls).to eq(1)
+      image.remove(:name => 'swipely/scratch', :noprune => true)
+    end
+
+    it 'raises an error if not found', :vcr do
+      expect{
+        subject.create('fromImage' => 'swipely/nonesuchimage')
+      }.to raise_error(Docker::Error::NotFoundError)
+    end
+
   end
 
   describe '.get' do
