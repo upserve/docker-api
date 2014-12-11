@@ -155,13 +155,13 @@ class Docker::Container::Config
         # Single-letter parameter - call method
         config.send(match[1].to_sym, array[index+1])
         index += 2
-      elsif match = value.match(/^[\-]{2}([a-z\-]+)/)
+      elsif match = value.match(/^[\-]{2}([a-z\-]+)$/)
         # Full-word boolean parameter - call method
-        config.send(match[1].to_sym)
+        config.send(match[1].gsub(/\-/,'_').to_sym)
         index += 1
       elsif match = value.match(/^[\-]{2}([a-z\-]+)=(.+)/)
         # Full-word parameter with value - call method
-        config.send(match[1].to_sym, match[2])
+        config.send(match[1].gsub(/\-/,'_').to_sym, match[2])
         index += 1
       elsif image.nil?
         # If we've gotten this far, its likely we've hit the image
