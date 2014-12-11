@@ -79,11 +79,11 @@ describe Docker::Image do
     context 'when a direcory is passed' do
       let(:new_image) {
         subject.insert_local(
-          'localPath' => File.join(project_dir, 'lib'),
-          'outputPath' => '/lib'
+          'localPath' => File.join(project_dir, 'spec', 'fixtures', 'top'),
+          'outputPath' => '/top'
         )
       }
-      let(:container) { new_image.run('ls -a /lib/docker') }
+      let(:container) { new_image.run('ls -a /top') }
       let(:response) { container.streaming_logs(stdout: true) }
       after do
         container.tap(&:wait).remove
@@ -91,7 +91,8 @@ describe Docker::Image do
       end
 
       it 'inserts the directory', :vcr do
-        expect(response.split("\n").sort).to eq(Dir.entries('lib/docker').sort)
+        expect(response.split("\n").sort)
+          .to eq(Dir.entries('spec/fixtures/top').sort)
       end
     end
 
