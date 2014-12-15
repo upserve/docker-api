@@ -291,6 +291,24 @@ describe Docker::Container::Config do
     end
   end
 
+  describe '#entrypoint' do
+    it 'returns itself' do
+      expect(cfg.entrypoint('/bin/sh')).to be_a described_class
+    end
+
+    it 'converts a String into Shellwords' do
+      cfg.entrypoint('/my_script.sh param1 -p "param has spaces"')
+      expect(cfg.options['Entrypoint'])
+      .to eql ['/my_script.sh', 'param1', '-p', 'param has spaces']
+    end
+
+    it 'sets Entrypoint' do
+      cfg.entrypoint('/my_script.sh', 'param1')
+      expect(cfg.options['Entrypoint'])
+      .to eql ['/my_script.sh', 'param1']
+    end
+  end
+
   describe '#env' do
     it 'returns itself' do
       expect(cfg.env('FAKE=fake')).to be_a described_class

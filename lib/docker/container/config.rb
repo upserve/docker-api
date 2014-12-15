@@ -447,6 +447,19 @@ class Docker::Container::Config
     self
   end
 
+  # Override the entrypoint of the container.
+  #
+  # @example
+  #   config.entrypoint('/bin/bash')
+  #
+  # @param cmd [String, Array<String>]
+  # @return [Docker::Container::Config]
+  def entrypoint(*cmd)
+    cmd = Shellwords.split(cmd[0]) if cmd.length == 1
+    @options['Entrypoint'] = cmd
+    self
+  end
+
   # Add one or more environment variables
   #
   # @example Specify a single environment variable using both the key and value
