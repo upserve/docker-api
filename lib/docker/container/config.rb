@@ -10,7 +10,7 @@ require 'shellwords'
 #   config.image('ubuntu:12.04').command('true')
 #   Docker::Container.create(config.to_hash)
 #
-# === Method Chianing
+# === Method Chaining
 # The class is built so you can chain together the methods calls. This is done
 # to simulate the behavior of the CLI.
 #
@@ -87,7 +87,7 @@ class Docker::Container::Config
   #   can include them in your command but they will simply be ignored.
   #
   # @example CLI command using a mix of long and short-codes
-  #   config = Docker::Container::Config.new(
+  #   config = Docker::Container::Config.from_cli(
   #     '-p 8080:80 -v /tmp:/tmp busybox --name="busybody"'
   #   )
   #
@@ -112,7 +112,7 @@ class Docker::Container::Config
   #   }
   #
   # @example CLI command using long-codes and setting image and command.
-  #   config = Docker::Container::Config.new(
+  #   config = Docker::Container::Config.from_cli(
   #     '--publish=8080:80 --privileged my_image /my_start.sh param'
   #   )
   #
@@ -451,7 +451,7 @@ class Docker::Container::Config
   #
   # @example Specify a single environment variable using both the key and value
   #   config.env('MY_VAR=example')
-  #   config.to_s
+  #   config.to_hash
   #   {
   #     "Env": [
   #       "MY_VAR=example"
@@ -460,7 +460,7 @@ class Docker::Container::Config
   #
   # @example Specify an existing Environment Variable
   #   config.env('DOCKER_HOST')
-  #   config.to_s
+  #   config.to_hash
   #   {
   #     "Env": [
   #       "DOCKER_HOST=unix:///var/run/docker.sock"
@@ -471,7 +471,7 @@ class Docker::Container::Config
   #   existing.
   #
   #   config.env('MY_VAR=example', 'DOCKER_HOST')
-  #   config.to_s
+  #   config.to_hash
   #   {
   #     "Env": [
   #       "MY_VAR=example",
