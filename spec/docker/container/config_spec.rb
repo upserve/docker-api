@@ -22,14 +22,15 @@ describe Docker::Container::Config do
 
   describe '.from_cli' do
     let(:cli) {
-      "docker run --privileged -p 8080:80 -v /container busybox " \
-      "--volumes-from=\"container1\" --volumes-from=\"container2:ro\" " \
+      "docker run --privileged -p 8080:80 -v /container busybox -t " \
+      "--volumes-from \"container1\" --volumes-from=\"container2:ro\" " \
       "/my_script.sh bar -p foo --option=\"has spaces\""
     }
 
     let(:expected) {
       described_class.new(
         'Image' => 'busybox',
+        'Tty' => true,
         'ExposedPorts' => {
           '80/tcp' => {}
         },
@@ -55,6 +56,11 @@ describe Docker::Container::Config do
 
     it 'parses a string and captures the necessary parameters' do
       expect(described_class.from_cli(cli).options).to eql expected.options
+    end
+
+    it 'raises an error with invalid options' do
+      expect{ described_class.from_cli('--sig-proxy') }
+        .to raise_error ArgumentError
     end
   end
 

@@ -143,22 +143,48 @@ class Docker::Container::Config
     image = nil
     config = self.new
     array = Shellwords.split(cli_string)
+    bool_params_short = %w(i d t P)
+    bool_params_long = %w(
+      interactive
+      detach
+      tty
+      publish-all
+      privileged
+    )
+    invalid_values = %w(
+      --sig-proxy
+    )
 
     while index < array.length
       # Grab the next parameter in the Docker CLI command
       value = array[index]
 
-      if %w(docker run create).include?(value)
+      if invalid_values.include?(value)
+        raise ArgumentError, "`#{value}` is not supported by " \
+                             "Docker::Container::Config"
+      elsif %w(docker run create).include?(value)
          # ignore these values, skip
          index += 1
       elsif match = value.match(/^[\-]{1}([a-z])/)
-        # Single-letter parameter - call method
-        config.send(match[1].to_sym, array[index+1])
-        index += 2
+        if bool_params_short.include?(match[1])
+          # Single-letter boolean parameter - call method
+          config.send(match[1].to_sym)
+          index += 1
+        else
+          # Single-letter parameter with value - call method
+          config.send(match[1].to_sym, array[index+1])
+          index += 2
+        end
       elsif match = value.match(/^[\-]{2}([a-z\-]+)$/)
-        # Full-word boolean parameter - call method
-        config.send(match[1].gsub(/\-/,'_').to_sym)
-        index += 1
+        if bool_params_long.include?(match[1])
+          # Full-word boolean parameter - call method
+          config.send(match[1].gsub(/\-/,'_').to_sym)
+          index += 1
+        else
+          # Full word parameter with value - call method
+          config.send(match[1].gsub(/\-/,'_').to_sym, array[index+1])
+          index += 2
+        end
       elsif match = value.match(/^[\-]{2}([a-z\-]+)=(.+)/)
         # Full-word parameter with value - call method
         config.send(match[1].gsub(/\-/,'_').to_sym, match[2])
