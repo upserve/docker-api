@@ -1,2 +1,2 @@
 FROM debian:wheezy
-ADD / /
+ADD . /

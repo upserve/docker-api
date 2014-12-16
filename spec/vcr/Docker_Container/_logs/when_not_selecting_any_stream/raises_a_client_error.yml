@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/create"
+    uri: <DOCKER_HOST>/v1.16/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":"echo hello","Image":"debian:wheezy"}'
+      string: ! '{"Cmd":"echo hello","Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - application/json
   response:
@@ -19,24 +19,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Thu, 12 Feb 2015 00:53:27 GMT
       Content-Length:
       - '90'
     body:
-      encoding: UTF-8
-      string: |
-        {"Id":"f53412e58875d2fba1c358163fcfb492b6d170bbcb46e171966723e61ed41743","Warnings":null}
+      encoding: US-ASCII
+      string: ! '{"Id":"a7e2263fd51fbf99dc5dfbc1e10ab8a8f4bdb86c4b73cc04a06b59fa2b3b8d35","Warnings":null}
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Thu, 12 Feb 2015 00:53:27 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/f53412e58875d2fba1c358163fcfb492b6d170bbcb46e171966723e61ed41743/logs"
+    uri: <DOCKER_HOST>/v1.16/containers/a7e2263fd51fbf99dc5dfbc1e10ab8a8f4bdb86c4b73cc04a06b59fa2b3b8d35/logs
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -47,24 +48,25 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Mon, 01 Dec 2014 18:07:39 GMT
+      - Thu, 12 Feb 2015 00:53:27 GMT
       Content-Length:
       - '52'
     body:
-      encoding: UTF-8
-      string: |
-        Bad parameters: you must choose at least one stream
+      encoding: US-ASCII
+      string: ! 'Bad parameters: you must choose at least one stream
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:39 GMT
+  recorded_at: Thu, 12 Feb 2015 00:53:27 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/f53412e58875d2fba1c358163fcfb492b6d170bbcb46e171966723e61ed41743/logs"
+    uri: <DOCKER_HOST>/v1.16/containers/a7e2263fd51fbf99dc5dfbc1e10ab8a8f4bdb86c4b73cc04a06b59fa2b3b8d35/logs
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -75,24 +77,25 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Mon, 01 Dec 2014 18:07:39 GMT
+      - Thu, 12 Feb 2015 00:53:27 GMT
       Content-Length:
       - '52'
     body:
-      encoding: UTF-8
-      string: |
-        Bad parameters: you must choose at least one stream
+      encoding: US-ASCII
+      string: ! 'Bad parameters: you must choose at least one stream
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:39 GMT
+  recorded_at: Thu, 12 Feb 2015 00:53:27 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/f53412e58875d2fba1c358163fcfb492b6d170bbcb46e171966723e61ed41743/logs"
+    uri: <DOCKER_HOST>/v1.16/containers/a7e2263fd51fbf99dc5dfbc1e10ab8a8f4bdb86c4b73cc04a06b59fa2b3b8d35/logs
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -103,24 +106,25 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Mon, 01 Dec 2014 18:07:39 GMT
+      - Thu, 12 Feb 2015 00:53:27 GMT
       Content-Length:
       - '52'
     body:
-      encoding: UTF-8
-      string: |
-        Bad parameters: you must choose at least one stream
+      encoding: US-ASCII
+      string: ! 'Bad parameters: you must choose at least one stream
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:39 GMT
+  recorded_at: Thu, 12 Feb 2015 00:53:27 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/f53412e58875d2fba1c358163fcfb492b6d170bbcb46e171966723e61ed41743/logs"
+    uri: <DOCKER_HOST>/v1.16/containers/a7e2263fd51fbf99dc5dfbc1e10ab8a8f4bdb86c4b73cc04a06b59fa2b3b8d35/logs
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -131,24 +135,25 @@ http_interactions:
       Content-Type:
       - text/plain; charset=utf-8
       Date:
-      - Mon, 01 Dec 2014 18:07:39 GMT
+      - Thu, 12 Feb 2015 00:53:27 GMT
       Content-Length:
       - '52'
     body:
-      encoding: UTF-8
-      string: |
-        Bad parameters: you must choose at least one stream
+      encoding: US-ASCII
+      string: ! 'Bad parameters: you must choose at least one stream
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:39 GMT
+  recorded_at: Thu, 12 Feb 2015 00:53:27 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/f53412e58875d2fba1c358163fcfb492b6d170bbcb46e171966723e61ed41743"
+    uri: <DOCKER_HOST>/v1.16/containers/a7e2263fd51fbf99dc5dfbc1e10ab8a8f4bdb86c4b73cc04a06b59fa2b3b8d35
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -157,10 +162,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:07:39 GMT
+      - Thu, 12 Feb 2015 00:53:27 GMT
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:39 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 12 Feb 2015 00:53:27 GMT
+recorded_with: VCR 2.9.2

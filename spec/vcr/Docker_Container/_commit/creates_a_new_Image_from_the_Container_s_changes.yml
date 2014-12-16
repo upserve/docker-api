@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/create"
+    uri: <DOCKER_HOST>/v1.16/containers/create
     body:
       encoding: UTF-8
-      string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
+      string: ! '{"Cmd":["true"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - application/json
   response:
@@ -19,24 +19,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:20 GMT
+      - Thu, 12 Feb 2015 01:02:55 GMT
       Content-Length:
       - '90'
     body:
-      encoding: UTF-8
-      string: |
-        {"Id":"ddb290600c9cc2d42c139008add0d1a36a63c0feec0995d98dc514d2009da82e","Warnings":null}
+      encoding: US-ASCII
+      string: ! '{"Id":"47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37","Warnings":null}
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:20 GMT
+  recorded_at: Thu, 12 Feb 2015 01:02:55 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/ddb290600c9cc2d42c139008add0d1a36a63c0feec0995d98dc514d2009da82e/start"
+    uri: <DOCKER_HOST>/v1.16/containers/47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37/start
     body:
       encoding: UTF-8
-      string: "{}"
+      string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - application/json
   response:
@@ -45,72 +46,21 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:08:20 GMT
+      - Thu, 12 Feb 2015 01:02:55 GMT
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:20 GMT
+  recorded_at: Thu, 12 Feb 2015 01:02:56 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/commit?container=ddb29060"
-    body:
-      encoding: UTF-8
-      string: 'null'
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.15.0
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 201
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Mon, 01 Dec 2014 18:08:20 GMT
-      Content-Length:
-      - '74'
-    body:
-      encoding: UTF-8
-      string: |
-        {"Id":"4021e5edd97e2f7d42a3e7073154aeb7137d5d8d7f7c3cee3f61eadbf591fce7"}
-    http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:20 GMT
-- request:
-    method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/ddb290600c9cc2d42c139008add0d1a36a63c0feec0995d98dc514d2009da82e"
+    uri: <DOCKER_HOST>/v1.16/containers/47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 204
-      message: 
-    headers:
-      Date:
-      - Mon, 01 Dec 2014 18:08:20 GMT
-    body:
-      encoding: UTF-8
-      string: ''
-    http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:20 GMT
-- request:
-    method: delete
-    uri: "<DOCKER_HOST>/v1.15/images/4021e5edd97e2f7d42a3e7073154aeb7137d5d8d7f7c3cee3f61eadbf591fce7"
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -121,14 +71,95 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:20 GMT
+      - Thu, 12 Feb 2015 01:02:56 GMT
+      Content-Length:
+      - '17'
+    body:
+      encoding: US-ASCII
+      string: ! '{"StatusCode":0}
+
+'
+    http_version: 
+  recorded_at: Thu, 12 Feb 2015 01:02:56 GMT
+- request:
+    method: post
+    uri: <DOCKER_HOST>/v1.16/commit?container=47dd0325
+    body:
+      encoding: UTF-8
+      string: 'null'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.18.0
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Feb 2015 01:02:57 GMT
+      Content-Length:
+      - '74'
+    body:
+      encoding: US-ASCII
+      string: ! '{"Id":"acc27058c70fce89605592bf1849a82ebea4e5dab0cc69c21a48e38fdfe26fc1"}
+
+'
+    http_version: 
+  recorded_at: Thu, 12 Feb 2015 01:02:57 GMT
+- request:
+    method: delete
+    uri: <DOCKER_HOST>/v1.16/containers/47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.18.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Date:
+      - Thu, 12 Feb 2015 01:02:58 GMT
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Thu, 12 Feb 2015 01:02:58 GMT
+- request:
+    method: delete
+    uri: <DOCKER_HOST>/v1.16/images/acc27058c70fce89605592bf1849a82ebea4e5dab0cc69c21a48e38fdfe26fc1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.18.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 12 Feb 2015 01:02:58 GMT
       Content-Length:
       - '81'
     body:
-      encoding: UTF-8
-      string: |-
-        [{"Deleted":"4021e5edd97e2f7d42a3e7073154aeb7137d5d8d7f7c3cee3f61eadbf591fce7"}
-        ]
+      encoding: US-ASCII
+      string: ! '[{"Deleted":"acc27058c70fce89605592bf1849a82ebea4e5dab0cc69c21a48e38fdfe26fc1"}
+
+        ]'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:20 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 12 Feb 2015 01:02:58 GMT
+recorded_with: VCR 2.9.2
