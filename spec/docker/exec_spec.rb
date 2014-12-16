@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe Docker::Exec do
+  let(:container) {
+    Docker::Container.create(
+      'Cmd' => %w(sleep 300),
+      'Image' => 'debian:wheezy'
+    ).start!
+  }
 
   describe '#to_s' do
     subject {
@@ -26,12 +32,6 @@ describe Docker::Exec do
     subject { described_class }
 
     context 'when the HTTP request returns a 201' do
-      let(:container) {
-        Docker::Container.create(
-          'Cmd' => %w[sleep 5],
-          'Image' => 'debian:wheezy'
-        ).start!
-      }
       let(:options) do
         {
           'AttachStdin' => false,
@@ -70,14 +70,26 @@ describe Docker::Exec do
     end
   end
 
-  describe '#start!' do
-    let(:container) {
-      Docker::Container.create(
-        'Cmd' => %w[sleep 10],
-        'Image' => 'debian:wheezy'
-      ).start!
+  describe '#json' do
+    subject {
+      described_class.create(
+        'Container' => container.id,
+        'Detach' => true,
+        'Cmd' => %w[true]
+      )
     }
 
+    let(:description) { subject.json }
+    before { subject.start! }
+    after { container.kill!.remove }
+
+    it 'returns the description as a Hash', :vcr do
+      expect(description).to be_a Hash
+      expect(description['ID']).to start_with(subject.id)
+    end
+  end
+
+  describe '#start!' do
     context 'when the exec instance does not exist' do
       subject do
         described_class.send(:new, Docker.connection, 'id' => rand(10000).to_s)
@@ -100,16 +112,17 @@ describe Docker::Exec do
       after { container.kill!.remove }
 
       it 'returns the stdout and stderr messages', :vcr do
-        expect(subject.start!).to eq([["hello\n"],[]])
+        expect(subject.start!).to eq([["hello\n"],[],0])
       end
 
       context 'block is passed' do
         it 'attaches to the stream', :vcr do
           chunk = nil
-          subject.start! do |stream, c|
+          result = subject.start! do |stream, c|
             chunk ||= c
           end
           expect(chunk).to eq("hello\n")
+          expect(result).to eq([["hello\n"], [], 0])
         end
       end
     end
@@ -120,8 +133,8 @@ describe Docker::Exec do
       }
       after { container.kill!.remove }
 
-      it 'returns empty stdout and stderr messages', :vcr do
-        expect(subject.start!(:detach => true)).to eq([[],[]])
+      it 'returns empty stdout/stderr messages with exitcode', :vcr do
+        expect(subject.start!(:detach => true)).to eq([[],[], 0])
       end
     end
 
@@ -146,51 +159,6 @@ describe Docker::Exec do
 
       it 'starts the exec instance', :vcr do
         expect { subject.start! }.not_to raise_error
-      end
-    end
-  end
-
-  describe '#resize' do
-    let(:container) {
-      Docker::Container.create(
-        'Cmd' => %w[sleep 20],
-        'Image' => 'debian:wheezy'
-      ).start!
-    }
-
-    context 'when exec instance has TTY enabled' do
-      let(:instance) do
-        described_class.create(
-          'Container' => container.id,
-          'AttachStdin' => true,
-          'Tty' => true,
-          'Cmd' => %w[/bin/bash]
-        )
-      end
-      after do
-        container.kill!
-        sleep 1
-        container.remove
-      end
-
-      it 'returns a 200', :vcr do
-        t = Thread.new do
-          instance.start!(:tty => true)
-        end
-        sleep 1
-        expect { instance.resize(:h => 10, :w => 30) }.not_to raise_error
-        t.kill
-      end
-    end
-
-    context 'when the exec instance does not exist' do
-      subject do
-        described_class.send(:new, Docker.connection, 'id' => rand(10000).to_s)
-      end
-
-      it 'raises an error', :vcr do
-        skip 'The Docker API returns a 200 (docker/docker#9341)'
-        expect { subject.resize }.to raise_error(Docker::Error::NotFoundError)
       end
     end
   end
