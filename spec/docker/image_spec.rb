@@ -151,6 +151,11 @@ describe Docker::Image do
       image.push(credentials)
     end
 
+    it 'streams output from push', :vcr do
+      expect { |b| image.push(credentials, &b) }
+        .to yield_control
+    end
+
     context 'when a tag is specified' do
       it 'pushes that specific tag'
     end

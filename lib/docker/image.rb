@@ -22,16 +22,18 @@ class Docker::Image
   end
 
   # Push the Image to the Docker registry.
-  def push(creds = nil, options = {})
+  def push(creds = nil, options = {}, &block)
     repo_tag = options.delete(:repo_tag) || ensure_repo_tags.first
     raise ArgumentError, "Image is untagged" if repo_tag.nil?
     repo, tag = Docker::Util.parse_repo_tag(repo_tag)
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
 
+    body = ""
     credentials = creds || Docker.creds || {}
     headers = Docker::Util.build_auth_header(credentials)
     opts = {:tag => tag}.merge(options)
-    connection.post("/images/#{repo}/push", opts, :headers => headers)
+    connection.post("/images/#{repo}/push", opts, :headers => headers,
+                    :response_block => self.class.response_block(body, &block))
     self
   end
 
@@ -199,7 +201,7 @@ class Docker::Image
       connection.post(
         '/build', opts,
         :body => Docker::Util.create_tar('Dockerfile' => commands),
-        :response_block => response_block_for_build(body, &block)
+        :response_block => response_block(body, &block)
       )
       new(connection, 'id' => Docker::Util.extract_id(body))
     rescue Docker::Error::ServerError
@@ -220,7 +222,7 @@ class Docker::Image
       connection.post(
         '/build', opts,
         :headers => headers,
-        :response_block => response_block_for_build(body, &block)
+        :response_block => response_block(body, &block)
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
 
       new(connection,
@@ -285,7 +287,7 @@ class Docker::Image
   # Generates the block to be passed as a reponse block to Excon. The returned
   # lambda will append Docker output to the first argument, and yield output to
   # the passed block, if a block is given.
-  def self.response_block_for_build(body)
+  def self.response_block(body)
     lambda do |chunk, remaining, total|
       body << chunk
       yield chunk if block_given?
