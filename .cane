@@ -1,1 +1,3 @@
 --abc-max 16
+--abc-exclude Config#publish
+--abc-exclude Config.from_cli
