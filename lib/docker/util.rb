@@ -61,7 +61,12 @@ module Docker::Util
         IO.copy_stream stdin, socket
 
         debug "hijack: closing write end of hijacked socket"
-        socket.close_write
+        closable = if socket.respond_to?(:close_write)
+          socket
+        elsif socket.respond_to?(:io)
+          socket.io
+        end
+        closable.close_write
       end
 
       debug "hijack: starting hijacked socket read thread"
