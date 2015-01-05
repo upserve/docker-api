@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/images/json"
+    uri: "<DOCKER_HOST>/v1.16/images/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -19,33 +19,31 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:43 GMT
+      - Tue, 16 Dec 2014 22:02:10 GMT
+      Content-Length:
+      - '1626'
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1416799251,"Id":"08e20b3475072326a5f6855b4bca4fe53680d025f379eb54c5076de119cae17b","ParentId":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","RepoTags":["tianon/true:latest"],"Size":0,"VirtualSize":125}
-        ,{"Created":1415864019,"Id":"74f5b38a45c97043cdf0082b8e8dd002497ab6b03388cdb2f20bafb7468ad55b","ParentId":"31ae66be94f160a92e1e757ab9a66aa7183af55183080576fb93a52cbce9e0cd","RepoTags":["registry:0.9.0"],"Size":0,"VirtualSize":411649756}
-        ,{"Created":1415863849,"Id":"d9925ba888d4dba2d9b22273d261155fe3b2a4e6cfa5db44e4abe5ac8e311efa","ParentId":"4abfff610473315c2fb7a6278c924948ba877fe6630ad197f734572b7636188e","RepoTags":["registry:0.8.1"],"Size":0,"VirtualSize":430388853}
-        ,{"Created":1415863681,"Id":"7e2db37c6564bf030e6c5af9725bf9f9a8196846e3a77a51e201fc97871e2e60","ParentId":"765d6041baaa23390504094a101b8f4e3433e99a03cb0f5cf20e3b2e3a2a7523","RepoTags":["registry:latest"],"Size":0,"VirtualSize":411649320}
+        [{"Created":1418662575,"Id":"eec44b3ebb587837f83e29dfa51b502d864a67861c43b2ffc66c1dd2e70d402e","ParentId":"17e079b19d6833166c8e17d534174009ac0da304790626357831a6cb13f41791","RepoTags":["tianon/true:latest"],"Size":0,"VirtualSize":125}
+        ,{"Created":1417717893,"Id":"1a76588fb302b923817d4540964dfa1fceef0ea85e5d308605ff37bbd22e7fc1","ParentId":"3ccac5a8b5a1d120d8ba02c837f4206ccb76f9fae4133d7c9a2fa691fc0fcaf9","RepoTags":["registry:latest"],"Size":0,"VirtualSize":405075857}
         ,{"Created":1415306638,"Id":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","ParentId":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","RepoTags":["debian:wheezy"],"Size":0,"VirtualSize":85100505}
-        ,{"Created":1414177799,"Id":"c723c9b95ac05c29c3e96b0b02e8fcf12096d850306b776a17877ee061daf49f","ParentId":"74dc9d28a649ac161e2a70d84190fe576f77f403f2565012f07bd68d638d291a","RepoTags":["registry:0.7.3"],"Size":0,"VirtualSize":426413472}
-        ,{"Created":1414174623,"Id":"bee70978874ce288a546770e762196041c90d5b0c0ef7e0c3d2e551d79417701","ParentId":"881f05ab63649f7d4b4ab048a2e01725c6a2d45f8866807bdb7766e28cdf224e","RepoTags":["registry:0.6.9"],"Size":0,"VirtualSize":462038905}
         ,{"Created":1412196370,"Id":"d415c60e5ea32875e4ddc7f7578bfaac3d59fb16e1334e705398b10ee91af801","ParentId":"0dfaa2625e19b0925a9e0fc7ea2c2a7f4fd0d31ec1e9838d08bf1310965ffc75","RepoTags":["busybox:ubuntu-12.04"],"Size":0,"VirtualSize":5454693}
         ,{"Created":1412196368,"Id":"e72ac664f4f0c6a061ac4ef332557a70d69b0c624b6add35f1c181ff7fff2287","ParentId":"e433a6c5b276a31aa38bf6eaba9cd1cfd69ea33f706ed72b3f20bafde5cd8644","RepoTags":["busybox:buildroot-2014.02","busybox:latest"],"Size":0,"VirtualSize":2433303}
         ,{"Created":1412196367,"Id":"4b2909447dbef01f71ca476725c2dbb3af12de41aa2d7491d62c66678ede2294","ParentId":"ad8766e8635d2ae9ddd77d32b8f0fa091fb88fffed77b3a8a240bdcdc6f5aa05","RepoTags":["busybox:buildroot-2013.08.1"],"Size":0,"VirtualSize":2489301}
         ,{"Created":1371157430,"Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","ParentId":"","RepoTags":["scratch:latest"],"Size":0,"VirtualSize":0}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:43 GMT
+  recorded_at: Tue, 16 Dec 2014 22:02:10 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -56,7 +54,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:43 GMT
+      - Tue, 16 Dec 2014 22:02:11 GMT
     body:
       encoding: UTF-8
       string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
@@ -65,17 +63,17 @@ http_interactions:
         exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:43 GMT
+  recorded_at: Tue, 16 Dec 2014 22:02:11 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/build?rm=true"
+    uri: "<DOCKER_HOST>/v1.16/build?rm=true"
     body:
       encoding: UTF-8
       string: !binary |-
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADEyNDM3MTI3MjUzADAxMjYxMwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNDQ0MTI1NzQzADAxMjYxMwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -97,7 +95,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjQzNzEyNzI1
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAxMjQ0NDEyNTc0
         MwAwMTMzMDQAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
@@ -143,7 +141,7 @@ http_interactions:
         AAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - application/json
   response:
@@ -154,24 +152,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:43 GMT
+      - Tue, 16 Dec 2014 22:02:11 GMT
     body:
       encoding: UTF-8
       string: "{\"stream\":\"Step 0 : FROM f6fab3b798be\\n\"}\r\n{\"stream\":\" ---\\u003e
         f6fab3b798be\\n\"}\r\n{\"stream\":\"Step 1 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 6c699633dc0a\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        74702a6b4275\\n\"}\r\n{\"stream\":\"Successfully built 6c699633dc0a\\n\"}\r\n"
+        ---\\u003e 99ef40dfc2f3\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        3b5614391a01\\n\"}\r\n{\"stream\":\"Successfully built 99ef40dfc2f3\\n\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:44 GMT
+  recorded_at: Tue, 16 Dec 2014 22:02:11 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/images/json"
+    uri: "<DOCKER_HOST>/v1.16/images/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -182,34 +180,32 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:44 GMT
+      - Tue, 16 Dec 2014 22:02:11 GMT
+      Content-Length:
+      - '1882'
     body:
       encoding: UTF-8
       string: |-
-        [{"Created":1417457324,"Id":"6c699633dc0a70aae5550761208f3f29075d07d284152c015de25ae7d149b2b3","ParentId":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":85100543}
-        ,{"Created":1416799251,"Id":"08e20b3475072326a5f6855b4bca4fe53680d025f379eb54c5076de119cae17b","ParentId":"0b7a3c1fbea815d721ccf5404d05e0d8c667945ebe21acdf530fae3aa22184ce","RepoTags":["tianon/true:latest"],"Size":0,"VirtualSize":125}
-        ,{"Created":1415864019,"Id":"74f5b38a45c97043cdf0082b8e8dd002497ab6b03388cdb2f20bafb7468ad55b","ParentId":"31ae66be94f160a92e1e757ab9a66aa7183af55183080576fb93a52cbce9e0cd","RepoTags":["registry:0.9.0"],"Size":0,"VirtualSize":411649756}
-        ,{"Created":1415863849,"Id":"d9925ba888d4dba2d9b22273d261155fe3b2a4e6cfa5db44e4abe5ac8e311efa","ParentId":"4abfff610473315c2fb7a6278c924948ba877fe6630ad197f734572b7636188e","RepoTags":["registry:0.8.1"],"Size":0,"VirtualSize":430388853}
-        ,{"Created":1415863681,"Id":"7e2db37c6564bf030e6c5af9725bf9f9a8196846e3a77a51e201fc97871e2e60","ParentId":"765d6041baaa23390504094a101b8f4e3433e99a03cb0f5cf20e3b2e3a2a7523","RepoTags":["registry:latest"],"Size":0,"VirtualSize":411649320}
+        [{"Created":1418767331,"Id":"99ef40dfc2f39c977b89346037c795ed68609e53afbe9bf900b681f745b704d1","ParentId":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","RepoTags":["\u003cnone\u003e:\u003cnone\u003e"],"Size":38,"VirtualSize":85100543}
+        ,{"Created":1418662575,"Id":"eec44b3ebb587837f83e29dfa51b502d864a67861c43b2ffc66c1dd2e70d402e","ParentId":"17e079b19d6833166c8e17d534174009ac0da304790626357831a6cb13f41791","RepoTags":["tianon/true:latest"],"Size":0,"VirtualSize":125}
+        ,{"Created":1417717893,"Id":"1a76588fb302b923817d4540964dfa1fceef0ea85e5d308605ff37bbd22e7fc1","ParentId":"3ccac5a8b5a1d120d8ba02c837f4206ccb76f9fae4133d7c9a2fa691fc0fcaf9","RepoTags":["registry:latest"],"Size":0,"VirtualSize":405075857}
         ,{"Created":1415306638,"Id":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","ParentId":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","RepoTags":["debian:wheezy"],"Size":0,"VirtualSize":85100505}
-        ,{"Created":1414177799,"Id":"c723c9b95ac05c29c3e96b0b02e8fcf12096d850306b776a17877ee061daf49f","ParentId":"74dc9d28a649ac161e2a70d84190fe576f77f403f2565012f07bd68d638d291a","RepoTags":["registry:0.7.3"],"Size":0,"VirtualSize":426413472}
-        ,{"Created":1414174623,"Id":"bee70978874ce288a546770e762196041c90d5b0c0ef7e0c3d2e551d79417701","ParentId":"881f05ab63649f7d4b4ab048a2e01725c6a2d45f8866807bdb7766e28cdf224e","RepoTags":["registry:0.6.9"],"Size":0,"VirtualSize":462038905}
         ,{"Created":1412196370,"Id":"d415c60e5ea32875e4ddc7f7578bfaac3d59fb16e1334e705398b10ee91af801","ParentId":"0dfaa2625e19b0925a9e0fc7ea2c2a7f4fd0d31ec1e9838d08bf1310965ffc75","RepoTags":["busybox:ubuntu-12.04"],"Size":0,"VirtualSize":5454693}
         ,{"Created":1412196368,"Id":"e72ac664f4f0c6a061ac4ef332557a70d69b0c624b6add35f1c181ff7fff2287","ParentId":"e433a6c5b276a31aa38bf6eaba9cd1cfd69ea33f706ed72b3f20bafde5cd8644","RepoTags":["busybox:buildroot-2014.02","busybox:latest"],"Size":0,"VirtualSize":2433303}
         ,{"Created":1412196367,"Id":"4b2909447dbef01f71ca476725c2dbb3af12de41aa2d7491d62c66678ede2294","ParentId":"ad8766e8635d2ae9ddd77d32b8f0fa091fb88fffed77b3a8a240bdcdc6f5aa05","RepoTags":["busybox:buildroot-2013.08.1"],"Size":0,"VirtualSize":2489301}
         ,{"Created":1371157430,"Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","ParentId":"","RepoTags":["scratch:latest"],"Size":0,"VirtualSize":0}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:44 GMT
+  recorded_at: Tue, 16 Dec 2014 22:02:11 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/images/6c699633dc0a"
+    uri: "<DOCKER_HOST>/v1.16/images/99ef40dfc2f3"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -220,14 +216,14 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:44 GMT
+      - Tue, 16 Dec 2014 22:02:11 GMT
       Content-Length:
       - '81'
     body:
       encoding: UTF-8
       string: |-
-        [{"Deleted":"6c699633dc0a70aae5550761208f3f29075d07d284152c015de25ae7d149b2b3"}
+        [{"Deleted":"99ef40dfc2f39c977b89346037c795ed68609e53afbe9bf900b681f745b704d1"}
         ]
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:44 GMT
+  recorded_at: Tue, 16 Dec 2014 22:02:11 GMT
 recorded_with: VCR 2.9.3
