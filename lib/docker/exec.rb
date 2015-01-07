@@ -41,7 +41,7 @@ class Docker::Exec
   # @option options [TrueClass, FalseClass] :tty (false) Whether to attach using
   #     a pseudo-TTY.
   #
-  # @return [Array, Array] The STDOUT and STDERR responses
+  # @return [Array, Array, Int] The STDOUT, STDERR and exit code
   def start!(options = {}, &block)
 
     # Parse the Options
