@@ -44,10 +44,8 @@ namespace :vcr do
       )
       registry.start
       Rake::Task["spec"].invoke
-    rescue
-      # nothing
     ensure
-      registry.kill!.remove
+      registry.kill!.remove unless registry.nil?
     end
   end
 end
