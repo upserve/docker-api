@@ -102,11 +102,17 @@ class Docker::Image
   class << self
 
     # Create a new Image.
-    def create(opts = {}, creds = nil, conn = Docker.connection)
+    def create(opts = {}, creds = nil, conn = Docker.connection, &block)
       credentials = creds.nil? ? Docker.creds : creds.to_json
       headers = !credentials.nil? && Docker::Util.build_auth_header(credentials)
       headers ||= {}
-      body = conn.post('/images/create', opts, :headers => headers)
+      body = ''
+      conn.post(
+        '/images/create',
+        opts,
+        :headers => headers,
+        :response_block => response_block(body, &block)
+      )
       json = Docker::Util.fix_json(body)
       image = json.reverse_each.find { |el| el && el.key?('id') }
       new(conn, 'id' => image && image.fetch('id'), :headers => headers)
