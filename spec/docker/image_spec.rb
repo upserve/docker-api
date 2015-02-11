@@ -318,6 +318,18 @@ describe Docker::Image do
         expect(image.info[:headers].keys).to include 'X-Registry-Auth'
       end
     end
+
+    context 'with a block capturing create output' do
+      let(:create_output) { "" }
+      let(:block) { Proc.new { |chunk| create_output << chunk } }
+      let!(:image) { subject.create('fromImage' => 'tianon/true', &block) }
+
+      before { Docker.creds = nil }
+
+      it 'calls the block and passes build output', :vcr do
+        expect(create_output).to match(/Pulling repository tianon\/true/)
+      end
+    end
   end
 
   describe '.get' do
