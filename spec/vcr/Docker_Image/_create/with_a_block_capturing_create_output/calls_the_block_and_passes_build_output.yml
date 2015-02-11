@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=hawknewton%2Ftrue"
+    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=tianon%2Ftrue"
     body:
       encoding: US-ASCII
       string: ''
@@ -19,47 +19,18 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 10 Jan 2015 13:52:23 GMT
+      - Wed, 11 Feb 2015 18:06:15 GMT
     body:
       encoding: UTF-8
-      string: "{\"status\":\"Pulling repository hawknewton/true\"}\r\n{\"status\":\"Pulling
-        image (latest) from hawknewton/true\",\"progressDetail\":{},\"id\":\"5fbce35eb337\"}{\"status\":\"Pulling
-        image (latest) from hawknewton/true, endpoint: https://registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"5fbce35eb337\"}{\"status\":\"Pulling
-        dependent layers\",\"progressDetail\":{},\"id\":\"5fbce35eb337\"}{\"status\":\"Download
+      string: "{\"status\":\"Pulling repository tianon/true\"}\r\n{\"status\":\"Pulling
+        image (latest) from tianon/true\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Pulling
+        image (latest) from tianon/true, endpoint: https://registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Pulling
+        dependent layers\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Download
         complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"c0d559283422\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"5fbce35eb337\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"5fbce35eb337\"}{\"status\":\"Status:
-        Image is up to date for hawknewton/true\"}\r\n"
+        complete\",\"progressDetail\":{},\"id\":\"e41eb64a720e\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Status:
+        Image is up to date for tianon/true\"}\r\n"
     http_version: 
-  recorded_at: Mon, 12 Jan 2015 22:21:11 GMT
-- request:
-    method: delete
-    uri: "<DOCKER_HOST>/v1.15/images/hawknewton/true?noprune=true"
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.17.0
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Sat, 10 Jan 2015 13:52:25 GMT
-      Content-Length:
-      - '40'
-    body:
-      encoding: UTF-8
-      string: |-
-        [{"Untagged":"hawknewton/true:latest"}
-        ]
-    http_version: 
-  recorded_at: Mon, 12 Jan 2015 22:21:11 GMT
+  recorded_at: Wed, 11 Feb 2015 18:06:17 GMT
 recorded_with: VCR 2.9.3

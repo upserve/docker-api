@@ -322,13 +322,12 @@ describe Docker::Image do
     context 'with a block capturing create output' do
       let(:create_output) { "" }
       let(:block) { Proc.new { |chunk| create_output << chunk } }
-      let!(:image) { subject.create('fromImage' => 'hawknewton/true', &block) }
+      let!(:image) { subject.create('fromImage' => 'tianon/true', &block) }
 
       before { Docker.creds = nil }
-      after { image.remove(:name => 'hawknewton/true', :noprune => true) }
 
       it 'calls the block and passes build output', :vcr do
-        expect(create_output).to match(/Pulling repository hawknewton\/true/)
+        expect(create_output).to match(/Pulling repository tianon\/true/)
       end
     end
   end
