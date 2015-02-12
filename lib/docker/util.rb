@@ -61,12 +61,7 @@ module Docker::Util
         IO.copy_stream stdin, socket
 
         debug "hijack: closing write end of hijacked socket"
-        closable = if socket.respond_to?(:close_write)
-          socket
-        elsif socket.respond_to?(:io)
-          socket.io
-        end
-        closable.close_write
+        close_write(socket)
       end
 
       debug "hijack: starting hijacked socket read thread"
@@ -86,6 +81,16 @@ module Docker::Util
       end
 
       threads.each(&:join)
+    end
+  end
+
+  def close_write(socket)
+    if socket.respond_to?(:close_write)
+      socket.close_write
+    elsif socket.respond_to?(:io)
+      socket.io.close_write
+    else
+      raise IOError, 'Cannot close socket'
     end
   end
 
