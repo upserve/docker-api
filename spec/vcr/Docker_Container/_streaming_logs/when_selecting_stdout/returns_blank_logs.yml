@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/create"
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
       encoding: UTF-8
       string: '{"Cmd":"echo hello","Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - application/json
   response:
@@ -19,24 +19,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Tue, 16 Dec 2014 22:00:43 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"b72257d27c26f5630e3e1d4d8aa0dd80903f6458f01b82e10f1761f1d3ea7b95","Warnings":null}
+        {"Id":"845a2f8a84afbe0ece4cb81f7929269036fda06211c46506c230e6d898bbdec8","Warnings":null}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Tue, 16 Dec 2014 22:00:43 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/b72257d27c26f5630e3e1d4d8aa0dd80903f6458f01b82e10f1761f1d3ea7b95/logs?stdout=1"
+    uri: "<DOCKER_HOST>/v1.16/containers/845a2f8a84afbe0ece4cb81f7929269036fda06211c46506c230e6d898bbdec8/logs?stdout=1"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -45,7 +45,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Tue, 16 Dec 2014 22:00:43 GMT
       Content-Length:
       - '0'
       Content-Type:
@@ -54,16 +54,16 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Tue, 16 Dec 2014 22:00:43 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/b72257d27c26f5630e3e1d4d8aa0dd80903f6458f01b82e10f1761f1d3ea7b95"
+    uri: "<DOCKER_HOST>/v1.16/containers/845a2f8a84afbe0ece4cb81f7929269036fda06211c46506c230e6d898bbdec8"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -72,10 +72,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Tue, 16 Dec 2014 22:00:43 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Tue, 16 Dec 2014 22:00:43 GMT
 recorded_with: VCR 2.9.3

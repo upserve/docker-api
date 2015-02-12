@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/create"
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
       encoding: UTF-8
       string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - application/json
   response:
@@ -19,24 +19,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Tue, 16 Dec 2014 22:00:42 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"1c038113ed7daef813a49805d83dba0a2726f749be99f99b1eef5064944256c6","Warnings":null}
+        {"Id":"12e4f3f0f98b3fd5989201126cf9cc2bb17f2ac01e0a27175a31fcb43c5d40e4","Warnings":null}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Tue, 16 Dec 2014 22:00:42 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/1c038113ed7daef813a49805d83dba0a2726f749be99f99b1eef5064944256c6/json"
+    uri: "<DOCKER_HOST>/v1.16/containers/12e4f3f0f98b3fd5989201126cf9cc2bb17f2ac01e0a27175a31fcb43c5d40e4/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -47,24 +47,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Tue, 16 Dec 2014 22:00:42 GMT
       Content-Length:
-      - '1499'
+      - '1553'
     body:
       encoding: UTF-8
       string: |
-        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"1c038113ed7d","Image":"debian:wheezy","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-12-01T18:07:38.155564002Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"1c038113ed7daef813a49805d83dba0a2726f749be99f99b1eef5064944256c6","Image":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","MountLabel":"","Name":"/elegant_brattain","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"true","ProcessLabel":"","ResolvConfPath":"","State":{"ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":null,"VolumesRW":null}
+        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":[],"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"12e4f3f0f98b","Image":"debian:wheezy","MacAddress":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2014-12-16T22:00:42.769277121Z","Driver":"aufs","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"IpcMode":"","Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"12e4f3f0f98b3fd5989201126cf9cc2bb17f2ac01e0a27175a31fcb43c5d40e4","Image":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","MountLabel":"","Name":"/romantic_feynman","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"true","ProcessLabel":"","ResolvConfPath":"","State":{"Error":"","ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","OOMKilled":false,"Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":{},"VolumesRW":{}}
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Tue, 16 Dec 2014 22:00:42 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/1c038113ed7daef813a49805d83dba0a2726f749be99f99b1eef5064944256c6"
+    uri: "<DOCKER_HOST>/v1.16/containers/12e4f3f0f98b3fd5989201126cf9cc2bb17f2ac01e0a27175a31fcb43c5d40e4"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.17.0
       Content-Type:
       - text/plain
   response:
@@ -73,10 +73,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:07:38 GMT
+      - Tue, 16 Dec 2014 22:00:42 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:07:38 GMT
+  recorded_at: Tue, 16 Dec 2014 22:00:42 GMT
 recorded_with: VCR 2.9.3
