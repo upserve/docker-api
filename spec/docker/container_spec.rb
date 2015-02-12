@@ -296,8 +296,8 @@ describe Docker::Container do
     context 'when passed only a command' do
       let(:output) { subject.exec(['bash','-c','sleep 2; echo hello']) }
 
-      it 'returns the stdout/stderr messages', :vcr do
-        expect(output).to eq([["hello\n"], []])
+      it 'returns the stdout/stderr messages and exit code', :vcr do
+        expect(output).to eq([["hello\n"], [], 0])
       end
     end
 
@@ -325,7 +325,7 @@ describe Docker::Container do
 
       it 'returns the stdout/stderr messages', :vcr do
         skip 'HTTP socket hijacking not compatible with VCR'
-        expect(output).to eq([["hello"],[]])
+        expect(output).to eq([["hello"],[],0])
       end
     end
 
@@ -337,7 +337,7 @@ describe Docker::Container do
       let(:output) { subject.exec(command, tty: true) }
 
       it 'returns the raw stdout/stderr output', :vcr do
-        expect(output).to eq([["I'm a TTY!"], []])
+        expect(output).to eq([["I'm a TTY!"], [], 0])
       end
     end
   end
@@ -534,13 +534,14 @@ describe Docker::Container do
     }
     let(:image) { subject.commit }
 
-    before { subject.start }
     after(:each) do
       subject.remove
       image.remove
     end
 
     it 'creates a new Image from the  Container\'s changes', :vcr do
+      subject.tap(&:start).wait
+
       expect(image).to be_a Docker::Image
       expect(image.id).to_not be_nil
     end

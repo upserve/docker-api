@@ -221,9 +221,10 @@ describe Docker::Image do
 
     context 'when the argument is a String', :vcr do
       let(:cmd) { 'ls /lib64/' }
-      after { container.tap(&:wait).remove }
+      after { container.remove }
 
       it 'splits the String by spaces and creates a new Container' do
+        container.wait
         expect(output).to eq("ld-linux-x86-64.so.2\n")
       end
     end
@@ -249,9 +250,10 @@ describe Docker::Image do
 
       context "command configured in image" do
         let(:cmd) { 'pwd' }
-        after { container.tap(&:wait).remove }
+        after { container.remove }
 
         it 'should normally show result if image has Cmd configured' do
+          container.wait
           expect(output).to eql "/\n"
         end
       end
@@ -562,8 +564,9 @@ describe Docker::Image do
         Docker::Container.create('Image' => image.id,
                                  'Cmd' => %w[cat /Dockerfile])
       end
-      let(:output) { container.tap(&:start)
-                              .streaming_logs(stdout: true) }
+      let!(:output) {
+        container.tap(&:start).streaming_logs(stdout: true)
+      }
       after(:each) do
         container.tap(&:wait).remove
         image.remove(:noprune => true)
@@ -571,6 +574,7 @@ describe Docker::Image do
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
+          container.wait
           expect(output).to eq(docker_file.read)
         end
       end

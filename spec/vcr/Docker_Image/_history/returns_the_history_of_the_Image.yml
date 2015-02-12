@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
+    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -19,25 +19,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:47 GMT
+      - Thu, 12 Feb 2015 00:55:49 GMT
     body:
-      encoding: UTF-8
-      string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
+      encoding: US-ASCII
+      string: ! "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
         exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"f10807909bc5\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
+        exists\",\"progressDetail\":{},\"id\":\"30d39e59ffe2\"}{\"status\":\"Already
+        exists\",\"progressDetail\":{},\"id\":\"c90d655b99b2\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:47 GMT
+  recorded_at: Thu, 12 Feb 2015 00:55:49 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/images/f6fab3b798be/history"
+    uri: <DOCKER_HOST>/v1.16/images/c90d655b99b2/history
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -48,16 +48,19 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:47 GMT
+      - Thu, 12 Feb 2015 00:55:49 GMT
       Content-Length:
       - '560'
     body:
-      encoding: UTF-8
-      string: |-
-        [{"Created":1415306638,"CreatedBy":"/bin/sh -c #(nop) CMD [/bin/bash]","Id":"f6fab3b798be3174f45aa1eb731f8182705555f89c9026d8c1ef230cbf8301dd","Size":0,"Tags":["debian:wheezy"]}
-        ,{"Created":1415306636,"CreatedBy":"/bin/sh -c #(nop) ADD file:01b419e635eb6bec686cabe0e261c4f3fb4dc206f4584ac01b21059a5d2f8b3b in /","Id":"f10807909bc552de261ca7463effc467600c3dca68d8e7704425283a6911d2ca","Size":85100505,"Tags":null}
+      encoding: US-ASCII
+      string: ! '[{"Created":1422379591,"CreatedBy":"/bin/sh -c #(nop) CMD [/bin/bash]","Id":"c90d655b99b2ec5b7e94d38c87f92dce015c17a313caeaae0e980d9b9bed8444","Size":0,"Tags":["debian:wheezy"]}
+
+        ,{"Created":1422379584,"CreatedBy":"/bin/sh -c #(nop) ADD file:3f1a40df75bc5673ce402476db7ad6dbb43e45bd1951ed165b9b01ca78011aa0
+        in /","Id":"30d39e59ffe287f29a41a3f8bd70734afc8728329e3289945cbdc5bbf07cd980","Size":85120773,"Tags":null}
+
         ,{"Created":1371157430,"CreatedBy":"","Id":"511136ea3c5a64f264b78b5433614aec563103b4d4702f3ba7d4d2698e22c158","Size":0,"Tags":["scratch:latest"]}
-        ]
+
+        ]'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:47 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 12 Feb 2015 00:55:49 GMT
+recorded_with: VCR 2.9.2

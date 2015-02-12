@@ -25,6 +25,12 @@ class Docker::Exec
     new(conn, hash)
   end
 
+  # Get info about the Exec instance
+  #
+  def json
+    Docker::Util.parse_json(connection.get(path_for(:json), {}))
+  end
+
   # Start the Exec instance. The Exec instance is deleted after this so this
   # command can only be run once.
   #
@@ -35,7 +41,7 @@ class Docker::Exec
   # @option options [TrueClass, FalseClass] :tty (false) Whether to attach using
   #     a pseudo-TTY.
   #
-  # @return [Array, Array] The STDOUT and STDERR responses
+  # @return [Array, Array, Int] The STDOUT, STDERR and exit code
   def start!(options = {}, &block)
 
     # Parse the Options
@@ -62,7 +68,7 @@ class Docker::Exec
     end
 
     connection.post(path_for(:start), nil, excon_params)
-    [msgs.stdout_messages, msgs.stderr_messages]
+    [msgs.stdout_messages, msgs.stderr_messages, self.json['ExitCode']]
   end
 
   # #start! performs the associated action and returns the output.

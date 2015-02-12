@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/images/create?fromImage=debian%3Awheezy"
+    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -19,25 +19,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:48 GMT
+      - Thu, 12 Feb 2015 00:55:51 GMT
     body:
-      encoding: UTF-8
-      string: "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
+      encoding: US-ASCII
+      string: ! "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
         exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"f10807909bc5\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"f6fab3b798be\"}{\"status\":\"Status:
+        exists\",\"progressDetail\":{},\"id\":\"30d39e59ffe2\"}{\"status\":\"Already
+        exists\",\"progressDetail\":{},\"id\":\"c90d655b99b2\"}{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:48 GMT
+  recorded_at: Thu, 12 Feb 2015 00:55:51 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/create"
+    uri: <DOCKER_HOST>/v1.16/containers/create
     body:
       encoding: UTF-8
-      string: '{"Image":"f6fab3b798be","Cmd":["which","pwd"]}'
+      string: ! '{"Image":"c90d655b99b2","Cmd":["which","pwd"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - application/json
   response:
@@ -48,24 +48,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:48 GMT
+      - Thu, 12 Feb 2015 00:55:51 GMT
       Content-Length:
       - '90'
     body:
-      encoding: UTF-8
-      string: |
-        {"Id":"ac8e9c43431e10077fc4f92bb2debb836190e13d8902e23639a4cf5f4a2d3a90","Warnings":null}
+      encoding: US-ASCII
+      string: ! '{"Id":"db24de1be76557de3e0ad3bb2439038dcfa3c926716dc173671c0b18fba59506","Warnings":null}
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:48 GMT
+  recorded_at: Thu, 12 Feb 2015 00:55:51 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/ac8e9c43431e10077fc4f92bb2debb836190e13d8902e23639a4cf5f4a2d3a90/start"
+    uri: <DOCKER_HOST>/v1.16/containers/db24de1be76557de3e0ad3bb2439038dcfa3c926716dc173671c0b18fba59506/start
     body:
       encoding: UTF-8
-      string: "{}"
+      string: ! '{}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - application/json
   response:
@@ -74,21 +75,21 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:08:49 GMT
+      - Thu, 12 Feb 2015 00:55:51 GMT
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:49 GMT
+  recorded_at: Thu, 12 Feb 2015 00:55:51 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.15/containers/ac8e9c43431e10077fc4f92bb2debb836190e13d8902e23639a4cf5f4a2d3a90/logs?stdout=true"
+    uri: <DOCKER_HOST>/v1.16/containers/db24de1be76557de3e0ad3bb2439038dcfa3c926716dc173671c0b18fba59506/logs?stdout=true
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -97,24 +98,24 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:08:49 GMT
+      - Thu, 12 Feb 2015 00:55:51 GMT
       Content-Type:
       - application/octet-stream
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: !binary |-
         AQAAAAAAAAkvYmluL3B3ZAo=
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:49 GMT
+  recorded_at: Thu, 12 Feb 2015 00:55:51 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.15/containers/ac8e9c43431e10077fc4f92bb2debb836190e13d8902e23639a4cf5f4a2d3a90/wait"
+    uri: <DOCKER_HOST>/v1.16/containers/db24de1be76557de3e0ad3bb2439038dcfa3c926716dc173671c0b18fba59506/wait
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -125,24 +126,25 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 01 Dec 2014 18:08:49 GMT
+      - Thu, 12 Feb 2015 00:55:51 GMT
       Content-Length:
       - '17'
     body:
-      encoding: UTF-8
-      string: |
-        {"StatusCode":0}
+      encoding: US-ASCII
+      string: ! '{"StatusCode":0}
+
+'
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:49 GMT
+  recorded_at: Thu, 12 Feb 2015 00:55:51 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.15/containers/ac8e9c43431e10077fc4f92bb2debb836190e13d8902e23639a4cf5f4a2d3a90"
+    uri: <DOCKER_HOST>/v1.16/containers/db24de1be76557de3e0ad3bb2439038dcfa3c926716dc173671c0b18fba59506
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.15.0
+      - Swipely/Docker-API 1.18.0
       Content-Type:
       - text/plain
   response:
@@ -151,10 +153,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Mon, 01 Dec 2014 18:08:49 GMT
+      - Thu, 12 Feb 2015 00:55:52 GMT
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ''
     http_version: 
-  recorded_at: Mon, 01 Dec 2014 18:08:49 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Thu, 12 Feb 2015 00:55:52 GMT
+recorded_with: VCR 2.9.2
