@@ -98,6 +98,24 @@ describe Docker::Container do
     end
   end
 
+  describe '#rename' do
+    subject {
+      described_class.create({
+        'name' => 'foo',
+        'Cmd' => %w[true],
+        'Image' => 'debian:wheezy'
+      })
+    }
+
+    before { subject.start }
+    after(:each) { subject.kill!.remove }
+
+    it 'renames the container', :vcr do
+      subject.rename('bar')
+      expect(subject.json["Name"]).to eq "bar"
+    end
+  end
+
   describe '#changes' do
     subject {
       described_class.create(
