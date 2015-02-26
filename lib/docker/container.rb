@@ -138,6 +138,12 @@ class Docker::Container
     connection.get(path_for(:logs), opts)
   end
 
+  def rename(new_name)
+    query = {}
+    query['name'] = new_name
+    connection.post(path_for(:rename), query)
+  end
+
   def streaming_logs(opts = {}, &block)
     msgs = Docker::Messages.new
     excon_params = {response_block: Docker::Util.attach_for(block, msgs, false)}
