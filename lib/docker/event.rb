@@ -1,4 +1,4 @@
-# This class represents a Docker Image.
+# This class represents a Docker Event.
 class Docker::Event
   include Docker::Error
 
