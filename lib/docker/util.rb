@@ -123,14 +123,34 @@ module Docker::Util
   end
 
   def create_dir_tar(directory)
-    cwd = FileUtils.pwd
-    tempfile_name = Dir::Tmpname.create('out') {}
-    tempfile = File.open(tempfile_name, 'wb+')
-    FileUtils.cd(directory)
-    Archive::Tar::Minitar.pack('.', tempfile)
+    tempfile = create_temp_file
+    Gem::Package::TarWriter.new(tempfile) do |tar|
+      fixed_file_names(directory) do |prefixed_file_name, file_name|
+        stat = File.stat(prefixed_file_name)
+        tar.add_file_simple(file_name, stat.mode, stat.size) do |tar_file|
+          tar_file.write(File.read(prefixed_file_name, mode: 'rb'))
+        end
+      end
+    end
+
     File.new(tempfile.path, 'r')
-  ensure
-    FileUtils.cd(cwd)
+  end
+
+  def fixed_file_names(directory)
+    Find.find(directory) do |file|
+      stat = File.stat(file)
+      next unless stat.file?
+
+      directory = directory + '/' unless directory.end_with?('/')
+
+      file_name = file.split(directory)[1]
+      yield file, file_name
+    end
+  end
+
+  def create_temp_file
+    tempfile_name = Dir::Tmpname.create('out') {}
+    File.open(tempfile_name, 'wb+')
   end
 
   def extract_id(body)
