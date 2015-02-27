@@ -124,28 +124,22 @@ module Docker::Util
 
   def create_dir_tar(directory)
     tempfile = create_temp_file
+    directory += '/' unless directory.end_with?('/')
+
     Gem::Package::TarWriter.new(tempfile) do |tar|
-      fixed_file_names(directory) do |prefixed_file_name, file_name|
+      Find.find(directory) do |prefixed_file_name|
         stat = File.stat(prefixed_file_name)
-        tar.add_file_simple(file_name, stat.mode, stat.size) do |tar_file|
-          tar_file.write(File.read(prefixed_file_name, mode: 'rb'))
+        next unless stat.file?
+
+        unprefixed_file_name = prefixed_file_name[directory.length..-1]
+        tar.add_file_simple(unprefixed_file_name, stat.mode, stat.size) do |tar_file|
+          IO.copy_stream(File.open(prefixed_file_name, 'rb'), tar_file)
         end
       end
+
     end
 
     File.new(tempfile.path, 'r')
-  end
-
-  def fixed_file_names(directory)
-    Find.find(directory) do |file|
-      stat = File.stat(file)
-      next unless stat.file?
-
-      directory = directory + '/' unless directory.end_with?('/')
-
-      file_name = file.split(directory)[1]
-      yield file, file_name
-    end
   end
 
   def create_temp_file
