@@ -123,14 +123,14 @@ module Docker::Util
   end
 
   def create_dir_tar(directory)
-    cwd = FileUtils.pwd
     tempfile_name = Dir::Tmpname.create('out') {}
     tempfile = File.open(tempfile_name, 'wb+')
-    FileUtils.cd(directory)
-    Archive::Tar::Minitar.pack('.', tempfile)
-    File.new(tempfile.path, 'r')
-  ensure
-    FileUtils.cd(cwd)
+    create_dir_tar_mutex.synchronize do
+      Dir.chdir(directory) do
+        Archive::Tar::Minitar.pack('.', tempfile)
+        File.new(tempfile.path, 'r')
+      end
+    end
   end
 
   def extract_id(body)
@@ -189,5 +189,9 @@ module Docker::Util
     {
       'X-Registry-Config' => encoded_header
     }
+  end
+
+  def create_dir_tar_mutex
+    @create_dir_tar_mutex ||= Mutex.new
   end
 end
