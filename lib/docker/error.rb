@@ -18,7 +18,7 @@ module Docker::Error
   class NotFoundError < DockerError; end
 
   # Raised when a request returns a 409.
-  class ConfictError < DockerError; end
+  class ConflictError < DockerError; end
 
   # Raised when a request returns a 500.
   class ServerError < DockerError; end

@@ -49,7 +49,7 @@ class Docker::Connection
   rescue Excon::Errors::NotFound => ex
     raise NotFoundError, ex.message
   rescue Excon::Errors::Conflict => ex
-    raise ConfictError, ex.message
+    raise ConflictError, ex.message
   rescue Excon::Errors::InternalServerError => ex
     raise ServerError, ex.response.data[:body]
   rescue Excon::Errors::Timeout => ex
