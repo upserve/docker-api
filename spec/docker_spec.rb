@@ -82,6 +82,7 @@ describe Docker do
           .and_return('tcp://someserver:8103')
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH')
           .and_return('/boot2dockert/cert/path')
+        allow(ENV).to receive(:[]).with('DOCKER_SSL_VERIFY').and_return(nil)
         Docker.reset!
       end
 
@@ -96,6 +97,32 @@ describe Docker do
       its(:url) { should == 'tcp://someserver:8103' }
       its(:connection) { should be_a Docker::Connection }
     end
+
+    context "when the DOCKER_CERT_PATH and DOCKER_SSL_VERIFY ENV variables are set" do
+      before do
+        allow(ENV).to receive(:[]).with('DOCKER_URL').and_return(nil)
+        allow(ENV).to receive(:[]).with('DOCKER_HOST')
+          .and_return('tcp://someserver:8103')
+        allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH')
+          .and_return('/boot2dockert/cert/path')
+        allow(ENV).to receive(:[]).with('DOCKER_SSL_VERIFY')
+          .and_return('false')
+        Docker.reset!
+      end
+
+      its(:options) {
+        should == {
+          client_cert: '/boot2dockert/cert/path/cert.pem',
+          client_key: '/boot2dockert/cert/path/key.pem',
+          ssl_ca_file: '/boot2dockert/cert/path/ca.pem',
+          scheme: 'https',
+          ssl_verify_peer: false
+        }
+      }
+      its(:url) { should == 'tcp://someserver:8103' }
+      its(:connection) { should be_a Docker::Connection }
+    end
+
   end
 
   describe '#reset_connection!' do
