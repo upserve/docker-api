@@ -44,7 +44,9 @@ $ sudo docker -d
 
 This will daemonize Docker so that it can be used for the remote API calls.
 
-If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not or change the path of the socket, you'll have to point the gem to your socket or local/remote port. For example:
+### Host
+
+If you're running Docker locally as a socket, there is no setup to do in Ruby. If you're not using a socket or have changed the path of the socket, you'll have to point the gem to your socket or local/remote port. For example:
 
 ```ruby
 Docker.url = 'tcp://example.com:5422'
@@ -75,6 +77,22 @@ irb(main):004:0> Docker.options
 ```
 
 Before doing anything else, ensure you have the correct version of the Docker API. To do this, run `Docker.validate_version!`. If your installed version is not supported, a `Docker::Error::VersionError` is raised.
+
+### SSL
+
+When running docker using SSL, setting the DOCKER_CERT_PATH will configure docker-api to use SSL.
+The cert path is a folder that contains the cert, key and cacert files.
+docker-api is expecting the files to be named: cert.pem, key.pem, and ca.pem.
+If your files are named different, you'll want to set your options explicity:
+
+```
+Docker.options = {
+    client_cert: File.join(cert_path, 'cert.pem'),
+    client_key: File.join(cert_path, 'key.pem'),
+    ssl_ca_file: File.join(cert_path, 'ca.pem'),
+    scheme: 'https'
+}
+```
 
 ## Global calls
 
