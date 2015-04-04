@@ -47,7 +47,7 @@ class Docker::Exec
     # Parse the Options
     tty = !!options.delete(:tty)
     detached = !!options.delete(:detach)
-    stdin = options[:stdin]
+    stdin = options.delete(:stdin)
 
     # Create API Request Body
     body = {

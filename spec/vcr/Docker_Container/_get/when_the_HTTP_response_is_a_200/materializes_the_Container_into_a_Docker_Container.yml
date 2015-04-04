@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/create
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["ls"],"Image":"debian:wheezy"}'
+      string: '{"Cmd":["ls"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.21.0
       Content-Type:
       - application/json
   response:
@@ -19,25 +19,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 12 Feb 2015 00:54:30 GMT
+      - Sat, 04 Apr 2015 12:38:34 GMT
       Content-Length:
       - '90'
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"f0a23d5b530dabb3b45577af6e01b8765793366a899c3ba9ab5f56ce7d2cdf7a","Warnings":null}
-
-'
+      encoding: UTF-8
+      string: |
+        {"Id":"f41e5a659f41b51310aff7196f39d24344a8d1c432b4aa1fd7d17b7537e21268","Warnings":null}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:54:30 GMT
+  recorded_at: Sat, 04 Apr 2015 12:38:34 GMT
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/containers/f0a23d5b530dabb3b45577af6e01b8765793366a899c3ba9ab5f56ce7d2cdf7a/json
+    uri: "<DOCKER_HOST>/v1.16/containers/f41e5a659f41b51310aff7196f39d24344a8d1c432b4aa1fd7d17b7537e21268/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.21.0
       Content-Type:
       - text/plain
   response:
@@ -48,25 +47,24 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 12 Feb 2015 00:54:30 GMT
+      - Sat, 04 Apr 2015 12:38:34 GMT
       Content-Length:
-      - '1559'
+      - '1736'
     body:
-      encoding: US-ASCII
-      string: ! '{"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["ls"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"f0a23d5b530d","Image":"debian:wheezy","MacAddress":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2015-02-12T00:54:29.834360398Z","Driver":"devicemapper","ExecDriver":"native-0.2","HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"IpcMode":"","Links":null,"LxcConf":null,"NetworkMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"f0a23d5b530dabb3b45577af6e01b8765793366a899c3ba9ab5f56ce7d2cdf7a","Image":"c90d655b99b2ec5b7e94d38c87f92dce015c17a313caeaae0e980d9b9bed8444","MountLabel":"","Name":"/adoring_thompson","NetworkSettings":{"Bridge":"","Gateway":"","IPAddress":"","IPPrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"ls","ProcessLabel":"","ResolvConfPath":"","State":{"Error":"","ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","OOMKilled":false,"Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":{},"VolumesRW":{}}
-
-'
+      encoding: UTF-8
+      string: |
+        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["ls"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"f41e5a659f41","Image":"debian:wheezy","MacAddress":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2015-04-04T12:38:34.321969697Z","Driver":"aufs","ExecDriver":"native-0.2","ExecIDs":null,"HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"IpcMode":"","Links":null,"LxcConf":null,"NetworkMode":"","PidMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"","HostsPath":"","Id":"f41e5a659f41b51310aff7196f39d24344a8d1c432b4aa1fd7d17b7537e21268","Image":"1265e16d0c286a4252c1dc5e775ba476d9560e2dd96d2032605ee75b30912f6b","MountLabel":"","Name":"/romantic_babbage","NetworkSettings":{"Bridge":"","Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"IPAddress":"","IPPrefixLen":0,"IPv6Gateway":"","LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"MacAddress":"","PortMapping":null,"Ports":null},"Path":"ls","ProcessLabel":"","ResolvConfPath":"","RestartCount":0,"State":{"Error":"","ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","OOMKilled":false,"Paused":false,"Pid":0,"Restarting":false,"Running":false,"StartedAt":"0001-01-01T00:00:00Z"},"Volumes":{},"VolumesRW":{}}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:54:30 GMT
+  recorded_at: Sat, 04 Apr 2015 12:38:34 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/containers/f0a23d5b530dabb3b45577af6e01b8765793366a899c3ba9ab5f56ce7d2cdf7a
+    uri: "<DOCKER_HOST>/v1.16/containers/f41e5a659f41b51310aff7196f39d24344a8d1c432b4aa1fd7d17b7537e21268"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.21.0
       Content-Type:
       - text/plain
   response:
@@ -75,10 +73,10 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Thu, 12 Feb 2015 00:54:31 GMT
+      - Sat, 04 Apr 2015 12:38:34 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:54:31 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Sat, 04 Apr 2015 12:38:34 GMT
+recorded_with: VCR 2.9.3
