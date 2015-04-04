@@ -56,6 +56,9 @@ class Docker::Exec
     }
     excon_params = { :body => body.to_json }
 
+    opts = {
+      :stream => true, :stdout => true, :stderr => true
+    }.merge(options)
     msgs = Docker::Messages.new
     unless detached
       if stdin
@@ -67,7 +70,7 @@ class Docker::Exec
       end
     end
 
-    connection.post(path_for(:start), nil, excon_params)
+    connection.post(path_for(:start), opts, excon_params)
     [msgs.stdout_messages, msgs.stderr_messages, self.json['ExitCode']]
   end
 
