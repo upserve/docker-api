@@ -564,29 +564,36 @@ describe Docker::Image do
         Docker::Container.create('Image' => image.id,
                                  'Cmd' => %w[cat /Dockerfile])
       end
-      let!(:output) {
-        container.tap(&:start).streaming_logs(stdout: true)
-      }
+      let(:output) { container.streaming_logs(stdout: true) }
+
       after(:each) do
-        container.tap(&:wait).remove
         image.remove(:noprune => true)
       end
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
-          container.wait
+          container.tap(&:wait).start
           expect(output).to eq(docker_file.read)
+        end
+
+        after do
+          container.remove
         end
       end
 
       context 'with specifying a repo in the query parameters' do
         let(:opts) { { "t" => "#{ENV['DOCKER_API_USER']}/debian:from_dir" } }
         it 'builds the image and tags it', :vcr do
+          container.tap(&:wait).start
           expect(output).to eq(docker_file.read)
           image.refresh!
           expect(image.info["RepoTags"]).to eq(
             ["#{ENV['DOCKER_API_USER']}/debian:from_dir"]
           )
+        end
+
+        after do
+          container.remove
         end
       end
 
@@ -597,6 +604,21 @@ describe Docker::Image do
         it 'calls the block and passes build output', :vcr do
           image # Create the image variable, which is lazy-loaded by Rspec
           expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
+        end
+
+        context 'uses a cached version the second time' do
+          let(:build_output_two) { "" }
+          let(:block_two) { Proc.new { |chunk| build_output_two << chunk } }
+          let(:image_two) { subject.build_from_dir(dir, opts, &block_two) }
+
+          it 'calls the block and passes build output', :vcr do
+            image # Create the image variable, which is lazy-loaded by Rspec
+            expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
+            expect(build_output).to_not match(/Using cache/)
+
+            image_two # Create the image_two variable, which is lazy-loaded by Rspec
+            expect(build_output_two).to match(/Using cache/)
+          end
         end
       end
 
