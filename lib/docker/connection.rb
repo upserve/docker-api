@@ -36,24 +36,28 @@ class Docker::Connection
   # Send a request to the server with the `
   def request(*args, &block)
     request = compile_request_params(*args, &block)
+    log_request(request)
+    resource.request(request).body
+  rescue Excon::Errors::BadRequest => ex
+    raise ClientError, ex.response.body
+  rescue Excon::Errors::Unauthorized => ex
+    raise UnauthorizedError, ex.response.body
+  rescue Excon::Errors::NotFound => ex
+    raise NotFoundError, ex.response.body
+  rescue Excon::Errors::Conflict => ex
+    raise ConflictError, ex.response.body
+  rescue Excon::Errors::InternalServerError => ex
+    raise ServerError, ex.response.body
+  rescue Excon::Errors::Timeout => ex
+    raise TimeoutError, ex.response.body
+  end
+
+  def log_request(request)
     if Docker.logger
       Docker.logger.debug(
         [request[:method], request[:path], request[:query], request[:body]]
       )
     end
-    resource.request(request).body
-  rescue Excon::Errors::BadRequest => ex
-    raise ClientError, ex.message
-  rescue Excon::Errors::Unauthorized => ex
-    raise UnauthorizedError, ex.message
-  rescue Excon::Errors::NotFound => ex
-    raise NotFoundError, ex.message
-  rescue Excon::Errors::Conflict => ex
-    raise ConflictError, ex.message
-  rescue Excon::Errors::InternalServerError => ex
-    raise ServerError, ex.response.data[:body]
-  rescue Excon::Errors::Timeout => ex
-    raise TimeoutError, ex.message
   end
 
   # Delegate all HTTP methods to the #request.
