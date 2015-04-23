@@ -49,7 +49,7 @@ class Docker::Connection
   rescue Excon::Errors::InternalServerError => ex
     raise ServerError, ex.response.body
   rescue Excon::Errors::Timeout => ex
-    raise TimeoutError, ex.response.body
+    raise TimeoutError, ex.message
   end
 
   def log_request(request)
