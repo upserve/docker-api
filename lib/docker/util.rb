@@ -138,13 +138,38 @@ module Docker::Util
         next unless stat.file?
 
         unprefixed_file_name = prefixed_file_name[directory.length..-1]
-        tar.add_file_simple(
-          unprefixed_file_name, stat.mode, stat.size
+        add_file_to_tar(
+          tar, unprefixed_file_name, stat.mode, stat.size, stat.mtime
         ) do |tar_file|
           IO.copy_stream(File.open(prefixed_file_name, 'rb'), tar_file)
         end
       end
     end
+  end
+
+  def add_file_to_tar(tar, name, mode, size, mtime)
+    tar.check_closed
+
+    io = tar.instance_variable_get(:@io)
+
+    name, prefix = tar.split_name(name)
+
+    header = Gem::Package::TarHeader.new(:name => name, :mode => mode,
+                                         :size => size, :prefix => prefix,
+                                         :mtime => mtime).to_s
+
+    io.write header
+    os = Gem::Package::TarWriter::BoundedStream.new io, size
+
+    yield os if block_given?
+
+    min_padding = size - os.written
+    io.write("\0" * min_padding)
+
+    remainder = (512 - (size % 512)) % 512
+    io.write("\0" * remainder)
+
+    tar
   end
 
   def create_temp_file
