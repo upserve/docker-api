@@ -221,7 +221,8 @@ class Docker::Container
 
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    name = opts.delete('name')
+    name = opts.delete('Name')
+    name = opts.delete('name') if !name
     query = {}
     query['name'] = name if name
     resp = conn.post('/containers/create', query, :body => opts.to_json)
