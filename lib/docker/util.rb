@@ -178,7 +178,7 @@ module Docker::Util
   end
 
   def extract_id(body)
-    body.lines.to_a.reverse.each do |line|
+    body.lines.reverse_each do |line|
       if (id = line.match(/Successfully built ([a-f0-9]+)/)) && !id[1].empty?
         return id[1]
       end
