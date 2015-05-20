@@ -6,7 +6,7 @@ module Docker::Base
   attr_accessor :connection, :info
   attr_reader :id
 
-  # The private new method accepts a connection and optional id.
+  # The private new method accepts a connection and a hash of options that must include an id.
   def initialize(connection, hash={})
     unless connection.is_a?(Docker::Connection)
       raise ArgumentError, "Expected a Docker::Connection, got: #{connection}."
