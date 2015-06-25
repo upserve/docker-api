@@ -43,6 +43,7 @@ class Docker::Container
     # Establish values
     tty = opts.delete(:tty) || false
     detach = opts.delete(:detach) || false
+    user = opts.delete(:user)
     stdin = opts.delete(:stdin)
     stdout = opts.delete(:stdout) || !detach
     stderr = opts.delete(:stderr) || !detach
@@ -50,6 +51,7 @@ class Docker::Container
     # Create Exec Instance
     instance = Docker::Exec.create(
       'Container' => self.id,
+      'User' => user,
       'AttachStdin' => !!stdin,
       'AttachStdout' => stdout,
       'AttachStderr' => stderr,
