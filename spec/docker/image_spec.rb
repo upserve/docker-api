@@ -84,7 +84,7 @@ describe Docker::Image do
         )
       }
       let(:container) { new_image.run('ls -a /lib/docker') }
-      let(:response) { container.streaming_logs(stdout: true) }
+      let(:response) { container.tap(&:wait).streaming_logs(stdout: true) }
       after do
         container.tap(&:wait).remove
         new_image.remove
