@@ -223,6 +223,7 @@ class Docker::Container
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     name = opts.delete('name')
+    opts['HostConfig'] = {} if !opts['HostConfig'] && Docker.version['Version'] > '1.14'
     query = {}
     query['name'] = name if name
     resp = conn.post('/containers/create', query, :body => opts.to_json)
