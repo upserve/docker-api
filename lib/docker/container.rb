@@ -147,8 +147,9 @@ class Docker::Container
 
   def streaming_logs(opts = {}, &block)
     stack_size = opts.delete('stack_size') || -1
+    tty = opts.delete('tty') || opts.delete(:tty) || false
     msgs = Docker::MessagesStack.new(stack_size)
-    excon_params = {response_block: Docker::Util.attach_for_multiplex(block, msgs)}
+    excon_params = {response_block: Docker::Util.attach_for(block, msgs, tty)}
 
     connection.get(path_for(:logs), opts, excon_params)
     msgs.messages.join

@@ -20,9 +20,12 @@ module Docker::Util
   end
 
   def attach_for_tty(block, msg_stack)
-    return lambda do |c,r,t|
-      msg_stack.stdout_messages << c
-      msg_stack.all_messages << c
+    messages = Docker::Messages.new
+    lambda do |c,r,t|
+      messages.stdout_messages << c
+      messages.all_messages << c
+      msg_stack.append(messages)
+
       block.call c if block
     end
   end
