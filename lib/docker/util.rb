@@ -34,7 +34,6 @@ module Docker::Util
     messages = Docker::Messages.new
     lambda do |c,r,t|
       messages = messages.decipher_messages(c)
-      msg_stack.append(messages)
 
       unless block.nil?
         messages.stdout_messages.each do |msg|
@@ -44,6 +43,8 @@ module Docker::Util
           block.call(:stderr, msg)
         end
       end
+
+      msg_stack.append(messages)
     end
   end
 
