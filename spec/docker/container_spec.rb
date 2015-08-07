@@ -212,6 +212,62 @@ describe Docker::Container do
     end
   end
 
+  describe '#archive_in' do
+    let(:tar) { StringIO.new(Docker::Util.create_tar('/lol' => 'TEST')) }
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
+    let(:committed_image) { subject.commit }
+    let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
+    let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
+
+    after(:each) { subject.remove }
+
+    context 'when the input is a tar' do
+      after { ls_container.remove; committed_image.remove }
+
+      it 'file exists in the container', :vcr do
+        subject.archive_in('/', false) { tar.read }
+        expect(output).to include('lol')
+      end
+    end
+  end
+
+  describe '#archive_out' do
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['touch','/test']) }
+
+    after(:each) { subject.remove }
+
+    context 'when the file does not exist' do
+      it 'raises an error', :vcr do
+        subject.start; subject.wait
+
+        expect { subject.archive_out('/lol') { |chunk| puts chunk } }
+            .to raise_error(Docker::Error::NotFoundError)
+      end
+    end
+
+    context 'when the input is a file' do
+      it 'yields each chunk of the tarred file', :vcr do
+        subject.start; subject.wait
+
+        chunks = []
+        subject.archive_out('/test') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(chunks).to be_include('test')
+      end
+    end
+
+    context 'when the input is a directory' do
+      it 'yields each chunk of the tarred directory', :vcr do
+        subject.start; subject.wait
+
+        chunks = []
+        subject.archive_out('/etc/logrotate.d') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
+      end
+    end
+  end
+
   describe '#export' do
     subject { described_class.create('Cmd' => %w[/true],
                                      'Image' => 'tianon/true') }

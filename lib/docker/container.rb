@@ -238,6 +238,27 @@ class Docker::Container
     self
   end
 
+  def archive_out(path, overwrite = false, &block)
+    connection.get(
+      path_for(:archive),
+      { 'path' => path },
+      :response_block => block
+    )
+    self
+  end
+
+  def archive_in(path, overwrite = false, &block)
+    connection.put(
+      path_for(:archive),
+      { 'path' => path, 'overwrite' => overwrite },
+      :headers => {
+        'Content-Type' => 'application/x-tar'
+      },
+      &block
+    )
+    self
+  end
+
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     name = opts.delete('name')
