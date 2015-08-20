@@ -390,6 +390,10 @@ Docker::Container.get('500f53b25e6e')
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
+
+# Request all of the Containers, filtering by status exited.
+Docker::Container.all(all: true, filters: { status: ["exited"] }.to_json)
+# => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
 
 ## Events
