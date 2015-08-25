@@ -124,8 +124,8 @@ require 'docker'
 # => true
 
 # Pull an Image.
-# docker command for reference: docker pull base, you need replace "base" with real docker image.
-image = Docker::Image.create('fromImage' => 'base')
+# docker command for reference: docker pull alpine:3.2
+image = Docker::Image.create('fromImage' => 'alpine:3.2')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Insert a local file into an Image.
