@@ -102,12 +102,15 @@ All of the following examples require a connection to a Docker server. See the <
 require 'docker'
 # => true
 
+# docker command for reference: docker version
 Docker.version
 # => { 'Version' => '0.5.2', 'GoVersion' => 'go1.1' }
 
+# docker command for reference: docker info 
 Docker.info
 # => { "Debug" => false, "Containers" => 187, "Images" => 196, "NFd" => 10, "NGoroutines" => 9, "MemoryLimit" => true }
 
+# docker command for reference: docker login
 Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 'email' => 'dockerboy22@aol.com')
 # => true
 ```
@@ -120,7 +123,8 @@ Just about every method here has a one-to-one mapping with the [Images](https://
 require 'docker'
 # => true
 
-# Create an Image.
+# Pull an Image.
+# docker command for reference: docker pull base, you need replace "base" with real docker image.
 image = Docker::Image.create('fromImage' => 'base')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
