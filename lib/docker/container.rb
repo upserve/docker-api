@@ -50,13 +50,16 @@ class Docker::Container
 
     # Create Exec Instance
     instance = Docker::Exec.create(
-      'Container' => self.id,
-      'User' => user,
-      'AttachStdin' => !!stdin,
-      'AttachStdout' => stdout,
-      'AttachStderr' => stderr,
-      'Tty' => tty,
-      'Cmd' => command
+      { 
+        'Container' => self.id,
+        'User' => user,
+        'AttachStdin' => !!stdin,
+        'AttachStdout' => stdout,
+        'AttachStderr' => stderr,
+        'Tty' => tty,
+        'Cmd' => command
+      }, 
+      self.connection
     )
 
     start_opts = {
