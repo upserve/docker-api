@@ -50,7 +50,7 @@ class Docker::Container
 
     # Create Exec Instance
     instance = Docker::Exec.create(
-      { 
+      {
         'Container' => self.id,
         'User' => user,
         'AttachStdin' => !!stdin,
@@ -58,7 +58,7 @@ class Docker::Container
         'AttachStderr' => stderr,
         'Tty' => tty,
         'Cmd' => command
-      }, 
+      },
       self.connection
     )
 
