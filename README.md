@@ -156,7 +156,7 @@ image.push
 # => Docker::Image { @connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} }, @info = { "id" => eb693ec80, "RepoTags" => ["base2", "base2/latest"]} }
 
 # Push individual tag to the Docker registry.
-image.push(nil, "tag" => "tag_name")
+image.push(nil, tag: "tag_name")
 image.push(nil, repo_tag: 'registry/repo_name:tag_name')
 
 # Given a command, create a new Container to run that command in the Image.
