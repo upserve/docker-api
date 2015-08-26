@@ -134,9 +134,13 @@ image.insert_local('localPath' => 'Gemfile', 'outputPath' => '/')
 image.insert_local('localPath' => [ 'Gemfile', 'Rakefile' ], 'outputPath' => '/')
 # => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
-# Tag an Image.
+# Add a repo name to Image.
 image.tag('repo' => 'base2', 'force' => true)
-# => nil
+# => ["base2"]
+
+# Add a repo name and tag an Image.
+image.tag('repo' => 'base2', 'tag' => 'latest', force: true)
+# => ["base2:latest"]
 
 # Get more information about the Image.
 image.json
