@@ -139,23 +139,28 @@ image.insert_local('localPath' => [ 'Gemfile', 'Rakefile' ], 'outputPath' => '/'
 # => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Add a repo name to Image.
+# docker command for reference: docker tag <IMAGE.ID> base2
 image.tag('repo' => 'base2', 'force' => true)
 # => ["base2"]
 
 # Add a repo name and tag an Image.
+# docker command for reference: docker tag <IMAGE.ID> base2:latest
 image.tag('repo' => 'base2', 'tag' => 'latest', force: true)
 # => ["base2:latest"]
 
 # Get more information about the Image.
+# docker command for reference: docker inspect <IMAGE.ID>
 image.json
 # => {"id"=>"67859327bf22ef8b5b9b4a6781f72b2015acd894fa03ce07e0db7af170ba468c", "comment"=>"Imported from -", "created"=>"2013-06-19T18:42:58.287944526-04:00", "container_config"=>{"Hostname"=>"", "User"=>"", "Memory"=>0, "MemorySwap"=>0, "CpuShares"=>0, "AttachStdin"=>false, "AttachStdout"=>false, "AttachStderr"=>false, "PortSpecs"=>nil, "Tty"=>false, "OpenStdin"=>false, "StdinOnce"=>false, "Env"=>nil, "Cmd"=>nil, "Dns"=>nil, "Image"=>"", "Volumes"=>nil, "VolumesFrom"=>""}, "docker_version"=>"0.4.0", "architecture"=>"x86_64"}
 
 # View the history of the Image.
+# docker command for reference, in fact it mixed the output from two commands: docker image <IMAGE.ID> and docker history <IMAGE.ID>
 image.history
 # => [{"Id"=>"67859327bf22", "Created"=>1371681778}]
 
 # Push the Image to the Docker registry. Note that you have to login using
 # `Docker.authenticate!` and tag the Image first.
+# docker command for reference: docker push <IMAGE.ID>
 image.push
 # => Docker::Image { @connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} }, @info = { "id" => eb693ec80, "RepoTags" => ["base2", "base2/latest"]} }
 
@@ -164,14 +169,17 @@ image.push(nil, tag: "tag_name")
 image.push(nil, repo_tag: 'registry/repo_name:tag_name')
 
 # Given a command, create a new Container to run that command in the Image.
+# docker command for reference: docker run -ti <IMAGE.ID> ls -l
 image.run('ls -l')
 # => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Remove the Image from the server.
+# docker command for reference: docker rmi -f <IMAGE.ID>
 image.remove(:force => true)
 # => true
 
 # Export a single Docker Image to a file
+# docker command for reference: docker save <IMAGE.ID> my_export.tar
 image.save('my_export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
@@ -180,6 +188,7 @@ image.save
 # => "abiglongbinarystring"
 
 # Given a Container's export, creates a new Image.
+# docker command for reference: docker import some-export.tar
 Docker::Image.import('some-export.tar')
 # => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
@@ -198,18 +207,22 @@ Docker::Image.build("from base\nrun touch /test")
 # => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Create an Image from a Dockerfile.
+# docker command for reference: docker build .
 Docker::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Create an Image from a tar file.
+# docker command for reference: docker build - < docker_image.tar
 Docker::Image.build_from_tar(File.open('docker_image.tar', 'r'))
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Load all Images on your Docker server.
+# docker command for reference: docker images
 Docker::Image.all
 # => [Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 
 # Get Image from the server, with id
+# docker command for reference: docker images <IMAGE.ID>
 Docker::Image.get('df4f1bdecf40')
 # => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
@@ -218,6 +231,7 @@ Docker::Image.exist?('ef723dcdac09')
 # => true
 
 # Export multiple images to a single tarball
+# docker command for reference: docker save my_image1 my_image2:not_latest > my_export.tar
 names = %w( my_image1 my_image2:not_latest )
 Docker::Image.save(names, 'my_export.tar')
 # => nil
@@ -228,6 +242,7 @@ Docker::Image.save(names)
 # => "abiglongbinarystring"
 
 # Search the Docker registry.
+# docker command for reference: docker search sshd
 Docker::Image.search('term' => 'sshd')
 # => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
