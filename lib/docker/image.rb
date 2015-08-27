@@ -41,7 +41,7 @@ class Docker::Image
   def tag(opts = {})
     self.info['RepoTags'] ||= []
     connection.post(path_for(:tag), opts)
-    repo = opts['repo'] || opts[:repo]
+    repo = opts['repo'] || opts[:repo] || self.id
     tag = opts['tag'] || opts[:tag] || 'latest'
     self.info['RepoTags'] << "#{repo}:#{tag}"
   end
