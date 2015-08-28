@@ -99,7 +99,7 @@ class Docker::Container
   end
 
   # Attach to a container's standard streams / logs.
-  def attach(options = {}, &block)
+  def attach(options = {}, excon_params = {}, &block)
     stdin = options.delete(:stdin)
     tty   = options.delete(:tty)
 
@@ -108,8 +108,6 @@ class Docker::Container
     }.merge(options)
     # Creates list to store stdout and stderr messages
     msgs = Docker::Messages.new
-
-    excon_params = {}
 
     if stdin
       # If attaching to stdin, we must hijack the underlying TCP connection
