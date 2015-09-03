@@ -16,7 +16,7 @@ class Docker::Container
   # Wait for the current command to finish executing. Default wait time is
   # `Excon.options[:read_timeout]`.
   def wait(time = nil)
-    excon_params = { :read_timeout => time, :idempotent => true }
+    excon_params = { :read_timeout => time }
     resp = connection.post(path_for(:wait), nil, excon_params)
     Docker::Util.parse_json(resp)
   end
