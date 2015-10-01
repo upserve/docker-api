@@ -3,6 +3,18 @@
 class Docker::Container
   include Docker::Base
 
+  # Update the @info hash, which is the only mutable state in this object.
+  #   e.g. if you would like a live status from the #info hash, call #refresh! first.
+  def refresh!
+    other = Docker::Container.all({all: true}, connection).find { |c|
+      c.id.start_with?(self.id) || self.id.start_with?(c.id)
+    }
+
+    info.merge!(self.json)
+    other && info.merge!(other.info)
+    self
+  end
+
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
     resp = Docker::Util.parse_json(connection.get(path_for(:top), opts))
