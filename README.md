@@ -210,6 +210,13 @@ Docker::Image.build("from base\nrun touch /test")
 Docker::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
+# Create an Image from a Dockerfile and stream the logs
+Docker::Image.build_from_dir('.') do |v|
+  if (log = JSON.parse(v)) && log.has_key?("stream")
+    $stdout.puts log["stream"]
+  end
+end
+
 # Create an Image from a tar file.
 # docker command for reference: docker build - < docker_image.tar
 Docker::Image.build_from_tar(File.open('docker_image.tar', 'r'))
