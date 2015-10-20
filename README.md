@@ -12,7 +12,7 @@ Installation
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'docker-api', :require => 'docker'
+gem 'docker-api'
 ```
 
 And then run:
