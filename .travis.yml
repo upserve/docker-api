@@ -1,4 +1,5 @@
 sudo: false
+cache: bundler
 language: ruby
 rvm:
     - 1.9.2
@@ -6,4 +7,3 @@ rvm:
     - 2.0
     - 2.1
     - 2.2
-script: bundle exec rake
