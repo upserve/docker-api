@@ -138,6 +138,17 @@ describe Docker::Exec do
       end
     end
 
+    context 'when :wait set with some values' do
+      subject {
+        described_class.create('Container' => container.id, 'Cmd' => %w[date])
+      }
+      after { container.kill!.remove }
+
+      it 'returns empty stdout/stderr messages with exitcode', :vcr do
+        expect(subject.start!(:wait => 100)).to eq([[],[], 0])
+      end
+    end
+
     context 'when the command has already run' do
       subject {
         described_class.create('Container' => container.id, 'Cmd' => ['date'])

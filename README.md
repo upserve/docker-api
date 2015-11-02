@@ -412,6 +412,12 @@ command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"]
 container.exec(command, tty: true)
 # => [["I'm a TTY!"], [], 0]
 
+# Wait for the current command to finish executing. If an argument is given,
+# will timeout after that number of seconds. The default is one minute.
+command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"Set max seconds for exec!!\"; fi"]
+container.exec(command, wait: 120)
+# => [["Set max seconds for exec!"], [], 0]
+
 # Delete a Container.
 container.delete(:force => true)
 # => nil
