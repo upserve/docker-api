@@ -68,7 +68,7 @@ class Docker::Exec
       end
     end
 
-    excon[:read_timeout] = read_timeout unless read_timeout.nil?
+    excon_params[:read_timeout] = read_timeout unless read_timeout.nil?
 
     connection.post(path_for(:start), nil, excon_params)
     [msgs.stdout_messages, msgs.stderr_messages, self.json['ExitCode']]
