@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://192.168.99.100:2376/v1.16/containers/create
+    uri: <DOCKER_HOST>/v1.16/containers/create
     body:
       encoding: UTF-8
       string: '{"Cmd":["sleep","300"],"Image":"debian:wheezy"}'
@@ -32,7 +32,7 @@ http_interactions:
   recorded_at: Wed, 04 Nov 2015 07:30:13 GMT
 - request:
     method: post
-    uri: https://192.168.99.100:2376/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a/start
+    uri: <DOCKER_HOST>/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a/start
     body:
       encoding: UTF-8
       string: "{}"
@@ -57,7 +57,7 @@ http_interactions:
   recorded_at: Wed, 04 Nov 2015 07:30:14 GMT
 - request:
     method: post
-    uri: https://192.168.99.100:2376/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a/exec
+    uri: <DOCKER_HOST>/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a/exec
     body:
       encoding: UTF-8
       string: '{"Cmd":["date"]}'
@@ -87,7 +87,7 @@ http_interactions:
   recorded_at: Wed, 04 Nov 2015 07:30:14 GMT
 - request:
     method: post
-    uri: https://192.168.99.100:2376/v1.16/exec/2fca0711df668baf5a782fdf1380f27357f7148e3580cc05299c24929ba04811/start
+    uri: <DOCKER_HOST>/v1.16/exec/2fca0711df668baf5a782fdf1380f27357f7148e3580cc05299c24929ba04811/start
     body:
       encoding: UTF-8
       string: '{"Tty":false,"Detach":false}'
@@ -110,7 +110,7 @@ http_interactions:
   recorded_at: Wed, 04 Nov 2015 07:30:14 GMT
 - request:
     method: get
-    uri: https://192.168.99.100:2376/v1.16/exec/2fca0711df668baf5a782fdf1380f27357f7148e3580cc05299c24929ba04811/json
+    uri: <DOCKER_HOST>/v1.16/exec/2fca0711df668baf5a782fdf1380f27357f7148e3580cc05299c24929ba04811/json
     body:
       encoding: US-ASCII
       string: ''
@@ -138,7 +138,7 @@ http_interactions:
   recorded_at: Wed, 04 Nov 2015 07:30:14 GMT
 - request:
     method: post
-    uri: https://192.168.99.100:2376/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a/kill
+    uri: <DOCKER_HOST>/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a/kill
     body:
       encoding: US-ASCII
       string: ''
@@ -163,7 +163,7 @@ http_interactions:
   recorded_at: Wed, 04 Nov 2015 07:30:14 GMT
 - request:
     method: delete
-    uri: https://192.168.99.100:2376/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a
+    uri: <DOCKER_HOST>/v1.16/containers/cb46ea8cb51d0df763bbce588b3b631bfe8f9141209a5120d9e8e8cc2fef452a
     body:
       encoding: US-ASCII
       string: ''
