@@ -160,6 +160,7 @@ describe Docker::Exec do
       after { container.kill!.remove }
 
       it 'raises an error', :vcr do
+        pending "VCR doesn't like to record errors"
         expect { subject.start!(:wait => 1) }.to raise_error(Docker::Error::TimeoutError)
       end
     end
