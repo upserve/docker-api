@@ -138,14 +138,29 @@ describe Docker::Exec do
       end
     end
 
-    context 'when :wait set with some values' do
+    context 'when :wait set long time value' do
       subject {
         described_class.create('Container' => container.id, 'Cmd' => %w[date])
       }
       after { container.kill!.remove }
 
-      it 'returns empty stdout/stderr messages with exitcode', :vcr do
-        expect(subject.start!(:wait => 100)).to eq([[],[], 0])
+      it 'returns empty stdout and stderr messages with exitcode', :vcr do
+        expect(subject.start!(:wait => 100)).to eq([[], [], 0])
+      end
+    end
+
+    context 'when :wait set short time value' do
+      subject {
+        described_class.create(
+            'Container'    => container.id,
+            'AttachStdout' => true,
+            'Cmd'          => ['bash', '-c', 'sleep 2; echo hello']
+        )
+      }
+      after { container.kill!.remove }
+
+      it 'raises an error' do
+        expect { subject.start!(:wait => 1) }.to raise_error(Docker::Error::TimeoutError)
       end
     end
 
