@@ -48,6 +48,7 @@ class Docker::Exec
     tty = !!options.delete(:tty)
     detached = !!options.delete(:detach)
     stdin = options[:stdin]
+    read_timeout = options[:wait]
 
     # Create API Request Body
     body = {
@@ -66,6 +67,8 @@ class Docker::Exec
           msgs, tty)
       end
     end
+
+    excon_params[:read_timeout] = read_timeout unless read_timeout.nil?
 
     connection.post(path_for(:start), nil, excon_params)
     [msgs.stdout_messages, msgs.stderr_messages, self.json['ExitCode']]

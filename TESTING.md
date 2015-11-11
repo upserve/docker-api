@@ -24,7 +24,7 @@ $ git checkout -b my_bug_fix
 4. Make any changes
 5. Write tests to support those changes.  
 6. Run the tests:
-  * `bundle exec rake vcr:test`
+  * `bundle exec rake vcr:spec`
 7. Assuming the tests pass, open a Pull Request on Github.
 
 # Using Rakefile Commands

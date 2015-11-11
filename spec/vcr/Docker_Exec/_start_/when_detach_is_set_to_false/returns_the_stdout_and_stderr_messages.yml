@@ -14,7 +14,7 @@ http_interactions:
   response:
     status:
       code: 201
-      message: 
+      message:
     headers:
       Content-Type:
       - application/json
@@ -27,7 +27,7 @@ http_interactions:
       string: ! '{"Id":"a8864e7b6565bfdb320c0542897bee3a03a6cd75bc54b362011b07b0b1acf00e","Warnings":null}
 
 '
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:36 GMT
 - request:
     method: post
@@ -43,14 +43,14 @@ http_interactions:
   response:
     status:
       code: 204
-      message: 
+      message:
     headers:
       Date:
       - Thu, 12 Feb 2015 00:54:36 GMT
     body:
       encoding: US-ASCII
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:36 GMT
 - request:
     method: post
@@ -66,7 +66,7 @@ http_interactions:
   response:
     status:
       code: 201
-      message: 
+      message:
     headers:
       Content-Type:
       - application/json
@@ -79,7 +79,7 @@ http_interactions:
       string: ! '{"Id":"07986593b4313b40484879220fe201c5f24fd6b6a4459e368d3235321932e833"}
 
 '
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:36 GMT
 - request:
     method: post
@@ -95,7 +95,7 @@ http_interactions:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       Content-Type:
       - application/vnd.docker.raw-stream
@@ -103,7 +103,7 @@ http_interactions:
       encoding: US-ASCII
       string: !binary |-
         AQAAAAAAAAZoZWxsbwo=
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:38 GMT
 - request:
     method: get
@@ -119,7 +119,7 @@ http_interactions:
   response:
     status:
       code: 200
-      message: 
+      message:
     headers:
       Content-Type:
       - application/json
@@ -131,7 +131,7 @@ http_interactions:
       encoding: US-ASCII
       string: ! '{"ID":"07986593b4313b40484879220fe201c5f24fd6b6a4459e368d3235321932e833","Running":false,"ExitCode":0,"ProcessConfig":{"privileged":false,"user":"","tty":false,"entrypoint":"bash","arguments":["-c","sleep
         2; echo hello"]},"OpenStdin":false,"OpenStderr":false,"OpenStdout":true,"Container":{"State":{"Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Pid":11092,"ExitCode":0,"Error":"","StartedAt":"2015-02-12T00:54:36.722319935Z","FinishedAt":"0001-01-01T00:00:00Z"},"ID":"a8864e7b6565bfdb320c0542897bee3a03a6cd75bc54b362011b07b0b1acf00e","Created":"2015-02-12T00:54:36.340436429Z","Path":"sleep","Args":["300"],"Config":{"Hostname":"a8864e7b6565","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"Cpuset":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"ExposedPorts":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["sleep","300"],"Image":"debian:wheezy","Volumes":null,"WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"MacAddress":"","OnBuild":null},"Image":"c90d655b99b2ec5b7e94d38c87f92dce015c17a313caeaae0e980d9b9bed8444","NetworkSettings":{"IPAddress":"172.17.0.83","IPPrefixLen":16,"MacAddress":"02:42:ac:11:00:53","Gateway":"172.17.42.1","Bridge":"docker0","PortMapping":null,"Ports":{}},"ResolvConfPath":"/var/lib/docker/containers/a8864e7b6565bfdb320c0542897bee3a03a6cd75bc54b362011b07b0b1acf00e/resolv.conf","HostnamePath":"/var/lib/docker/containers/a8864e7b6565bfdb320c0542897bee3a03a6cd75bc54b362011b07b0b1acf00e/hostname","HostsPath":"/var/lib/docker/containers/a8864e7b6565bfdb320c0542897bee3a03a6cd75bc54b362011b07b0b1acf00e/hosts","Name":"/cocky_euclid","Driver":"devicemapper","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","AppArmorProfile":"","RestartCount":0,"Volumes":{},"VolumesRW":{}}}'
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:38 GMT
 - request:
     method: post
@@ -147,14 +147,14 @@ http_interactions:
   response:
     status:
       code: 204
-      message: 
+      message:
     headers:
       Date:
       - Thu, 12 Feb 2015 00:54:38 GMT
     body:
       encoding: US-ASCII
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:38 GMT
 - request:
     method: delete
@@ -170,13 +170,13 @@ http_interactions:
   response:
     status:
       code: 204
-      message: 
+      message:
     headers:
       Date:
       - Thu, 12 Feb 2015 00:54:39 GMT
     body:
       encoding: US-ASCII
       string: ''
-    http_version: 
+    http_version:
   recorded_at: Thu, 12 Feb 2015 00:54:39 GMT
 recorded_with: VCR 2.9.2
