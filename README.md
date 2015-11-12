@@ -395,7 +395,7 @@ container.exec(['./my_service'], detach: true)
 # => Docker::Exec { :id => be4eaeb8d28a, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Parse the output of an Exec instance
-container.exec(['find / -name *']) { |stream, chunk| puts "#{stream}: #{chunk}" }
+container.exec(['find', '/', '-name *']) { |stream, chunk| puts "#{stream}: #{chunk}" }
 stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
 # => [[], ["2013/10/30 17:16:24 Unable to locate find / -name *\n"], 1]
 
