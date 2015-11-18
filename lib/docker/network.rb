@@ -3,11 +3,17 @@ class Docker::Network
   include Docker::Base
 
   def connect(container, opts = {})
-    Docker::Util.parse_json(connection.post(path_for('connect'), opts, body: {container: container}.to_json))
+    Docker::Util.parse_json(
+      connection.post(path_for('connect'), opts,
+                      body: { container: container }.to_json)
+    )
   end
 
   def disconnect(container, opts = {})
-    Docker::Util.parse_json(connection.post(path_for('disconnect'), opts, body: {container: container}.to_json))
+    Docker::Util.parse_json(
+      connection.post(path_for('disconnect'), opts,
+                      body: { container: container }.to_json)
+    )
   end
 
   # remove network
@@ -21,6 +27,11 @@ class Docker::Network
     Docker::Util.parse_json(connection.get(path_for, opts))
   end
 
+  def to_s
+    "Docker::Network { :id => #{id}, :info => #{info.inspect}, "\
+      ":connection => #{connection} }"
+  end
+
   class << self
     def create(opts = {}, conn = Docker.connection)
       default_opts = {
@@ -29,7 +40,8 @@ class Docker::Network
       name = opts.delete('name')
       query = {}
       query['name'] = name if name
-      resp = conn.post('/networks/create', query, :body => default_opts.merge(opts).to_json)
+      resp = conn.post('/networks/create', query,
+                       body: default_opts.merge(opts).to_json)
       hash = Docker::Util.parse_json(resp) || {}
       new(conn, hash)
     end
