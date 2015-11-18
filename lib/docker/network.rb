@@ -54,6 +54,12 @@ class Docker::Network
       hashes = Docker::Util.parse_json(conn.get('/networks', opts)) || []
       hashes.map { |hash| new(conn, hash) }
     end
+
+    def remove(id, opts = {}, conn = Docker.connection)
+      conn.delete("/networks/#{URI.encode(id)}", opts)
+      nil
+    end
+    alias_method :delete, :remove
   end
 
   # Convenience method to return the path for a particular resource.
