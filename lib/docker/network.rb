@@ -33,17 +33,15 @@ class Docker::Network
   end
 
   class << self
-    def create(opts = {}, conn = Docker.connection)
+    def create(name, opts = {}, conn = Docker.connection)
       default_opts = {
+        'Name' => name,
         'CheckDuplicate' => true
       }
-      name = opts.delete('name')
-      query = {}
-      query['name'] = name if name
-      resp = conn.post('/networks/create', query,
+      resp = conn.post('/networks/create', {},
                        body: default_opts.merge(opts).to_json)
-      hash = Docker::Util.parse_json(resp) || {}
-      new(conn, hash)
+      response_hash = Docker::Util.parse_json(resp) || {}
+      get(response_hash['Id']) || {}
     end
 
     def get(id, opts = {}, conn = Docker.connection)
