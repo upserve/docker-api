@@ -2,181 +2,189 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/create
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["sleep","300"],"Image":"debian:wheezy"}'
+      string: '{"Cmd":["sleep","300"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message:
+      message: 
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:40 GMT
+      - Fri, 20 Nov 2015 16:38:43 GMT
       Content-Length:
       - '90'
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe","Warnings":null}
-
-'
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:40 GMT
+      encoding: UTF-8
+      string: |
+        {"Id":"7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c","Warnings":null}
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:43 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe/start
+    uri: "<DOCKER_HOST>/v1.16/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/start"
     body:
       encoding: UTF-8
-      string: ! '{}'
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
     status:
       code: 204
-      message:
+      message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:40 GMT
-    body:
-      encoding: US-ASCII
-      string: ''
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:40 GMT
-- request:
-    method: post
-    uri: <DOCKER_HOST>/v1.16/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe/exec
+      - Fri, 20 Nov 2015 16:38:43 GMT
     body:
       encoding: UTF-8
-      string: ! '{"AttachStdout":true,"Cmd":["bash","-c","sleep 2; echo hello"]}'
+      string: ''
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:43 GMT
+- request:
+    method: post
+    uri: "<DOCKER_HOST>/v1.16/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/exec"
+    body:
+      encoding: UTF-8
+      string: '{"AttachStdout":true,"Cmd":["bash","-c","sleep 2; echo hello"]}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
     status:
       code: 201
-      message:
+      message: 
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:40 GMT
+      - Fri, 20 Nov 2015 16:38:43 GMT
       Content-Length:
       - '74'
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"b59c0236313570501ac9420299e448c91fc3b8458a0f44dd680dac6936817590"}
-
-'
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:40 GMT
+      encoding: UTF-8
+      string: |
+        {"Id":"5b2bcb27d0330c49adb143213d4054788ed4d8307d97616b030acb5f82272031"}
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:43 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/exec/b59c0236313570501ac9420299e448c91fc3b8458a0f44dd680dac6936817590/start
+    uri: "<DOCKER_HOST>/v1.16/exec/5b2bcb27d0330c49adb143213d4054788ed4d8307d97616b030acb5f82272031/start"
     body:
       encoding: UTF-8
-      string: ! '{"Tty":false,"Detach":false}'
+      string: '{"Tty":false,"Detach":false}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       Content-Type:
       - application/vnd.docker.raw-stream
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: !binary |-
         AQAAAAAAAAZoZWxsbwo=
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:42 GMT
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:46 GMT
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/exec/b59c0236313570501ac9420299e448c91fc3b8458a0f44dd680dac6936817590/json
+    uri: "<DOCKER_HOST>/v1.16/exec/5b2bcb27d0330c49adb143213d4054788ed4d8307d97616b030acb5f82272031/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 200
-      message:
+      message: 
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:42 GMT
-      Content-Length:
-      - '1891'
+      - Fri, 20 Nov 2015 16:38:46 GMT
     body:
-      encoding: US-ASCII
-      string: ! '{"ID":"b59c0236313570501ac9420299e448c91fc3b8458a0f44dd680dac6936817590","Running":false,"ExitCode":0,"ProcessConfig":{"privileged":false,"user":"","tty":false,"entrypoint":"bash","arguments":["-c","sleep
-        2; echo hello"]},"OpenStdin":false,"OpenStderr":false,"OpenStdout":true,"Container":{"State":{"Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Pid":11153,"ExitCode":0,"Error":"","StartedAt":"2015-02-12T00:54:40.397377758Z","FinishedAt":"0001-01-01T00:00:00Z"},"ID":"331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe","Created":"2015-02-12T00:54:40.009782151Z","Path":"sleep","Args":["300"],"Config":{"Hostname":"331b69bde1c0","Domainname":"","User":"","Memory":0,"MemorySwap":0,"CpuShares":0,"Cpuset":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"ExposedPorts":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"Cmd":["sleep","300"],"Image":"debian:wheezy","Volumes":null,"WorkingDir":"","Entrypoint":null,"NetworkDisabled":false,"MacAddress":"","OnBuild":null},"Image":"c90d655b99b2ec5b7e94d38c87f92dce015c17a313caeaae0e980d9b9bed8444","NetworkSettings":{"IPAddress":"172.17.0.84","IPPrefixLen":16,"MacAddress":"02:42:ac:11:00:54","Gateway":"172.17.42.1","Bridge":"docker0","PortMapping":null,"Ports":{}},"ResolvConfPath":"/var/lib/docker/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe/resolv.conf","HostnamePath":"/var/lib/docker/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe/hostname","HostsPath":"/var/lib/docker/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe/hosts","Name":"/insane_mccarthy","Driver":"devicemapper","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","AppArmorProfile":"","RestartCount":0,"Volumes":{},"VolumesRW":{}}}'
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:42 GMT
+      encoding: UTF-8
+      string: |
+        {"ID":"5b2bcb27d0330c49adb143213d4054788ed4d8307d97616b030acb5f82272031","Running":false,"ExitCode":0,"ProcessConfig":{"privileged":false,"user":"","tty":false,"entrypoint":"bash","arguments":["-c","sleep 2; echo hello"]},"OpenStdin":false,"OpenStderr":false,"OpenStdout":true,"Container":{"State":{"Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":17852,"ExitCode":0,"Error":"","StartedAt":"2015-11-20T16:38:43.958441647Z","FinishedAt":"0001-01-01T00:00:00Z"},"ID":"7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c","Created":"2015-11-20T16:38:42.253860845Z","Path":"sleep","Args":["300"],"Config":{"Hostname":"7e59277ffe05","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["sleep","300"],"Image":"debian:wheezy","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{}},"Image":"b4c4e8b590a7f35f98b73b02f8f1db4850f907619770fd09ed3d489e671f7f38","NetworkSettings":{"Bridge":"","SandboxID":"e01bafae72d6da3b393197b22d68f437edebf1c3a1a3459ffb05dca319637a4e","HairpinMode":false,"LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"Networks":{"bridge":{"EndpointID":"fcd4bed7586deed1a5e08a774e0f243156457e5df299ca150f1a2133db97d1d9","Gateway":"172.17.0.1","IPAddress":"172.17.0.3","IPPrefixLen":16,"IPv6Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"MacAddress":"02:42:ac:11:00:03"}},"Ports":{},"SandboxKey":"/var/run/docker/netns/e01bafae72d6","SecondaryIPAddresses":null,"SecondaryIPv6Addresses":null,"IsAnonymousEndpoint":true},"LogPath":"/var/lib/docker/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c-json.log","Name":"/desperate_turing","Driver":"devicemapper","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","RestartCount":0,"HasBeenStartedBefore":false,"HasBeenManuallyStopped":false,"AppArmorProfile":"","HostnamePath":"/var/lib/docker/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/hostname","HostsPath":"/var/lib/docker/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/hosts","ShmPath":"/var/lib/docker/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/shm","MqueuePath":"/var/lib/docker/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/mqueue","MountPoints":{},"ResolvConfPath":"/var/lib/docker/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/resolv.conf","Volumes":{},"VolumesRW":{}}}
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:46 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe/kill
+    uri: "<DOCKER_HOST>/v1.16/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c/kill"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 204
-      message:
+      message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:42 GMT
+      - Fri, 20 Nov 2015 16:38:46 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:42 GMT
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:46 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/containers/331b69bde1c01753ffbe15f07bc4ae1bb6a492ef49866e522454c2fcd3cc4cfe
+    uri: "<DOCKER_HOST>/v1.16/containers/7e59277ffe05032dc93d49e12f37e420e994a529f0d069038b80b47a8ae6723c"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
     status:
       code: 204
-      message:
+      message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:43 GMT
+      - Fri, 20 Nov 2015 16:38:47 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
-    http_version:
-  recorded_at: Thu, 12 Feb 2015 00:54:43 GMT
-recorded_with: VCR 2.9.2
+    http_version: 
+  recorded_at: Fri, 20 Nov 2015 16:38:47 GMT
+recorded_with: VCR 3.0.0

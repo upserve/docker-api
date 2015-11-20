@@ -2,17 +2,17 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=tianon%2Ftrue
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=tianon%2Ftrue"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
       X-Registry-Auth:
-      - eyJ1c2VybmFtZSI6InRsdW50ZXIiLCJwYXNzd29yZCI6ImprN2d0aXEiLCJlbWFpbCI6InRsdW50ZXJAZ21haWwuY29tIn0=
+      - eyJ1c2VybmFtZSI6ImRlYmJpZV9kb2NrZXIiLCJwYXNzd29yZCI6IioqKioqKioqKioqKioiLCJlbWFpbCI6ImRlYmJpZV9kb2NrZXJAZXhhbXBsZS5jb20ifQ==
   response:
     status:
       code: 200
@@ -20,19 +20,14 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:57 GMT
+      - Fri, 20 Nov 2015 16:40:21 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"Pulling repository tianon/true\"}\r\n{\"status\":\"Pulling
-        image (latest) from tianon/true\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Pulling
-        image (latest) from tianon/true, endpoint: https://registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Pulling
-        dependent layers\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"e41eb64a720e\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Status:
-        Image is up to date for tianon/true\"}\r\n"
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling repository docker.io/tianon/true\"}\r\n{\"errorDetail\":{\"message\":\"Authentication
+        is required.\"},\"error\":\"Authentication is required.\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:59 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Fri, 20 Nov 2015 16:40:21 GMT
+recorded_with: VCR 3.0.0

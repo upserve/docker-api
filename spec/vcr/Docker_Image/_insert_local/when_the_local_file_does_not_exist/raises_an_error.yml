@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,15 +18,15 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:55 GMT
+      - Fri, 20 Nov 2015 16:39:25 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"30d39e59ffe2\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"c90d655b99b2\"}{\"status\":\"Status:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling from library/debian\",\"id\":\"wheezy\"}\r\n{\"status\":\"Digest:
+        sha256:913916fa02a58cde97ea6dbbdd009026c7910861a243b78c151d04bc1d23f39e\"}\r\n{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:54:55 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Fri, 20 Nov 2015 16:39:25 GMT
+recorded_with: VCR 3.0.0

@@ -2,54 +2,62 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/create
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
       encoding: UTF-8
-      string: ! '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"debian:wheezy","Volumes":{},"VolumesFrom":""}'
+      string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"debian:wheezy","Volumes":{},"VolumesFrom":""}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
     status:
-      code: 201
+      code: 500
       message: 
     headers:
       Content-Type:
-      - application/json
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:28 GMT
+      - Fri, 20 Nov 2015 16:38:22 GMT
       Content-Length:
-      - '90'
+      - '61'
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"f39b0ff6aeed1f8d046d463c878808b581c19d80620d2d5b8971df221275cf9b","Warnings":null}
-
-'
+      encoding: UTF-8
+      string: |
+        json: cannot unmarshal string into Go value of type []string
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:54:28 GMT
+  recorded_at: Fri, 20 Nov 2015 16:38:22 GMT
 - request:
-    method: delete
-    uri: <DOCKER_HOST>/v1.16/containers/f39b0ff6aeed1f8d046d463c878808b581c19d80620d2d5b8971df221275cf9b
+    method: post
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: '{"Hostname":"","User":"","Memory":0,"MemorySwap":0,"AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"PortSpecs":null,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["date"],"Dns":null,"Image":"debian:wheezy","Volumes":{},"VolumesFrom":""}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
-      - text/plain
+      - application/json
   response:
     status:
-      code: 204
+      code: 500
       message: 
     headers:
+      Content-Type:
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:54:29 GMT
+      - Fri, 20 Nov 2015 16:38:22 GMT
+      Content-Length:
+      - '61'
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: |
+        json: cannot unmarshal string into Go value of type []string
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:54:29 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Fri, 20 Nov 2015 16:38:22 GMT
+recorded_with: VCR 3.0.0

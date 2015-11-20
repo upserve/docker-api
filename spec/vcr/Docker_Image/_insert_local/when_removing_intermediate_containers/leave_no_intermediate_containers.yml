@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/containers/json?all=true
+    uri: "<DOCKER_HOST>/v1.16/containers/json?all=true"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,30 +18,25 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:13 GMT
-      Content-Length:
-      - '491'
+      - Fri, 20 Nov 2015 16:39:42 GMT
     body:
-      encoding: US-ASCII
-      string: ! '[{"Command":"true","Created":1423702467,"Id":"ddcdf1352c0e624bba454a8957174d5f8410edce613b6ba100984fc722d8c21d","Image":"debian:wheezy","Names":["/cocky_goodall"],"Ports":[],"Status":"Exited
-        (0) 44 seconds ago"}
-
-        ,{"Command":"docker-registry","Created":1423702401,"Id":"7495fa1e6c231934f42eb34525f24a052af2a7a43ae9c85051636428a62a40ba","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up
-        About a minute"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        [{"Id":"620dc64e4089301efb8b566ccd99a408dd4e37af3a57f911537e6fa55d3fd849","Names":["/registry"],"Image":"registry","ImageID":"1cb234ccb22b7897976cb8b95b6a502aacf5b606eef6eb1af000b7194a5293f4","Command":"docker-registry","Created":1448037339,"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Labels":{},"Status":"Up 4 minutes","HostConfig":{"NetworkMode":"default"}},{"Id":"3d8bdb25736a63602bf53d2d0527c01037897af7a488d107803751a88bbf8f55","Names":["/distracted_mcnulty"],"Image":"8c897ece9aad","ImageID":"8c897ece9aad17b448882d5001a97050bdad918bbc13f134ba19577df08905a7","Command":"cat /Dockerfile","Created":1448031420,"Ports":[],"Labels":{},"Status":"Exited (0) About an hour ago","HostConfig":{"NetworkMode":"default"}},{"Id":"d54eb3a4f03ed53a450f188853235277d7b408930a382b639e47e4348dfa5808","Names":["/gigantic_jepsen"],"Image":"8c897ece9aad","ImageID":"8c897ece9aad17b448882d5001a97050bdad918bbc13f134ba19577df08905a7","Command":"cat /Dockerfile","Created":1448031418,"Ports":[],"Labels":{},"Status":"Exited (0) About an hour ago","HostConfig":{"NetworkMode":"default"}},{"Id":"b63f98857aef9e78476e6da067af45629a08b6ab5c7bbb6ed5f678ba9d92e134","Names":["/nostalgic_carson"],"Image":"8c897ece9aad","ImageID":"8c897ece9aad17b448882d5001a97050bdad918bbc13f134ba19577df08905a7","Command":"cat /Dockerfile","Created":1448031017,"Ports":[],"Labels":{},"Status":"Exited (0) About an hour ago","HostConfig":{"NetworkMode":"default"}},{"Id":"80cd3fafca6e2f46356834f08161010f4a3d265023dff320b4c3f736a09fb603","Names":["/loving_morse"],"Image":"8c897ece9aad","ImageID":"8c897ece9aad17b448882d5001a97050bdad918bbc13f134ba19577df08905a7","Command":"cat /Dockerfile","Created":1448030277,"Ports":[],"Labels":{},"Status":"Exited (0) 2 hours ago","HostConfig":{"NetworkMode":"default"}},{"Id":"8b94169fb425c71054c5d111c7578e0b26120f6efb7d5406525d4cbf1a1bca12","Names":["/suspicious_ritchie"],"Image":"8c897ece9aad","ImageID":"8c897ece9aad17b448882d5001a97050bdad918bbc13f134ba19577df08905a7","Command":"cat /Dockerfile","Created":1448030275,"Ports":[],"Labels":{},"Status":"Exited (0) 2 hours ago","HostConfig":{"NetworkMode":"default"}}]
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:13 GMT
+  recorded_at: Fri, 20 Nov 2015 16:39:42 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -51,27 +46,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:13 GMT
+      - Fri, 20 Nov 2015 16:39:44 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"30d39e59ffe2\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"c90d655b99b2\"}{\"status\":\"Status:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling from library/debian\",\"id\":\"wheezy\"}\r\n{\"status\":\"Digest:
+        sha256:913916fa02a58cde97ea6dbbdd009026c7910861a243b78c151d04bc1d23f39e\"}\r\n{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:13 GMT
+  recorded_at: Fri, 20 Nov 2015 16:39:44 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/build?rm=true
+    uri: "<DOCKER_HOST>/v1.16/build?rm=true"
     body:
       encoding: UTF-8
       string: !binary |-
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADAwMDAwMDAwMDAwADAxMjU0NgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNjIzNjQ2MzIwADAxMjYxMQAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -93,8 +88,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAwMDAwMDAwMDAw
-        MAAwMTMyMzcAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDAzMgAxMjYyMzY0NjMy
+        MAAwMTMzMDMAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -102,7 +97,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAZnJvbSBjOTBkNjU1Yjk5YjIKYWRkIEdlbWZpbGUgLwoAAAAAAAAA
+        AAAAAAAAZnJvbSB3aGVlenkKYWRkIEdlbWZpbGUgLwoAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -139,7 +134,7 @@ http_interactions:
         AAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -149,27 +144,98 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:13 GMT
+      - Fri, 20 Nov 2015 16:39:44 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"stream\":\"Step 0 : FROM c90d655b99b2\\n\"}\r\n{\"stream\":\"
-        ---\\u003e c90d655b99b2\\n\"}\r\n{\"stream\":\"Step 1 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 4b3da5a8e27b\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        108aa140d2ec\\n\"}\r\n{\"stream\":\"Successfully built 4b3da5a8e27b\\n\"}\r\n"
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 1 : FROM wheezy\\n\"}\r\n{\"status\":\"Pulling repository
+        docker.io/library/wheezy\"}\r\n{\"errorDetail\":{\"message\":\"Error: image
+        library/wheezy:latest not found\"},\"error\":\"Error: image library/wheezy:latest
+        not found\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:15 GMT
+  recorded_at: Fri, 20 Nov 2015 16:39:46 GMT
 - request:
-    method: get
-    uri: <DOCKER_HOST>/v1.16/containers/json?all=true
+    method: post
+    uri: "<DOCKER_HOST>/v1.16/build?rm=true"
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: !binary |-
+        R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
+        ADEyNjIzNjQ2MzIyADAxMjYxMwAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAwMDAwMDAwADAwMDAwMDAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAABzb3VyY2UgJ2h0dHA6Ly9ydWJ5Z2Vtcy5vcmcn
+        CgpnZW1zcGVjCgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDAzMgAxMjYyMzY0NjMy
+        MgAwMTMzMDUAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAMDAwMDAwMAAwMDAwMDAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAZnJvbSB3aGVlenkKYWRkIEdlbWZpbGUgLwoAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
-      - text/plain
+      - application/json
   response:
     status:
       code: 200
@@ -177,48 +243,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:15 GMT
-      Content-Length:
-      - '491'
+      - Fri, 20 Nov 2015 16:39:46 GMT
     body:
-      encoding: US-ASCII
-      string: ! '[{"Command":"true","Created":1423702467,"Id":"ddcdf1352c0e624bba454a8957174d5f8410edce613b6ba100984fc722d8c21d","Image":"debian:wheezy","Names":["/cocky_goodall"],"Ports":[],"Status":"Exited
-        (0) 47 seconds ago"}
-
-        ,{"Command":"docker-registry","Created":1423702401,"Id":"7495fa1e6c231934f42eb34525f24a052af2a7a43ae9c85051636428a62a40ba","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up
-        About a minute"}
-
-        ]'
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 1 : FROM wheezy\\n\"}\r\n{\"status\":\"Pulling repository
+        docker.io/library/wheezy\"}\r\n{\"errorDetail\":{\"message\":\"Error: image
+        library/wheezy:latest not found\"},\"error\":\"Error: image library/wheezy:latest
+        not found\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:15 GMT
-- request:
-    method: delete
-    uri: <DOCKER_HOST>/v1.16/images/4b3da5a8e27b
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - Swipely/Docker-API 1.18.0
-      Content-Type:
-      - text/plain
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 12 Feb 2015 00:55:16 GMT
-      Content-Length:
-      - '81'
-    body:
-      encoding: US-ASCII
-      string: ! '[{"Deleted":"4b3da5a8e27b1fe2d963e39742b610f40e1f0a6de42712c8039a13b9703c0e27"}
-
-        ]'
-    http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:16 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Fri, 20 Nov 2015 16:39:48 GMT
+recorded_with: VCR 3.0.0
