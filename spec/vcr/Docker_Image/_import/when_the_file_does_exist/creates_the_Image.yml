@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromSrc=-
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromSrc=-"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/tar
       Transfer-Encoding:
@@ -20,22 +20,24 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:59 GMT
+      - Fri, 20 Nov 2015 16:40:22 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"92e5cf883c1fb5fbf0a9bca0ca8919fd848892c481199272af30d616a20544a1\"}\r\n"
+      encoding: UTF-8
+      string: "{\"status\":\"c1c977f9dbc277e44ba9610a2ccab3f9fadf5dff52c1dbdd698477a68868df54\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:59 GMT
+  recorded_at: Fri, 20 Nov 2015 16:40:22 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/images/92e5cf883c1fb5fbf0a9bca0ca8919fd848892c481199272af30d616a20544a1?noprune=true
+    uri: "<DOCKER_HOST>/v1.16/images/c1c977f9dbc277e44ba9610a2ccab3f9fadf5dff52c1dbdd698477a68868df54?noprune=true"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -45,15 +47,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:56:00 GMT
+      - Fri, 20 Nov 2015 16:40:23 GMT
       Content-Length:
       - '81'
     body:
-      encoding: US-ASCII
-      string: ! '[{"Deleted":"92e5cf883c1fb5fbf0a9bca0ca8919fd848892c481199272af30d616a20544a1"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        [{"Deleted":"c1c977f9dbc277e44ba9610a2ccab3f9fadf5dff52c1dbdd698477a68868df54"}]
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:56:00 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Fri, 20 Nov 2015 16:40:23 GMT
+recorded_with: VCR 3.0.0

@@ -8,7 +8,7 @@ http_interactions:
       string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.19.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -18,25 +18,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Mon, 23 Feb 2015 19:44:39 GMT
+      - Fri, 20 Nov 2015 16:36:11 GMT
       Content-Length:
       - '90'
     body:
       encoding: UTF-8
       string: |
-        {"Id":"9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2","Warnings":null}
+        {"Id":"ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68","Warnings":null}
     http_version: 
-  recorded_at: Mon, 23 Feb 2015 19:44:39 GMT
+  recorded_at: Fri, 20 Nov 2015 16:36:11 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.16/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/start"
+    uri: "<DOCKER_HOST>/v1.16/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/start"
     body:
       encoding: UTF-8
       string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.19.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -44,22 +46,24 @@ http_interactions:
       code: 204
       message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Mon, 23 Feb 2015 19:44:39 GMT
+      - Fri, 20 Nov 2015 16:36:11 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 23 Feb 2015 19:44:39 GMT
+  recorded_at: Fri, 20 Nov 2015 16:36:11 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.16/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/rename?name=bar"
+    uri: "<DOCKER_HOST>/v1.16/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/rename?name=bar"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.19.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -67,22 +71,24 @@ http_interactions:
       code: 204
       message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Mon, 23 Feb 2015 19:44:39 GMT
+      - Fri, 20 Nov 2015 16:36:12 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 23 Feb 2015 19:44:39 GMT
+  recorded_at: Fri, 20 Nov 2015 16:36:12 GMT
 - request:
     method: get
-    uri: "<DOCKER_HOST>/v1.16/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/json"
+    uri: "<DOCKER_HOST>/v1.16/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.19.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -92,23 +98,25 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Mon, 23 Feb 2015 19:44:39 GMT
+      - Fri, 20 Nov 2015 16:36:12 GMT
     body:
       encoding: UTF-8
       string: |
-        {"AppArmorProfile":"","Args":[],"Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["true"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"9da0d07895ab","Image":"debian:wheezy","MacAddress":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":null,"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2015-02-23T19:44:39.002713163Z","Driver":"aufs","ExecDriver":"native-0.2","ExecIDs":null,"HostConfig":{"Binds":null,"CapAdd":null,"CapDrop":null,"ContainerIDFile":"","Devices":null,"Dns":null,"DnsSearch":null,"ExtraHosts":null,"IpcMode":"","Links":null,"LxcConf":null,"NetworkMode":"","PidMode":"","PortBindings":null,"Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"RestartPolicy":{"MaximumRetryCount":0,"Name":""},"SecurityOpt":null,"VolumesFrom":null},"HostnamePath":"/data/docker/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/hostname","HostsPath":"/data/docker/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/hosts","Id":"9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2","Image":"479215127fa7b852902ed734f3a7ac69177c0d4d9446ad3a1648938230c3c8ab","MountLabel":"","Name":"bar","NetworkSettings":{"Bridge":"docker0","Gateway":"172.17.42.1","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"IPAddress":"172.17.8.30","IPPrefixLen":16,"IPv6Gateway":"","LinkLocalIPv6Address":"fe80::42:acff:fe11:81e","LinkLocalIPv6PrefixLen":64,"MacAddress":"02:42:ac:11:08:1e","PortMapping":null,"Ports":{}},"Path":"true","ProcessLabel":"","ResolvConfPath":"/data/docker/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/resolv.conf","RestartCount":0,"State":{"Error":"","ExitCode":0,"FinishedAt":"0001-01-01T00:00:00Z","OOMKilled":false,"Paused":false,"Pid":29174,"Restarting":false,"Running":true,"StartedAt":"2015-02-23T19:44:39.19713536Z"},"Volumes":{},"VolumesRW":{}}
+        {"Id":"ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68","Created":"2015-11-20T16:36:10.078686764Z","Path":"true","Args":[],"State":{"Status":"exited","Running":false,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":0,"ExitCode":0,"Error":"","StartedAt":"2015-11-20T16:36:11.785517206Z","FinishedAt":"2015-11-20T16:36:12.168752047Z"},"Image":"b4c4e8b590a7f35f98b73b02f8f1db4850f907619770fd09ed3d489e671f7f38","ResolvConfPath":"/var/lib/docker/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/resolv.conf","HostnamePath":"/var/lib/docker/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/hostname","HostsPath":"/var/lib/docker/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/hosts","LogPath":"/var/lib/docker/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68-json.log","Name":"/bar","RestartCount":0,"Driver":"devicemapper","ExecDriver":"native-0.2","MountLabel":"","ProcessLabel":"","AppArmorProfile":"","ExecIDs":null,"HostConfig":{"Binds":null,"ContainerIDFile":"","LxcConf":null,"Memory":0,"MemoryReservation":0,"MemorySwap":0,"KernelMemory":0,"CpuShares":0,"CpuPeriod":0,"CpusetCpus":"","CpusetMems":"","CpuQuota":0,"BlkioWeight":0,"OomKillDisable":false,"MemorySwappiness":null,"Privileged":false,"PortBindings":null,"Links":null,"PublishAllPorts":false,"Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"VolumesFrom":null,"Devices":null,"NetworkMode":"default","IpcMode":"","PidMode":"","UTSMode":"","CapAdd":null,"CapDrop":null,"GroupAdd":null,"RestartPolicy":{"Name":"","MaximumRetryCount":0},"SecurityOpt":null,"ReadonlyRootfs":false,"Ulimits":null,"LogConfig":{"Type":"json-file","Config":{}},"CgroupParent":"","ConsoleSize":[0,0],"VolumeDriver":""},"GraphDriver":{"Name":"devicemapper","Data":{"DeviceId":"2714","DeviceName":"docker-253:2-1577924-ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68","DeviceSize":"10737418240"}},"Volumes":{},"VolumesRW":{},"Config":{"Hostname":"ebf93eb4db8f","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["true"],"Image":"debian:wheezy","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":{},"MacAddress":"","NetworkDisabled":false,"ExposedPorts":null,"VolumeDriver":"","Memory":0,"MemorySwap":0,"CpuShares":0,"Cpuset":""},"NetworkSettings":{"Bridge":"","SandboxID":"","HairpinMode":false,"LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"Ports":null,"SandboxKey":"","SecondaryIPAddresses":null,"SecondaryIPv6Addresses":null,"EndpointID":"","Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"IPAddress":"","IPPrefixLen":0,"IPv6Gateway":"","MacAddress":""}}
     http_version: 
-  recorded_at: Mon, 23 Feb 2015 19:44:39 GMT
+  recorded_at: Fri, 20 Nov 2015 16:36:12 GMT
 - request:
     method: post
-    uri: "<DOCKER_HOST>/v1.16/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2/kill"
+    uri: "<DOCKER_HOST>/v1.16/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68/kill"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.19.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -116,22 +124,24 @@ http_interactions:
       code: 204
       message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Mon, 23 Feb 2015 19:44:39 GMT
+      - Fri, 20 Nov 2015 16:36:12 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 23 Feb 2015 19:44:39 GMT
+  recorded_at: Fri, 20 Nov 2015 16:36:12 GMT
 - request:
     method: delete
-    uri: "<DOCKER_HOST>/v1.16/containers/9da0d07895abd822be26f56dfebca52628b6ebc4cfa1216b633cca367e5632b2"
+    uri: "<DOCKER_HOST>/v1.16/containers/ebf93eb4db8fed42bb1f0c0ae0128d14bf11ca898cfccc15f035af1a0ad13f68"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.19.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -139,11 +149,13 @@ http_interactions:
       code: 204
       message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Mon, 23 Feb 2015 19:44:39 GMT
+      - Fri, 20 Nov 2015 16:36:13 GMT
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Mon, 23 Feb 2015 19:44:39 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Fri, 20 Nov 2015 16:36:13 GMT
+recorded_with: VCR 3.0.0

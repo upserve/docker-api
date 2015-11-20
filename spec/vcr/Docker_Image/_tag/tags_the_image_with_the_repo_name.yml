@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,71 +18,75 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:48 GMT
+      - Fri, 20 Nov 2015 16:40:03 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"30d39e59ffe2\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"c90d655b99b2\"}{\"status\":\"Status:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling from library/debian\",\"id\":\"wheezy\"}\r\n{\"status\":\"Digest:
+        sha256:913916fa02a58cde97ea6dbbdd009026c7910861a243b78c151d04bc1d23f39e\"}\r\n{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:48 GMT
+  recorded_at: Fri, 20 Nov 2015 16:40:03 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/c90d655b99b2/tag?force=true&repo=teh
+    uri: "<DOCKER_HOST>/v1.16/images/wheezy/tag?force=true&repo=teh"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
     status:
-      code: 201
+      code: 404
       message: 
     headers:
-      Date:
-      - Thu, 12 Feb 2015 00:55:48 GMT
-      Content-Length:
-      - '0'
       Content-Type:
       - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Fri, 20 Nov 2015 16:40:03 GMT
+      Content-Length:
+      - '41'
     body:
-      encoding: US-ASCII
-      string: ''
+      encoding: UTF-8
+      string: |
+        could not find image: no such id: wheezy
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:48 GMT
+  recorded_at: Fri, 20 Nov 2015 16:40:03 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/images/teh:latest?noprune=true
+    uri: "<DOCKER_HOST>/v1.16/images/teh:latest?noprune=true"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
     status:
-      code: 200
+      code: 404
       message: 
     headers:
       Content-Type:
-      - application/json
+      - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:48 GMT
+      - Fri, 20 Nov 2015 16:40:03 GMT
       Content-Length:
-      - '28'
+      - '45'
     body:
-      encoding: US-ASCII
-      string: ! '[{"Untagged":"teh:latest"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        could not find image: no such id: teh:latest
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:48 GMT
-recorded_with: VCR 2.9.2
+  recorded_at: Fri, 20 Nov 2015 16:40:03 GMT
+recorded_with: VCR 3.0.0
