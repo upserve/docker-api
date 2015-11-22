@@ -163,18 +163,6 @@ describe Docker::Exec do
       end
     end
 
-    context 'when the command has already run' do
-      subject {
-        described_class.create('Container' => container.id, 'Cmd' => ['date'])
-      }
-      before { subject.start! }
-      after { container.kill!.remove }
-
-      it 'raises an error', :vcr do
-        expect { subject.start! }.to raise_error(Docker::Error::NotFoundError)
-      end
-    end
-
     context 'when the HTTP request returns a 201' do
       subject {
         described_class.create('Container' => container.id, 'Cmd' => ['date'])

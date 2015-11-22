@@ -283,6 +283,8 @@ describe Docker::Container do
         .attach(stdin: StringIO.new("foo\nbar\n")) do |stream, c|
           chunk ||= c
         end
+      container.tap(&:wait).remove
+
       expect(chunk).to eq("foo\nbar\n")
     end
   end
@@ -361,7 +363,7 @@ describe Docker::Container do
     end
 
     context 'when stdin object is passed' do
-      let(:output) { subject.exec('cat', stdin: StringIO.new("hello")) }
+      let(:output) { subject.exec(['cat'], stdin: StringIO.new("hello")) }
 
       it 'returns the stdout/stderr messages', :vcr do
         expect(output).to eq([["hello"],[],0])
@@ -521,10 +523,9 @@ describe Docker::Container do
       end
 
       context 'and a command runs for too long' do
-        after(:each) { subject.remove }
-
         it 'raises a ServerError', :vcr do
           expect{subject.wait(4)}.to raise_error(Docker::Error::TimeoutError)
+          subject.tap(&:wait)
         end
       end
     end
@@ -586,9 +587,12 @@ describe Docker::Container do
 
     context 'if run is passed, it saves the command in the image', :vcr do
       let(:image) { subject.commit }
+      let(:container) { image.run('pwd') }
 
       it 'saves the command' do
-        expect(image.run('pwd').attach).to eql [["/\n"],[]]
+        container.wait
+        expect(container.attach(logs: true, stream: false)).to eql [["/\n"],[]]
+        container.remove
       end
     end
   end

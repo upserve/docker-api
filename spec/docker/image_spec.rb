@@ -104,10 +104,10 @@ describe Docker::Image do
       let(:license) { File.read('LICENSE') }
       let(:container) { new_image.run('cat /Gemfile /LICENSE') }
       let(:response) {
-        container.streaming_logs(stdout: true)
+        container.tap(&:wait).streaming_logs(stdout: true)
       }
       after do
-        container.tap(&:wait).remove
+        container.remove
         new_image.remove
       end
 
@@ -217,7 +217,7 @@ describe Docker::Image do
 
   describe '#run' do
     subject { described_class.create('fromImage' => 'debian:wheezy') }
-    let(:container) { subject.run(cmd) }
+    let(:container) { subject.run(cmd).tap(&:wait) }
     let(:output) { container.streaming_logs(stdout: true) }
 
     context 'when the argument is a String', :vcr do
@@ -225,14 +225,13 @@ describe Docker::Image do
       after { container.remove }
 
       it 'splits the String by spaces and creates a new Container' do
-        container.wait
         expect(output).to eq("ld-linux-x86-64.so.2\n")
       end
     end
 
     context 'when the argument is an Array' do
       let(:cmd) { %w[which pwd] }
-      after { container.tap(&:wait).remove }
+      after { container.remove }
 
       it 'creates a new Container', :vcr do
         expect(output).to eq("/bin/pwd\n")
@@ -254,7 +253,6 @@ describe Docker::Image do
         after { container.remove }
 
         it 'should normally show result if image has Cmd configured' do
-          container.wait
           expect(output).to eql "/\n"
         end
       end
@@ -563,39 +561,32 @@ describe Docker::Image do
       let(:opts) { {} }
       let(:block) { Proc.new {} }
       let(:container) do
-        Docker::Container.create('Image' => image.id,
-                                 'Cmd' => %w[cat /Dockerfile])
+        Docker::Container.create(
+          'Image' => image.id,
+          'Cmd' => %w[cat /Dockerfile]
+        ).tap(&:start).tap(&:wait)
       end
       let(:output) { container.streaming_logs(stdout: true) }
 
       after(:each) do
+        container.remove
         image.remove(:noprune => true)
       end
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
-          container.start
           expect(output).to eq(docker_file.read)
-        end
-
-        after do
-          container.tap(&:wait).remove
         end
       end
 
       context 'with specifying a repo in the query parameters' do
         let(:opts) { { "t" => "#{ENV['DOCKER_API_USER']}/debian:from_dir" } }
         it 'builds the image and tags it', :vcr do
-          container.start
           expect(output).to eq(docker_file.read)
           image.refresh!
           expect(image.info["RepoTags"]).to eq(
             ["#{ENV['DOCKER_API_USER']}/debian:from_dir"]
           )
-        end
-
-        after do
-          container.tap(&:wait).remove
         end
       end
 
