@@ -65,9 +65,9 @@ describe Docker::Image do
     context 'when the local file does exist' do
       let(:file) { File.join(project_dir, 'Gemfile') }
       let(:gemfile) { File.read('Gemfile') }
-      let(:container) { new_image.run('cat /Gemfile') }
+      let(:container) { new_image.run('cat /Gemfile').tap(&:wait) }
       after do
-        container.tap(&:wait).remove
+        container.remove
         new_image.remove
       end
 
@@ -574,19 +574,19 @@ describe Docker::Image do
 
       context 'with no query parameters' do
         it 'builds the image', :vcr do
-          container.tap(&:wait).start
+          container.start
           expect(output).to eq(docker_file.read)
         end
 
         after do
-          container.remove
+          container.tap(&:wait).remove
         end
       end
 
       context 'with specifying a repo in the query parameters' do
         let(:opts) { { "t" => "#{ENV['DOCKER_API_USER']}/debian:from_dir" } }
         it 'builds the image and tags it', :vcr do
-          container.tap(&:wait).start
+          container.start
           expect(output).to eq(docker_file.read)
           image.refresh!
           expect(image.info["RepoTags"]).to eq(
@@ -595,7 +595,7 @@ describe Docker::Image do
         end
 
         after do
-          container.remove
+          container.tap(&:wait).remove
         end
       end
 
