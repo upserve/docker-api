@@ -96,7 +96,6 @@ describe Docker::Exec do
       end
 
       it 'raises an error', :vcr do
-        skip 'The Docker API returns a 200 (docker/docker#9341)'
         expect { subject.start! }.to raise_error(Docker::Error::NotFoundError)
       end
     end
@@ -160,8 +159,7 @@ describe Docker::Exec do
       after { container.kill!.remove }
 
       it 'raises an error', :vcr do
-        skip "VCR doesn't like to record errors"
-        #expect { subject.start!(:wait => 1) }.to raise_error(Docker::Error::TimeoutError)
+        expect { subject.start!(:wait => 1) }.to raise_error(Docker::Error::TimeoutError)
       end
     end
 
@@ -173,7 +171,6 @@ describe Docker::Exec do
       after { container.kill!.remove }
 
       it 'raises an error', :vcr do
-        skip 'The Docker API returns a 200 (docker/docker#9341)'
         expect { subject.start! }.to raise_error(Docker::Error::NotFoundError)
       end
     end

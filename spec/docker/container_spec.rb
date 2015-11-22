@@ -270,11 +270,7 @@ describe Docker::Container do
   end
 
   describe '#attach with stdin' do
-    # Because this uses HTTP socket hijacking, it is not compatible with
-    # VCR, so it is currently pending until a good way to test it without
-    # a running Docker daemon is discovered
     it 'yields the output' do
-      skip 'HTTP socket hijacking not compatible with VCR'
       container = described_class.create(
         'Cmd'       => %w[cat],
         'Image'     => 'debian:wheezy',
@@ -282,9 +278,11 @@ describe Docker::Container do
         'StdinOnce' => true
       )
       chunk = nil
-      container.attach(stdin: StringIO.new("foo\nbar\n")) do |stream, c|
-        chunk ||= c
-      end
+      container
+        .tap(&:start)
+        .attach(stdin: StringIO.new("foo\nbar\n")) do |stream, c|
+          chunk ||= c
+        end
       expect(chunk).to eq("foo\nbar\n")
     end
   end
@@ -366,7 +364,6 @@ describe Docker::Container do
       let(:output) { subject.exec('cat', stdin: StringIO.new("hello")) }
 
       it 'returns the stdout/stderr messages', :vcr do
-        skip 'HTTP socket hijacking not compatible with VCR'
         expect(output).to eq([["hello"],[],0])
       end
     end
@@ -523,14 +520,13 @@ describe Docker::Container do
         expect(subject.wait(6)['StatusCode']).to be_zero
       end
 
-      # context 'and a command runs for too long' do
-      #   after(:each) { subject.remove }
-      #
-      #   it 'raises a ServerError', :vcr do
-      #     skip "VCR doesn't like to record errors"
-      #     expect{subject.wait(4)}.to raise_error(Docker::Error::TimeoutError)
-      #   end
-      # end
+      context 'and a command runs for too long' do
+        after(:each) { subject.remove }
+
+        it 'raises a ServerError', :vcr do
+          expect{subject.wait(4)}.to raise_error(Docker::Error::TimeoutError)
+        end
+      end
     end
   end
 
@@ -588,15 +584,13 @@ describe Docker::Container do
       expect(image.id).to_not be_nil
     end
 
-    # context 'if run is passed, it saves the command in the image', :vcr do
-    #   let(:image) { subject.commit }
-    #
-    #   it 'saves the command' do
-    #     skip 'This is no longer working in v0.8'
-    #     expect(image.run('pwd').attach).to eql [["/\n"],[]]
-    #   end
-    # end
+    context 'if run is passed, it saves the command in the image', :vcr do
+      let(:image) { subject.commit }
 
+      it 'saves the command' do
+        expect(image.run('pwd').attach).to eql [["/\n"],[]]
+      end
+    end
   end
 
   describe '.create' do
