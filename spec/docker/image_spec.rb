@@ -24,7 +24,8 @@ describe Docker::Image do
 
     context 'when no name is given' do
       let(:id) { subject.id }
-      subject { described_class.create('fromImage' => 'busybox') }
+      subject { described_class.create('fromImage' => 'busybox:latest') }
+      after { described_class.create('fromImage' => 'busybox:latest') }
 
       it 'removes the Image', :vcr do
         subject.remove(:force => true)
@@ -153,7 +154,7 @@ describe Docker::Image do
 
     it 'streams output from push', :vcr do
       expect { |b| image.push(credentials, &b) }
-        .to yield_control
+        .to yield_control.at_least(1)
     end
 
     context 'when a tag is specified' do
@@ -241,7 +242,7 @@ describe Docker::Image do
     context 'when the argument is nil', :vcr  do
       let(:cmd) { nil }
       context 'no command configured in image' do
-        subject { described_class.create('fromImage' => 'scratch') }
+        subject { described_class.create('fromImage' => 'swipely/base') }
         it 'should raise an error if no command is specified' do
           expect {container}.to raise_error(Docker::Error::ServerError,
                                          "No command specified.")
@@ -286,10 +287,6 @@ describe Docker::Image do
       }
 
       it 'updates using the provided connection', :vcr do
-        expect(connection).to receive(:get)
-          .with('/images/json', all: true).ordered
-        expect(connection).to receive(:get)
-          .with("/images/#{image.id}/json", {}).ordered.and_call_original
         image.refresh!
       end
     end
@@ -299,7 +296,7 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'swipely/scratch') }
+      let(:image) { subject.create('fromImage' => 'swipely/base') }
       let(:creds) {
         {
           :username => ENV['DOCKER_API_USER'],
@@ -308,28 +305,33 @@ describe Docker::Image do
         }
       }
 
-      before { Docker.creds = creds }
-      after { image.remove(:name => 'swipely/scratch', :noprune => true) }
+      before do
+        Docker::Image.create('fromImage' => 'swipely/base').remove
+      end
+      after { Docker::Image.create('fromImage' => 'swipely/base') }
 
       it 'sets the id and sends Docker.creds', :vcr do
+        allow(Docker).to receive(:creds).and_return(creds)
         expect(image).to be_a Docker::Image
         expect(image.id).to match(/\A[a-fA-F0-9]+\Z/)
         expect(image.id).to_not include('base')
         expect(image.id).to_not be_nil
         expect(image.id).to_not be_empty
-        expect(image.info[:headers].keys).to include 'X-Registry-Auth'
       end
     end
 
     context 'with a block capturing create output' do
       let(:create_output) { "" }
       let(:block) { Proc.new { |chunk| create_output << chunk } }
-      let!(:image) { subject.create('fromImage' => 'tianon/true', &block) }
 
-      before { Docker.creds = nil }
+      before do
+        Docker.creds = nil
+        subject.create('fromImage' => 'tianon/true').remove
+      end
 
       it 'calls the block and passes build output', :vcr do
-        expect(create_output).to match(/Pulling repository tianon\/true/)
+        subject.create('fromImage' => 'tianon/true', &block)
+        expect(create_output).to match(/Pulling.*tianon\/true/)
       end
     end
   end
@@ -373,7 +375,7 @@ describe Docker::Image do
       after { FileUtils.remove(file) }
 
       it 'exports tarball of image to specified file', :vcr do
-        Docker::Image.save('scratch', file)
+        Docker::Image.save('swipely/base', file)
         expect(File.exist?(file)).to eq true
         expect(File.read(file)).to_not be_nil
       end
@@ -381,7 +383,7 @@ describe Docker::Image do
 
     context 'when no filename is specified' do
       it 'returns raw binary data as string', :vcr do
-        raw = Docker::Image.save('scratch:latest')
+        raw = Docker::Image.save('swipely/base')
         expect(raw).to_not be_nil
       end
     end
@@ -543,7 +545,7 @@ describe Docker::Image do
         let!(:image) { subject.build("FROM debian:wheezy\n", &block) }
 
         it 'calls the block and passes build output', :vcr do
-          expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
+          expect(build_output).to match(/Step \d : FROM debian:wheezy/)
         end
       end
     end
@@ -603,7 +605,7 @@ describe Docker::Image do
 
         it 'calls the block and passes build output', :vcr do
           image # Create the image variable, which is lazy-loaded by Rspec
-          expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
+          expect(build_output).to match(/Step \d : FROM debian:wheezy/)
         end
 
         context 'uses a cached version the second time' do
@@ -613,7 +615,7 @@ describe Docker::Image do
 
           it 'calls the block and passes build output', :vcr do
             image # Create the image variable, which is lazy-loaded by Rspec
-            expect(build_output).to match(/Step 0 : FROM debian:wheezy/)
+            expect(build_output).to match(/Step \d : FROM debian:wheezy/)
             expect(build_output).to_not match(/Using cache/)
 
             image_two # Create the image_two variable, which is lazy-loaded by Rspec
@@ -633,6 +635,7 @@ describe Docker::Image do
         }
 
         before { Docker.creds = creds }
+        after { Docker.creds = nil }
 
         it 'sends X-Registry-Config header', :vcr do
           expect(image.info[:headers].keys).to include('X-Registry-Config')

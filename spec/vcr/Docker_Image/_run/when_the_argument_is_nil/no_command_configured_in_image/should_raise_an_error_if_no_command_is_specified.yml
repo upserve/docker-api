@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=scratch
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=swipely%2Fbase"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,28 +18,56 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:52 GMT
-    body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"Pulling repository scratch\"}\r\n{\"status\":\"Pulling
-        image (latest) from scratch\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Pulling
-        image (latest) from scratch, endpoint: https://registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Pulling
-        dependent layers\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Status:
-        Image is up to date for scratch\"}\r\n"
-    http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:53 GMT
-- request:
-    method: post
-    uri: <DOCKER_HOST>/v1.16/containers/create
+      - Sun, 22 Nov 2015 04:14:51 GMT
     body:
       encoding: UTF-8
-      string: ! '{"Image":"511136ea3c5a","Cmd":null}'
+      string: "{\"status\":\"Pulling from swipely/base\",\"id\":\"latest\"}\r\n{\"status\":\"Digest:
+        sha256:e68693f560d833202a817ca6d8d969019db7cb777ddd270c6a8d20e340da2a97\"}\r\n{\"status\":\"Status:
+        Image is up to date for swipely/base\"}\r\n"
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:51 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/images/swipely/base/json"
+    body:
+      encoding: US-ASCII
+      string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Sun, 22 Nov 2015 04:14:52 GMT
+      Content-Length:
+      - '1101'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"eec906ce18ef008fcdba71f7a96255d198904b08c7636cb69121ba6d9fe9a466","RepoTags":["swipely/base:latest"],"RepoDigests":[],"Parent":"","Comment":"","Created":"2015-11-21T02:07:23.171581389Z","Container":"7349fb93945247761e337cf27822db179af2eaf9a975375e47c583b531067538","ContainerConfig":{"Hostname":"7349fb939452","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/sh","-c","#(nop) ADD file:00519ee4236a0b3d4fee11131134dfaff435d76d51307b4a178587c6f02ef588 in /Dockerfile"],"Image":"","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"DockerVersion":"1.9.0","Author":"","Config":{"Hostname":"7349fb939452","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":null,"Image":"","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"Architecture":"amd64","Os":"linux","Size":40,"VirtualSize":40,"GraphDriver":{"Name":"aufs","Data":null}}
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:51 GMT
+- request:
+    method: post
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
+    body:
+      encoding: UTF-8
+      string: '{"Image":"eec906ce18ef008fcdba71f7a96255d198904b08c7636cb69121ba6d9fe9a466","Cmd":null}'
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -49,15 +77,16 @@ http_interactions:
     headers:
       Content-Type:
       - text/plain; charset=utf-8
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:53 GMT
+      - Sun, 22 Nov 2015 04:14:52 GMT
       Content-Length:
       - '21'
     body:
-      encoding: US-ASCII
-      string: ! 'No command specified
-
-'
+      encoding: UTF-8
+      string: |
+        No command specified
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:53 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:51 GMT
 recorded_with: VCR 2.9.2

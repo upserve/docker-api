@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/build
+    uri: "<DOCKER_HOST>/v1.16/build"
     body:
       encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDIz
-        ADAwMDAwMDAwMDAwADAxMzI0MAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNjI0MjQwNDM0ADAxMzMwMAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -54,7 +54,7 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -64,12 +64,14 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:56:05 GMT
+      - Sun, 22 Nov 2015 04:14:20 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"stream\":\"Step 0 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\"
-        ---\\u003e c90d655b99b2\\n\"}\r\n{\"stream\":\"Successfully built c90d655b99b2\\n\"}\r\n"
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 1 : FROM debian:wheezy\\n\"}\r\n{\"stream\":\" ---\\u003e
+        b4c4e8b590a7\\n\"}\r\n{\"stream\":\"Successfully built b4c4e8b590a7\\n\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:56:05 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:20 GMT
 recorded_with: VCR 2.9.2

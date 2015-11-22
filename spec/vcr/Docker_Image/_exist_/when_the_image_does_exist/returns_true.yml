@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/images/debian:wheezy/json
+    uri: "<DOCKER_HOST>/v1.16/images/debian:wheezy/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,16 +18,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:59 GMT
+      - Sun, 22 Nov 2015 04:15:18 GMT
       Content-Length:
-      - '1592'
+      - '1232'
     body:
-      encoding: US-ASCII
-      string: ! '{"Architecture":"amd64","Author":"","Checksum":"tarsum.dev+sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855","Comment":"","Config":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/bash"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"dc534047acbb","Image":"30d39e59ffe287f29a41a3f8bd70734afc8728329e3289945cbdc5bbf07cd980","MacAddress":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Container":"939613a44d80d4e75ce1053d4c2ee73da091e0aaeb233abfe29a478eca1769a9","ContainerConfig":{"AttachStderr":false,"AttachStdin":false,"AttachStdout":false,"Cmd":["/bin/sh","-c","#(nop)
-        CMD [/bin/bash]"],"CpuShares":0,"Cpuset":"","Domainname":"","Entrypoint":null,"Env":["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"],"ExposedPorts":null,"Hostname":"dc534047acbb","Image":"30d39e59ffe287f29a41a3f8bd70734afc8728329e3289945cbdc5bbf07cd980","MacAddress":"","Memory":0,"MemorySwap":0,"NetworkDisabled":false,"OnBuild":[],"OpenStdin":false,"PortSpecs":null,"StdinOnce":false,"Tty":false,"User":"","Volumes":null,"WorkingDir":""},"Created":"2015-01-27T17:26:31.855267409Z","DockerVersion":"1.4.1","Id":"c90d655b99b2ec5b7e94d38c87f92dce015c17a313caeaae0e980d9b9bed8444","Os":"linux","Parent":"30d39e59ffe287f29a41a3f8bd70734afc8728329e3289945cbdc5bbf07cd980","Size":0,"VirtualSize":85120773}
-
-'
+      encoding: UTF-8
+      string: |
+        {"Id":"b4c4e8b590a7f35f98b73b02f8f1db4850f907619770fd09ed3d489e671f7f38","RepoTags":["debian:wheezy"],"RepoDigests":[],"Parent":"68e42ff590bdb4cbabc81b362b48ce2b5ddfad1c5672d02a264d351cf169e736","Comment":"","Created":"2015-11-20T00:23:34.502422683Z","Container":"d62f0c2d1957f7ae5e8e2c664575d980721e02bebb1d764dc972120bfc2fd4b2","ContainerConfig":{"Hostname":"c98f3c4629d3","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/sh","-c","#(nop) CMD [\"/bin/bash\"]"],"Image":"b014c4494ea56a76f945ba3d69b7d42c4a3031aef94f3ab6a53b506e354829bf","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"DockerVersion":"1.8.3","Author":"","Config":{"Hostname":"c98f3c4629d3","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/bash"],"Image":"b014c4494ea56a76f945ba3d69b7d42c4a3031aef94f3ab6a53b506e354829bf","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"Architecture":"amd64","Os":"linux","Size":0,"VirtualSize":84892344,"GraphDriver":{"Name":"aufs","Data":null}}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:59 GMT
+  recorded_at: Sun, 22 Nov 2015 04:15:18 GMT
 recorded_with: VCR 2.9.2

@@ -2,14 +2,14 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/build
+    uri: "<DOCKER_HOST>/v1.16/build"
     body:
       encoding: UTF-8
       string: !binary |-
         RG9ja2VyZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDA3
-        ADAwMDAwMDAwMDAwADAxMzI0MgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNjI0MjQwNDM0ADAxMzMwMgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -54,26 +54,24 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
     status:
-      code: 500
+      code: 200
       message: 
     headers:
       Content-Type:
-      - text/plain; charset=utf-8
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:56:02 GMT
-      Content-Length:
-      - '98'
+      - Sun, 22 Nov 2015 04:14:20 GMT
     body:
-      encoding: US-ASCII
-      string: ! 'We do not understand this file. Please ensure it is a valid Dockerfile.
-        Parser error at "lololol"
-
-'
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 1 : LOLOLOL \\n\"}\r\n{\"errorDetail\":{\"message\":\"Unknown
+        instruction: LOLOLOL\"},\"error\":\"Unknown instruction: LOLOLOL\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:56:02 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:20 GMT
 recorded_with: VCR 2.9.2

@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/containers/json?all=true
+    uri: "<DOCKER_HOST>/v1.16/containers/json?all=true"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,30 +18,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:13 GMT
+      - Sun, 22 Nov 2015 04:14:30 GMT
       Content-Length:
-      - '491'
+      - '396'
     body:
-      encoding: US-ASCII
-      string: ! '[{"Command":"true","Created":1423702467,"Id":"ddcdf1352c0e624bba454a8957174d5f8410edce613b6ba100984fc722d8c21d","Image":"debian:wheezy","Names":["/cocky_goodall"],"Ports":[],"Status":"Exited
-        (0) 44 seconds ago"}
-
-        ,{"Command":"docker-registry","Created":1423702401,"Id":"7495fa1e6c231934f42eb34525f24a052af2a7a43ae9c85051636428a62a40ba","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up
-        About a minute"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        [{"Id":"c9a603648f0ac1796886b298a1249403f027f8496b0ae834f7612ad4437ed462","Names":["/registry"],"Image":"registry","ImageID":"b775c10f62fcf1a8f2a44b965ad8c247cb65356a98d61613e29b649e7e7808df","Command":"docker-registry","Created":1448165616,"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Labels":{},"Status":"Up 54 seconds","HostConfig":{"NetworkMode":"default"}}]
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:13 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:30 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=debian%3Awheezy"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -51,27 +48,57 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:13 GMT
+      - Sun, 22 Nov 2015 04:14:32 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"The image you are pulling has been verified\",\"id\":\"debian:wheezy\"}\r\n{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"30d39e59ffe2\"}{\"status\":\"Already
-        exists\",\"progressDetail\":{},\"id\":\"c90d655b99b2\"}{\"status\":\"Status:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling from library/debian\",\"id\":\"wheezy\"}\r\n{\"status\":\"Digest:
+        sha256:913916fa02a58cde97ea6dbbdd009026c7910861a243b78c151d04bc1d23f39e\"}\r\n{\"status\":\"Status:
         Image is up to date for debian:wheezy\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:13 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:32 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/images/debian:wheezy/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.23.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Sun, 22 Nov 2015 04:14:32 GMT
+      Content-Length:
+      - '1232'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"b4c4e8b590a7f35f98b73b02f8f1db4850f907619770fd09ed3d489e671f7f38","RepoTags":["debian:wheezy"],"RepoDigests":[],"Parent":"68e42ff590bdb4cbabc81b362b48ce2b5ddfad1c5672d02a264d351cf169e736","Comment":"","Created":"2015-11-20T00:23:34.502422683Z","Container":"d62f0c2d1957f7ae5e8e2c664575d980721e02bebb1d764dc972120bfc2fd4b2","ContainerConfig":{"Hostname":"c98f3c4629d3","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/sh","-c","#(nop) CMD [\"/bin/bash\"]"],"Image":"b014c4494ea56a76f945ba3d69b7d42c4a3031aef94f3ab6a53b506e354829bf","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"DockerVersion":"1.8.3","Author":"","Config":{"Hostname":"c98f3c4629d3","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/bash"],"Image":"b014c4494ea56a76f945ba3d69b7d42c4a3031aef94f3ab6a53b506e354829bf","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"Architecture":"amd64","Os":"linux","Size":0,"VirtualSize":84892344,"GraphDriver":{"Name":"aufs","Data":null}}
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:32 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/build?rm=true
+    uri: "<DOCKER_HOST>/v1.16/build?rm=true"
     body:
       encoding: UTF-8
       string: !binary |-
         R2VtZmlsZQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAADAwMDA2NDAAMDAwMDAwMAAwMDAwMDAwADAwMDAwMDAwMDQ2
-        ADAwMDAwMDAwMDAwADAxMjU0NgAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        ADEyNjI0MjQwNDUwADAxMjYwNAAgMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB1c3RhcgAwMHdoZWVs
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAd2hlZWwAAAAAAAAAAAAAAAAA
@@ -93,8 +120,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERvY2tlcmZpbGUA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAw
-        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDA0MAAwMDAwMDAwMDAw
-        MAAwMTMyMzcAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        MDAwNjQwADAwMDAwMDAAMDAwMDAwMAAwMDAwMDAwMDEyNAAxMjYyNDI0MDQ1
+        MAAwMTMzMDAAIDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAdXN0YXIAMDB3aGVlbAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAHdoZWVsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -102,8 +129,8 @@ http_interactions:
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-        AAAAAAAAZnJvbSBjOTBkNjU1Yjk5YjIKYWRkIEdlbWZpbGUgLwoAAAAAAAAA
-        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAZnJvbSBiNGM0ZThiNTkwYTdmMzVmOThiNzNiMDJmOGYxZGI0ODUw
+        ZjkwNzYxOTc3MGZkMDllZDNkNDg5ZTY3MWY3ZjM4CmFkZCBHZW1maWxlIC8K
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
         AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
@@ -139,7 +166,7 @@ http_interactions:
         AAAAAAAAAAAAAAAA
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -149,25 +176,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:13 GMT
+      - Sun, 22 Nov 2015 04:14:32 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"stream\":\"Step 0 : FROM c90d655b99b2\\n\"}\r\n{\"stream\":\"
-        ---\\u003e c90d655b99b2\\n\"}\r\n{\"stream\":\"Step 1 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
-        ---\\u003e 4b3da5a8e27b\\n\"}\r\n{\"stream\":\"Removing intermediate container
-        108aa140d2ec\\n\"}\r\n{\"stream\":\"Successfully built 4b3da5a8e27b\\n\"}\r\n"
+      encoding: UTF-8
+      string: "{\"stream\":\"Step 1 : FROM b4c4e8b590a7f35f98b73b02f8f1db4850f907619770fd09ed3d489e671f7f38\\n\"}\r\n{\"stream\":\"
+        ---\\u003e b4c4e8b590a7\\n\"}\r\n{\"stream\":\"Step 2 : ADD Gemfile /\\n\"}\r\n{\"stream\":\"
+        ---\\u003e 7eb5e191a958\\n\"}\r\n{\"stream\":\"Removing intermediate container
+        2ea120cc3420\\n\"}\r\n{\"stream\":\"Successfully built 7eb5e191a958\\n\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:15 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:32 GMT
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/containers/json?all=true
+    uri: "<DOCKER_HOST>/v1.16/containers/json?all=true"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -177,30 +206,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:15 GMT
+      - Sun, 22 Nov 2015 04:14:32 GMT
       Content-Length:
-      - '491'
+      - '396'
     body:
-      encoding: US-ASCII
-      string: ! '[{"Command":"true","Created":1423702467,"Id":"ddcdf1352c0e624bba454a8957174d5f8410edce613b6ba100984fc722d8c21d","Image":"debian:wheezy","Names":["/cocky_goodall"],"Ports":[],"Status":"Exited
-        (0) 47 seconds ago"}
-
-        ,{"Command":"docker-registry","Created":1423702401,"Id":"7495fa1e6c231934f42eb34525f24a052af2a7a43ae9c85051636428a62a40ba","Image":"registry:latest","Names":["/registry"],"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Status":"Up
-        About a minute"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        [{"Id":"c9a603648f0ac1796886b298a1249403f027f8496b0ae834f7612ad4437ed462","Names":["/registry"],"Image":"registry","ImageID":"b775c10f62fcf1a8f2a44b965ad8c247cb65356a98d61613e29b649e7e7808df","Command":"docker-registry","Created":1448165616,"Ports":[{"IP":"0.0.0.0","PrivatePort":5000,"PublicPort":5000,"Type":"tcp"}],"Labels":{},"Status":"Up 56 seconds","HostConfig":{"NetworkMode":"default"}}]
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:15 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:32 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/images/4b3da5a8e27b
+    uri: "<DOCKER_HOST>/v1.16/images/7eb5e191a958"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -210,15 +236,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:16 GMT
+      - Sun, 22 Nov 2015 04:14:32 GMT
       Content-Length:
       - '81'
     body:
-      encoding: US-ASCII
-      string: ! '[{"Deleted":"4b3da5a8e27b1fe2d963e39742b610f40e1f0a6de42712c8039a13b9703c0e27"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        [{"Deleted":"7eb5e191a958095e3124d6d5a1a247071049146bfb2425cf93977977b7cd9113"}]
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:16 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:32 GMT
 recorded_with: VCR 2.9.2

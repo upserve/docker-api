@@ -2,17 +2,15 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/images/create?fromImage=tianon%2Ftrue
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=tianon%2Ftrue"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
-      X-Registry-Auth:
-      - eyJ1c2VybmFtZSI6InRsdW50ZXIiLCJwYXNzd29yZCI6ImprN2d0aXEiLCJlbWFpbCI6InRsdW50ZXJAZ21haWwuY29tIn0=
   response:
     status:
       code: 200
@@ -20,19 +18,146 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:57 GMT
+      - Sun, 22 Nov 2015 04:14:43 GMT
     body:
-      encoding: US-ASCII
-      string: ! "{\"status\":\"Pulling repository tianon/true\"}\r\n{\"status\":\"Pulling
-        image (latest) from tianon/true\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Pulling
-        image (latest) from tianon/true, endpoint: https://registry-1.docker.io/v1/\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Pulling
-        dependent layers\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"511136ea3c5a\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"e41eb64a720e\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Download
-        complete\",\"progressDetail\":{},\"id\":\"a47c4817ef07\"}{\"status\":\"Status:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling from tianon/true\",\"id\":\"latest\"}\r\n{\"status\":\"Digest:
+        sha256:1c9f383810ce4295b0ac0f7ffe1aff3661163e2441a9fb27a22183bacf514afa\"}\r\n{\"status\":\"Status:
         Image is up to date for tianon/true\"}\r\n"
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:59 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:43 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/images/tianon/true/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.23.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Sun, 22 Nov 2015 04:14:43 GMT
+      Content-Length:
+      - '1228'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"39345a6d9d297fef072f33a54db7543600abba17627acc4888024891f7dc9581","RepoTags":["tianon/true:latest"],"RepoDigests":[],"Parent":"03ef2855f297036ed414eb0ac7284b18c78e6af093564e22f8a7a786f45a0d4d","Comment":"","Created":"2015-11-20T22:55:11.786652262Z","Container":"55be3d7967cd491566ca5ddddf19b3e5c7563e9ba0d93d59e36d8b8fd2910eea","ContainerConfig":{"Hostname":"6b527c5a5a25","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/sh","-c","#(nop) CMD [\"/true\"]"],"Image":"4e956ac536655dba85b47965a6fe946f061e3cea0aa47505439eb53f8dbd80d1","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"DockerVersion":"1.8.3-rc4","Author":"","Config":{"Hostname":"6b527c5a5a25","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/true"],"Image":"4e956ac536655dba85b47965a6fe946f061e3cea0aa47505439eb53f8dbd80d1","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"Architecture":"amd64","Os":"linux","Size":0,"VirtualSize":125,"GraphDriver":{"Name":"aufs","Data":null}}
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:43 GMT
+- request:
+    method: delete
+    uri: "<DOCKER_HOST>/v1.16/images/39345a6d9d297fef072f33a54db7543600abba17627acc4888024891f7dc9581"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.23.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Sun, 22 Nov 2015 04:14:43 GMT
+      Content-Length:
+      - '194'
+    body:
+      encoding: UTF-8
+      string: |
+        [{"Untagged":"tianon/true:latest"},{"Deleted":"39345a6d9d297fef072f33a54db7543600abba17627acc4888024891f7dc9581"},{"Deleted":"03ef2855f297036ed414eb0ac7284b18c78e6af093564e22f8a7a786f45a0d4d"}]
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:43 GMT
+- request:
+    method: post
+    uri: "<DOCKER_HOST>/v1.16/images/create?fromImage=tianon%2Ftrue"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.23.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Sun, 22 Nov 2015 04:14:44 GMT
+    body:
+      encoding: UTF-8
+      string: "{\"status\":\"Pulling from tianon/true\",\"id\":\"latest\"}\r\n{\"status\":\"Pulling
+        fs layer\",\"progressDetail\":{},\"id\":\"03ef2855f297\"}{\"status\":\"Pulling
+        fs layer\",\"progressDetail\":{},\"id\":\"39345a6d9d29\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":147,\"total\":147},\"progress\":\"[==================================================\\u003e]
+        \   147 B/147 B\",\"id\":\"03ef2855f297\"}{\"status\":\"Verifying Checksum\",\"progressDetail\":{},\"id\":\"03ef2855f297\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"03ef2855f297\"}{\"status\":\"Extracting\",\"progressDetail\":{\"current\":147,\"total\":147},\"progress\":\"[==================================================\\u003e]
+        \   147 B/147 B\",\"id\":\"03ef2855f297\"}{\"status\":\"Extracting\",\"progressDetail\":{\"current\":147,\"total\":147},\"progress\":\"[==================================================\\u003e]
+        \   147 B/147 B\",\"id\":\"03ef2855f297\"}{\"status\":\"Extracting\",\"progressDetail\":{\"current\":147,\"total\":147},\"progress\":\"[==================================================\\u003e]
+        \   147 B/147 B\",\"id\":\"03ef2855f297\"}{\"status\":\"Pull complete\",\"progressDetail\":{},\"id\":\"03ef2855f297\"}{\"status\":\"Downloading\",\"progressDetail\":{\"current\":32,\"total\":32},\"progress\":\"[==================================================\\u003e]
+        \    32 B/32 B\",\"id\":\"39345a6d9d29\"}{\"status\":\"Verifying Checksum\",\"progressDetail\":{},\"id\":\"39345a6d9d29\"}{\"status\":\"Download
+        complete\",\"progressDetail\":{},\"id\":\"39345a6d9d29\"}{\"status\":\"Extracting\",\"progressDetail\":{\"current\":32,\"total\":32},\"progress\":\"[==================================================\\u003e]
+        \    32 B/32 B\",\"id\":\"39345a6d9d29\"}{\"status\":\"Extracting\",\"progressDetail\":{\"current\":32,\"total\":32},\"progress\":\"[==================================================\\u003e]
+        \    32 B/32 B\",\"id\":\"39345a6d9d29\"}{\"status\":\"Extracting\",\"progressDetail\":{\"current\":32,\"total\":32},\"progress\":\"[==================================================\\u003e]
+        \    32 B/32 B\",\"id\":\"39345a6d9d29\"}{\"status\":\"Pull complete\",\"progressDetail\":{},\"id\":\"39345a6d9d29\"}{\"status\":\"Digest:
+        sha256:1c9f383810ce4295b0ac0f7ffe1aff3661163e2441a9fb27a22183bacf514afa\"}\r\n{\"status\":\"Status:
+        Downloaded newer image for tianon/true\"}\r\n"
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:45 GMT
+- request:
+    method: get
+    uri: "<DOCKER_HOST>/v1.16/images/39345a6d9d29/json"
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.23.0
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Content-Type:
+      - application/json
+      Server:
+      - Docker/1.9.0 (linux)
+      Date:
+      - Sun, 22 Nov 2015 04:14:45 GMT
+      Content-Length:
+      - '1228'
+    body:
+      encoding: UTF-8
+      string: |
+        {"Id":"39345a6d9d297fef072f33a54db7543600abba17627acc4888024891f7dc9581","RepoTags":["tianon/true:latest"],"RepoDigests":[],"Parent":"03ef2855f297036ed414eb0ac7284b18c78e6af093564e22f8a7a786f45a0d4d","Comment":"","Created":"2015-11-20T22:55:11.786652262Z","Container":"55be3d7967cd491566ca5ddddf19b3e5c7563e9ba0d93d59e36d8b8fd2910eea","ContainerConfig":{"Hostname":"6b527c5a5a25","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/sh","-c","#(nop) CMD [\"/true\"]"],"Image":"4e956ac536655dba85b47965a6fe946f061e3cea0aa47505439eb53f8dbd80d1","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"DockerVersion":"1.8.3-rc4","Author":"","Config":{"Hostname":"6b527c5a5a25","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/true"],"Image":"4e956ac536655dba85b47965a6fe946f061e3cea0aa47505439eb53f8dbd80d1","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"Architecture":"amd64","Os":"linux","Size":0,"VirtualSize":125,"GraphDriver":{"Name":"aufs","Data":null}}
+    http_version: 
+  recorded_at: Sun, 22 Nov 2015 04:14:45 GMT
 recorded_with: VCR 2.9.2

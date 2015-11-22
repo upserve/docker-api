@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/images/search?term=sshd
+    uri: "<DOCKER_HOST>/v1.16/images/search?term=sshd"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,62 +18,91 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:56:02 GMT
+      - Sun, 22 Nov 2015 04:14:25 GMT
     body:
-      encoding: US-ASCII
-      string: ! '[{"description":"","is_official":false,"is_trusted":true,"name":"moul/sshd","star_count":1}
-
-        ,{"description":"Fedora docker file for ssh service which managed by supervisor","is_official":false,"is_trusted":true,"name":"kumarpraveen/fedora-sshd","star_count":1}
-
-        ,{"description":"Dockerized SSH service, built on top of official Ubuntu images.","is_official":false,"is_trusted":true,"name":"rastasheep/ubuntu-sshd","star_count":1}
-
-        ,{"description":"sshd on Fedora 20","is_official":false,"is_trusted":true,"name":"qlkao/sshd","star_count":0}
-
-        ,{"description":"Ubuntu 12.04 with SSHd and ubuntu user (check logs for initial
-        password).","is_official":false,"is_trusted":true,"name":"jimt/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"ariarijp/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"mogproject/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"larrycai/ubuntu-sshd","star_count":0}
-
-        ,{"description":"Run haproxy with sshd","is_official":false,"is_trusted":true,"name":"llamashoes/haproxy-sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"titanous/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"speg03/sshd-centos","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"nishik20/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"jdauphant/jenkins-slave-sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"instedd/cdx-sync-sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"danhixon/sshd","star_count":0}
-
-        ,{"description":"A ssh server with password: admin","is_official":false,"is_trusted":true,"name":"wnameless/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"typester/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"eyenx/ubuntu-sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"eyenx/archlinux-sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"monokrome/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"mogproject/sshd-supervisor","star_count":0}
-
-        ,{"description":"Spoke container for etcd.","is_official":false,"is_trusted":true,"name":"radial/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"eyenx/debian-sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"docku/sshd","star_count":0}
-
-        ,{"description":"","is_official":false,"is_trusted":true,"name":"trobz/sshd","star_count":0}
-
-        ]'
+      encoding: ASCII-8BIT
+      string: !binary |-
+        W3sic3Rhcl9jb3VudCI6MCwiaXNfb2ZmaWNpYWwiOmZhbHNlLCJuYW1lIjoi
+        ZGp4MzM5L3NzaGQiLCJpc190cnVzdGVkIjp0cnVlLCJpc19hdXRvbWF0ZWQi
+        OnRydWUsImRlc2NyaXB0aW9uIjoic3NoZCJ9LHsic3Rhcl9jb3VudCI6MCwi
+        aXNfb2ZmaWNpYWwiOmZhbHNlLCJuYW1lIjoidmFjYS9zc2hkIiwiaXNfdHJ1
+        c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVkIjp0cnVlLCJkZXNjcmlwdGlvbiI6
+        IlNhbXBsZSBpbWFnZSAobm90IGludGVuZGVkIGZvciBhY3R1YWwgdXNlKSB1
+        c2luZyBzNi1yYyB0byBtYW5hZ2Ugc29tZSBzZXJ2aWNlcywgaW5jbHVkaW5n
+        IHNzaGQuIn0seyJzdGFyX2NvdW50IjowLCJpc19vZmZpY2lhbCI6ZmFsc2Us
+        Im5hbWUiOiJkb2NrdS9zc2hkIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0
+        b21hdGVkIjp0cnVlLCJkZXNjcmlwdGlvbiI6IiJ9LHsic3Rhcl9jb3VudCI6
+        MTUsImlzX29mZmljaWFsIjpmYWxzZSwibmFtZSI6InJhc3Rhc2hlZXAvdWJ1
+        bnR1LXNzaGQiLCJpc190cnVzdGVkIjp0cnVlLCJpc19hdXRvbWF0ZWQiOnRy
+        dWUsImRlc2NyaXB0aW9uIjoiRG9ja2VyaXplZCBTU0ggc2VydmljZSwgYnVp
+        bHQgb24gdG9wIG9mIG9mZmljaWFsIFVidW50dSBpbWFnZXMuIn0seyJzdGFy
+        X2NvdW50IjowLCJpc19vZmZpY2lhbCI6ZmFsc2UsIm5hbWUiOiJ0cm9iei9z
+        c2hkIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVkIjp0cnVlLCJk
+        ZXNjcmlwdGlvbiI6IiJ9LHsic3Rhcl9jb3VudCI6MCwiaXNfb2ZmaWNpYWwi
+        OmZhbHNlLCJuYW1lIjoicGF0YXF1ZXRzL3NzaGQiLCJpc190cnVzdGVkIjp0
+        cnVlLCJpc19hdXRvbWF0ZWQiOnRydWUsImRlc2NyaXB0aW9uIjoiIn0seyJz
+        dGFyX2NvdW50IjowLCJpc19vZmZpY2lhbCI6ZmFsc2UsIm5hbWUiOiJjYnVy
+        a2kvc3NoZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6dHJ1
+        ZSwiZGVzY3JpcHRpb24iOiJEZWJpYW4gSmVzc2llIHdpdGggc3NoZCJ9LHsi
+        c3Rhcl9jb3VudCI6MCwiaXNfb2ZmaWNpYWwiOmZhbHNlLCJuYW1lIjoicWxr
+        YW8vc3NoZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6dHJ1
+        ZSwiZGVzY3JpcHRpb24iOiJzc2hkIG9uIEZlZG9yYSAyMCJ9LHsic3Rhcl9j
+        b3VudCI6MCwiaXNfb2ZmaWNpYWwiOmZhbHNlLCJuYW1lIjoiamltdC9zc2hk
+        IiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVkIjp0cnVlLCJkZXNj
+        cmlwdGlvbiI6IlVidW50dSAxMi4wNCB3aXRoIFNTSGQgYW5kIHVidW50dSB1
+        c2VyIChjaGVjayBsb2dzIGZvciBpbml0aWFsIHBhc3N3b3JkKS4ifSx7InN0
+        YXJfY291bnQiOjEsImlzX29mZmljaWFsIjpmYWxzZSwibmFtZSI6Im1vdWwv
+        c3NoZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6dHJ1ZSwi
+        ZGVzY3JpcHRpb24iOiIifSx7InN0YXJfY291bnQiOjAsImlzX29mZmljaWFs
+        IjpmYWxzZSwibmFtZSI6ImpzbWlnZWwvc3NoZCIsImlzX3RydXN0ZWQiOnRy
+        dWUsImlzX2F1dG9tYXRlZCI6dHJ1ZSwiZGVzY3JpcHRpb24iOiIifSx7InN0
+        YXJfY291bnQiOjAsImlzX29mZmljaWFsIjpmYWxzZSwibmFtZSI6Im1vZ3By
+        b2plY3Qvc3NoZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6
+        dHJ1ZSwiZGVzY3JpcHRpb24iOiIifSx7InN0YXJfY291bnQiOjAsImlzX29m
+        ZmljaWFsIjpmYWxzZSwibmFtZSI6ImxsYW1hc2hvZXMvaGFwcm94eS1zc2hk
+        IiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVkIjp0cnVlLCJkZXNj
+        cmlwdGlvbiI6IlJ1biBoYXByb3h5IHdpdGggc3NoZCJ9LHsic3Rhcl9jb3Vu
+        dCI6MCwiaXNfb2ZmaWNpYWwiOmZhbHNlLCJuYW1lIjoidGl0YW5vdXMvc3No
+        ZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6dHJ1ZSwiZGVz
+        Y3JpcHRpb24iOiIifSx7InN0YXJfY291bnQiOjAsImlzX29mZmljaWFsIjpm
+        YWxzZSwibmFtZSI6ImFyaWFyaWpwL3NzaGQiLCJpc190cnVzdGVkIjp0cnVl
+        LCJpc19hdXRvbWF0ZWQiOnRydWUsImRlc2NyaXB0aW9uIjoiIn0seyJzdGFy
+        X2NvdW50IjoxLCJpc19vZmZpY2lhbCI6ZmFsc2UsIm5hbWUiOiJiYXRtYXQv
+        c3NoZC1ib3VuY2VyIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVk
+        Ijp0cnVlLCJkZXNjcmlwdGlvbiI6IlNTSEQgaW1hZ2Ugd2l0aCBteSBwdWJs
+        aWMgUlNBIGtleSwgdXNlZnVsIHRvIHJ1biBzb21ld2hlcmUgYW5kIHVzZSB0
+        byBib3VuY2UgaWYgbmVlZCBiZS4gIn0seyJzdGFyX2NvdW50IjowLCJpc19v
+        ZmZpY2lhbCI6ZmFsc2UsIm5hbWUiOiJzdW1wZmdvdHRoZWl0L2NlbnRvczct
+        c3NoZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6dHJ1ZSwi
+        ZGVzY3JpcHRpb24iOiIifSx7InN0YXJfY291bnQiOjAsImlzX29mZmljaWFs
+        IjpmYWxzZSwibmFtZSI6InNoYXJha3UvZGViaWFuLXNzaGQiLCJpc190cnVz
+        dGVkIjp0cnVlLCJpc19hdXRvbWF0ZWQiOnRydWUsImRlc2NyaXB0aW9uIjoi
+        ZGViaWFu44Guc3NoZOapn+iDveOCkuaPkOS+m+OBmeOCi+OCs+ODs+ODhuOD
+        iuOBp+OBmeOAgiJ9LHsic3Rhcl9jb3VudCI6MCwiaXNfb2ZmaWNpYWwiOmZh
+        bHNlLCJuYW1lIjoiZmFpcmVkZ2Uvc3NoZCIsImlzX3RydXN0ZWQiOnRydWUs
+        ImlzX2F1dG9tYXRlZCI6dHJ1ZSwiZGVzY3JpcHRpb24iOiIifSx7InN0YXJf
+        Y291bnQiOjAsImlzX29mZmljaWFsIjpmYWxzZSwibmFtZSI6Im1vcmdhbmhq
+        ay9zc2hkIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVkIjp0cnVl
+        LCJkZXNjcmlwdGlvbiI6IlNpbXBsZSBEb2NrZXIgaW1hZ2UgdG8gcnVuIGFu
+        IE9wZW5TU0ggc2VydmVyLiJ9LHsic3Rhcl9jb3VudCI6MiwiaXNfb2ZmaWNp
+        YWwiOmZhbHNlLCJuYW1lIjoic2FuZHJvc2FsbGVzL3NzaGQtcHJveHkiLCJp
+        c190cnVzdGVkIjp0cnVlLCJpc19hdXRvbWF0ZWQiOnRydWUsImRlc2NyaXB0
+        aW9uIjoiIn0seyJzdGFyX2NvdW50IjowLCJpc19vZmZpY2lhbCI6ZmFsc2Us
+        Im5hbWUiOiJsaWZlaS9zc2hkIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0
+        b21hdGVkIjp0cnVlLCJkZXNjcmlwdGlvbiI6InNzaGQgaW4gZG9ja2VyIn0s
+        eyJzdGFyX2NvdW50IjowLCJpc19vZmZpY2lhbCI6ZmFsc2UsIm5hbWUiOiJ0
+        eXBlc3Rlci9zc2hkIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVk
+        Ijp0cnVlLCJkZXNjcmlwdGlvbiI6IiJ9LHsic3Rhcl9jb3VudCI6MSwiaXNf
+        b2ZmaWNpYWwiOmZhbHNlLCJuYW1lIjoia3VtYXJwcmF2ZWVuL2ZlZG9yYS1z
+        c2hkIiwiaXNfdHJ1c3RlZCI6dHJ1ZSwiaXNfYXV0b21hdGVkIjp0cnVlLCJk
+        ZXNjcmlwdGlvbiI6IkZlZG9yYSBkb2NrZXIgZmlsZSBmb3Igc3NoIHNlcnZp
+        Y2Ugd2hpY2ggbWFuYWdlZCBieSBzdXBlcnZpc29yIn0seyJzdGFyX2NvdW50
+        IjowLCJpc19vZmZpY2lhbCI6ZmFsc2UsIm5hbWUiOiJhcHBuZXN0aWMvc3No
+        ZCIsImlzX3RydXN0ZWQiOnRydWUsImlzX2F1dG9tYXRlZCI6dHJ1ZSwiZGVz
+        Y3JpcHRpb24iOiIifV0K
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:56:02 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:25 GMT
 recorded_with: VCR 2.9.2

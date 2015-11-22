@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/images/busybox/json
+    uri: "<DOCKER_HOST>/v1.16/images/busybox/json"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,50 +18,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:55:55 GMT
+      - Sun, 22 Nov 2015 04:14:48 GMT
       Content-Length:
-      - '1635'
+      - '1218'
     body:
-      encoding: ASCII-8BIT
-      string: !binary |-
-        eyJBcmNoaXRlY3R1cmUiOiJhbWQ2NCIsIkF1dGhvciI6IkrDqXLDtG1lIFBl
-        dGF6em9uaSBcdTAwM2NqZXJvbWVAZG9ja2VyLmNvbVx1MDAzZSIsIkNoZWNr
-        c3VtIjoidGFyc3VtLmRlditzaGEyNTY6ZTNiMGM0NDI5OGZjMWMxNDlhZmJm
-        NGM4OTk2ZmI5MjQyN2FlNDFlNDY0OWI5MzRjYTQ5NTk5MWI3ODUyYjg1NSIs
-        IkNvbW1lbnQiOiIiLCJDb25maWciOnsiQXR0YWNoU3RkZXJyIjpmYWxzZSwi
-        QXR0YWNoU3RkaW4iOmZhbHNlLCJBdHRhY2hTdGRvdXQiOmZhbHNlLCJDbWQi
-        OlsiL2Jpbi9zaCJdLCJDcHVTaGFyZXMiOjAsIkNwdXNldCI6IiIsIkRvbWFp
-        bm5hbWUiOiIiLCJFbnRyeXBvaW50IjpudWxsLCJFbnYiOlsiUEFUSD0vdXNy
-        L2xvY2FsL3NiaW46L3Vzci9sb2NhbC9iaW46L3Vzci9zYmluOi91c3IvYmlu
-        Oi9zYmluOi9iaW4iXSwiRXhwb3NlZFBvcnRzIjpudWxsLCJIb3N0bmFtZSI6
-        IjdmNjc0OTE1OTgwZCIsIkltYWdlIjoiZWExMzE0OTk0NWNiNmIxZTc0NmJm
-        MjgwMzJmMDJlOWI1YTc5MzUyMzQ4MWEwYTE4NjQ1ZmM3N2FkNTNjNGVhMiIs
-        Ik1hY0FkZHJlc3MiOiIiLCJNZW1vcnkiOjAsIk1lbW9yeVN3YXAiOjAsIk5l
-        dHdvcmtEaXNhYmxlZCI6ZmFsc2UsIk9uQnVpbGQiOltdLCJPcGVuU3RkaW4i
-        OmZhbHNlLCJQb3J0U3BlY3MiOm51bGwsIlN0ZGluT25jZSI6ZmFsc2UsIlR0
-        eSI6ZmFsc2UsIlVzZXIiOiIiLCJWb2x1bWVzIjpudWxsLCJXb3JraW5nRGly
-        IjoiIn0sIkNvbnRhaW5lciI6IjgzZGNmMzZhZDEwNDJiOTBmNGVhOGIyZWJi
-        NjBlNjFiMmYxYTQ1MWE4ODNlMDRiMzg4YmUyOTlhZDM4MmIyNTkiLCJDb250
-        YWluZXJDb25maWciOnsiQXR0YWNoU3RkZXJyIjpmYWxzZSwiQXR0YWNoU3Rk
-        aW4iOmZhbHNlLCJBdHRhY2hTdGRvdXQiOmZhbHNlLCJDbWQiOlsiL2Jpbi9z
-        aCIsIi1jIiwiIyhub3ApIENNRCBbL2Jpbi9zaF0iXSwiQ3B1U2hhcmVzIjow
-        LCJDcHVzZXQiOiIiLCJEb21haW5uYW1lIjoiIiwiRW50cnlwb2ludCI6bnVs
-        bCwiRW52IjpbIlBBVEg9L3Vzci9sb2NhbC9zYmluOi91c3IvbG9jYWwvYmlu
-        Oi91c3Ivc2JpbjovdXNyL2Jpbjovc2JpbjovYmluIl0sIkV4cG9zZWRQb3J0
-        cyI6bnVsbCwiSG9zdG5hbWUiOiI3ZjY3NDkxNTk4MGQiLCJJbWFnZSI6ImVh
-        MTMxNDk5NDVjYjZiMWU3NDZiZjI4MDMyZjAyZTliNWE3OTM1MjM0ODFhMGEx
-        ODY0NWZjNzdhZDUzYzRlYTIiLCJNYWNBZGRyZXNzIjoiIiwiTWVtb3J5Ijow
-        LCJNZW1vcnlTd2FwIjowLCJOZXR3b3JrRGlzYWJsZWQiOmZhbHNlLCJPbkJ1
-        aWxkIjpbXSwiT3BlblN0ZGluIjpmYWxzZSwiUG9ydFNwZWNzIjpudWxsLCJT
-        dGRpbk9uY2UiOmZhbHNlLCJUdHkiOmZhbHNlLCJVc2VyIjoiIiwiVm9sdW1l
-        cyI6bnVsbCwiV29ya2luZ0RpciI6IiJ9LCJDcmVhdGVkIjoiMjAxNC0xMi0z
-        MVQyMjoyMzo1Ni45NDM0MDM2NjhaIiwiRG9ja2VyVmVyc2lvbiI6IjEuNC4x
-        IiwiSWQiOiI0OTg2YmY4YzE1MzYzZDFjNWQxNTUxMmQ1MjY2Zjg3NzdiZmJh
-        NDk3NGFjNTZlMzI3MGU3NzYwZjZmMGE4MTI1IiwiT3MiOiJsaW51eCIsIlBh
-        cmVudCI6ImVhMTMxNDk5NDVjYjZiMWU3NDZiZjI4MDMyZjAyZTliNWE3OTM1
-        MjM0ODFhMGExODY0NWZjNzdhZDUzYzRlYTIiLCJTaXplIjowLCJWaXJ0dWFs
-        U2l6ZSI6MjQzMzMwM30K
+      encoding: UTF-8
+      string: |
+        {"Id":"c51f86c283408d1749d066333f7acd5d33b053b003a61ff6a7b36819ddcbc7b7","RepoTags":["busybox:latest"],"RepoDigests":[],"Parent":"039b63dd2cbaa10d6015ea574392530571ed8d7b174090f032211285a71881d0","Comment":"","Created":"2015-10-31T22:22:55.613815829Z","Container":"349b014153779e30093d94f6df2a43c7a0a164e05aa207389917b540add39b51","ContainerConfig":{"Hostname":"23304fc829f9","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["/bin/sh","-c","#(nop) CMD [\"sh\"]"],"Image":"d1592a710ac323612bd786fa8ac20727c58d8a67847e5a65177c594f43919498","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"DockerVersion":"1.8.2","Author":"","Config":{"Hostname":"23304fc829f9","Domainname":"","User":"","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":null,"Cmd":["sh"],"Image":"d1592a710ac323612bd786fa8ac20727c58d8a67847e5a65177c594f43919498","Volumes":null,"WorkingDir":"","Entrypoint":null,"OnBuild":null,"Labels":null},"Architecture":"amd64","Os":"linux","Size":0,"VirtualSize":1108935,"GraphDriver":{"Name":"aufs","Data":null}}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:55:55 GMT
+  recorded_at: Sun, 22 Nov 2015 04:14:48 GMT
 recorded_with: VCR 2.9.2

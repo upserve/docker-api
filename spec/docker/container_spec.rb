@@ -58,7 +58,7 @@ describe Docker::Container do
       let(:stdout) { subject.streaming_logs(stdout: 1) }
       it 'returns blank logs', :vcr do
         expect(stdout).to be_a String
-        expect(stdout).to eq "hello\n"
+        expect(stdout).to match("hello")
       end
     end
 
@@ -68,7 +68,7 @@ describe Docker::Container do
       let(:output) { subject.streaming_logs(stdout: 1, tty: 1) }
       it 'returns `hello`', :vcr do
         expect(output).to be_a(String)
-        expect(output).to eq("hello\n")
+        expect(output).to match("hello")
       end
     end
 
@@ -77,8 +77,8 @@ describe Docker::Container do
       let(:output) { subject.streaming_logs(stdout: 1, follow: 1) { |s,c| lines << c } }
       it 'returns `hello`', :vcr do
         expect(output).to be_a(String)
-        expect(output).to eq("hello\n")
-        expect(lines).to eq(["hello\n"])
+        expect(output).to match("hello")
+        expect(lines.join).to match("hello")
       end
     end
   end
@@ -118,7 +118,7 @@ describe Docker::Container do
       after(:each) { subject.remove }
 
       it 'should have name set to bob', :vcr do
-        expect(subject.json["Name"]).to eq "/bob"
+        expect(subject.json["Name"]).to eq("/bob")
       end
     end
   end
@@ -137,7 +137,7 @@ describe Docker::Container do
 
     it 'renames the container', :vcr do
       subject.rename('bar')
-      expect(subject.json["Name"]).to eq "bar"
+      expect(subject.json["Name"]).to eq("/bar")
     end
   end
 
@@ -190,9 +190,8 @@ describe Docker::Container do
 
     context 'when the file does not exist' do
       it 'raises an error', :vcr do
-        skip 'Docker no longer returns a 500 when the file does not exist'
-        # expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
-        #     .to raise_error
+        expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
+          .to raise_error
       end
     end
 
@@ -298,7 +297,7 @@ describe Docker::Container do
         'Volumes' => {'/foo' => {}}
       )
     }
-    let(:all) { Docker::Container.all }
+    let(:all) { Docker::Container.all(all: true) }
 
     before { subject.start('Binds' => ["/tmp:/foo"]) }
     after(:each) { subject.remove }
@@ -345,7 +344,7 @@ describe Docker::Container do
     end
 
     context 'when detach is true' do
-      let(:output) { subject.exec('date', detach: true) }
+      let(:output) { subject.exec(['date'], detach: true) }
 
       it 'returns the Docker::Exec object', :vcr do
         expect(output).to be_a Docker::Exec
@@ -622,23 +621,8 @@ describe Docker::Container do
       context 'when the HTTP request returns a 200' do
         let(:options) do
           {
-            "Hostname"     => "",
-            "User"         => "",
-            "Memory"       => 0,
-            "MemorySwap"   => 0,
-            "AttachStdin"  => false,
-            "AttachStdout" => false,
-            "AttachStderr" => false,
-            "PortSpecs"    => nil,
-            "Tty"          => false,
-            "OpenStdin"    => false,
-            "StdinOnce"    => false,
-            "Env"          => nil,
             "Cmd"          => ["date"],
-            "Dns"          => nil,
             "Image"        => "debian:wheezy",
-            "Volumes"      => {},
-            "VolumesFrom"  => ""
           }
         end
         let(:container) { subject.create(options) }

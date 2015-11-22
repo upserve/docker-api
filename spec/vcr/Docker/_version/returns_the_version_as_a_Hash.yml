@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: get
-    uri: <DOCKER_HOST>/v1.16/version
+    uri: "<DOCKER_HOST>/v1.16/version"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -18,17 +18,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
-      Job-Name:
-      - version
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 00:56:23 GMT
+      - Sun, 22 Nov 2015 04:15:29 GMT
       Content-Length:
-      - '144'
+      - '192'
     body:
-      encoding: US-ASCII
-      string: ! '{"ApiVersion":"1.16","Arch":"amd64","GitCommit":"5bc2ff8","GoVersion":"go1.3.3","KernelVersion":"3.17.6-1-ARCH","Os":"linux","Version":"1.4.1"}
-
-'
+      encoding: UTF-8
+      string: |
+        {"Version":"1.9.0","ApiVersion":"1.21","GitCommit":"76d6bc9","GoVersion":"go1.4.3","Os":"linux","Arch":"amd64","KernelVersion":"4.1.12-boot2docker","BuildTime":"Tue Nov  3 19:20:09 UTC 2015"}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 00:56:23 GMT
+  recorded_at: Sun, 22 Nov 2015 04:15:28 GMT
 recorded_with: VCR 2.9.2

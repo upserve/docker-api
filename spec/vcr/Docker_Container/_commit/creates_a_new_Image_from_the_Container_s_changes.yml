@@ -2,13 +2,13 @@
 http_interactions:
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/create
+    uri: "<DOCKER_HOST>/v1.16/containers/create"
     body:
       encoding: UTF-8
-      string: ! '{"Cmd":["true"],"Image":"debian:wheezy"}'
+      string: '{"Cmd":["true"],"Image":"debian:wheezy"}'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -18,26 +18,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 01:02:55 GMT
+      - Sun, 22 Nov 2015 04:13:39 GMT
       Content-Length:
       - '90'
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37","Warnings":null}
-
-'
+      encoding: UTF-8
+      string: |
+        {"Id":"70887d5ba006ad089e443c8ffbc4730a23b14018a46e8558ef94ed83d960563f","Warnings":null}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 01:02:55 GMT
+  recorded_at: Sun, 22 Nov 2015 04:13:39 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37/start
+    uri: "<DOCKER_HOST>/v1.16/containers/70887d5ba006ad089e443c8ffbc4730a23b14018a46e8558ef94ed83d960563f/start"
     body:
       encoding: UTF-8
-      string: ! '{}'
+      string: "{}"
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -45,22 +46,24 @@ http_interactions:
       code: 204
       message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 01:02:55 GMT
+      - Sun, 22 Nov 2015 04:13:39 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 01:02:56 GMT
+  recorded_at: Sun, 22 Nov 2015 04:13:39 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/containers/47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37/wait
+    uri: "<DOCKER_HOST>/v1.16/containers/70887d5ba006ad089e443c8ffbc4730a23b14018a46e8558ef94ed83d960563f/wait"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -70,26 +73,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 01:02:56 GMT
+      - Sun, 22 Nov 2015 04:13:39 GMT
       Content-Length:
       - '17'
     body:
-      encoding: US-ASCII
-      string: ! '{"StatusCode":0}
-
-'
+      encoding: UTF-8
+      string: |
+        {"StatusCode":0}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 01:02:56 GMT
+  recorded_at: Sun, 22 Nov 2015 04:13:39 GMT
 - request:
     method: post
-    uri: <DOCKER_HOST>/v1.16/commit?container=47dd0325
+    uri: "<DOCKER_HOST>/v1.16/commit?container=70887d5b"
     body:
       encoding: UTF-8
       string: 'null'
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - application/json
   response:
@@ -99,26 +103,27 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 01:02:57 GMT
+      - Sun, 22 Nov 2015 04:13:39 GMT
       Content-Length:
       - '74'
     body:
-      encoding: US-ASCII
-      string: ! '{"Id":"acc27058c70fce89605592bf1849a82ebea4e5dab0cc69c21a48e38fdfe26fc1"}
-
-'
+      encoding: UTF-8
+      string: |
+        {"Id":"b32f62565264c1f5fa2c500e3a9a0bfe960d9b7c515ccc144e81c186a8ea6826"}
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 01:02:57 GMT
+  recorded_at: Sun, 22 Nov 2015 04:13:39 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/containers/47dd032599c479284b47d87a5960c0a84bc77e7e04a46838cad0690320b35f37
+    uri: "<DOCKER_HOST>/v1.16/containers/70887d5ba006ad089e443c8ffbc4730a23b14018a46e8558ef94ed83d960563f"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -126,22 +131,24 @@ http_interactions:
       code: 204
       message: 
     headers:
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 01:02:58 GMT
+      - Sun, 22 Nov 2015 04:13:39 GMT
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 01:02:58 GMT
+  recorded_at: Sun, 22 Nov 2015 04:13:39 GMT
 - request:
     method: delete
-    uri: <DOCKER_HOST>/v1.16/images/acc27058c70fce89605592bf1849a82ebea4e5dab0cc69c21a48e38fdfe26fc1
+    uri: "<DOCKER_HOST>/v1.16/images/b32f62565264c1f5fa2c500e3a9a0bfe960d9b7c515ccc144e81c186a8ea6826"
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - Swipely/Docker-API 1.18.0
+      - Swipely/Docker-API 1.23.0
       Content-Type:
       - text/plain
   response:
@@ -151,15 +158,16 @@ http_interactions:
     headers:
       Content-Type:
       - application/json
+      Server:
+      - Docker/1.9.0 (linux)
       Date:
-      - Thu, 12 Feb 2015 01:02:58 GMT
+      - Sun, 22 Nov 2015 04:13:39 GMT
       Content-Length:
       - '81'
     body:
-      encoding: US-ASCII
-      string: ! '[{"Deleted":"acc27058c70fce89605592bf1849a82ebea4e5dab0cc69c21a48e38fdfe26fc1"}
-
-        ]'
+      encoding: UTF-8
+      string: |
+        [{"Deleted":"b32f62565264c1f5fa2c500e3a9a0bfe960d9b7c515ccc144e81c186a8ea6826"}]
     http_version: 
-  recorded_at: Thu, 12 Feb 2015 01:02:58 GMT
+  recorded_at: Sun, 22 Nov 2015 04:13:39 GMT
 recorded_with: VCR 2.9.2
