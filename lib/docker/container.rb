@@ -238,7 +238,7 @@ class Docker::Container
     self
   end
 
-  def archive_out(path, overwrite = false, &block)
+  def archive_out(path, &block)
     connection.get(
       path_for(:archive),
       { 'path' => path },
@@ -247,10 +247,20 @@ class Docker::Container
     self
   end
 
-  def archive_in(path, overwrite = false, &block)
+  def archive_in(inputs, output_path, opts = {})
+    file_hash = Docker::Util.file_hash_from_paths([*inputs])
+    tar = StringIO.new(Docker::Util.create_tar(file_hash))
+    archive_in_stream(output_path, opts) do
+      tar.read(Excon.defaults[:chunk_size]).to_s
+    end
+  end
+
+  def archive_in_stream(output_path, opts = {}, &block)
+    overwrite = opts[:overwrite] || opts['overwrite'] || false
+
     connection.put(
       path_for(:archive),
-      { 'path' => path, 'overwrite' => overwrite },
+      { 'path' => output_path, 'noOverwriteDirNonDir' => !overwrite },
       :headers => {
         'Content-Type' => 'application/x-tar'
       },

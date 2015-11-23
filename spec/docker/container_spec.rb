@@ -212,41 +212,84 @@ describe Docker::Container do
     end
   end
 
-  describe '#archive_in' do
+  describe '#archive_in', :docker_1_8 do
+    let(:license_path) { File.absolute_path(File.join(__FILE__, '..', '..', '..', 'LICENSE')) }
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
+    let(:committed_image) { subject.commit }
+    let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
+    let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
+
+    after do
+      subject.remove
+    end
+
+    context 'when the input is a tar' do
+      after do
+        ls_container.remove
+        committed_image.remove
+      end
+
+      it 'file exists in the container' do
+        subject.archive_in(license_path, '/', overwrite: false)
+        expect(output).to include('LICENSE')
+      end
+    end
+  end
+
+  describe '#archive_in_stream', :docker_1_8 do
     let(:tar) { StringIO.new(Docker::Util.create_tar('/lol' => 'TEST')) }
     subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
     let(:committed_image) { subject.commit }
     let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
     let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
 
-    after(:each) { subject.remove }
+    after do
+      subject.remove
+    end
 
     context 'when the input is a tar' do
-      after { ls_container.remove; committed_image.remove }
+      after do
+        ls_container.remove
+        committed_image.remove
+      end
 
-      it 'file exists in the container', :vcr do
-        subject.archive_in('/', false) { tar.read }
+      it 'file exists in the container' do
+        subject.archive_in_stream('/', overwrite: false) { tar.read }
         expect(output).to include('lol')
+      end
+    end
+
+    context 'when the input would overwrite a directory with a file' do
+      let(:tar) { StringIO.new(Docker::Util.create_tar('/etc' => 'TEST')) }
+
+      it 'raises an error' do
+        # Docs say this should return a client error: clearly wrong
+        # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.21/
+        # #extract-an-archive-of-files-or-folders-to-a-directory-in-a-container
+        expect {
+          subject.archive_in_stream('/', overwrite: false) { tar.read }
+        }.to raise_error(Docker::Error::ServerError)
       end
     end
   end
 
-  describe '#archive_out' do
+  describe '#archive_out', :docker_1_8 do
     subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['touch','/test']) }
 
-    after(:each) { subject.remove }
+    after { subject.remove }
 
     context 'when the file does not exist' do
-      it 'raises an error', :vcr do
-        subject.start; subject.wait
+      it 'raises an error' do
+        subject.start
+        subject.wait
 
         expect { subject.archive_out('/lol') { |chunk| puts chunk } }
-            .to raise_error(Docker::Error::NotFoundError)
+          .to raise_error(Docker::Error::NotFoundError)
       end
     end
 
     context 'when the input is a file' do
-      it 'yields each chunk of the tarred file', :vcr do
+      it 'yields each chunk of the tarred file' do
         subject.start; subject.wait
 
         chunks = []
@@ -257,7 +300,7 @@ describe Docker::Container do
     end
 
     context 'when the input is a directory' do
-      it 'yields each chunk of the tarred directory', :vcr do
+      it 'yields each chunk of the tarred directory' do
         subject.start; subject.wait
 
         chunks = []
