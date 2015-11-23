@@ -47,7 +47,7 @@ describe Docker::Exec do
       let(:process) { subject.create(options) }
       after { container.kill!.remove }
 
-      it 'sets the id', :vcr do
+      it 'sets the id' do
         expect(process).to be_a Docker::Exec
         expect(process.id).to_not be_nil
         expect(process.connection).to_not be_nil
@@ -83,7 +83,7 @@ describe Docker::Exec do
     before { subject.start! }
     after { container.kill!.remove }
 
-    it 'returns the description as a Hash', :vcr do
+    it 'returns the description as a Hash' do
       expect(description).to be_a Hash
       expect(description['ID']).to start_with(subject.id)
     end
@@ -95,7 +95,7 @@ describe Docker::Exec do
         described_class.send(:new, Docker.connection, 'id' => rand(10000).to_s)
       end
 
-      it 'raises an error', :vcr do
+      it 'raises an error' do
         expect { subject.start! }.to raise_error(Docker::Error::NotFoundError)
       end
     end
@@ -110,12 +110,12 @@ describe Docker::Exec do
       }
       after { container.kill!.remove }
 
-      it 'returns the stdout and stderr messages', :vcr do
+      it 'returns the stdout and stderr messages' do
         expect(subject.start!).to eq([["hello\n"],[],0])
       end
 
       context 'block is passed' do
-        it 'attaches to the stream', :vcr do
+        it 'attaches to the stream' do
           chunk = nil
           result = subject.start! do |stream, c|
             chunk ||= c
@@ -132,7 +132,7 @@ describe Docker::Exec do
       }
       after { container.kill!.remove }
 
-      it 'returns empty stdout/stderr messages with exitcode', :vcr do
+      it 'returns empty stdout/stderr messages with exitcode' do
         expect(subject.start!(:detach => true)).to eq([[],[], 0])
       end
     end
@@ -143,7 +143,7 @@ describe Docker::Exec do
       }
       after { container.kill!.remove }
 
-      it 'returns empty stdout and stderr messages with exitcode', :vcr do
+      it 'returns empty stdout and stderr messages with exitcode' do
         expect(subject.start!(:wait => 100)).to eq([[], [], 0])
       end
     end
@@ -158,7 +158,7 @@ describe Docker::Exec do
       }
       after { container.kill!.remove }
 
-      it 'raises an error', :vcr do
+      it 'raises an error' do
         expect { subject.start!(:wait => 1) }.to raise_error(Docker::Error::TimeoutError)
       end
     end
@@ -169,7 +169,7 @@ describe Docker::Exec do
       }
       after { container.kill!.remove }
 
-      it 'starts the exec instance', :vcr do
+      it 'starts the exec instance' do
         expect { subject.start! }.not_to raise_error
       end
     end

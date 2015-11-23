@@ -21,7 +21,7 @@ describe Docker::Event do
 
   describe ".stream" do
     let(:container) { Docker::Image.create('fromImage' => 'debian:wheezy').run('bash') }
-    it 'receives at least 4 events', :vcr do
+    it 'receives at least 4 events' do
       expect(Docker::Event)
         .to receive(:new_event)
         .at_least(4).times
@@ -46,7 +46,7 @@ describe Docker::Event do
     let(:time) { Time.now.to_i + 1 }
     let(:container) { Docker::Image.create('fromImage' => 'debian:wheezy').run('bash') }
 
-    it 'receives at least 4 events', :vcr do
+    it 'receives at least 4 events' do
       expect(Docker::Event)
         .to receive(:new_event)
         .at_least(4).times

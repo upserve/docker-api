@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-# WARNING if you're re-recording any of these VCRs, you must be running the
-# Docker daemon and have the base Image pulled.
 describe Docker::Container do
   describe '#to_s' do
     subject {
@@ -30,7 +28,7 @@ describe Docker::Container do
     let(:description) { subject.json }
     after(:each) { subject.remove }
 
-    it 'returns the description as a Hash', :vcr do
+    it 'returns the description as a Hash' do
       expect(description).to be_a Hash
       expect(description['Id']).to start_with(subject.id)
     end
@@ -49,14 +47,14 @@ describe Docker::Container do
 
     context 'when not selecting any stream' do
       let(:non_destination) { subject.streaming_logs }
-      it 'raises a client error', :vcr do
+      it 'raises a client error' do
         expect { non_destination }.to raise_error(Docker::Error::ClientError)
       end
     end
 
     context 'when selecting stdout' do
       let(:stdout) { subject.streaming_logs(stdout: 1) }
-      it 'returns blank logs', :vcr do
+      it 'returns blank logs' do
         expect(stdout).to be_a String
         expect(stdout).to match("hello")
       end
@@ -66,7 +64,7 @@ describe Docker::Container do
       let(:options) { { 'Tty' => true } }
 
       let(:output) { subject.streaming_logs(stdout: 1, tty: 1) }
-      it 'returns `hello`', :vcr do
+      it 'returns `hello`' do
         expect(output).to be_a(String)
         expect(output).to match("hello")
       end
@@ -75,7 +73,7 @@ describe Docker::Container do
     context 'when passing a block' do
       let(:lines) { [] }
       let(:output) { subject.streaming_logs(stdout: 1, follow: 1) { |s,c| lines << c } }
-      it 'returns `hello`', :vcr do
+      it 'returns `hello`' do
         expect(output).to be_a(String)
         expect(output).to match("hello")
         expect(lines.join).to match("hello")
@@ -91,14 +89,14 @@ describe Docker::Container do
 
     context "when not selecting any stream" do
       let(:non_destination) { subject.logs }
-      it 'raises a client error', :vcr do
+      it 'raises a client error' do
         expect { non_destination }.to raise_error(Docker::Error::ClientError)
       end
     end
 
     context "when selecting stdout" do
       let(:stdout) { subject.logs(stdout: 1) }
-      it 'returns blank logs', :vcr do
+      it 'returns blank logs' do
         expect(stdout).to be_a String
         expect(stdout).to eq ""
       end
@@ -117,7 +115,7 @@ describe Docker::Container do
       let(:opts) { {"name" => "bob"} }
       after(:each) { subject.remove }
 
-      it 'should have name set to bob', :vcr do
+      it 'should have name set to bob' do
         expect(subject.json["Name"]).to eq("/bob")
       end
     end
@@ -135,7 +133,7 @@ describe Docker::Container do
     before { subject.start }
     after(:each) { subject.kill!.remove }
 
-    it 'renames the container', :vcr do
+    it 'renames the container' do
       subject.rename('bar')
       expect(subject.json["Name"]).to eq("/bar")
     end
@@ -153,7 +151,7 @@ describe Docker::Container do
     before { subject.tap(&:start).tap(&:wait) }
     after(:each) { subject.tap(&:wait).remove }
 
-    it 'returns the changes as an array', :vcr do
+    it 'returns the changes as an array' do
       expect(changes).to eq [
         {
           "Path" => "/root",
@@ -175,7 +173,7 @@ describe Docker::Container do
       image.remove
     end
 
-    it 'returns the top commands as an Array', :vcr do
+    it 'returns the top commands as an Array' do
       expect(top).to be_a Array
       expect(top).to_not be_empty
       expect(top.first.keys).to include('PID')
@@ -189,14 +187,14 @@ describe Docker::Container do
     after(:each) { subject.remove }
 
     context 'when the file does not exist' do
-      it 'raises an error', :vcr do
+      it 'raises an error' do
         expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
           .to raise_error
       end
     end
 
     context 'when the input is a file' do
-      it 'yields each chunk of the tarred file', :vcr do
+      it 'yields each chunk of the tarred file' do
         chunks = []
         subject.copy('/test') { |chunk| chunks << chunk }
         chunks = chunks.join("\n")
@@ -205,7 +203,7 @@ describe Docker::Container do
     end
 
     context 'when the input is a directory' do
-      it 'yields each chunk of the tarred directory', :vcr do
+      it 'yields each chunk of the tarred directory' do
         chunks = []
         subject.copy('/etc/logrotate.d') { |chunk| chunks << chunk }
         chunks = chunks.join("\n")
@@ -220,7 +218,7 @@ describe Docker::Container do
     before { subject.start }
     after { subject.tap(&:wait).remove }
 
-    it 'yields each chunk', :vcr do
+    it 'yields each chunk' do
       first = nil
       subject.export do |chunk|
         first ||= chunk
@@ -241,7 +239,7 @@ describe Docker::Container do
     after(:each) { subject.stop.remove }
 
     context 'with normal sized chunks' do
-      it 'yields each chunk', :vcr do
+      it 'yields each chunk' do
         chunk = nil
         subject.attach do |stream, c|
           chunk ||= c
@@ -259,7 +257,7 @@ describe Docker::Container do
         Docker.options = {}
       end
 
-      it 'yields each chunk', :vcr do
+      it 'yields each chunk' do
         chunk = nil
         subject.attach do |stream, c|
           chunk ||= c
@@ -302,7 +300,7 @@ describe Docker::Container do
     before { subject.start('Binds' => ["/tmp:/foo"]) }
     after(:each) { subject.remove }
 
-    it 'starts the container', :vcr do
+    it 'starts the container' do
       expect(all.map(&:id)).to be_any { |id| id.start_with?(subject.id) }
       expect(subject.wait(10)['StatusCode']).to be_zero
     end
@@ -316,7 +314,7 @@ describe Docker::Container do
     before { subject.tap(&:start).stop('timeout' => '10') }
     after { subject.remove }
 
-    it 'stops the container', :vcr do
+    it 'stops the container' do
       expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
         id.start_with?(subject.id)
       }
@@ -338,7 +336,7 @@ describe Docker::Container do
     context 'when passed only a command' do
       let(:output) { subject.exec(['bash','-c','sleep 2; echo hello']) }
 
-      it 'returns the stdout/stderr messages and exit code', :vcr do
+      it 'returns the stdout/stderr messages and exit code' do
         expect(output).to eq([["hello\n"], [], 0])
       end
     end
@@ -346,14 +344,14 @@ describe Docker::Container do
     context 'when detach is true' do
       let(:output) { subject.exec(['date'], detach: true) }
 
-      it 'returns the Docker::Exec object', :vcr do
+      it 'returns the Docker::Exec object' do
         expect(output).to be_a Docker::Exec
         expect(output.id).to_not be_nil
       end
     end
 
     context 'when passed a block' do
-      it 'streams the stdout/stderr messages', :vcr do
+      it 'streams the stdout/stderr messages' do
         chunk = nil
         subject.exec(['bash','-c','sleep 2; echo hello']) do |stream, c|
           chunk ||= c
@@ -365,7 +363,7 @@ describe Docker::Container do
     context 'when stdin object is passed' do
       let(:output) { subject.exec(['cat'], stdin: StringIO.new("hello")) }
 
-      it 'returns the stdout/stderr messages', :vcr do
+      it 'returns the stdout/stderr messages' do
         expect(output).to eq([["hello"],[],0])
       end
     end
@@ -377,7 +375,7 @@ describe Docker::Container do
       ] }
       let(:output) { subject.exec(command, tty: true) }
 
-      it 'returns the raw stdout/stderr output', :vcr do
+      it 'returns the raw stdout/stderr output' do
         expect(output).to eq([["I'm a TTY!"], [], 0])
       end
     end
@@ -392,7 +390,7 @@ describe Docker::Container do
     before { subject.start }
     after(:each) {subject.remove }
 
-    it 'kills the container', :vcr do
+    it 'kills the container' do
       subject.kill
       expect(described_class.all.map(&:id)).to be_none { |id|
         id.start_with?(subject.id)
@@ -410,7 +408,7 @@ describe Docker::Container do
           'trap echo SIGTERM; while [ 1 ]; do echo hello; done'
         ]
       }
-      it 'kills the container', :vcr do
+      it 'kills the container' do
         subject.kill(:signal => "SIGTERM")
         expect(described_class.all.map(&:id)).to be_any { |id|
           id.start_with?(subject.id)
@@ -435,7 +433,7 @@ describe Docker::Container do
       described_class.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
     }
 
-    it 'deletes the container', :vcr do
+    it 'deletes the container' do
       subject.delete(:force => true)
       expect(described_class.all.map(&:id)).to be_none { |id|
         id.start_with?(subject.id)
@@ -451,7 +449,7 @@ describe Docker::Container do
     before { subject.start }
     after { subject.kill!.remove }
 
-    it 'restarts the container', :vcr do
+    it 'restarts the container' do
       expect(described_class.all.map(&:id)).to be_any { |id|
         id.start_with?(subject.id)
       }
@@ -475,7 +473,7 @@ describe Docker::Container do
     }
     after { subject.unpause.kill!.remove }
 
-    it 'pauses the container', :vcr do
+    it 'pauses the container' do
       subject.pause
       expect(described_class.get(subject.id).info['State']['Paused']).to be true
     end
@@ -491,7 +489,7 @@ describe Docker::Container do
     before { subject.pause }
     after { subject.kill!.remove }
 
-    it 'unpauses the container', :vcr do
+    it 'unpauses the container' do
       subject.unpause
       expect(
         described_class.get(subject.id).info['State']['Paused']
@@ -510,7 +508,7 @@ describe Docker::Container do
     before { subject.start }
     after(:each) { subject.remove }
 
-    it 'waits for the command to finish', :vcr do
+    it 'waits for the command to finish' do
       expect(subject.wait['StatusCode']).to_not be_zero
     end
 
@@ -518,12 +516,12 @@ describe Docker::Container do
       subject { described_class.create('Cmd' => %w[sleep 5],
                                        'Image' => 'debian:wheezy') }
 
-      it 'sets the :read_timeout to that amount of time', :vcr do
+      it 'sets the :read_timeout to that amount of time' do
         expect(subject.wait(6)['StatusCode']).to be_zero
       end
 
       context 'and a command runs for too long' do
-        it 'raises a ServerError', :vcr do
+        it 'raises a ServerError' do
           expect{subject.wait(4)}.to raise_error(Docker::Error::TimeoutError)
           subject.tap(&:wait)
         end
@@ -542,7 +540,7 @@ describe Docker::Container do
         subject.remove
       end
 
-      it 'raises an error', :vcr do
+      it 'raises an error' do
         expect { run_command }
             .to raise_error(Docker::Error::UnexpectedResponseError)
       end
@@ -561,7 +559,7 @@ describe Docker::Container do
         end
       end
 
-      it 'creates a new container to run the specified command', :vcr do
+      it 'creates a new container to run the specified command' do
         expect(run_command.wait['StatusCode']).to be_zero
       end
     end
@@ -578,14 +576,14 @@ describe Docker::Container do
       image.remove
     end
 
-    it 'creates a new Image from the  Container\'s changes', :vcr do
+    it 'creates a new Image from the  Container\'s changes' do
       subject.tap(&:start).wait
 
       expect(image).to be_a Docker::Image
       expect(image.id).to_not be_nil
     end
 
-    context 'if run is passed, it saves the command in the image', :vcr do
+    context 'if run is passed, it saves the command in the image' do
       let(:image) { subject.commit }
       let(:container) { image.run('pwd') }
 
@@ -626,7 +624,7 @@ describe Docker::Container do
         let(:container) { subject.create(options) }
         after { container.remove }
 
-        it 'sets the id', :vcr do
+        it 'sets the id' do
           expect(container).to be_a Docker::Container
           expect(container.id).to_not be_nil
           expect(container.connection).to_not be_nil
@@ -660,7 +658,7 @@ describe Docker::Container do
       }
       after { container.remove }
 
-      it 'materializes the Container into a Docker::Container', :vcr do
+      it 'materializes the Container into a Docker::Container' do
         expect(subject.get(container.id)).to be_a Docker::Container
       end
     end
@@ -693,7 +691,7 @@ describe Docker::Container do
       before { container }
       after { container.remove }
 
-      it 'materializes each Container into a Docker::Container', :vcr do
+      it 'materializes each Container into a Docker::Container' do
         expect(subject.all(:all => true)).to be_all { |container|
           container.is_a?(Docker::Container)
         }

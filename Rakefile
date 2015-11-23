@@ -24,7 +24,7 @@ task :unpack do
   end
 end
 
-desc 'Run spec tests and record VCR cassettes'
+desc 'Run spec tests with a registry'
 task :rspec do
   begin
     registry = Docker::Container.create(

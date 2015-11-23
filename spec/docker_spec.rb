@@ -160,7 +160,7 @@ describe Docker do
     }
 
     let(:version) { subject.version }
-    it 'returns the version as a Hash', :vcr do
+    it 'returns the version as a Hash' do
       expect(version).to be_a Hash
       expect(version.keys.sort).to include(*expected)
     end
@@ -177,7 +177,7 @@ describe Docker do
          NGoroutines Name OperatingSystem SwapLimit)
     end
 
-    it 'returns the info as a Hash', :vcr do
+    it 'returns the info as a Hash' do
       expect(info).to be_a Hash
       expect(info.keys.sort).to include(*keys)
     end
@@ -193,8 +193,6 @@ describe Docker do
     after { Docker.creds = nil }
 
     context 'with valid credentials' do
-      # Used valid credentials to record VCR and then changed
-      # cassette to match these credentials
       let(:credentials) {
         {
           :username      => ENV['DOCKER_API_USER'],
@@ -204,15 +202,13 @@ describe Docker do
         }
       }
 
-      it 'logs in and sets the creds', :vcr do
+      it 'logs in and sets the creds' do
         expect(authentication).to be true
         expect(Docker.creds).to eq(credentials.to_json)
       end
     end
 
     context 'with invalid credentials' do
-      # Recorded the VCR with these credentials
-      # to purposely fail
       let(:credentials) {
         {
           :username      => 'test',
@@ -222,7 +218,7 @@ describe Docker do
         }
       }
 
-      it "raises an error and doesn't set the creds", :vcr do
+      it "raises an error and doesn't set the creds" do
         expect {
           authentication
         }.to raise_error(Docker::Error::AuthenticationError)
@@ -245,7 +241,7 @@ describe Docker do
       end
     end
 
-    context 'when nothing is raised', :vcr do
+    context 'when nothing is raised' do
       its(:validate_version!) { should be true }
     end
   end
