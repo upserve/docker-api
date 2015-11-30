@@ -159,6 +159,20 @@ class Docker::Image
       end
     end
 
+    def load(name, filename = nil, conn = Docker.connection)
+      query = {}
+      if filename
+        file = File.open(filename , 'rb')
+        conn.post(
+          '/images/load',
+          query,
+          :response_block => response_block_for_load(file)
+        )
+        file.close
+        nil
+      end
+    end
+
     # Check if an image exists.
     def exist?(id, opts = {}, conn = Docker.connection)
       get(id, opts, conn)
@@ -310,4 +324,11 @@ class Docker::Image
       file << chunk
     end
   end
+
+  def self.response_block_for_load(file)
+    lambda do |chunk, remianing, total|
+      puts chunk
+    end
+  end
+
 end

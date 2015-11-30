@@ -76,6 +76,7 @@ private
     query ||= {}
     opts ||= {}
     headers = opts.delete(:headers) || {}
+    puts "## DEBUG: #{content_type}"
     content_type = opts[:body].nil? ?  'text/plain' : 'application/json'
     user_agent = "Swipely/Docker-API #{Docker::VERSION}"
     {

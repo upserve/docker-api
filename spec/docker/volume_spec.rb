@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-# WARNING if you're re-recording any of these VCRs, you must be running the
-# Docker daemon and have the base Image pulled.
 describe Docker::Volume do
 
 name = "ArbitraryNameForTheRakeTestVolume"
