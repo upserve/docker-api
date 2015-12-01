@@ -159,19 +159,21 @@ class Docker::Image
       end
     end
 
-    def load(name, filename = nil, conn = Docker.connection)
-      query = {}
-      if filename
-        file = File.open(filename , 'rb')
-        conn.post(
-          '/images/load',
-          query,
-          :response_block => response_block_for_load(file)
-        )
-        file.close
-        nil
-      end
-    end
+    def load(tar, opts = {}, conn = Docker.connection, creds = nil, &block)
+       headers = build_headers(creds)
+       body = ""
+       f = File.open(tar,'rb')
+       conn.post(
+         '/images/load',
+         opts,
+         :headers => headers,
+         :response_block => response_block(body, &block)
+       ) { f.read(Excon.defaults[:chunk_size]).to_s }
+ 
+       new(conn,
+         :headers => headers)
+     end
+
 
     # Check if an image exists.
     def exist?(id, opts = {}, conn = Docker.connection)
@@ -322,12 +324,6 @@ class Docker::Image
   def self.response_block_for_save(file)
     lambda do |chunk, remianing, total|
       file << chunk
-    end
-  end
-
-  def self.response_block_for_load(file)
-    lambda do |chunk, remianing, total|
-      puts chunk
     end
   end
 
