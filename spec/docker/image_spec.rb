@@ -270,10 +270,12 @@ describe Docker::Image do
   end
 
   describe '#load' do
-    contect 'test image upload' do
-      it 'load busybox image' do
-        result = Docker::Image.load('busybox.tar')
-        expect(result).to be_nil
+    include_context "local paths"
+    let(:file) { File.join(project_dir, 'spec', 'fixtures', 'load.tar') }
+    context 'test image upload' do
+      it 'load tianon/true image' do
+        result = Docker::Image.load(file)
+        expect(result).to eq("")
       end
     end
   end
