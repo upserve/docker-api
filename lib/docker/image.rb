@@ -169,10 +169,7 @@ class Docker::Image
          :headers => headers,
          :response_block => response_block(body, &block)
        ) { f.read(Excon.defaults[:chunk_size]).to_s }
- 
-       new(conn,
-         :headers => headers)
-     end
+    end
 
 
     # Check if an image exists.
