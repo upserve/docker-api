@@ -269,6 +269,15 @@ describe Docker::Image do
     end
   end
 
+  describe '#load' do
+    contect 'test image upload' do
+      it 'load busybox image' do
+        result = Docker::Image.load('busybox.tar')
+        expect(result).to be_nil
+      end
+    end
+  end
+
   describe '#refresh!' do
     let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
 
