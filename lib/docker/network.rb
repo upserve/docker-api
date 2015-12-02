@@ -7,6 +7,7 @@ class Docker::Network
       connection.post(path_for('connect'), opts,
                       body: { container: container }.to_json)
     )
+    reload
   end
 
   def disconnect(container, opts = {})
@@ -14,9 +15,9 @@ class Docker::Network
       connection.post(path_for('disconnect'), opts,
                       body: { container: container }.to_json)
     )
+    reload
   end
 
-  # remove network
   def remove(opts = {})
     connection.delete(path_for, opts)
     nil
@@ -30,6 +31,12 @@ class Docker::Network
   def to_s
     "Docker::Network { :id => #{id}, :info => #{info.inspect}, "\
       ":connection => #{connection} }"
+  end
+
+  def reload
+    network_json = @connection.get("/networks/#{URI.encode(@id)}")
+    hash = Docker::Util.parse_json(network_json) || {}
+    @info = hash
   end
 
   class << self
@@ -68,5 +75,4 @@ class Docker::Network
   end
 
   private :path_for
-  private_class_method :new
 end
