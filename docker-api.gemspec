@@ -21,7 +21,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rspec-its'
   gem.add_development_dependency 'cane'
   gem.add_development_dependency 'pry'
-  gem.add_development_dependency 'vcr', '>= 2.7.0'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'webmock'
   # > 1.3.4 doesn't support ruby 1.9.2

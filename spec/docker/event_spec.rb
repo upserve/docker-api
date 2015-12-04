@@ -20,40 +20,50 @@ describe Docker::Event do
   end
 
   describe ".stream" do
-    it 'receives three events', :vcr do
-      skip "get VCR to record events that break"
-      expect(Docker::Event).to receive(:new_event).exactly(3).times
+    let(:container) { Docker::Image.create('fromImage' => 'debian:wheezy').run('bash') }
+    it 'receives at least 4 events' do
+      expect(Docker::Event)
+        .to receive(:new_event)
+        .at_least(4).times
         .and_call_original
-      fork do
-        sleep 1
-        Docker::Image.create('fromImage' => 'debian:wheezy').run('bash')
-      end
-      Docker::Event.stream do |event|
-        puts "#{event}"
-        if event.status == "die"
-          break
+
+      stream_thread = Thread.new do
+        Docker::Event.stream do |event|
+          puts "#{event}"
         end
       end
+
+      stream_thread.join(0.1)
+      container.wait
+      stream_thread.join(10)
+      stream_thread.kill
+
+      container.remove
     end
   end
 
   describe ".since" do
-    let!(:time) { Time.now.to_i }
+    let(:time) { Time.now.to_i + 1 }
+    let(:container) { Docker::Image.create('fromImage' => 'debian:wheezy').run('bash') }
 
-    it 'receives three events', :vcr do
-      skip "get VCR to record events that break"
-      expect(Docker::Event).to receive(:new_event).exactly(3).times
+    it 'receives at least 4 events' do
+      expect(Docker::Event)
+        .to receive(:new_event)
+        .at_least(4).times
         .and_call_original
-      fork do
-        sleep 1
-        Docker::Image.create('fromImage' => 'debian:wheezy').run('bash')
-      end
-      Docker::Event.since(time) do |event|
-        puts "#{event}"
-        if event.status == "die"
-          break
+
+      stream_thread = Thread.new do
+        Docker::Event.since(time) do |event|
+          puts "#{event}"
         end
       end
+
+      stream_thread.join(0.1)
+      container.wait
+      stream_thread.join(10)
+      stream_thread.kill
+
+      container.remove
     end
   end
 

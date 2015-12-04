@@ -13,6 +13,7 @@ describe Docker do
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) { should == {} }
       its(:url) { should == 'unix:///var/run/docker.sock' }
@@ -27,6 +28,7 @@ describe Docker do
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) { should == {} }
       its(:url) { should == 'unixs:///var/run/not-docker.sock' }
@@ -40,6 +42,7 @@ describe Docker do
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) { should == {} }
       its(:url) { should == 'tcp://localhost:2375' }
@@ -54,6 +57,7 @@ describe Docker do
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) { should == {} }
       its(:url) { should == 'tcp://someserver:8103' }
@@ -69,6 +73,7 @@ describe Docker do
         allow(ENV).to receive(:[]).with('DOCKER_CERT_PATH').and_return(nil)
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) { should == {} }
       its(:url) { should == 'tcp://someotherserver:8103' }
@@ -85,6 +90,7 @@ describe Docker do
         allow(ENV).to receive(:[]).with('DOCKER_SSL_VERIFY').and_return(nil)
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) {
         should == {
@@ -109,6 +115,7 @@ describe Docker do
           .and_return('false')
         Docker.reset!
       end
+      after { Docker.reset! }
 
       its(:options) {
         should == {
@@ -136,39 +143,31 @@ describe Docker do
 
   [:options=, :url=].each do |method|
     describe "##{method}" do
-      before do
-        subject.url = nil
-        subject.options = nil
-      end
+      before { Docker.reset! }
 
       it 'calls #reset_connection!' do
         expect(subject).to receive(:reset_connection!)
-        subject.public_send(method, {})
+        subject.public_send(method, nil)
       end
     end
   end
 
   describe '#version' do
-    before do
-      subject.url = nil
-      subject.options = nil
-    end
+    before { Docker.reset! }
+
     let(:expected) {
       %w[ApiVersion Arch GitCommit GoVersion KernelVersion Os Version]
     }
 
     let(:version) { subject.version }
-    it 'returns the version as a Hash', :vcr do
+    it 'returns the version as a Hash' do
       expect(version).to be_a Hash
-      expect(version.keys.sort).to eq expected
+      expect(version.keys.sort).to include(*expected)
     end
   end
 
   describe '#info' do
-    before do
-      subject.url = nil
-      subject.options = nil
-    end
+    before { Docker.reset! }
 
     let(:info) { subject.info }
     let(:keys) do
@@ -178,9 +177,9 @@ describe Docker do
          NGoroutines Name OperatingSystem SwapLimit)
     end
 
-    it 'returns the info as a Hash', :vcr do
+    it 'returns the info as a Hash' do
       expect(info).to be_a Hash
-      expect(info.keys.sort).to eq keys
+      expect(info.keys.sort).to include(*keys)
     end
   end
 
@@ -191,13 +190,9 @@ describe Docker do
       subject.authenticate!(credentials)
     }
 
-    after do
-      Docker.creds = nil
-    end
+    after { Docker.creds = nil }
 
     context 'with valid credentials' do
-      # Used valid credentials to record VCR and then changed
-      # cassette to match these credentials
       let(:credentials) {
         {
           :username      => ENV['DOCKER_API_USER'],
@@ -207,15 +202,13 @@ describe Docker do
         }
       }
 
-      it 'logs in and sets the creds', :vcr do
+      it 'logs in and sets the creds' do
         expect(authentication).to be true
         expect(Docker.creds).to eq(credentials.to_json)
       end
     end
 
     context 'with invalid credentials' do
-      # Recorded the VCR with these credentials
-      # to purposely fail
       let(:credentials) {
         {
           :username      => 'test',
@@ -225,8 +218,7 @@ describe Docker do
         }
       }
 
-      it "raises an error and doesn't set the creds", :vcr do
-        skip "VCR won't record when Excon::Expects fail"
+      it "raises an error and doesn't set the creds" do
         expect {
           authentication
         }.to raise_error(Docker::Error::AuthenticationError)
@@ -236,10 +228,7 @@ describe Docker do
   end
 
   describe '#validate_version' do
-    before do
-      subject.url = nil
-      subject.options = nil
-    end
+    before { Docker.reset! }
 
     context 'when a Docker Error is raised' do
       before do
@@ -252,7 +241,7 @@ describe Docker do
       end
     end
 
-    context 'when nothing is raised', :vcr do
+    context 'when nothing is raised' do
       its(:validate_version!) { should be true }
     end
   end
