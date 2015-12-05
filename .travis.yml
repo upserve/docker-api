@@ -3,6 +3,8 @@ services:
   - docker
 cache: bundler
 language: ruby
+before_script:
+  - docker version
 rvm:
   - 1.9.3
   - 2.0
