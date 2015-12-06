@@ -135,7 +135,7 @@ describe Docker::Container do
 
     it 'renames the container' do
       subject.rename('bar')
-      expect(subject.json["Name"]).to eq("/bar")
+      expect(subject.json["Name"]).to match(%r{bar})
     end
   end
 
