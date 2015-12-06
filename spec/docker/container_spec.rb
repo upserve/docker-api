@@ -131,7 +131,7 @@ describe Docker::Container do
     }
 
     before { subject.start }
-    after(:each) { subject.kill!.remove }
+    after(:each) { subject.tap(&:wait).remove }
 
     it 'renames the container' do
       subject.rename('bar')
