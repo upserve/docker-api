@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Docker::Network do
+describe Docker::Network, docker_1_9: true do
   let(:name) do |example|
     example.description.downcase.gsub('\s', '-')
   end
