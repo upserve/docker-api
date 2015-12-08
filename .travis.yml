@@ -1,6 +1,5 @@
 sudo: required
-services:
-  - docker
+dist: trusty
 cache: bundler
 language: ruby
 rvm:
@@ -8,3 +7,10 @@ rvm:
   - 2.0
   - 2.1
   - 2.2
+env:
+  - DOCKER_VERSION=1.5.0
+  - DOCKER_VERSION=1.6.2
+  - DOCKER_VERSION=1.7.1
+  - DOCKER_VERSION=1.8.3
+  - DOCKER_VERSION=1.9.1
+before_install: ./script/install_dependencies.sh
