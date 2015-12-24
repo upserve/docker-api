@@ -235,7 +235,9 @@ describe Docker::Container do
       File.join(File.dirname(__FILE__), '..', 'fixtures', 'top')
     }
     let(:image) { Docker::Image.build_from_dir(dir) }
-    let(:top) { sleep 1; container.top }
+    let(:top_empty) { sleep 1; container.top }
+    let(:top_ary) { sleep 1; container.top }
+    let(:top_hash) { sleep 1; container.top(format: :hash) }
     let!(:container) { image.run('/while') }
     after do
       container.kill!.remove
@@ -243,14 +245,20 @@ describe Docker::Container do
     end
 
     it 'returns the top commands as an Array' do
-      expect(top).to be_a Array
-      expect(top).to_not be_empty
-      expect(top.first.keys).to include('PID')
+      expect(top_ary).to be_a Array
+      expect(top_ary).to_not be_empty
+      expect(top_ary.first.keys).to include('PID')
+    end
+
+    it 'returns the top commands as an Hash' do
+      expect(top_hash).to be_a Hash
+      expect(top_hash).to_not be_empty
+      expect(top_hash.keys).to eq ['Processes', 'Titles']
     end
 
     it 'returns nothing when Processes were not returned due to an error' do
       expect(Docker::Util).to receive(:parse_json).and_return({})
-      expect(top).to eq []
+      expect(top_empty).to eq []
     end
   end
 

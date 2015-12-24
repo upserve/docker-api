@@ -17,11 +17,12 @@ class Docker::Container
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
+    format = opts.delete(:format) { :array }
     resp = Docker::Util.parse_json(connection.get(path_for(:top), opts))
     if resp['Processes'].nil?
-      []
+      format == :array ? [] : {}
     else
-      resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] }
+      format == :array ? resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] } : resp
     end
   end
 
