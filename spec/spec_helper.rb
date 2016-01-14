@@ -24,14 +24,15 @@ RSpec.configure do |config|
   config.tty = true
 
   case ENV['DOCKER_VERSION']
-  when /1\.5/
-    config.filter_run_including :docker_1_8 => false
   when /1\.6/
     config.filter_run_including :docker_1_8 => false
+    config.filter_run_including :docker_1_9 => false
   when /1\.7/
     config.filter_run_including :docker_1_8 => false
+    config.filter_run_including :docker_1_9 => false
   when /1\.8/
     config.filter_run_including :docker_1_8 => true
+    config.filter_run_including :docker_1_9 => false
   when /1\.9/
     config.filter_run_including :docker_1_8 => true
     config.filter_run_including :docker_1_9 => true
