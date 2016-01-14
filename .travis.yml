@@ -8,7 +8,6 @@ rvm:
   - 2.1
   - 2.2
 env:
-  - DOCKER_VERSION=1.5.0
   - DOCKER_VERSION=1.6.2
   - DOCKER_VERSION=1.7.1
   - DOCKER_VERSION=1.8.3
