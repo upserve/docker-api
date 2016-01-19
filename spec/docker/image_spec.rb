@@ -269,6 +269,17 @@ describe Docker::Image do
     end
   end
 
+  describe '#load' do
+    include_context "local paths"
+    let(:file) { File.join(project_dir, 'spec', 'fixtures', 'load.tar') }
+    context 'test image upload' do
+      it 'load tianon/true image' do
+        result = Docker::Image.load(file)
+        expect(result).to eq("")
+      end
+    end
+  end
+
   describe '#refresh!' do
     let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
 
