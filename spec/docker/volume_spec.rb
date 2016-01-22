@@ -1,44 +1,42 @@
 require 'spec_helper'
 
-# WARNING if you're re-recording any of these VCRs, you must be running the
-# Docker daemon and have the base Image pulled.
-describe Docker::Volume do
+describe Docker::Volume, :docker_1_9 do
+  let(:name) { "ArbitraryNameForTheRakeTestVolume" }
 
-name = "ArbitraryNameForTheRakeTestVolume"
+  describe '.create' do
+    let(:volume) { Docker::Volume.create(name) }
 
-  describe '#create' do
-    context 'creating a volume' do
-      it 'check if volume exists', :vcr do
-        result = Docker::Volume.create(name).instance_variable_get(:@id)
-        expect(result).to eq(name)
-      end
+    after { volume.remove }
+
+    it 'creates a volume' do
+      expect(volume.id).to eq(name)
     end
   end
 
-  describe '#get' do
-    context 'getting a volume' do
-      it 'check volume details', :vcr do
-        result = Docker::Volume.get(name).instance_variable_get(:@id)
-        expect(result).to eq(name)
-      end
+  describe '.get' do
+    let(:volume) { Docker::Volume.get(name) }
+
+    before { Docker::Volume.create(name) }
+    after { volume.remove }
+
+    it 'gets volume details' do
+      expect(volume.id).to eq(name)
+      expect(volume.info).to_not be_empty
     end
   end
 
-  describe '#all' do
-    context 'getting volume list' do
-      it 'check if volume number is more than 1', :vcr do
-        result = Docker::Volume.all.length
-        expect(result).to be >1
-      end
+  describe '.all' do
+    after { Docker::Volume.get(name).remove }
+
+    it 'gets a list of volumes' do
+      expect { Docker::Volume.create(name) }.to change { Docker::Volume.all.length }.by(1)
     end
   end
 
   describe '#remove' do
-    context 'removing a volume' do
-      it 'check if volume can be deleted', :vcr do
-        result = Docker::Volume.remove(name)
-        expect(result).to be_nil
-      end
+    it 'removes a volume' do
+      volume = Docker::Volume.create(name)
+      expect { volume.remove }.to change { Docker::Volume.all.length }.by(-1)
     end
   end
 
