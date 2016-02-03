@@ -454,6 +454,26 @@ Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdae
 
 These methods are prone to read timeouts.  `Docker.options[:read_timeout]` will need to be made higher than 60 seconds if expecting a long time between events.
 
+## JSON encoded values
+
+For JSON encoded values, nothing is done implicitly, meaning you need to explicitly call `to_json` on your parameter before the call. For example, to get a list of all exited container :
+
+```
+Docker::Container.all(all: 1, filters: { status: [ "exited"  ]  }.to_json)
+```
+
+Or to filter the container list with a label :
+
+```
+Docker::Container.all(all: 1, filters: { label: [ "label_name"  ]  }.to_json)
+```
+
+To find a specific value associated to a label :
+
+```
+Docker::Container.all(all: 1, filters: { label: [ "label_name=label_value"  ]  }.to_json)
+```
+
 ## Connecting to Multiple Servers
 
 By default, each object connects to the connection specified by `Docker.connection`. If you need to connect to multiple servers, you can do so by specifying the connection on `#new` or in the utilizing class method. For example:
