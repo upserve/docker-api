@@ -435,7 +435,7 @@ Docker::Container.all(:all => true)
 
 For JSON encoded values, nothing is done implicitly, meaning you need to explicitly call `to_json` on your parameter before the call. For example, to get a list of all exited container :
 
-```
+```ruby
 # Request all of the Containers, filtering by status exited.
 Docker::Container.all(all: true, filters: { status: ["exited"] }.to_json)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
