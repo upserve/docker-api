@@ -49,8 +49,8 @@ class Docker::Image
   # Given a path of a local file and the path it should be inserted, creates
   # a new Image that has that file.
   def insert_local(opts = {})
-    local_paths = opts.delete('localPath')
-    output_path = opts.delete('outputPath')
+    local_paths = opts.delete(:localPath) || opts.delete('localPath')
+    output_path = opts.delete(:outputPath) || opts.delete('outputPath')
 
     local_paths = [ local_paths ] unless local_paths.is_a?(Array)
 
