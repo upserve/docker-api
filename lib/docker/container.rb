@@ -51,27 +51,29 @@ class Docker::Container
   # @param options [Hash] The options to pass to Docker::Exec
   #
   # @return [Docker::Exec] The Exec instance
-  def exec(command, opts = {}, &block)
+  def exec(command, options = {}, &block)
     # Establish values
-    tty = opts.delete(:tty) || false
-    detach = opts.delete(:detach) || false
-    user = opts.delete(:user)
-    stdin = opts.delete(:stdin)
-    stdout = opts.delete(:stdout) || !detach
-    stderr = opts.delete(:stderr) || !detach
-    wait = opts.delete(:wait)
+    tty = options.delete(:tty) || false
+    detach = options.delete(:detach) || false
+    user = options.delete(:user)
+    stdin = options.delete(:stdin)
+    stdout = options.delete(:stdout) || !detach
+    stderr = options.delete(:stderr) || !detach
+    wait = options.delete(:wait)
+
+    opts = {
+      'Container' => self.id,
+      'User' => user,
+      'AttachStdin' => !!stdin,
+      'AttachStdout' => stdout,
+      'AttachStderr' => stderr,
+      'Tty' => tty,
+      'Cmd' => command
+    }.merge(options)
 
     # Create Exec Instance
     instance = Docker::Exec.create(
-      {
-        'Container' => self.id,
-        'User' => user,
-        'AttachStdin' => !!stdin,
-        'AttachStdout' => stdout,
-        'AttachStderr' => stderr,
-        'Tty' => tty,
-        'Cmd' => command
-      },
+      opts,
       self.connection
     )
 
