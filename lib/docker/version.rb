@@ -3,5 +3,5 @@ module Docker
   VERSION = '1.26.0'
 
   # The version of the compatible Docker remote API.
-  API_VERSION = '1.21'
+  API_VERSION = '1.22'
 end
