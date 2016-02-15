@@ -33,6 +33,17 @@ describe Docker::Image do
       end
     end
 
+    context 'when using the class' do
+      let(:id) { subject.id }
+      subject { described_class.create('fromImage' => 'busybox:latest') }
+      after { described_class.create('fromImage' => 'busybox:latest') }
+
+      it 'removes the Image' do
+        Docker::Image.remove(id, force: true)
+        expect(Docker::Image.all.map(&:id)).to_not include(id)
+      end
+    end
+
     context 'when a valid tag is given' do
       it 'untags the Image'
     end
