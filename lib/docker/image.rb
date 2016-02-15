@@ -128,6 +128,12 @@ class Docker::Image
       new(conn, hash)
     end
 
+    # Delete a specific image
+    def remove(id, opts = {}, conn = Docker.connection)
+      conn.delete("/images/#{id}", opts)
+    end
+    alias_method :delete, :remove
+
     # Save the raw binary representation or one or more Docker images
     #
     # @param names [String, Array#String] The image(s) you wish to save
