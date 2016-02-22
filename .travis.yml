@@ -12,9 +12,10 @@ env:
   # - DOCKER_VERSION=1.6.2
 matrix:
   fast_finish: true
-before_install: sudo ./script/install_dependencies.sh
-after_script:
+before_install:
+ - gem install bundler
+before_script:
+ - sudo ./script/install_dependencies.sh
  - uname -a
- - export PATH=/opt/docker:$PATH
  - docker version
  - docker info
