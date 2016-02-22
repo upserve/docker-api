@@ -10,7 +10,7 @@ set -e
 # sudo curl -fo /opt/docker/docker "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}"
 # sudo chmod +x /opt/docker/docker
 
-echo 'deb http://ftp.de.debian.org/debian vivid-backports main' >> /etc/apt/sources.list.d/docker-main.list
+echo 'deb "https://apt.dockerproject.org/repo" ubuntu-wily main' >> /etc/apt/sources.list.d/docker-main.list
 apt-get update
 apt-get install docker-engine ${DOCKER_VERSION}-0~vivid
 service docker start
