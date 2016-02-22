@@ -10,6 +10,7 @@ set -e
 # sudo curl -fo /opt/docker/docker "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}"
 # sudo chmod +x /opt/docker/docker
 
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo 'deb "https://apt.dockerproject.org/repo" ubuntu-wily main' >> /etc/apt/sources.list.d/docker-main.list
 apt-get -y update
 apt-get -y install docker-engine ${DOCKER_VERSION}-0~vivid
