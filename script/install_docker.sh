@@ -7,7 +7,7 @@ DOCKER_VERSION=$1
 
 # disable travis default installation
 service docker stop
-rm -f /etc/default/docker
+apt-get -y --purge remove docker-engine
 
 # enable docker repo
 apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
@@ -18,4 +18,4 @@ echo 'deb "https://apt.dockerproject.org/repo" ubuntu-trusty main' >> /etc/apt/s
 apt-get -y update
 
 # install package
-apt-get -y install docker-engine=${DOCKER_VERSION}-0~trusty
+apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~trusty
