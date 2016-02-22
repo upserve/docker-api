@@ -3,7 +3,7 @@ set -x
 set -e
 
 # Update bundler
-gem install bundler
+# gem install bundler
 
 # Install docker
 # sudo mkdir -p /opt/docker
