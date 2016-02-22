@@ -13,7 +13,7 @@ env:
 matrix:
   fast_finish: true
 before_install: ./script/install_dependencies.sh
-before_script:
+after_script:
  - export PATH=/opt/docker:$PATH
  - docker version
  - docker info
