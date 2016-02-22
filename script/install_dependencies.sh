@@ -11,8 +11,8 @@ set -e
 # sudo chmod +x /opt/docker/docker
 
 echo 'deb "https://apt.dockerproject.org/repo" ubuntu-wily main' >> /etc/apt/sources.list.d/docker-main.list
-apt-get update
-apt-get install docker-engine ${DOCKER_VERSION}-0~vivid
+apt-get -y update
+apt-get -y install docker-engine ${DOCKER_VERSION}-0~vivid
 service docker start
 
 # case "${DOCKER_VERSION}" in
