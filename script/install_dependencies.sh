@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 set -e
 
 # Update bundler
@@ -10,7 +11,7 @@ sudo curl -fo /opt/docker/docker "https://get.docker.com/builds/Linux/x86_64/doc
 sudo chmod +x /opt/docker/docker
 
 # Disable default service
-sudo service stop docker
+sudo service docker stop
 
 running=0
 for x in {1..3}
