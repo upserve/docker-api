@@ -13,7 +13,7 @@ sudo chmod +x /opt/docker/docker
 case ${DOCKER_VERSION} in
     '1.6.2' )        
         DAEMON_ARG='-d'
-    else
+    * )
         DAEMON_ARG='daemon'
 esac
 
