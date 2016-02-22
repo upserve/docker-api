@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x
 set -e
 
 # Update bundler
@@ -8,6 +9,9 @@ gem install bundler
 sudo mkdir -p /opt/docker
 sudo curl -fo /opt/docker/docker "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}"
 sudo chmod +x /opt/docker/docker
+
+# Disable default service
+sudo service docker stop
 
 running=0
 for x in {1..3}
