@@ -2,15 +2,14 @@
 set -x
 set -e
 
+# enable docker repo
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+apt-get -y update
+
 # enable backports
 echo 'deb "https://apt.dockerproject.org/repo" wily-backports main' >> /etc/apt/sources.list.d/wily-backports.list
-
-# enable docker repo
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
-# apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
 echo 'deb "https://apt.dockerproject.org/repo" ubuntu-wily main' >> /etc/apt/sources.list.d/docker-main.list
 
-# update apt cache
 apt-get -y update
 
 # install package
