@@ -1,5 +1,5 @@
 sudo: required
-dist: vivid
+dist: wily
 language: ruby
 cache: bundler
 rvm:
