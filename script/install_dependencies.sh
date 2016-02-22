@@ -7,9 +7,7 @@ apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E8
 apt-get -y update
 
 # enable backports
-echo 'deb "https://apt.dockerproject.org/repo" trusty-backports main' >> /etc/apt/sources.list.d/trusty-backports.list
 echo 'deb "https://apt.dockerproject.org/repo" ubuntu-trusty main' >> /etc/apt/sources.list.d/docker-main.list
-
 apt-get -y update
 
 # install package
