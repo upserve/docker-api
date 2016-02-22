@@ -10,11 +10,11 @@ sudo mkdir -p /opt/docker
 sudo curl -fo /opt/docker/docker "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}"
 sudo chmod +x /opt/docker/docker
 
-case ${DOCKER_VERSION} in
-    '1.6.2' )        
-        DAEMON_ARG='-d'
-    * )
-        DAEMON_ARG='daemon'
+case "${DOCKER_VERSION}" in
+    "1.6.2" )        
+        DAEMON_ARG="-d"
+    *)
+        DAEMON_ARG="daemon"
 esac
 
 running=0
