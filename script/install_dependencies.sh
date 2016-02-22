@@ -10,12 +10,19 @@ sudo mkdir -p /opt/docker
 sudo curl -fo /opt/docker/docker "https://get.docker.com/builds/Linux/x86_64/docker-${DOCKER_VERSION}"
 sudo chmod +x /opt/docker/docker
 
+case ${DOCKER_VERSION} in
+    '1.6.2' )        
+        DAEMON_ARG='-d'
+    else
+        DAEMON_ARG='daemon'
+esac
+
 running=0
 for x in {1..3}
 do
     [[ $running != 1 ]] || break
     sudo rm -rf /var/run/docker.pid
-    sudo /opt/docker/docker -d -D &
+    sudo /opt/docker/docker ${DAEMON_ARG} -D &
     DOCKER_PID=$!
     sleep 5
     echo "Checking if docker is running"
