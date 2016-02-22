@@ -1,6 +1,9 @@
-#!/bin/bash
+n#!/bin/bash
 set -x
 set -e
+
+# argv[0]
+DOCKER_VERSION=$1
 
 # enable docker repo
 apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D

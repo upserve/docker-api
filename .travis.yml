@@ -15,7 +15,7 @@ matrix:
 before_install:
  - gem install bundler
 before_script:
- - sudo ./script/install_docker.sh
+ - sudo ./script/install_docker.sh ${DOCKER_VERSION}
  - uname -a
  - docker version
  - docker info
