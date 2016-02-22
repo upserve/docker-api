@@ -10,9 +10,6 @@ matrix:
   fast_finish: true
   - DOCKER_VERSION=1.10.0
   - DOCKER_VERSION=1.9.1
-  - DOCKER_VERSION=1.8.3
-  - DOCKER_VERSION=1.7.1
-  - DOCKER_VERSION=1.6.2
 before_install: ./script/install_dependencies.sh
 before_script:
  - export PATH=/opt/docker:$PATH
