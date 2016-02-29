@@ -156,6 +156,11 @@ class Docker::Container
     connection.get(path_for(:logs), opts)
   end
 
+  # TODO: Implement Streaming stats
+  def stats
+    Docker::Util.parse_json(connection.get(path_for(:stats), {stream: 0}))
+  end
+
   def rename(new_name)
     query = {}
     query['name'] = new_name

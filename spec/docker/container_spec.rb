@@ -81,6 +81,20 @@ describe Docker::Container do
     end
   end
 
+  describe '#stats' do
+    subject {
+      described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
+    }
+    after(:each) { subject.remove }
+
+    context "when requesting container stats" do
+      let(:output) { subject.stats }
+      it "returns a Hash" do
+        expect(output).to be_a Hash
+      end
+    end
+  end
+
   describe '#logs' do
     subject {
       described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
