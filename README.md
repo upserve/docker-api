@@ -401,6 +401,10 @@ container = Docker::Container.create('Image' => 'ubuntu', 'Cmd' => command, 'Tty
 container.tap(&:start).attach(:tty => true)
 # => [["I'm a TTY!"], []]
 
+# Obtaining the current statistics of a container
+container.stats
+# => {"read"=>"2016-02-29T20:47:05.221608695Z", "precpu_stats"=>{"cpu_usage"=> ... }
+
 # Create an Image from a Container's changes.
 container.commit
 # => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
