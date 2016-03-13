@@ -154,6 +154,19 @@ class Docker::Image
       end
     end
 
+    # Load a tar Image 
+    def load(tar, opts = {}, conn = Docker.connection, creds = nil, &block)
+       headers = build_headers(creds)
+       body = ""
+       f = File.open(tar,'rb')
+       conn.post(
+         '/images/load',
+         opts,
+         :headers => headers,
+         :response_block => response_block(body, &block)
+       ) { f.read(Excon.defaults[:chunk_size]).to_s }
+    end
+
     # Check if an image exists.
     def exist?(id, opts = {}, conn = Docker.connection)
       get(id, opts, conn)
