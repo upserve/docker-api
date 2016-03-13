@@ -322,7 +322,7 @@ describe Docker::Image do
       it 'sets the id and sends Docker.creds' do
         allow(Docker).to receive(:creds).and_return(creds)
         expect(image).to be_a Docker::Image
-        expect(image.id).to match(/\A[a-fA-F0-9]+\Z/)
+        expect(image.id).to match(/\A(sha256:)?[a-fA-F0-9]+\Z/)
         expect(image.id).to_not include('base')
         expect(image.id).to_not be_nil
         expect(image.id).to_not be_empty
