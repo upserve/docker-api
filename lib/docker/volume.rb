@@ -23,10 +23,8 @@ class Docker::Volume
     # /volumes endpoint returns an array of hashes incapsulated in an Volumes tag
     def all(opts = {}, conn = Docker.connection)
       resp = conn.get('/volumes')
-      hashes = Docker::Util.parse_json(resp) || []
-      if hashes.has_key?("Volumes")
-         hashes =  hashes['Volumes']
-      end
+      json = Docker::Util.parse_json(resp) || {}
+      hashes = json['Volumes'] || []
       hashes.map { |hash| new(conn, hash) }
     end
 

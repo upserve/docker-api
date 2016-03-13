@@ -1,0 +1,35 @@
+#!/bin/bash
+set -x
+set -e
+
+# argv[0]
+DOCKER_VERSION=$1
+
+# disable travis default installation
+service docker stop
+apt-get -y --purge remove docker-engine
+
+# install gpg key for docker rpo
+apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv 58118E89F3A912897C070ADBF76221572C52609D
+
+# enable docker repo
+echo 'deb "https://apt.dockerproject.org/repo" ubuntu-trusty main' >> /etc/apt/sources.list.d/docker-main.list
+apt-get update -o Dir::Etc::sourcelist='sources.list.d/docker-main.list' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0'
+apt-cache gencaches
+
+# install package
+apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~trusty
+echo 'DOCKER_OPTS="-H unix:///var/run/docker.sock --pidfile=/var/run/docker.pid"' > /etc/default/docker
+cat /etc/default/docker
+
+# docker 1.6 packages did not come with init files
+if [[ $DOCKER_VERSION == 1.6.* ]]
+then
+    cp script/docker.conf /etc/init/docker.conf
+    cp script/docker /etc/init.d/docker
+    chmod +x /etc/init.d/docker
+else
+    service docker stop
+fi
+
+service docker start
