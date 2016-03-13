@@ -183,6 +183,16 @@ describe Docker do
     end
   end
 
+  describe '#ping' do
+    before { Docker.reset! }
+
+    let(:ping) { subject.ping}
+
+    it 'returns the status as a String' do
+      expect(ping).to eq('OK')
+    end
+  end
+
   describe '#authenticate!' do
     subject { described_class }
 

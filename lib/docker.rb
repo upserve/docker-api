@@ -112,6 +112,11 @@ module Docker
     Util.parse_json(connection.get('/info'))
   end
 
+  # Ping the Docker server.
+  def ping(connection = self.connection)
+    connection.get('/_ping')
+  end
+
   # Login to the Docker registry.
   def authenticate!(options = {}, connection = self.connection)
     creds = options.to_json
@@ -134,5 +139,5 @@ module Docker
   module_function :default_socket_url, :env_url, :url, :url=, :env_options,
                   :options, :options=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset!, :reset_connection!, :version, :info,
-                  :authenticate!, :validate_version!, :ssl_options
+                  :ping, :authenticate!, :validate_version!, :ssl_options
 end
