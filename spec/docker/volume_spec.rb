@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+# Volume requests are actually slow enough to occasionally not work
+# Use sleep statements to manage that
 describe Docker::Volume, :docker_1_9 do
   let(:name) { "ArbitraryNameForTheRakeTestVolume" }
 
@@ -16,7 +18,7 @@ describe Docker::Volume, :docker_1_9 do
   describe '.get' do
     let(:volume) { Docker::Volume.get(name) }
 
-    before { Docker::Volume.create(name) }
+    before { Docker::Volume.create(name); sleep 1 }
     after { volume.remove }
 
     it 'gets volume details' do
@@ -29,13 +31,14 @@ describe Docker::Volume, :docker_1_9 do
     after { Docker::Volume.get(name).remove }
 
     it 'gets a list of volumes' do
-      expect { Docker::Volume.create(name) }.to change { Docker::Volume.all.length }.by(1)
+      expect { Docker::Volume.create(name); sleep 1 }.to change { Docker::Volume.all.length }.by(1)
     end
   end
 
   describe '#remove' do
     it 'removes a volume' do
       volume = Docker::Volume.create(name)
+      sleep 1
       expect { volume.remove }.to change { Docker::Volume.all.length }.by(-1)
     end
   end
