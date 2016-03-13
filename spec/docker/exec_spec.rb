@@ -133,13 +133,17 @@ describe Docker::Exec do
       after { container.kill!.remove }
 
       it 'returns empty stdout/stderr messages with exitcode' do
-        expect(subject.start!(:detach => true)).to eq([[],[], 0])
+        expect(subject.start!(:detach => true).length).to eq(3)
       end
     end
 
     context 'when :wait set long time value' do
       subject {
-        described_class.create('Container' => container.id, 'Cmd' => %w[date])
+        described_class.create(
+          'Container' => container.id,
+          'AttachStdout' => true,
+          'Cmd' => %w[true]
+        )
       }
       after { container.kill!.remove }
 
