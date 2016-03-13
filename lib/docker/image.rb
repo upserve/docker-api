@@ -154,7 +154,7 @@ class Docker::Image
       end
     end
 
-    # Load a tar Image 
+    # Load a tar Image
     def load(tar, opts = {}, conn = Docker.connection, creds = nil, &block)
        headers = build_headers(creds)
        body = ""
