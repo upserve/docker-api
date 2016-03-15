@@ -311,6 +311,32 @@ describe Docker::Container do
     end
   end
 
+  describe "#read_file", :docker_1_8 do
+    subject { Docker::Container.create("Image" => "debian:wheezy", "Cmd" => ["/bin/bash", "-c", "echo \"Hello world\" > /test"]) }
+
+    after { subject.remove }
+
+    before do
+      subject.start
+      subject.wait
+    end
+
+    it "reads contents from files" do
+      expect(subject.read_file("/test")).to eq "Hello world\n"
+    end
+  end
+
+  describe "#store_file", :docker_1_8 do
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ["ls"]) }
+
+    after { subject.remove }
+
+    it "stores content in files" do
+      subject.store_file("/test", "Hello\nWorld")
+      expect(subject.read_file("/test")).to eq "Hello\nWorld"
+    end
+  end
+
   describe '#export' do
     subject { described_class.create('Cmd' => %w[/true],
                                      'Image' => 'tianon/true') }

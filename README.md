@@ -108,7 +108,7 @@ require 'docker'
 Docker.version
 # => { 'Version' => '0.5.2', 'GoVersion' => 'go1.1' }
 
-# docker command for reference: docker info 
+# docker command for reference: docker info
 Docker.info
 # => { "Debug" => false, "Containers" => 187, "Images" => 196, "NFd" => 10, "NGoroutines" => 9, "MemoryLimit" => true }
 
@@ -299,6 +299,13 @@ container.kill(:signal => "SIGHUP")
 # Return the currently executing processes in a Container.
 container.top
 # => [{"PID"=>"4851", "TTY"=>"pts/0", "TIME"=>"00:00:00", "CMD"=>"lxc-start"}]
+
+# Stores a file with the given content in the container
+container.store_file("/test", "Hello world")
+
+# Reads a file from the container
+container.read_file("/test")
+# => "Hello world"
 
 # Export a Container. Since an export is typically at least 300M, chunks of the
 # export are yielded instead of just returning the whole thing.
