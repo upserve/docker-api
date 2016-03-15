@@ -162,6 +162,18 @@ class Docker::Container
     connection.post(path_for(:rename), query)
   end
 
+  def update(opts)
+    connection.post(
+      path_for(:update),
+      {
+        headers: {
+          "Content-Type" => "application/json"
+        }
+      },
+      body: opts.to_json
+    )
+  end
+
   def streaming_logs(opts = {}, &block)
     stack_size = opts.delete('stack_size') || -1
     tty = opts.delete('tty') || opts.delete(:tty) || false

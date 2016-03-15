@@ -139,6 +139,30 @@ describe Docker::Container do
     end
   end
 
+  describe "#update" do
+    subject {
+      described_class.create({
+        "name" => "foo",
+        "Cmd" => %w[true],
+        "Image" => "debian:wheezy",
+        "HostConfig" => {
+          "CpuShares" => 60000
+        }
+      })
+    }
+
+    before { subject.start }
+    after(:each) { subject.tap(&:wait).remove }
+
+    it "updates the container" do
+      subject.refresh!
+      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 60000
+      subject.update("CpuShares" => 50000)
+      subject.refresh!
+      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 50000
+    end
+  end
+
   describe '#changes' do
     subject {
       described_class.create(
