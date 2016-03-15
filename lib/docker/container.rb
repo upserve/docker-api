@@ -276,6 +276,31 @@ class Docker::Container
     self
   end
 
+  def read_file(path)
+    content = StringIO.new
+    archive_out(path) do |chunk|
+      content.write chunk
+    end
+
+    content.rewind
+
+    Gem::Package::TarReader.new(content) do |tar|
+      tar.each do |tarfile|
+        return tarfile.read
+      end
+    end
+  end
+
+  def store_file(path, file_content)
+    output_io = StringIO.new(
+      Docker::Util.create_tar(
+        path => file_content
+      )
+    )
+
+    archive_in_stream("/", overwrite: true) { output_io.read }
+  end
+
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     name = opts.delete('name')
