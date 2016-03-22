@@ -429,11 +429,29 @@ Docker::Container.get('500f53b25e6e')
 # Request all of the Containers. By default, will only return the running Containers.
 Docker::Container.all(:all => true)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
+```
+
+## JSON encoded values
+
+For JSON encoded values, nothing is done implicitly, meaning you need to explicitly call `to_json` on your parameter before the call. For example, to request all of the Containers using a filter:
+
+```ruby
+require 'docker'
 
 # Request all of the Containers, filtering by status exited.
 Docker::Container.all(all: true, filters: { status: ["exited"] }.to_json)
 # => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
+
+# Request all of the Container, filtering by label_name.
+Docker::Container.all(all: true, filters: { label: [ "label_name"  ]  }.to_json)
+# => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
+
+# Request all of the Container, filtering by label label_name that have the value label_value_.
+Docker::Container.all(all: true, filters: { label: [ "label_name=label_value"  ]  }.to_json)
+# => [Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
+
+This applies for all parameters that are requested to be JSON encoded by the docker api.
 
 ## Events
 
