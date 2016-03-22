@@ -210,6 +210,11 @@ Docker::Image.build("from base\nrun touch /test")
 Docker::Image.build_from_dir('.')
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
+# Create an Image from a file other than Dockerfile.
+# docker command for reference: docker build -f Dockerfile.Centos .
+Docker::Image.build_from_dir('.', { 'dockerfile' => 'Dockerfile.Centos' })
+# => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
+
 # Create an Image from a Dockerfile and stream the logs
 Docker::Image.build_from_dir('.') do |v|
   if (log = JSON.parse(v)) && log.has_key?("stream")
@@ -503,6 +508,10 @@ image 'repo:new_tag' => 'repo:tag' do
   image.tag('repo' => 'repo', 'tag' => 'new_tag')
 end
 ```
+
+## Known issues
+
+*   If the docker daemon is always responding to your requests with a 400 Bad Request when using UNIX sockets, verify you're running Excon version 0.46.0 or greater. [Link](https://github.com/swipely/docker-api/issues/381)
 
 ## Not supported (yet)
 
