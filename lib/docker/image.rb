@@ -1,49 +1,48 @@
-# This class represents a Docker Image.
 class Docker::Image
+  # This class represents a Docker Image.
   include Docker::Base
 
-  # Given a command and optional list of streams to attach to, run a command on
-  # an Image. This will not modify the Image, but rather create a new Container
-  # to run the Image. If the image has an embedded config, no command is
-  # necessary, but it will fail with 500 if no config is saved with the image
-  def run(cmd=nil)
-    opts = { 'Image' => self.id }
-    opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
+  # Given a command and optional list of streams to attach to, run a
+  # command on an Image. This will not modify the Image, but rather
+  # create a new Container to run the Image. If the image has an
+  # embedded config, no command is necessary, but it will fail with
+  # 500 if no config is saved with the image
+  def run(cmd = nil)
+    opts = { 'Image' => id }
+    opts['Cmd'] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
     begin
-      Docker::Container.create(opts, connection)
-                       .tap(&:start!)
+      Docker::Container.create(opts, connection).tap(&:start!)
     rescue ServerError => ex
-      if cmd
-        raise ex
-      else
-        raise ServerError, "No command specified."
-      end
+      raise ex if cmd
+      raise ServerError, 'No command specified.'
     end
   end
 
   # Push the Image to the Docker registry.
   def push(creds = nil, options = {}, &block)
     repo_tag = options.delete(:repo_tag) || ensure_repo_tags.first
-    raise ArgumentError, "Image is untagged" if repo_tag.nil?
-    repo, tag = Docker::Util.parse_repo_tag(repo_tag)
-    raise ArgumentError, "Image does not have a name to push." if repo.nil?
+    raise ArgumentError, 'Image is untagged' if repo_tag.nil?
 
-    body = ""
+    repo, tag = Docker::Util.parse_repo_tag(repo_tag)
+    raise ArgumentError, 'Image does not have a name to push.' if repo.nil?
+
+    body = ''
     credentials = creds || Docker.creds || {}
     headers = Docker::Util.build_auth_header(credentials)
-    opts = {:tag => tag}.merge(options)
-    connection.post("/images/#{repo}/push", opts, :headers => headers,
-                    :response_block => self.class.response_block(body, &block))
+    opts = { tag: tag }.merge(options)
+    connection.post(
+      "/images/#{repo}/push", opts, headers: headers,
+                                    response_block: self.class.response_block(body, &block))
     self
   end
 
   # Tag the Image.
   def tag(opts = {})
-    self.info['RepoTags'] ||= []
+    info['RepoTags'] ||= []
     connection.post(path_for(:tag), opts)
     repo = opts['repo'] || opts[:repo]
     tag = opts['tag'] || opts[:tag] || 'latest'
-    self.info['RepoTags'] << "#{repo}:#{tag}"
+    info['RepoTags'] << "#{repo}:#{tag}"
   end
 
   # Given a path of a local file and the path it should be inserted, creates
@@ -52,32 +51,32 @@ class Docker::Image
     local_paths = opts.delete('localPath')
     output_path = opts.delete('outputPath')
 
-    local_paths = [ local_paths ] unless local_paths.is_a?(Array)
+    local_paths = [local_paths] unless local_paths.is_a?(Array)
 
     file_hash = Docker::Util.file_hash_from_paths(local_paths)
 
     file_hash['Dockerfile'] = dockerfile_for(file_hash, output_path)
 
     tar = Docker::Util.create_tar(file_hash)
-    body = connection.post('/build', opts, :body => tar)
+    body = connection.post('/build', opts, body: tar)
     self.class.send(:new, connection, 'id' => Docker::Util.extract_id(body))
   end
 
   # Remove the Image from the server.
   def remove(opts = {})
-    name = opts.delete(:name) || self.id
+    name = opts.delete(:name) || id
     connection.delete("/images/#{name}", opts)
   end
-  alias_method :delete, :remove
+  alias delete remove
 
   # Return a String representation of the Image.
   def to_s
-    "Docker::Image { :id => #{self.id}, :info => #{self.info.inspect}, "\
-      ":connection => #{self.connection} }"
+    "Docker::Image { :id => #{id}, :info => #{info.inspect}, "\
+    ":connection => #{connection} }"
   end
 
-  # #json returns extra information about an Image, #history returns its
-  # history.
+  # #json returns extra information about an Image, #history returns
+  # its history.
   [:json, :history].each do |method|
     define_method(method) do |opts = {}|
       Docker::Util.parse_json(connection.get(path_for(method), opts))
@@ -86,21 +85,25 @@ class Docker::Image
 
   # Save the image as a tarball
   def save(filename = nil)
-    self.class.save(self.id, filename, connection)
+    self.class.save(id, filename, connection)
   end
 
-  # Update the @info hash, which is the only mutable state in this object.
+  # Extract the image id
+  def img
+    Docker::Image.all({ all: true }, connection).find do |image|
+      image.id.start_with?(id) || id.start_with?(image.id)
+    end
+  end
+
+  # Update the @info hash, which is the only mutable state in this
+  # object.
   def refresh!
-    img = Docker::Image.all({:all => true}, connection).find { |image|
-      image.id.start_with?(self.id) || self.id.start_with?(image.id)
-    }
-    info.merge!(self.json)
+    info.merge!(json)
     img && info.merge!(img.info)
     self
   end
 
   class << self
-
     # Create a new Image.
     def create(opts = {}, creds = nil, conn = Docker.connection, &block)
       credentials = creds.nil? ? Docker.creds : creds.to_json
@@ -109,9 +112,9 @@ class Docker::Image
       conn.post(
         '/images/create',
         opts,
-        :headers => headers,
-        :response_block => response_block(body, &block)
-        )
+        headers: headers,
+        response_block: response_block(body, &block)
+      )
       image = opts['fromImage'] || opts[:fromImage]
       get(image, {}, conn)
     end
@@ -130,23 +133,19 @@ class Docker::Image
     # @param conn [Docker::Connection] The Docker connection to use
     #
     # @return [NilClass, String] If filename is nil, return the string
-    # representation of the binary data. If the filename is not nil, then
-    # return nil.
+    # representation of the binary data. If the filename is not nil,
+    # then return nil.
+
     def save(names, filename = nil, conn = Docker.connection)
       # By using compare_by_identity we can create a Hash that has
       # the same key multiple times.
-      query = {}
-      query.compare_by_identity
-      Array(names).each do |name|
-        query['names'.dup] = URI.encode(name)
-      end
+      query = {}.compare_by_identity
+      # query.compare_by_identity
+      Array(names).each { |name| query['names'.dup] = URI.encode(name) }
 
       if filename
         file = File.open(filename, 'wb')
-        conn.get(
-          '/images/get', query,
-          :response_block => response_block_for_save(file)
-        )
+        conn.get('/images/get', query, response_block: response_block_for_save(file))
         file.close
         nil
       else
@@ -181,16 +180,16 @@ class Docker::Image
       hashes.map { |hash| new(conn, hash) }
     end
 
-    # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
-    # a corresponding Image.
+    # Given a query like `{ :term => 'sshd' }`, queries the Docker
+    # Registry for a corresponding Image.
     def search(query = {}, connection = Docker.connection)
       body = connection.get('/images/search', query)
       hashes = Docker::Util.parse_json(body) || []
       hashes.map { |hash| new(connection, 'id' => hash['name']) }
     end
 
-    # Import an Image from the output of Docker::Container#export. The first
-    # argument may either be a File or URI.
+    # Import an Image from the output of Docker::Container#export.
+    # The first argument may either be a File or URI.
     def import(imp, opts = {}, conn = Docker.connection)
       open(imp) do |io|
         import_stream(opts, conn) do
@@ -204,21 +203,21 @@ class Docker::Image
     def import_stream(options = {}, connection = Docker.connection, &block)
       body = connection.post(
         '/images/create',
-         options.merge('fromSrc' => '-'),
-         :headers => { 'Content-Type' => 'application/tar',
-                       'Transfer-Encoding' => 'chunked' },
-         &block
+        options.merge('fromSrc' => '-'),
+        headers: { 'Content-Type' => 'application/tar',
+                   'Transfer-Encoding' => 'chunked' },
+        &block
       )
-      new(connection, 'id'=> Docker::Util.parse_json(body)['status'])
+      new(connection, 'id' => Docker::Util.parse_json(body)['status'])
     end
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, opts = {}, connection = Docker.connection, &block)
-      body = ""
+      body = ''
       connection.post(
         '/build', opts,
-        :body => Docker::Util.create_tar('Dockerfile' => commands),
-        :response_block => response_block(body, &block)
+        body: Docker::Util.create_tar('Dockerfile' => commands),
+        response_block: response_block(body, &block)
       )
       new(connection, 'id' => Docker::Util.extract_id(body))
     rescue Docker::Error::ServerError
@@ -229,22 +228,18 @@ class Docker::Image
     #
     # If a block is passed, chunks of output produced by Docker will be passed
     # to that block.
-    def build_from_tar(tar, opts = {}, connection = Docker.connection,
-                       creds = nil, &block)
-
+    def build_from_tar(
+        tar, opts = {}, conn = Docker.connection, creds = nil, &block
+    )
       headers = build_headers(creds)
-
       # The response_block passed to Excon will build up this body variable.
-      body = ""
-      connection.post(
+      body = ''
+      conn.post(
         '/build', opts,
-        :headers => headers,
-        :response_block => response_block(body, &block)
+        headers: headers,
+        response_block: response_block(body, &block)
       ) { tar.read(Excon.defaults[:chunk_size]).to_s }
-
-      new(connection,
-          'id' => Docker::Util.extract_id(body),
-          :headers => headers)
+      new(conn, 'id' => Docker::Util.extract_id(body), :headers => headers)
     end
 
     # Given a directory that contains a Dockerfile, builds an Image.
@@ -264,30 +259,15 @@ class Docker::Image
     end
   end
 
-  private
-
-  # A method to build the config header and merge it into the
-  # headers sent by build_from_dir.
-  def self.build_headers(creds=nil)
-    credentials = creds || Docker.creds || {}
-    config_header = Docker::Util.build_config_header(credentials)
-
-    headers = { 'Content-Type'      => 'application/tar',
-                'Transfer-Encoding' => 'chunked' }
-    headers = headers.merge(config_header) if config_header
-    headers
-  end
-
   # Convenience method to return the path for a particular resource.
   def path_for(resource)
-    "/images/#{self.id}/#{resource}"
+    "/images/#{id}/#{resource}"
   end
-
 
   # Convience method to get the Dockerfile for a file hash and a path to
   # output to.
   def dockerfile_for(file_hash, output_path)
-    dockerfile = "from #{self.id}\n"
+    dockerfile = "from #{id}\n"
 
     file_hash.keys.each do |basename|
       dockerfile << "add #{basename} #{output_path}\n"
@@ -297,25 +277,41 @@ class Docker::Image
   end
 
   def ensure_repo_tags
-    refresh! unless info.has_key?('RepoTags')
+    refresh! unless info.key?('RepoTags')
     info['RepoTags']
   end
 
   # Generates the block to be passed as a reponse block to Excon. The returned
-  # lambda will append Docker output to the first argument, and yield output to
-  # the passed block, if a block is given.
+  # lambda will append Docker output to the first argument, and yield
+  # output to the passed block, if a block is given.
   def self.response_block(body)
-    lambda do |chunk, remaining, total|
+    lambda do |chunk, _remaining, _total|
       body << chunk
       yield chunk if block_given?
     end
   end
 
+  # A method to build the config header and merge it into the
+  # headers sent by build_from_dir.
+  def self.build_headers(creds = nil)
+    credentials = creds || Docker.creds || {}
+    config_header = Docker::Util.build_config_header(credentials)
+
+    headers = { 'Content-Type' => 'application/tar',
+                'Transfer-Encoding' => 'chunked' }
+    headers = headers.merge(config_header) if config_header
+    headers
+  end
+
+  private_class_method :build_headers
+
   # Generates the block to be passed in to the save request. This lambda will
   # append the streaming data to the file provided.
   def self.response_block_for_save(file)
-    lambda do |chunk, remianing, total|
+    lambda do |chunk, _remianing, _total|
       file << chunk
     end
   end
+
+  private_class_method :response_block_for_save
 end
