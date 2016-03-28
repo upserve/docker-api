@@ -269,6 +269,17 @@ describe Docker::Image do
     end
   end
 
+  describe '#save_stream' do
+    let(:image) { Docker::Image.get('busybox') }
+    let(:block) { proc { |chunk| puts chunk } }
+
+    it 'calls the class method' do
+      expect(Docker::Image).to receive(:save_stream)
+        .with(image.id, instance_of(Hash), instance_of(Docker::Connection))
+      image.save_stream(:chunk_size => 1024 * 1024, &block)
+    end
+  end
+
   describe '#load' do
     include_context "local paths"
     let(:file) { File.join(project_dir, 'spec', 'fixtures', 'load.tar') }
@@ -395,6 +406,24 @@ describe Docker::Image do
         raw = Docker::Image.save('swipely/base')
         expect(raw).to_not be_nil
       end
+    end
+  end
+
+  describe '.save_stream' do
+    let(:image) { 'busybox:latest' }
+    let(:expected) do
+      Docker.connection.get(
+        '/images/get',
+        'names' => URI.encode(image)
+      )
+    end
+    let(:actual) { '' }
+
+    it 'yields each chunk of the image' do
+      Docker::Image.save_stream(image) do |chunk|
+        actual << chunk.to_s
+      end
+      expect(actual).to eq(expected)
     end
   end
 
