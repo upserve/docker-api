@@ -411,19 +411,25 @@ describe Docker::Image do
 
   describe '.save_stream' do
     let(:image) { 'busybox:latest' }
-    let(:expected) do
+    let(:non_streamed) do
       Docker.connection.get(
         '/images/get',
         'names' => URI.encode(image)
       )
     end
-    let(:actual) { '' }
+    let(:streamed) { '' }
+    let(:tar_files) do
+      proc do |string|
+        Gem::Package::TarReader
+          .new(StringIO.new(string, 'rb'))
+          .map(&:full_name)
+          .sort
+      end
+    end
 
     it 'yields each chunk of the image' do
-      Docker::Image.save_stream(image) do |chunk|
-        actual << chunk.to_s
-      end
-      expect(actual).to eq(expected)
+      Docker::Image.save_stream(image) { |chunk| streamed << chunk }
+      expect(tar_files.call(streamed)).to eq(tar_files.call(non_streamed))
     end
   end
 
