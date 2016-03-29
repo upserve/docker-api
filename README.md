@@ -186,6 +186,10 @@ image.save('my_export.tar')
 image.save
 # => "abiglongbinarystring"
 
+# Stream the contents of the image to a block:
+image.save_stream { |chunk| puts chunk }
+# => nil
+
 # Given a Container's export, creates a new Image.
 # docker command for reference: docker import some-export.tar
 Docker::Image.import('some-export.tar')
@@ -251,6 +255,11 @@ Docker::Image.save(names, 'my_export.tar')
 names = %w( my_image1 my_image2:not_latest )
 Docker::Image.save(names)
 # => "abiglongbinarystring"
+
+# Stream the raw binary data
+names = %w( my_image1 my_image2:not_latest )
+Docker::Image.save_stream(names) { |chunk| puts chunk }
+# => nil
 
 # Search the Docker registry.
 # docker command for reference: docker search sshd

@@ -89,6 +89,11 @@ class Docker::Image
     self.class.save(self.id, filename, connection)
   end
 
+  # Save the image as a tarball to an IO object.
+  def save_stream(opts = {}, &block)
+    self.class.save_stream(self.id, opts, connection, &block)
+  end
+
   # Update the @info hash, which is the only mutable state in this object.
   def refresh!
     img = Docker::Image.all({:all => true}, connection).find { |image|
@@ -133,25 +138,34 @@ class Docker::Image
     # representation of the binary data. If the filename is not nil, then
     # return nil.
     def save(names, filename = nil, conn = Docker.connection)
-      # By using compare_by_identity we can create a Hash that has
-      # the same key multiple times.
-      query = {}
-      query.compare_by_identity
-      Array(names).each do |name|
-        query['names'.dup] = URI.encode(name)
-      end
-
       if filename
-        file = File.open(filename, 'wb')
-        conn.get(
-          '/images/get', query,
-          :response_block => response_block_for_save(file)
-        )
-        file.close
+        File.open(filename, 'wb') do |file|
+          save_stream(names, {}, conn, &response_block_for_save(file))
+        end
         nil
       else
-        conn.get('/images/get', query)
+        string = ''
+        save_stream(names, {}, conn, &response_block_for_save(string))
+        string
       end
+    end
+
+    # Stream the contents of Docker image(s) to a block.
+    #
+    # @param names [String, Array#String] The image(s) you wish to save
+    # @param conn [Docker::Connection] The Docker connection to use
+    # @yield chunk [String] a chunk of the Docker image(s).
+    def save_stream(names, opts = {}, conn = Docker.connection, &block)
+      # By using compare_by_identity we can create a Hash that has
+      # the same key multiple times.
+      query = {}.tap(&:compare_by_identity)
+      Array(names).each { |name| query['names'.dup] = URI.encode(name) }
+      conn.get(
+        '/images/get',
+        query,
+        opts.merge(:response_block => block)
+      )
+      nil
     end
 
     # Load a tar Image
