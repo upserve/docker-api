@@ -108,7 +108,7 @@ require 'docker'
 Docker.version
 # => { 'Version' => '0.5.2', 'GoVersion' => 'go1.1' }
 
-# docker command for reference: docker info 
+# docker command for reference: docker info
 Docker.info
 # => { "Debug" => false, "Containers" => 187, "Images" => 196, "NFd" => 10, "NGoroutines" => 9, "MemoryLimit" => true }
 
@@ -244,6 +244,16 @@ Docker::Image.get('df4f1bdecf40')
 # Check if an image with a given id exists on the server.
 Docker::Image.exist?('ef723dcdac09')
 # => true
+
+# Load an image from the file system
+Docker::Image.load('./my-image.tar')
+# => ""
+
+# An IO object may also be specified for loading
+File.open('./my-image.tar', 'rb') do |file|
+  Docker::Image.load(file)
+end
+# => ""
 
 # Export multiple images to a single tarball
 # docker command for reference: docker save my_image1 my_image2:not_latest > my_export.tar
