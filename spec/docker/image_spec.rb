@@ -280,17 +280,6 @@ describe Docker::Image do
     end
   end
 
-  describe '#load' do
-    include_context "local paths"
-    let(:file) { File.join(project_dir, 'spec', 'fixtures', 'load.tar') }
-    context 'test image upload' do
-      it 'load tianon/true image' do
-        result = Docker::Image.load(file)
-        expect(result).to eq("")
-      end
-    end
-  end
-
   describe '#refresh!' do
     let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
 
@@ -308,6 +297,29 @@ describe Docker::Image do
 
       it 'updates using the provided connection' do
         image.refresh!
+      end
+    end
+  end
+
+  describe '.load' do
+    include_context "local paths"
+    let(:file) { File.join(project_dir, 'spec', 'fixtures', 'load.tar') }
+
+    context 'when the argument is a String' do
+      it 'loads tianon/true image from the file system' do
+        result = Docker::Image.load(file)
+        expect(result).to eq("")
+      end
+    end
+
+    context 'when the argument is an IO' do
+      let(:io) { File.open(file) }
+
+      after { io.close }
+
+      it 'loads tinan/true image from the IO' do
+        result = Docker::Image.load(io)
+        expect(result).to eq("")
       end
     end
   end
