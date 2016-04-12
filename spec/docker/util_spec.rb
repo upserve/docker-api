@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'tempfile'
 
 describe Docker::Util do
   subject { described_class }
@@ -151,4 +152,19 @@ describe Docker::Util do
       end
     end
   end
+
+  describe '.filesystem_permissions' do
+    it 'returns the permissions on a file' do
+      file = Tempfile.new('test_file')
+      file.close
+      expected_permissions = 0600
+      File.chmod(expected_permissions, file.path)
+
+      actual_permissions = subject.filesystem_permissions(file.path)
+
+      file.unlink
+      expect(actual_permissions).to eql(expected_permissions)
+    end
+  end
+
 end
