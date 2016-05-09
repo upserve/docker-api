@@ -172,9 +172,9 @@ describe Docker do
     let(:info) { subject.info }
     let(:keys) do
       %w(Containers Debug DockerRootDir Driver DriverStatus ExecutionDriver ID
-         IPv4Forwarding Images IndexServerAddress InitPath InitSha1
-         KernelVersion Labels MemTotal MemoryLimit NCPU NEventsListener NFd
-         NGoroutines Name OperatingSystem SwapLimit)
+         IPv4Forwarding Images IndexServerAddress KernelVersion Labels MemTotal
+         MemoryLimit NCPU NEventsListener NFd NGoroutines Name
+         OperatingSystem SwapLimit)
     end
 
     it 'returns the info as a Hash' do
