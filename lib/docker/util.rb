@@ -184,7 +184,7 @@ module Docker::Util
   def extract_id(body)
     body.lines.reverse_each do |line|
       if (id = line.match(/Successfully built ([a-f0-9]+)/)) && !id[1].empty?
-        return id[1]
+        return "sha256:#{id[1]}"
       end
     end
     raise UnexpectedResponseError, "Couldn't find id: #{body}"
