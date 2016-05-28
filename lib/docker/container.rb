@@ -59,6 +59,7 @@ class Docker::Container
     stdin = opts.delete(:stdin)
     stdout = opts.delete(:stdout) || !detach
     stderr = opts.delete(:stderr) || !detach
+    wait = opts.delete(:wait)
 
     # Create Exec Instance
     instance = Docker::Exec.create(
@@ -77,7 +78,8 @@ class Docker::Container
     start_opts = {
       :tty => tty,
       :stdin => stdin,
-      :detach => detach
+      :detach => detach,
+      :wait => wait
     }
 
     if detach
