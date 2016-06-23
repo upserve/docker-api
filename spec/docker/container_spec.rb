@@ -81,7 +81,7 @@ describe Docker::Container do
     end
   end
 
-  describe '#stats' do
+  describe '#stats', docker_1_9: true do
     subject {
       described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
     }
