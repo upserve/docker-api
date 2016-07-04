@@ -38,17 +38,17 @@ class Docker::Connection
     request = compile_request_params(*args, &block)
     log_request(request)
     resource.request(request).body
-  rescue Excon::Errors::BadRequest => ex
+  rescue Excon::Error::BadRequest => ex
     raise ClientError, ex.response.body
-  rescue Excon::Errors::Unauthorized => ex
+  rescue Excon::Error::Unauthorized => ex
     raise UnauthorizedError, ex.response.body
-  rescue Excon::Errors::NotFound => ex
+  rescue Excon::Error::NotFound => ex
     raise NotFoundError, ex.response.body
-  rescue Excon::Errors::Conflict => ex
+  rescue Excon::Error::Conflict => ex
     raise ConflictError, ex.response.body
-  rescue Excon::Errors::InternalServerError => ex
+  rescue Excon::Error::InternalServerError => ex
     raise ServerError, ex.response.body
-  rescue Excon::Errors::Timeout => ex
+  rescue Excon::Error::Timeout => ex
     raise TimeoutError, ex.message
   end
 
