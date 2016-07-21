@@ -11,7 +11,7 @@ class Docker::Container
     }
 
     info.merge!(self.json)
-    other && info.merge!(other.info)
+    other && info.merge!(other.info) { |key, info_value, other_value| info_value }
     self
   end
 
