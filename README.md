@@ -324,6 +324,54 @@ container.kill(:signal => "SIGHUP")
 container.top
 # => [{"PID"=>"4851", "TTY"=>"pts/0", "TIME"=>"00:00:00", "CMD"=>"lxc-start"}]
 
+# To expose 1234 to bridge
+# In Dockerfile: EXPOSE 1234/tcp
+# docker run resulting-image-name
+Docker::Container.create(
+  'Image' => 'image-name',
+  'HostConfig' => {
+    'PortBindings' => {
+      '1234/tcp' => [{}]
+    }
+  }
+)
+
+# To expose 1234 to host with any port
+# docker run -p 1234 image-name
+Docker::Container.create(
+  'Image' => 'image-name',
+  'ExposedPorts' => { '1234/tcp' => {} },
+  'HostConfig' => {
+    'PortBindings' => {
+      '1234/tcp' => [{}]
+    }
+  }
+)
+
+# To expose 1234 to host with a specified host port
+# docker run -p 1234:1234 image-name
+Docker::Container.create(
+  'Image' => 'image-name',
+  'ExposedPorts' => { '1234/tcp' => {} },
+  'HostConfig' => {
+    'PortBindings' => {
+      '1234/tcp' => [{ 'HostPort' => '1234' }]
+    }
+  }
+)
+
+# To expose 1234 to host with a specified host port and host IP
+# docker run -p 192.168.99.100:1234:1234 image-name
+Docker::Container.create(
+  'Image' => 'image-name',
+  'ExposedPorts' => { '1234/tcp' => {} },
+  'HostConfig' => {
+    'PortBindings' => {
+      '1234/tcp' => [{ 'HostPort' => '1234', 'HostIp' => '192.168.99.100' }]
+    }
+  }
+)
+
 # Export a Container. Since an export is typically at least 300M, chunks of the
 # export are yielded instead of just returning the whole thing.
 File.open('export.tar', 'w') do |f|
