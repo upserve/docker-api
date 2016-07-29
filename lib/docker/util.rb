@@ -207,7 +207,7 @@ module Docker::Util
         tar.close
         FileUtils.rm(tar.path)
       else
-        file_hash[basename] = File.read(local_path)
+        file_hash[basename] = File.read(local_path, mode: 'rb')
       end
     end
   end
