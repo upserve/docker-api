@@ -422,6 +422,9 @@ container.exec(command, wait: 120)
 container.delete(:force => true)
 # => nil
 
+# Update the container.
+container.update("CpuShares" => 50000")
+
 # Request a Container by ID or name.
 Docker::Container.get('500f53b25e6e')
 # => Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
@@ -450,11 +453,6 @@ Docker::Event.since(1416958763) { |event| puts event; puts Time.now.to_i; break 
 Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdaef329043b409ecb97fb68d7e, :from => base:latest, :time => 1416958764 }
 1416959041
 # => nil
-```
-
-## [Update](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.22/#update-a-container) the container.
-```ruby
-container.update("CpuShares" => 50000")
 ```
 
 These methods are prone to read timeouts.  `Docker.options[:read_timeout]` will need to be made higher than 60 seconds if expecting a long time between events.
