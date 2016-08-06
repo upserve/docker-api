@@ -163,15 +163,7 @@ class Docker::Container
   end
 
   def update(opts)
-    connection.post(
-      path_for(:update),
-      {
-        headers: {
-          "Content-Type" => "application/json"
-        }
-      },
-      body: opts.to_json
-    )
+    connection.post(path_for(:update), {}, body: opts.to_json)
   end
 
   def streaming_logs(opts = {}, &block)
