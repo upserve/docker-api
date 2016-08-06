@@ -326,7 +326,12 @@ describe Docker::Container do
   end
 
   describe "#read_file", :docker_1_8 do
-    subject { Docker::Container.create("Image" => "debian:wheezy", "Cmd" => ["/bin/bash", "-c", "echo \"Hello world\" > /test"]) }
+    subject {
+      Docker::Container.create(
+        "Image" => "debian:wheezy",
+        "Cmd" => ["/bin/bash", "-c", "echo \"Hello world\" > /test"]
+      )
+    }
 
     after { subject.remove }
 
