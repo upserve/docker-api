@@ -139,7 +139,7 @@ describe Docker::Container do
     end
   end
 
-  describe "#update" do
+  describe "#update", :docker_1_10 do
     subject {
       described_class.create({
         "name" => "foo",
