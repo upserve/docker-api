@@ -119,8 +119,12 @@ module Docker::Util
   def create_tar(hash = {})
     output = StringIO.new
     Gem::Package::TarWriter.new(output) do |tar|
-      hash.each do |file_name, input|
-        tar.add_file(file_name, 0640) { |tar_file| tar_file.write(input) }
+      hash.each do |file_name, file_details|
+        permissions = file_details.is_a?(Hash) ? file_details[:permissions] : 0640
+        tar.add_file(file_name, permissions) do |tar_file|
+          content = file_details.is_a?(Hash) ? file_details[:content] : file_details
+          tar_file.write(content)
+        end
       end
     end
     output.tap(&:rewind).string
@@ -203,13 +207,24 @@ module Docker::Util
       basename = File.basename(local_path)
       if File.directory?(local_path)
         tar = create_dir_tar(local_path)
-        file_hash[basename] = tar.read
+        file_hash[basename] = {
+          content: tar.read,
+          permissions: filesystem_permissions(local_path)
+        }
         tar.close
         FileUtils.rm(tar.path)
       else
-        file_hash[basename] = File.read(local_path, mode: 'rb')
+        file_hash[basename] = {
+          content: File.read(local_path, mode: 'rb'),
+          permissions: filesystem_permissions(local_path)
+        }
       end
     end
+  end
+
+  def filesystem_permissions(path)
+    mode = sprintf("%o", File.stat(path).mode)
+    mode[(mode.length - 3)...mode.length].to_i(8)
   end
 
   def build_auth_header(credentials)
