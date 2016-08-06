@@ -227,11 +227,18 @@ describe Docker::Image do
   end
 
   describe '#run' do
-    subject { described_class.create('fromImage' => 'debian:wheezy') }
-    let(:container) { subject.run(cmd).tap(&:wait) }
+    let(:cmd) { nil }
+    let(:options) { {} }
+
+    subject do
+      described_class.create(
+        {'fromImage' => 'debian:wheezy'})
+    end
+
+    let(:container) { subject.run(cmd, options).tap(&:wait) }
     let(:output) { container.streaming_logs(stdout: true) }
 
-    context 'when the argument is a String' do
+    context 'when cmd is a String' do
       let(:cmd) { 'ls /lib64/' }
       after { container.remove }
 
@@ -240,7 +247,7 @@ describe Docker::Image do
       end
     end
 
-    context 'when the argument is an Array' do
+    context 'when cmd is an Array' do
       let(:cmd) { %w[which pwd] }
       after { container.remove }
 
@@ -249,7 +256,7 @@ describe Docker::Image do
       end
     end
 
-    context 'when the argument is nil'  do
+    context 'when cmd is nil'  do
       let(:cmd) { nil }
       context 'no command configured in image' do
         subject { described_class.create('fromImage' => 'swipely/base') }
@@ -266,6 +273,15 @@ describe Docker::Image do
         it 'should normally show result if image has Cmd configured' do
           expect(output).to eql "/\n"
         end
+      end
+    end
+
+    context 'when using cpu shares' do
+      let(:options) { { 'CpuShares' => 50 } }
+      after { container.remove }
+
+      it 'returns 50' do
+        expect(container.json["Config"]["CpuShares"]).to eq 50
       end
     end
   end
