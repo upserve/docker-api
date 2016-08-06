@@ -372,6 +372,13 @@ Docker::Container.create(
   }
 )
 
+# Stores a file with the given content in the container
+container.store_file("/test", "Hello world")
+
+# Reads a file from the container
+container.read_file("/test")
+# => "Hello world"
+
 # Export a Container. Since an export is typically at least 300M, chunks of the
 # export are yielded instead of just returning the whole thing.
 File.open('export.tar', 'w') do |f|
