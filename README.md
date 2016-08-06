@@ -553,6 +553,11 @@ Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdae
 # => nil
 ```
 
+## [Update](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.22/#update-a-container) the container.
+```ruby
+container.update("CpuShares" => 50000")
+```
+
 These methods are prone to read timeouts.  `Docker.options[:read_timeout]` will need to be made higher than 60 seconds if expecting a long time between events.
 
 ## Connecting to Multiple Servers
