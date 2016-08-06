@@ -505,6 +505,9 @@ container.exec(command, wait: 120)
 container.delete(:force => true)
 # => nil
 
+# Update the container.
+container.update("CpuShares" => 50000")
+
 # Request a Container by ID or name.
 Docker::Container.get('500f53b25e6e')
 # => Docker::Container { :id => , :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
