@@ -1,19 +1,24 @@
+# Class to interface with Docker 1.12 /swarm endpoints.
 class Docker::Swarm
 
   RESOURCE_BASE='/swarm'
 
+  # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/initialize-a-new-swarm
   def self.init opts = {}
     new(opts).init
   end
 
+  # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/join-an-existing-swarm
   def self.join opts = {}
     new(opts).join
   end
 
+  # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/leave-a-swarm
   def self.leave opts = {}
     new(opts).leave
   end
 
+  # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/update-a-swarm
   def self.update opts = {}
     new(opts).update
   end
@@ -26,29 +31,29 @@ class Docker::Swarm
   end
 
   def init
-    @info = Docker::Util.parse_json(
-              @connection.post "#{RESOURCE_BASE}/init", {}, @options.to_json
-            )
-    self
+    call 'init'
   end
 
   def join
-    @info = Docker::Util.parse_json(
-              @connection.post "#{RESOURCE_BASE}/join", {}, @options.to_json
-            )
-    self
+    call 'join'
   end
 
   def leave
-    @info = Docker::Util.parse_json(
-              @connection.post "#{RESOURCE_BASE}/leave", {}, @options.to_json
-            )
-    self
+    call 'leave'
   end
 
   def update
+    call 'update'
+  end
+
+  private
+
+  def call endpoint
     @info = Docker::Util.parse_json(
-              @connection.post "#{RESOURCE_BASE}/update", {}, @options.to_json
+              @connection.post "#{RESOURCE_BASE}/#{endpoint}",
+                               {},
+                               body: @options.to_json,
+                               headers: {'Content-Type' => 'application/json'}
             )
     self
   end
