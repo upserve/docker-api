@@ -259,10 +259,21 @@ describe Docker::Image do
     context 'when cmd is nil'  do
       let(:cmd) { nil }
       context 'no command configured in image' do
-        subject { described_class.create('fromImage' => 'swipely/base') }
-        it 'should raise an error if no command is specified' do
-          expect {container}.to raise_error(Docker::Error::ServerError,
-                                         "No command specified.")
+
+        describe '(< docker 1.12 will be a ServerError)', :pre_1_12 do
+          subject { described_class.create('fromImage' => 'swipely/base') }
+          it 'should raise an error if no command is specified' do
+            expect {container}.to raise_error(Docker::Error::ServerError,
+                                              "No command specified.")
+          end
+        end
+
+        describe '(>= docker 1.12 will be a ClientError)', :docker_1_12 do
+          subject { described_class.create('fromImage' => 'swipely/base') }
+          it 'should raise an error if no command is specified' do
+            expect {container}.to raise_error(Docker::Error::ClientError,
+                                          /No command specified/)
+          end
         end
       end
 

@@ -39,7 +39,18 @@ class Docker::Swarm
   end
 
   def leave
-    call 'leave'
+    # This is undocumented on docker's side and opened:
+    #
+    # https://github.com/docker/docker/issues/25543
+    #
+    # to address this. I am assuming the interface will be JSON in the body of
+    # {"Force":true}. If they end up going with this, then we can delete the
+    # whole `query` business.
+    query = {
+      force: @options.delete('Force') == true,
+    }
+
+    call 'leave', query
   end
 
   def update
@@ -48,14 +59,20 @@ class Docker::Swarm
 
   private
 
-  def call endpoint
+  def call endpoint, query = {}
     @info = Docker::Util.parse_json(
               @connection.post "#{RESOURCE_BASE}/#{endpoint}",
-                               {},
+                               query,
                                body: @options.to_json,
-                               headers: {'Content-Type' => 'application/json'}
+                               headers: headers
             )
     self
+  end
+
+  def headers
+    {
+      'Content-Type' => 'application/json',
+    }
   end
 
 end
