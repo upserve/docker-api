@@ -25,4 +25,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'webmock'
   # > 1.3.4 doesn't support ruby 1.9.2
   gem.add_development_dependency 'parallel', '1.3.3'
+  gem.add_development_dependency 'docker_machine', '0.1.0'
 end
