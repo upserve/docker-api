@@ -38,7 +38,7 @@ class Docker::Connection
     request = compile_request_params(*args, &block)
     log_request(request)
     resource.request(request).body
-  rescue Excon::Errors::BadRequest => ex
+  rescue Excon::Errors::BadRequest, Excon::Error::NotAcceptable => ex
     raise ClientError, ex.response.body
   rescue Excon::Errors::Unauthorized => ex
     raise UnauthorizedError, ex.response.body

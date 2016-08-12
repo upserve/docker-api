@@ -1,33 +1,34 @@
-# Class to interface with Docker 1.12 /swarm endpoints.
+# Class to interface with Docker 1.12 #{RESOURCE_BASE} endpoints.
 class Docker::Swarm
 
   RESOURCE_BASE='/swarm'
 
   # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/initialize-a-new-swarm
-  def self.init opts = {}
-    new(opts).init
+  def self.init body = {}, query = {}
+    new(body, query).init
   end
 
   # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/join-an-existing-swarm
-  def self.join opts = {}
-    new(opts).join
+  def self.join body = {}, query = {}
+    new(body, query).join
   end
 
   # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/leave-a-swarm
-  def self.leave opts = {}
-    new(opts).leave
+  def self.leave body = {}, query = {}
+    new(body, query).leave
   end
 
   # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.24/#/update-a-swarm
-  def self.update opts = {}
-    new(opts).update
+  def self.update body = {}, query = {}
+    new(body, query).update
   end
 
-  attr_accessor :connection, :options, :info
+  attr_accessor :connection, :body, :info, :query
 
-  def initialize opts
+  def initialize body = {}, query = {}
     @connection = Docker.connection
-    @options = opts
+    @body = body
+    @query = query
   end
 
   def init
@@ -39,18 +40,7 @@ class Docker::Swarm
   end
 
   def leave
-    # This is undocumented on docker's side and opened:
-    #
-    # https://github.com/docker/docker/issues/25543
-    #
-    # to address this. I am assuming the interface will be JSON in the body of
-    # {"Force":true}. If they end up going with this, then we can delete the
-    # whole `query` business.
-    query = {
-      force: @options.delete('Force') == true,
-    }
-
-    call 'leave', query
+    call 'leave'
   end
 
   def update
@@ -59,11 +49,11 @@ class Docker::Swarm
 
   private
 
-  def call endpoint, query = {}
+  def call endpoint
     @info = Docker::Util.parse_json(
               @connection.post "#{RESOURCE_BASE}/#{endpoint}",
-                               query,
-                               body: @options.to_json,
+                               @query,
+                               body: @body.to_json,
                                headers: headers
             )
     self
