@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SingleCov.covered! uncovered: 3
+
 describe Docker::Messages do
   shared_examples_for "two equal messages" do
     it "has the same messages as we expect" do

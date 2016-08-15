@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SingleCov.covered!
+
 # Volume requests are actually slow enough to occasionally not work
 # Use sleep statements to manage that
 describe Docker::Volume, :docker_1_9 do
@@ -42,5 +44,4 @@ describe Docker::Volume, :docker_1_9 do
       expect { volume.remove }.to change { Docker::Volume.all.length }.by(-1)
     end
   end
-
 end

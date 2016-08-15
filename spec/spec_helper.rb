@@ -3,7 +3,14 @@ require 'bundler/setup'
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
 require 'rspec/its'
-require 'simplecov'
+
+require 'single_cov'
+
+# avoid coverage failure from lower docker versions not running all tests
+if !ENV['DOCKER_VERSION'] || ENV['DOCKER_VERSION'] =~ /^1\.\d\d/
+  SingleCov.setup :rspec
+end
+
 require 'docker'
 
 ENV['DOCKER_API_USER']  ||= 'debbie_docker'
@@ -32,18 +39,18 @@ RSpec.configure do |config|
   config.include SpecHelpers
 
   case ENV['DOCKER_VERSION']
-  when /1\.6/
+  when /^1\.6/
     config.filter_run_excluding :docker_1_8 => true
     config.filter_run_excluding :docker_1_9 => true
     config.filter_run_excluding :docker_1_10 => true
-  when /1\.7/
+  when /^1\.7/
     config.filter_run_excluding :docker_1_8 => true
     config.filter_run_excluding :docker_1_9 => true
     config.filter_run_excluding :docker_1_10 => true
-  when /1\.8/
+  when /^1\.8/
     config.filter_run_excluding :docker_1_9 => true
     config.filter_run_excluding :docker_1_10 => true
-  when /1\.9/
+  when /^1\.9/
     config.filter_run_excluding :docker_1_10 => true
   end
 end

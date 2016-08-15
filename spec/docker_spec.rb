@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SingleCov.covered! uncovered: 2
+
 describe Docker do
   subject { Docker }
 

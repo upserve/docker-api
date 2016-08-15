@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SingleCov.covered! uncovered: 2
+
 describe Docker::Image do
   describe '#to_s' do
     subject { described_class.new(Docker.connection, info) }
@@ -21,7 +23,6 @@ describe Docker::Image do
   end
 
   describe '#remove' do
-
     context 'when no name is given' do
       let(:id) { subject.id }
       subject { described_class.create('fromImage' => 'busybox:latest') }

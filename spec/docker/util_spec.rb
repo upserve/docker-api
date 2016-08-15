@@ -1,6 +1,8 @@
 require 'spec_helper'
 require 'tempfile'
 
+SingleCov.covered! uncovered: 71
+
 describe Docker::Util do
   subject { described_class }
 

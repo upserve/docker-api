@@ -2,5 +2,4 @@
 *.swp
 *.gem
 Gemfile.lock
-coverage/
 .ruby-*
