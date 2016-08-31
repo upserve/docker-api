@@ -211,8 +211,18 @@ class Docker::Container
     define_method(:"#{method}!") do |opts = {}|
       timeout = opts.delete('timeout')
       query = {}
-      query['t'] = timeout if timeout
-      connection.post(path_for(method), query, :body => opts.to_json)
+      request_options = {
+        :body => opts.to_json
+      }
+      if timeout
+        query['t'] = timeout
+        # Ensure request does not timeout before Docker timeout
+        request_options.merge!(
+          read_timeout: timeout.to_i + 5,
+          write_timeout: timeout.to_i + 5
+        )
+      end
+      connection.post(path_for(method), query, request_options)
       self
     end
 

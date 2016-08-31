@@ -87,7 +87,7 @@ private
                         }.merge(headers),
       :expects       => (200..204).to_a << 304,
       :idempotent    => http_method == :get,
-      :request_block => block
+      :request_block => block,
     }.merge(opts).reject { |_, v| v.nil? }
   end
 end
