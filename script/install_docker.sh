@@ -28,8 +28,6 @@ then
     cp script/docker.conf /etc/init/docker.conf
     cp script/docker /etc/init.d/docker
     chmod +x /etc/init.d/docker
-else
-    service docker stop
+    service docker start
 fi
 
-service docker start
