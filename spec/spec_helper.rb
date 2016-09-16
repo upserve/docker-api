@@ -15,6 +15,12 @@ RSpec.shared_context "local paths" do
   end
 end
 
+module SpecHelpers
+  def skip_without_auth
+    skip "Disabled because of missing auth" if ENV['DOCKER_API_USER'] == 'debbie_docker'
+  end
+end
+
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
@@ -22,6 +28,7 @@ RSpec.configure do |config|
   config.color = true
   config.formatter = :documentation
   config.tty = true
+  config.include SpecHelpers
 
   case ENV['DOCKER_VERSION']
   when /1\.6/

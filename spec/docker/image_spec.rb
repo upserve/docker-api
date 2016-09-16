@@ -206,6 +206,8 @@ describe Docker::Image do
   end
 
   describe '#json' do
+    before { skip_without_auth }
+
     subject { described_class.create('fromImage' => 'debian:wheezy') }
     let(:json) { subject.json }
 
@@ -365,6 +367,7 @@ describe Docker::Image do
       }
 
       before do
+        skip_without_auth
         Docker::Image.create('fromImage' => 'swipely/base').remove
       end
       after { Docker::Image.create('fromImage' => 'swipely/base') }

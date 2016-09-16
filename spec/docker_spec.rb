@@ -213,6 +213,7 @@ describe Docker do
       }
 
       it 'logs in and sets the creds' do
+        skip_without_auth
         expect(authentication).to be true
         expect(Docker.creds).to eq(credentials.to_json)
       end

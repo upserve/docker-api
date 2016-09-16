@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.name          = "docker-api"
   gem.require_paths = %w{lib}
   gem.version       = Docker::VERSION
+  gem.required_ruby_version = '>= 2.0.0'
   gem.add_dependency 'excon', '>= 0.38.0'
   gem.add_dependency 'json'
   gem.add_development_dependency 'rake'
@@ -23,6 +24,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'webmock'
-  # > 1.3.4 doesn't support ruby 1.9.2
-  gem.add_development_dependency 'parallel', '1.3.3'
+  gem.add_development_dependency 'parallel'
 end
