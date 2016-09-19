@@ -1,6 +1,6 @@
 docker-api
 ==========
-[![Gem Version](https://badge.fury.io/rb/docker-api.png)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.png?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.png)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.png)](https://gemnasium.com/swipely/docker-api)
+[![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.svg?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.svg)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.svg)](https://gemnasium.com/swipely/docker-api)
 
 This gem provides an object-oriented interface to the [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.3.*
 
