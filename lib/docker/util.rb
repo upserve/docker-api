@@ -141,15 +141,16 @@ module Docker::Util
 
   def create_relative_dir_tar(directory, output)
     Gem::Package::TarWriter.new(output) do |tar|
-      Find.find(directory) do |prefixed_file_name|
-        stat = File.stat(prefixed_file_name)
-        next unless stat.file?
+      Dir.chdir(directory) do
+        Find.find('.') do |file_name|
+          stat = File.stat(file_name)
+          next unless stat.file?
 
-        unprefixed_file_name = prefixed_file_name[directory.length..-1]
-        add_file_to_tar(
-          tar, unprefixed_file_name, stat.mode, stat.size, stat.mtime
-        ) do |tar_file|
-          IO.copy_stream(File.open(prefixed_file_name, 'rb'), tar_file)
+          add_file_to_tar(
+            tar, file_name, stat.mode, stat.size, stat.mtime
+          ) do |tar_file|
+            IO.copy_stream(File.open(file_name, 'rb'), tar_file)
+          end
         end
       end
     end
