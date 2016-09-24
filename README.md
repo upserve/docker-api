@@ -592,7 +592,7 @@ end
 
 ## Known issues
 
-*   If the docker daemon is always responding to your requests with a 400 Bad Request when using UNIX sockets, verify you're running Excon version 0.46.0 or greater. [Link](https://github.com/swipely/docker-api/issues/381)
+*   Please check [Issues page](https://github.com/swipely/docker-api/issues)
 
 ## Not supported (yet)
 
