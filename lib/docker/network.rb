@@ -2,10 +2,10 @@
 class Docker::Network
   include Docker::Base
 
-  def connect(container, opts = {})
+  def connect(container, opts = {}, body_opts = {})
     Docker::Util.parse_json(
       connection.post(path_for('connect'), opts,
-                      body: { container: container }.to_json)
+                      body: { container: container }.merge(body_opts).to_json)
     )
     reload
   end

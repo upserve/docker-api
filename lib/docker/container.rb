@@ -99,7 +99,7 @@ class Docker::Container
   end
 
   # Attach to a container's standard streams / logs.
-  def attach(options = {}, &block)
+  def attach(options = {}, excon_params = {}, &block)
     stdin = options.delete(:stdin)
     tty   = options.delete(:tty)
 
@@ -108,8 +108,6 @@ class Docker::Container
     }.merge(options)
     # Creates list to store stdout and stderr messages
     msgs = Docker::Messages.new
-
-    excon_params = {}
 
     if stdin
       # If attaching to stdin, we must hijack the underlying TCP connection
@@ -211,8 +209,18 @@ class Docker::Container
     define_method(:"#{method}!") do |opts = {}|
       timeout = opts.delete('timeout')
       query = {}
-      query['t'] = timeout if timeout
-      connection.post(path_for(method), query, :body => opts.to_json)
+      request_options = {
+        :body => opts.to_json
+      }
+      if timeout
+        query['t'] = timeout
+        # Ensure request does not timeout before Docker timeout
+        request_options.merge!(
+          read_timeout: timeout.to_i + 5,
+          write_timeout: timeout.to_i + 5
+        )
+      end
+      connection.post(path_for(method), query, request_options)
       self
     end
 

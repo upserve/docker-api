@@ -493,6 +493,42 @@ describe Docker::Container do
         id.start_with?(subject.id)
       }
     end
+
+    context 'with a timeout' do
+      let(:custom_timeout) { 60 }
+
+      before do
+        subject.tap(&:start)
+      end
+
+      it 'extends the Excon HTTP timeout ensuring the HTTP request does not timeout before Docker' do
+        expect(subject.connection).to receive(:request).with(
+          :post,
+          anything,
+          anything,
+          hash_including(read_timeout: custom_timeout + 5, write_timeout: custom_timeout + 5)
+        ).once
+        allow(subject.connection).to receive(:request).with(:delete, anything, anything)
+        subject.stop('timeout' => custom_timeout)
+      end
+    end
+
+    context 'without a timeout' do
+      before do
+        subject.tap(&:start)
+      end
+
+      it 'does not adjust the default Excon HTTP timeout' do
+        expect(subject.connection).to receive(:request).with(
+          :post,
+          anything,
+          anything,
+          hash_including(body: '{}')
+        ).once
+        allow(subject.connection).to receive(:request).with(:delete, anything, anything)
+        subject.stop
+      end
+    end
   end
 
   describe '#exec' do
