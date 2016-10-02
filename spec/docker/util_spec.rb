@@ -61,16 +61,87 @@ describe Docker::Util do
   describe '.create_dir_tar' do
     attr_accessor :tmpdir
 
+    let(:tar) { subject.create_dir_tar tmpdir }
+
     around do |example|
       Dir.mktmpdir do |tmpdir|
         self.tmpdir = tmpdir
         example.call
+        FileUtils.rm tar
       end
     end
 
-    specify do
+    it 'creates a tarball' do
       tar = subject.create_dir_tar tmpdir
-      expect { FileUtils.rm tar }.to_not raise_error
+      expect(files_in_tar(tar)).to eq []
+    end
+
+    it 'packs regular files' do
+      File.write("#{tmpdir}/foo", 'bar')
+      expect(files_in_tar(tar)).to eq ['foo']
+    end
+
+    it 'packs nested files, but not directory entries' do
+      FileUtils.mkdir("#{tmpdir}/foo")
+      File.write("#{tmpdir}/foo/bar", 'bar')
+      expect(files_in_tar(tar)).to eq ['foo/bar']
+    end
+
+    describe ".dockerignore" do
+      it 'ignores files' do
+        File.write("#{tmpdir}/foo", 'bar')
+        File.write("#{tmpdir}/baz", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "foo")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'baz']
+      end
+
+      it 'ignores folders' do
+        FileUtils.mkdir("#{tmpdir}/foo")
+        File.write("#{tmpdir}/foo/bar", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "foo")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore']
+      end
+
+      it 'ignores based on wildcards' do
+        File.write("#{tmpdir}/bar", 'bar')
+        File.write("#{tmpdir}/baz", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "*z")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'bar']
+      end
+
+      it 'ignores comments' do
+        File.write("#{tmpdir}/foo", 'bar')
+        File.write("#{tmpdir}/baz", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "# nothing here\nfoo")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'baz']
+      end
+
+      it 'ignores whitespace' do
+        File.write("#{tmpdir}/foo", 'bar')
+        File.write("#{tmpdir}/baz", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "foo   \n   \n\n")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'baz']
+      end
+
+      it 'ignores multiple patterns' do
+        File.write("#{tmpdir}/foo", 'bar')
+        File.write("#{tmpdir}/baz", 'bar')
+        File.write("#{tmpdir}/zig", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "fo*\nba*")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'zig']
+      end
     end
   end
 
@@ -92,7 +163,6 @@ describe Docker::Util do
         'X-Registry-Auth' => encoded_creds
       }
     }
-
 
     context 'given credentials as a Hash' do
       it 'returns an X-Registry-Auth header encoded' do
@@ -167,4 +237,7 @@ describe Docker::Util do
     end
   end
 
+  def files_in_tar(tar)
+    Gem::Package::TarReader.new(tar) { |content| return content.map(&:full_name).sort }
+  end
 end

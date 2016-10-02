@@ -1,6 +1,9 @@
 # This module holds shared logic that doesn't really belong anywhere else in the
 # gem.
 module Docker::Util
+  # http://www.tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm#STANDARD-WILDCARDS
+  GLOB_WILDCARDS = /[\?\*\[\{]/
+
   include Docker::Error
 
   module_function
@@ -141,7 +144,10 @@ module Docker::Util
 
   def create_relative_dir_tar(directory, output)
     Gem::Package::TarWriter.new(output) do |tar|
-      Find.find(directory) do |prefixed_file_name|
+      files = glob_all_files(File.join(directory, "**/*"))
+      remove_ignored_files!(directory, files)
+
+      files.each do |prefixed_file_name|
         stat = File.stat(prefixed_file_name)
         next unless stat.file?
 
@@ -252,5 +258,23 @@ module Docker::Util
     {
       'X-Registry-Config' => encoded_header
     }
+  end
+
+  def glob_all_files(pattern)
+    Dir.glob(pattern, File::FNM_DOTMATCH) - ['..', '.']
+  end
+
+  def remove_ignored_files!(directory, files)
+    ignore = File.join(directory, '.dockerignore')
+    return unless files.include?(ignore)
+    ignored_files(directory, ignore).each { |f| files.delete(f) }
+  end
+
+  def ignored_files(directory, ignore_file)
+    patterns = File.read(ignore_file).split("\n").each(&:strip!)
+    patterns.reject! { |p| p.empty? || p.start_with?('#') }
+    patterns.map! { |p| File.join(directory, p) }
+    patterns.map! { |p| File.directory?(p) ? "#{p}/**/*" : p }
+    patterns.flat_map { |p| p =~ GLOB_WILDCARDS ? glob_all_files(p) : p }
   end
 end
