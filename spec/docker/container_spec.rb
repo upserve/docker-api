@@ -501,7 +501,7 @@ describe Docker::Container do
         subject.tap(&:start)
       end
 
-      it 'extends the Excon HTTP timeout ensuring the HTTP request does not timeout before Docker' do
+      it 'extends the Excon timeout ensuring the request does not timeout before Docker' do
         expect(subject.connection).to receive(:request).with(
           :post,
           anything,
