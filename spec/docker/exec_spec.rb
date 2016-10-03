@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SingleCov.covered! uncovered: 4
+
 describe Docker::Exec do
   let(:container) {
     Docker::Container.create(

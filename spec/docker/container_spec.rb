@@ -1,5 +1,7 @@
 require 'spec_helper'
 
+SingleCov.covered! uncovered: 1
+
 describe Docker::Container do
   describe '#to_s' do
     subject {
@@ -215,6 +217,11 @@ describe Docker::Container do
       expect(top).to be_a Array
       expect(top).to_not be_empty
       expect(top.first.keys).to include('PID')
+    end
+
+    it 'returns nothing when Processes were not returned due to an error' do
+      expect(Docker::Util).to receive(:parse_json).and_return({})
+      expect(top).to eq []
     end
   end
 

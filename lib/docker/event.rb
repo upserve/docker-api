@@ -108,11 +108,7 @@ class Docker::Event
   end
 
   def to_s_actor_style
-    most_accurate_time = if !time_nano.nil?
-                           time_nano
-                         elsif !time.nil?
-                           time
-                         end
+    most_accurate_time = time_nano || time
 
     attributes = []
     actor.attributes.each do |attribute, value|

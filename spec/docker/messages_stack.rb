@@ -1,7 +1,8 @@
 require 'spec_helper'
 
-describe Docker::MessagesStack do
+SingleCov.covered!
 
+describe Docker::MessagesStack do
   describe '#append' do
     context 'without limits' do |variable|
       it 'does not limit stack size by default' do
