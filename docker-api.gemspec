@@ -10,7 +10,6 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files lib README.md LICENSE`.split($\)
   gem.name          = 'docker-api'
   gem.version       = Docker::VERSION
-  gem.required_ruby_version = '>= 2.0.0'
   gem.add_dependency 'excon', '>= 0.38.0'
   gem.add_dependency 'json'
   gem.add_development_dependency 'rake'
