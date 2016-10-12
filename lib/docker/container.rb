@@ -134,7 +134,7 @@ class Docker::Container
     # Based on the link, the config passed as run, needs to be passed as the
     # body of the post so capture it, remove from the options, and pass it via
     # the post body
-    config = options.delete('run')
+    config = options.delete('run') || options.delete(:run)
     hash = Docker::Util.parse_json(connection.post('/commit',
                                                    options,
                                                    :body => config.to_json))
@@ -174,7 +174,7 @@ class Docker::Container
   end
 
   def streaming_logs(opts = {}, &block)
-    stack_size = opts.delete('stack_size') || -1
+    stack_size = opts.delete('stack_size') || opts.delete(:stack_size) || -1
     tty = opts.delete('tty') || opts.delete(:tty) || false
     msgs = Docker::MessagesStack.new(stack_size)
     excon_params = {response_block: Docker::Util.attach_for(block, msgs, tty)}
@@ -207,7 +207,7 @@ class Docker::Container
   # but rescue from ServerErrors.
   [:stop, :restart].each do |method|
     define_method(:"#{method}!") do |opts = {}|
-      timeout = opts.delete('timeout')
+      timeout = opts.delete('timeout') || opts.delete(:timeout)
       query = {}
       request_options = {
         :body => opts.to_json
@@ -317,7 +317,7 @@ class Docker::Container
 
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    name = opts.delete('name')
+    name =  opts.delete('name') || opts.delete(:name)
     query = {}
     query['name'] = name if name
     resp = conn.post('/containers/create', query, :body => opts.to_json)
