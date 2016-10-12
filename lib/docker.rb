@@ -14,7 +14,7 @@ require 'open-uri'
 require 'excon/middlewares/hijack'
 Excon.defaults[:middlewares].unshift Excon::Middleware::Hijack
 
-# The top-level module for this gem. It's purpose is to hold global
+# The top-level module for this gem. Its purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
   attr_accessor :creds, :logger
