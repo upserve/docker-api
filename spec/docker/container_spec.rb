@@ -84,22 +84,51 @@ describe Docker::Container do
   end
 
   describe '#stats', docker_1_9: true do
-    subject {
-      described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
-    }
-    after(:each) { subject.remove }
+    after(:each) do
+      subject.kill!
+      subject.remove
+    end
 
     context "when requesting container stats" do
+      subject {
+        described_class.create('Cmd' => ['echo', 'hello'], 'Image' => 'debian:wheezy')
+      }
+
       let(:output) { subject.stats }
       it "returns a Hash" do
         expect(output).to be_a Hash
+      end
+    end
+
+    context "when streaming container stats" do
+      subject {
+        described_class.create('Cmd' => ['sleep', '3'], 'Image' => 'debian:wheezy')
+      }
+
+      it "yields a Hash" do
+        subject.start! # If the container isn't started, no stats will be streamed
+        called_count = 0
+        subject.stats do |output|
+          expect(output).to be_a Hash
+          called_count += 1
+          break if called_count == 2
+        end
+        expect(called_count).to eq 2
+      end
+
+      it "returns after :read_timeout if the container is not running" do
+        called_count = 0
+        subject.stats(read_timeout: 3) do |output|
+          called_count +=1
+        end
+        expect(called_count).to eq 0
       end
     end
   end
 
   describe '#logs' do
     subject {
-      described_class.create('Cmd' => "echo hello", 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => ['echo',  'hello'], 'Image' => 'debian:wheezy')
     }
     after(:each) { subject.remove }
 
