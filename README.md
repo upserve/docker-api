@@ -372,6 +372,12 @@ Docker::Container.create(
   }
 )
 
+# To set container name pass `name` key to options
+Docker::Container.create(
+  'name' => 'my-new-container',
+  'Image' => 'image-name'
+)
+
 # Stores a file with the given content in the container
 container.store_file("/test", "Hello world")
 
