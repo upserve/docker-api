@@ -158,9 +158,23 @@ class Docker::Container
     connection.get(path_for(:logs), opts)
   end
 
-  # TODO: Implement Streaming stats
-  def stats
-    Docker::Util.parse_json(connection.get(path_for(:stats), {stream: 0}))
+  def stats(options = {})
+    if block_given?
+      options[:read_timeout] ||= 10
+      options[:idempotent] ||= false
+      parser = lambda do |chunk, remaining_bytes, total_bytes|
+        yield Docker::Util.parse_json(chunk)
+      end
+      begin
+        connection.get(path_for(:stats), nil, {response_block: parser}.merge(options))
+      rescue Docker::Error::TimeoutError
+        # If the container stops, the docker daemon will hold the connection
+        # open forever, but stop sending events.
+        # So this Timeout indicates the stream is over.
+      end
+    else
+      Docker::Util.parse_json(connection.get(path_for(:stats), {stream: 0}.merge(options)))
+    end
   end
 
   def rename(new_name)
