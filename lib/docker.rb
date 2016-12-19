@@ -14,6 +14,8 @@ require 'open-uri'
 require 'excon/middlewares/hijack'
 Excon.defaults[:middlewares].unshift Excon::Middleware::Hijack
 
+Excon.defaults[:middlewares] << Excon::Middleware::RedirectFollower
+
 # The top-level module for this gem. Its purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
