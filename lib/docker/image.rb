@@ -108,7 +108,7 @@ class Docker::Image
 
     # Create a new Image.
     def create(opts = {}, creds = nil, conn = Docker.connection, &block)
-      credentials = creds.nil? ? Docker.creds : creds.to_json
+      credentials = creds.nil? ? Docker.creds : MultiJson.dump(creds)
       headers = credentials && Docker::Util.build_auth_header(credentials) || {}
       body = ''
       conn.post(

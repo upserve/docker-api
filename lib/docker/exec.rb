@@ -20,7 +20,7 @@ class Docker::Exec
   def self.create(options = {}, conn = Docker.connection)
     container = options.delete('Container')
     resp = conn.post("/containers/#{container}/exec", {},
-      :body => options.to_json)
+      body: MultiJson.dump(options))
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)
   end
@@ -51,11 +51,11 @@ class Docker::Exec
     read_timeout = options[:wait]
 
     # Create API Request Body
-    body = {
-      "Tty" => tty,
-      "Detach" => detached
-    }
-    excon_params = { :body => body.to_json }
+    body = MultiJson.dump(
+      'Tty' => tty,
+      'Detach' => detached
+    )
+    excon_params = { body: body }
 
     msgs = Docker::Messages.new
     unless detached

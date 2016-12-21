@@ -1,5 +1,5 @@
 require 'cgi'
-require 'json'
+require 'multi_json'
 require 'excon'
 require 'tempfile'
 require 'base64'
@@ -121,8 +121,8 @@ module Docker
 
   # Login to the Docker registry.
   def authenticate!(options = {}, connection = self.connection)
-    creds = options.to_json
-    connection.post('/auth', {}, :body => creds)
+    creds = MultiJson.dump(options)
+    connection.post('/auth', {}, body: creds)
     @creds = creds
     true
   rescue Docker::Error::ServerError, Docker::Error::UnauthorizedError
