@@ -134,10 +134,10 @@ class Docker::Container
     # Based on the link, the config passed as run, needs to be passed as the
     # body of the post so capture it, remove from the options, and pass it via
     # the post body
-    config = options.delete('run')
-    hash = Docker::Util.parse_json(connection.post('/commit',
-                                                   options,
-                                                   :body => config.to_json))
+    config = MultiJson.dump(options.delete('run'))
+    hash = Docker::Util.parse_json(
+      connection.post('/commit', options, body: config)
+    )
     Docker::Image.send(:new, self.connection, hash)
   end
 
@@ -184,7 +184,7 @@ class Docker::Container
   end
 
   def update(opts)
-    connection.post(path_for(:update), {}, body: opts.to_json)
+    connection.post(path_for(:update), {}, body: MultiJson.dump(opts))
   end
 
   def streaming_logs(opts = {}, &block)
@@ -198,7 +198,7 @@ class Docker::Container
   end
 
   def start!(opts = {})
-    connection.post(path_for(:start), {}, :body => opts.to_json)
+    connection.post(path_for(:start), {}, body: MultiJson.dump(opts))
     self
   end
 
@@ -224,7 +224,7 @@ class Docker::Container
       timeout = opts.delete('timeout')
       query = {}
       request_options = {
-        :body => opts.to_json
+        :body => MultiJson.dump(opts)
       }
       if timeout
         query['t'] = timeout
@@ -266,9 +266,11 @@ class Docker::Container
   end
 
   def copy(path, &block)
-    connection.post(path_for(:copy), {},
-      :body => { "Resource" => path }.to_json,
-      :response_block => block
+    connection.post(
+      path_for(:copy),
+      {},
+      body: MultiJson.dump('Resource' => path),
+      response_block: block
     )
     self
   end
@@ -334,7 +336,7 @@ class Docker::Container
     name = opts.delete('name') || opts.delete(:name)
     query = {}
     query['name'] = name if name
-    resp = conn.post('/containers/create', query, :body => opts.to_json)
+    resp = conn.post('/containers/create', query, body: MultiJson.dump(opts))
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)
   end

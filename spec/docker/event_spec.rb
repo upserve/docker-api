@@ -132,7 +132,13 @@ describe Docker::Event do
     end
 
     context 'with a new api response' do
-      let(:event) { Docker::Event.new_event(api_response.to_json, nil, nil) }
+      let(:event) do
+        Docker::Event.new_event(
+          MultiJson.dump(api_response),
+          nil,
+          nil
+        )
+      end
 
       it 'returns a Docker::Event' do
         expect(event).to be_kind_of(Docker::Event)

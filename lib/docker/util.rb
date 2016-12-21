@@ -102,8 +102,8 @@ module Docker::Util
   end
 
   def parse_json(body)
-    JSON.parse(body) unless body.nil? || body.empty? || (body == 'null')
-  rescue JSON::ParserError => ex
+    MultiJson.load(body) unless body.nil? || body.empty? || (body == 'null')
+  rescue MultiJson::ParseError => ex
     raise UnexpectedResponseError, ex.message
   end
 
@@ -234,7 +234,7 @@ module Docker::Util
   end
 
   def build_auth_header(credentials)
-    credentials = credentials.to_json if credentials.is_a?(Hash)
+    credentials = MultiJson.dump(credentials) if credentials.is_a?(Hash)
     encoded_creds = Base64.encode64(credentials).gsub(/\n/, '')
     {
       'X-Registry-Auth' => encoded_creds
@@ -245,13 +245,13 @@ module Docker::Util
     if credentials.is_a?(String)
       credentials = JSON.parse(credentials, symbolize_names: true)
     end
-    header = {
+    header = MultiJson.dump(
       credentials[:serveraddress].to_s => {
-        "username" => credentials[:username].to_s,
-        "password" => credentials[:password].to_s,
-        "email" => credentials[:email].to_s
+        'username' => credentials[:username].to_s,
+        'password' => credentials[:password].to_s,
+        'email' => credentials[:email].to_s
       }
-    }.to_json
+    )
 
     encoded_header = Base64.encode64(header).gsub(/\n/, '')
 

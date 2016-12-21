@@ -1,9 +1,11 @@
 #!/bin/bash
-set -x
-set -e
+set -ex
+
+declare -a SEMVER
 
 # argv[0]
 DOCKER_VERSION=$1
+SEMVER=(${DOCKER_VERSION//./ })
 
 # disable travis default installation
 service docker stop
@@ -18,6 +20,10 @@ apt-get update -o Dir::Etc::sourcelist='sources.list.d/docker-main.list' -o Dir:
 apt-cache gencaches
 
 # install package
-apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~trusty
+if [ ${SEMVER[1]} -ge 12 ] ; then
+  apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~ubuntu-trusty
+else
+  apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~trusty
+fi
 echo 'DOCKER_OPTS="-H unix:///var/run/docker.sock --pidfile=/var/run/docker.pid"' > /etc/default/docker
 cat /etc/default/docker

@@ -7,18 +7,9 @@ class Docker::Image
   # to run the Image. If the image has an embedded config, no command is
   # necessary, but it will fail with 500 if no config is saved with the image
   def run(cmd = nil, options = {})
-    opts = {'Image' => self.id}.merge(options)
-    opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
-    begin
-      Docker::Container.create(opts, connection)
-                       .tap(&:start!)
-    rescue ServerError => ex
-      if cmd
-        raise ex
-      else
-        raise ServerError, "No command specified."
-      end
-    end
+    opts = { 'Image' => self.id }.merge(options)
+    opts['Cmd'] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
+    Docker::Container.create(opts, connection).tap(&:start!)
   end
 
   # Push the Image to the Docker registry.
@@ -108,7 +99,7 @@ class Docker::Image
 
     # Create a new Image.
     def create(opts = {}, creds = nil, conn = Docker.connection, &block)
-      credentials = creds.nil? ? Docker.creds : creds.to_json
+      credentials = creds.nil? ? Docker.creds : MultiJson.dump(creds)
       headers = credentials && Docker::Util.build_auth_header(credentials) || {}
       body = ''
       conn.post(

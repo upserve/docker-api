@@ -11,7 +11,7 @@ Gem::Specification.new do |gem|
   gem.name          = 'docker-api'
   gem.version       = Docker::VERSION
   gem.add_dependency 'excon', '>= 0.38.0'
-  gem.add_dependency 'json'
+  gem.add_dependency 'multi_json'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'rspec-its'
