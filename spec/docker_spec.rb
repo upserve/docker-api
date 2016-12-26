@@ -188,7 +188,7 @@ describe Docker do
   describe '#ping' do
     before { Docker.reset! }
 
-    let(:ping) { subject.ping}
+    let(:ping) { subject.ping }
 
     it 'returns the status as a String' do
       expect(ping).to eq('OK')
@@ -260,7 +260,7 @@ describe Docker do
 
       it 'raises a Version Error' do
         expect { subject.validate_version! }
-            .to raise_error(Docker::Error::VersionError)
+          .to raise_error(Docker::Error::VersionError)
       end
     end
 
