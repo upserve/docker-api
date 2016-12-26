@@ -90,6 +90,14 @@ module Docker
     reset_connection!
   end
 
+  def api_version
+    options.fetch(:api_version, SUPPORTED_API_VERSION)
+  end
+
+  def api_version=(version)
+    options[:api_version] = version.to_s
+  end
+
   def connection
     @connection ||= Connection.new(url, options)
   end
@@ -132,14 +140,19 @@ module Docker
   # When the correct version of Docker is installed, returns true. Otherwise,
   # raises a VersionError.
   def validate_version!
+    !api_version.empty? &&
+      Gem::Version.new(api_version) < Gem::Version.new(SUPPORTED_API_VERSION) &&
+      raise(Docker::Error::VersionError)
+
     Docker.info
     true
-  rescue Docker::Error::DockerError
-    raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
+  rescue Docker::Error::DockerError, Docker::Error::VersionError
+    raise Docker::Error::VersionError, "Expected API Version: #{SUPPORTED_API_VERSION}"
   end
 
   module_function :default_socket_url, :env_url, :url, :url=, :env_options,
                   :options, :options=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset!, :reset_connection!, :version, :info,
-                  :ping, :authenticate!, :validate_version!, :ssl_options
+                  :ping, :authenticate!, :validate_version!, :ssl_options,
+                  :api_version, :api_version=
 end
