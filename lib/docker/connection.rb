@@ -76,11 +76,12 @@ private
     query ||= {}
     opts ||= {}
     headers = opts.delete(:headers) || {}
+    remote_api_version = Docker.api_version.empty? ? '' : "/v#{Docker.api_version}"
     content_type = opts[:body].nil? ?  'text/plain' : 'application/json'
     user_agent = "Swipely/Docker-API #{Docker::VERSION}"
     {
       :method        => http_method,
-      :path          => "/v#{Docker::API_VERSION}#{path}",
+      :path          => File.join(remote_api_version, path),
       :query         => query,
       :headers       => { 'Content-Type' => content_type,
                           'User-Agent'   => user_agent,

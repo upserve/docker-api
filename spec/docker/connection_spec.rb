@@ -75,10 +75,11 @@ describe Docker::Connection do
     let(:body) { rand(10000000) }
     let(:resource) { double(:resource) }
     let(:response) { double(:response, :body => body) }
+    let(:path_with_version) { "/v#{Docker::SUPPORTED_API_VERSION}#{path}" }
     let(:expected_hash) {
       {
         :method  => method,
-        :path    => "/v#{Docker::API_VERSION}#{path}",
+        :path    => path_with_version,
         :query   => query,
         :headers => { 'Content-Type' => 'text/plain',
                       'User-Agent'   => "Swipely/Docker-API #{Docker::VERSION}",
@@ -98,6 +99,17 @@ describe Docker::Connection do
 
     it 'sends #request to #resource with the compiled params' do
       expect(subject.request(method, path, query, options)).to eq body
+    end
+
+    context 'when api version is specified' do
+      before { Docker.api_version = '1.0.0' }
+      after { Docker.reset! }
+
+      let(:path_with_version) { "/v1.0.0#{path}" }
+
+      it 'sets api version it the :path option' do
+        expect(subject.request(method, path, query, options)).to eq body
+      end
     end
   end
 

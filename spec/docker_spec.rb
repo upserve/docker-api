@@ -188,7 +188,7 @@ describe Docker do
   describe '#ping' do
     before { Docker.reset! }
 
-    let(:ping) { subject.ping}
+    let(:ping) { subject.ping }
 
     it 'returns the status as a String' do
       expect(ping).to eq('OK')
@@ -243,6 +243,16 @@ describe Docker do
   describe '#validate_version' do
     before { Docker.reset! }
 
+    context 'when specified version is not supported by the client' do
+      before { Docker.api_version = '0.0.1' }
+      after { Docker.reset! }
+
+      it 'raises a Version Error' do
+        expect { subject.validate_version! }
+          .to raise_error(Docker::Error::VersionError)
+      end
+    end
+
     context 'when a Docker Error is raised' do
       before do
         allow(Docker).to receive(:info).and_raise(Docker::Error::ClientError)
@@ -250,7 +260,7 @@ describe Docker do
 
       it 'raises a Version Error' do
         expect { subject.validate_version! }
-            .to raise_error(Docker::Error::VersionError)
+          .to raise_error(Docker::Error::VersionError)
       end
     end
 
