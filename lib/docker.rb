@@ -34,6 +34,7 @@ module Docker
   require 'docker/util'
   require 'docker/version'
   require 'docker/volume'
+  require 'docker/service'
   require 'docker/rake_task' if defined?(Rake::Task)
 
   def default_socket_url
