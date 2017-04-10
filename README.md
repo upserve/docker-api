@@ -339,6 +339,13 @@ container.kill(:signal => "SIGHUP")
 container.top
 # => [{"PID"=>"4851", "TTY"=>"pts/0", "TIME"=>"00:00:00", "CMD"=>"lxc-start"}]
 
+# Same as above, but uses the original format
+container.top(format: :hash)
+# => {
+#      "Titles" => ["PID", "TTY", "TIME", "CMD"],
+#      "Processes" => [["4851", "pts/0", "00:00:00", "lxc-start"]]
+#    }
+
 # To expose 1234 to bridge
 # In Dockerfile: EXPOSE 1234/tcp
 # docker run resulting-image-name
