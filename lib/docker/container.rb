@@ -320,10 +320,17 @@ class Docker::Container
     end
   end
 
-  def store_file(path, file_content)
+  def store_file(path, file_content, file_permissions=nil)
+    file_details =
+      if file_permissions
+        { content: file_content, permissions: file_permissions }
+      else
+        file_content
+      end
+
     output_io = StringIO.new(
       Docker::Util.create_tar(
-        path => file_content
+        path => file_details
       )
     )
 
