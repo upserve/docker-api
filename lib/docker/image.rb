@@ -201,6 +201,11 @@ class Docker::Image
       hashes.map { |hash| new(conn, hash) }
     end
 
+    # Returns response from list api endpoint.
+    def list(opts = {}, conn = Docker.connection)
+      Docker::Util.parse_json(conn.get('/images/json', opts)) || []
+    end
+
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponding Image.
     def search(query = {}, connection = Docker.connection)
