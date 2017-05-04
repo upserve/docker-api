@@ -130,6 +130,10 @@ Docker.info
 # docker command for reference: docker login
 Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 'email' => 'dockerboy22@aol.com')
 # => true
+
+# docker command for reference: docker login registry.gitlab.com
+Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 'email' => 'dockerboy22@aol.com', 'serveraddress' => 'https://registry.gitlab.com/v1/')
+# => true
 ```
 
 ## Images
