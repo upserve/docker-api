@@ -76,6 +76,7 @@ private
     query ||= {}
     opts ||= {}
     headers = opts.delete(:headers) || {}
+    headers['Host'] = "" if url == "unix:///" && !headers.key?('Host')
     content_type = opts[:body].nil? ?  'text/plain' : 'application/json'
     user_agent = "Swipely/Docker-API #{Docker::VERSION}"
     {
@@ -83,7 +84,7 @@ private
       :path          => "/v#{Docker::API_VERSION}#{path}",
       :query         => query,
       :headers       => { 'Content-Type' => content_type,
-                          'User-Agent'   => user_agent,
+                          'User-Agent'   => user_agent
                         }.merge(headers),
       :expects       => (200..204).to_a << 301 << 304,
       :idempotent    => http_method == :get,
