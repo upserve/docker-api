@@ -951,7 +951,7 @@ describe Docker::Container do
     end
   end
 	
-	describe '.prune', :docker_ce => true => true do
+	describe '.prune', :docker_ce => true do
 		it 'prune containers' do
 			expect { Docker::Container.prune }.not_to raise_error 
 		end
