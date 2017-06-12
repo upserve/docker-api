@@ -91,7 +91,7 @@ describe Docker::Network, docker_1_9: true do
     end
   end
 
-	describe '.prune' do
+	describe '.prune', :docker_ce => true do
 		it 'prune networks' do
 			expect { Docker::Network.prune }.not_to raise_error 
 		end

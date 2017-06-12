@@ -576,7 +576,7 @@ describe Docker::Image do
     end
   end
 
-	describe '.prune' do
+	describe '.prune', :docker_ce => true do
 		it 'prune images' do
 			expect { Docker::Image.prune }.not_to raise_error 
 		end
