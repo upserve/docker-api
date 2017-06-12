@@ -576,6 +576,12 @@ describe Docker::Image do
     end
   end
 
+	describe '.prune' do
+		it 'prune images' do
+			expect { Docker::Image.prune }.not_to raise_error 
+		end
+	end
+
   describe '.search' do
     subject { described_class }
 

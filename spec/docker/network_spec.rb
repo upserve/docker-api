@@ -91,6 +91,12 @@ describe Docker::Network, docker_1_9: true do
     end
   end
 
+	describe '.prune' do
+		it 'prune networks' do
+			expect { Docker::Network.prune }.not_to raise_error 
+		end
+	end
+
   describe '#connect' do
     let!(:container) do
       Docker::Container.create(

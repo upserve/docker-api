@@ -67,6 +67,11 @@ class Docker::Network
       nil
     end
     alias_method :delete, :remove
+
+		def prune(conn = Docker.connection)
+			conn.post("/networks/prune", {})
+			nil
+		end
   end
 
   # Convenience method to return the path for a particular resource.

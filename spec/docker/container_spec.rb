@@ -950,4 +950,10 @@ describe Docker::Container do
       end
     end
   end
+	
+	describe '.prune' do
+		it 'prune containers' do
+			expect { Docker::Container.prune }.not_to raise_error 
+		end
+	end
 end
