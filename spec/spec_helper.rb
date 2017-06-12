@@ -40,23 +40,30 @@ RSpec.configure do |config|
 
   case ENV['DOCKER_VERSION']
   when /^1\.6/
+    config.filter_run_excluding :docker_ce => true
     config.filter_run_excluding :docker_1_8 => true
     config.filter_run_excluding :docker_1_9 => true
     config.filter_run_excluding :docker_1_10 => true
-		config.filter_run_excluding :docker_ce => true 
+		config.filter_run_excluding :docker_17_03 => true 
   when /^1\.7/
+    config.filter_run_excluding :docker_ce => true
     config.filter_run_excluding :docker_1_8 => true
     config.filter_run_excluding :docker_1_9 => true
     config.filter_run_excluding :docker_1_10 => true
-		config.filter_run_excluding :docker_ce => true 
+		config.filter_run_excluding :docker_17_03 => true 
   when /^1\.8/
+    config.filter_run_excluding :docker_ce => true
     config.filter_run_excluding :docker_1_9 => true
     config.filter_run_excluding :docker_1_10 => true
-		config.filter_run_excluding :docker_ce => true 
+		config.filter_run_excluding :docker_17_03 => true 
   when /^1\.9/
+    config.filter_run_excluding :docker_ce => true
     config.filter_run_excluding :docker_1_10 => true
-		config.filter_run_excluding :docker_ce => true 
-	when /^17\.03/
-    config.filter_run_excluding :docker_17_03 => true
+		config.filter_run_excluding :docker_17_03 => true 
+  when /^1\.10/
+    config.filter_run_excluding :docker_ce => true
+		config.filter_run_excluding :docker_17_03 => true 
+  when /^17\.03/
+    config.filter_run_excluding :docker_old => true
   end
 end

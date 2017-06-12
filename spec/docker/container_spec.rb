@@ -100,7 +100,7 @@ describe Docker::Container do
       end
     end
 
-    context "when streaming container stats" do
+    context "when streaming container stats", :docker_old => true do
       subject {
         described_class.create('Cmd' => ['sleep', '3'], 'Image' => 'debian:wheezy')
       }
@@ -188,7 +188,7 @@ describe Docker::Container do
     subject {
       described_class.create({
         "name" => "foo",
-        "Cmd" => %w[true],
+        "Cmd" => ['sleep', '1'],
         "Image" => "debian:wheezy",
         "HostConfig" => {
           "CpuShares" => 60000
@@ -951,7 +951,7 @@ describe Docker::Container do
     end
   end
 	
-	describe '.prune', :docker_ce => true do
+	describe '.prune', :docker_17_03 => true do
 		it 'prune containers' do
 			expect { Docker::Container.prune }.not_to raise_error 
 		end

@@ -37,7 +37,7 @@ describe Docker::Volume, :docker_1_9 do
     end
   end
 
-	describe '.prune', :docker_ce => true do
+	describe '.prune', :docker_17_03 => true do
     it 'prune volumes' do
 			expect { Docker::Volume.prune }.not_to raise_error 
     end
