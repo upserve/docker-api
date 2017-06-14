@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 1
+SingleCov.covered! uncovered: 2
 
 describe Docker::Network, docker_1_9: true do
   let(:name) do |example|

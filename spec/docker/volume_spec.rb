@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered!
+SingleCov.covered! uncovered: 1
 
 # Volume requests are actually slow enough to occasionally not work
 # Use sleep statements to manage that
