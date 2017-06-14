@@ -167,14 +167,14 @@ class Docker::Container
         yield Docker::Util.parse_json(chunk)
       end
       begin
-        connection.get(path_for(:stats), 'stream=false', {response_block: parser}.merge(options))
+        connection.get(path_for(:stats), nil, {response_block: parser}.merge(options))
       rescue Docker::Error::TimeoutError
         # If the container stops, the docker daemon will hold the connection
         # open forever, but stop sending events.
         # So this Timeout indicates the stream is over.
       end
     else
-      Docker::Util.parse_json(connection.get(path_for(:stats), 'stream=false', {stream: 0}.merge(options)))
+      Docker::Util.parse_json(connection.get(path_for(:stats), {stream: 0}.merge(options)))
     end
   end
 
@@ -353,11 +353,11 @@ class Docker::Container
     hashes.map { |hash| new(conn, hash) }
   end
 
-	# Prune images
-	def self.prune(conn = Docker.connection)
+  # Prune images
+  def self.prune(conn = Docker.connection)
     conn.post("/containers/prune", {})
     nil
-	end
+  end
 
   # Convenience method to return the path for a particular resource.
   def path_for(resource)

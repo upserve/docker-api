@@ -264,7 +264,7 @@ describe Docker::Image do
       context 'no command configured in image' do
         subject { described_class.create('fromImage' => 'swipely/base') }
         it 'should raise an error if no command is specified' do
-          expect {container}.to raise_error(Docker::Error::ClientError)
+          expect {container}.to raise_error('No command specified.')
         end
       end
 
@@ -575,11 +575,11 @@ describe Docker::Image do
     end
   end
 
-	describe '.prune', :docker_17_03 => true do
-		it 'prune images' do
-			expect { Docker::Image.prune }.not_to raise_error 
-		end
-	end
+  describe '.prune', :docker_17_03 => true do
+    it 'prune images' do
+      expect { Docker::Image.prune }.not_to raise_error
+    end
+  end
 
   describe '.search' do
     subject { described_class }
@@ -637,7 +637,7 @@ describe Docker::Image do
         let!(:image) { subject.build("FROM debian:wheezy\n", &block) }
 
         it 'calls the block and passes build output' do
-          expect(build_output).to match(/Step \d\/\d : FROM debian:wheezy/)
+          expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
         end
       end
     end
@@ -690,7 +690,7 @@ describe Docker::Image do
 
         it 'calls the block and passes build output' do
           image # Create the image variable, which is lazy-loaded by Rspec
-          expect(build_output).to match(/Step \d\/\d : FROM debian:wheezy/)
+          expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
         end
 
         context 'uses a cached version the second time' do
@@ -700,7 +700,7 @@ describe Docker::Image do
 
           it 'calls the block and passes build output' do
             image # Create the image variable, which is lazy-loaded by Rspec
-            expect(build_output).to match(/Step \d\/\d : FROM debian:wheezy/)
+            expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
             expect(build_output).to_not match(/Using cache/)
 
             image_two # Create the image_two variable, which is lazy-loaded by Rspec

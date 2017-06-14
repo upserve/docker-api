@@ -8,7 +8,7 @@ DOCKER_VERSION=$1
 DOCKER_CE=$2
 
 # disable travis default installation
-service docker stop
+#service docker stop
 apt-get -y --purge remove docker docker-engine
 
 if [ "$DOCKER_CE" = "1" ]; then

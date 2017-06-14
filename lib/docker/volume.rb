@@ -36,9 +36,9 @@ class Docker::Volume
       new(conn, hash)
     end
 
-		def prune(conn = Docker.connection)
-			conn.post("/volumes/prune")
-		end
+    def prune(conn = Docker.connection)
+      conn.post("/volumes/prune")
+    end
 
   end
 end
