@@ -382,6 +382,47 @@ describe Docker::Image do
       end
     end
 
+    context 'image with tag' do
+      it 'pulls the image (string arguments)' do
+        image = subject.create('fromImage' => 'busybox', 'tag' => 'uclibc')
+        image.refresh!
+        expect(image.info['RepoTags']).to include('busybox:uclibc')
+      end
+
+      it 'pulls the image (symbol arguments)' do
+        image = subject.create(fromImage: 'busybox', tag: 'uclibc')
+        image.refresh!
+        expect(image.info['RepoTags']).to include('busybox:uclibc')
+      end
+
+      it 'supports identical fromImage and tag', docker_1_10: true do
+        # This is here for backwards compatibility. docker-api used to
+        # complete ignore the "tag" argument, which Docker itself prioritizes
+        # over a tag found in fromImage, which meant that we had 3 scenarios:
+        #
+        # 1 fromImage does not include a tag, and the tag argument is provided
+        #   and isn't the default (i.e. "latest"): docker-api crashes looking
+        #   for fromImage when the image that was pulled is fromImage:tag (or
+        #   returns the wrong image if fromImage:latest exists)
+        # 2 fromImage does not a include a tag, and the tag argument is absent
+        #   or default (i.e. "latest"): docker-api finds the right image.
+        # 3 fromImage includes a tag, and the tag argument is absent: docker-api
+        #   also finds the right image.
+        # 4 fromImage includes a tag, and the tag argument is present: works if
+        #   the tag is the same in both.
+        #
+        # Adding support for the tag argument to fix 1 above means we'd break 4
+        # if we didn't explicitly handle the case where both tags are identical.
+        # This is what this test checks.
+        #
+        # Note that providing the tag inline in fromImage is only supported in
+        # Docker 1.10 and up.
+        image = subject.create(fromImage: 'busybox:uclibc', tag: 'uclibc')
+        image.refresh!
+        expect(image.info['RepoTags']).to include('busybox:uclibc')
+      end
+    end
+
     context 'with a block capturing create output' do
       let(:create_output) { "" }
       let(:block) { Proc.new { |chunk| create_output << chunk } }
