@@ -196,7 +196,7 @@ describe Docker::Container do
       })
     }
 
-    before { subject.start }
+    before { subject.tap(&:start).tap(&:wait) }
     after(:each) { subject.tap(&:wait).remove }
 
     it "updates the container" do

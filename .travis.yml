@@ -8,11 +8,12 @@ rvm:
   - 2.1
   - 2.0
 env:
-  - DOCKER_VERSION=1.11.1
-  - DOCKER_VERSION=1.10.3
-  - DOCKER_VERSION=1.9.1
-  - DOCKER_VERSION=1.8.2
-  - DOCKER_VERSION=1.7.1
+  - DOCKER_VERSION=1.13.1-0~ubuntu-trusty
+  - DOCKER_VERSION=1.12.3-0~trusty
+  - DOCKER_VERSION=1.11.1-0~trusty
+  - DOCKER_VERSION=1.10.3-0~trusty
+  - DOCKER_VERSION=1.9.1-0~trusty
+  - DOCKER_VERSION=1.8.2-0~trusty
 matrix:
   fast_finish: true
 before_install:

@@ -18,6 +18,6 @@ apt-get update -o Dir::Etc::sourcelist='sources.list.d/docker-main.list' -o Dir:
 apt-cache gencaches
 
 # install package
-apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~trusty
+apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}
 echo 'DOCKER_OPTS="-H unix:///var/run/docker.sock --pidfile=/var/run/docker.pid"' > /etc/default/docker
 cat /etc/default/docker
