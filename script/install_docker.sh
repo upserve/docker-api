@@ -25,7 +25,7 @@ if [ "$DOCKER_CE" = "1" ]; then
 	apt-cache gencaches
 
 	# install package
-	apt-get install docker-ce=${DOCKER_VERSION}~ce-0~ubuntu-trusty
+	apt-get install docker-ce=${DOCKER_VERSION}
 else
 	# install gpg key for docker rpo
 	apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv 58118E89F3A912897C070ADBF76221572C52609D
@@ -35,8 +35,9 @@ else
 	apt-get update -o Dir::Etc::sourcelist='sources.list.d/docker-main.list' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0'
 	apt-cache gencaches
 
-	# install package
-	apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}-0~trusty
+        # install package
+        apt-get -y --force-yes install docker-engine=${DOCKER_VERSION}
 fi
+
 echo 'DOCKER_OPTS="-H unix:///var/run/docker.sock --pidfile=/var/run/docker.pid"' > /etc/default/docker
 cat /etc/default/docker
