@@ -206,8 +206,14 @@ class Docker::Image
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponding Image.
-    def search(query = {}, connection = Docker.connection)
-      body = connection.get('/images/search', query)
+    def search(query = {}, connection = Docker.connection, creds = nil)
+      credentials = creds.nil? ? Docker.creds : creds.to_json
+      headers = credentials && Docker::Util.build_auth_header(credentials) || {}
+      body = connection.get(
+        '/images/search',
+        query,
+        :headers => headers,
+      )
       hashes = Docker::Util.parse_json(body) || []
       hashes.map { |hash| new(connection, 'id' => hash['name']) }
     end
