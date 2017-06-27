@@ -1,494 +1,952 @@
 require 'spec_helper'
 
-# WARNING if you're re-recording any of these VCRs, you must be running the
-# Docker daemon and have the base Image pulled.
+SingleCov.covered! uncovered: 1
+
 describe Docker::Container do
-  describe '#initialize' do
-    subject { described_class }
-
-    context 'with no argument' do
-      let(:container) { subject.new }
-
-      it 'sets the id to nil' do
-        container.id.should be_nil
-      end
-
-      it 'keeps the default Connection' do
-        container.connection.should == Docker.connection
-      end
-    end
-
-    context 'with an argument' do
-      let(:id) { 'a7c2ee4' }
-      let(:container) { subject.new(:id => id) }
-
-      it 'sets the id to the argument' do
-        container.id.should == id
-      end
-
-      it 'keeps the default Connection' do
-        container.connection.should == Docker.connection
-      end
-    end
-
-    context 'with two arguments' do
-      context 'when the second argument is not a Docker::Connection' do
-        let(:id) { 'abc123f' }
-        let(:connection) { :not_a_connection }
-        let(:container) { subject.new(:id => id, :connection => connection) }
-
-        it 'raises an error' do
-          expect { container }.to raise_error(Docker::Error::ArgumentError)
-        end
-      end
-
-      context 'when the second argument is a Docker::Connection' do
-        let(:id) { 'cb3f14a' }
-        let(:connection) { Docker::Connection.new }
-        let(:container) { subject.new(:id => id, :connection => connection) }
-
-        it 'initializes the Container' do
-          container.id.should == id
-          container.connection.should == connection
-        end
-      end
-    end
-  end
-
   describe '#to_s' do
+    subject {
+      described_class.send(:new, Docker.connection, 'id' => rand(10000).to_s)
+    }
+
     let(:id) { 'bf119e2' }
-    let(:connection) { Docker::Connection.new }
-    let(:expected_string) do
+    let(:connection) { Docker.connection }
+    let(:expected_string) {
       "Docker::Container { :id => #{id}, :connection => #{connection} }"
+    }
+    before do
+      {
+        :@id => id,
+        :@connection => connection
+      }.each { |k, v| subject.instance_variable_set(k, v) }
     end
-    subject { described_class.new(:id => id, :connection => connection)  }
 
     its(:to_s) { should == expected_string }
   end
 
-  describe '#created?' do
-    context 'when the id is nil' do
-      its(:created?) { should be_false }
-    end
+  describe '#json' do
+    subject {
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+    }
+    let(:description) { subject.json }
+    after(:each) { subject.remove }
 
-    context 'when the id is present' do
-      subject { described_class.new(:id => 'a732ebf') }
-
-      its(:created?) { should be_true }
+    it 'returns the description as a Hash' do
+      expect(description).to be_a Hash
+      expect(description['Id']).to start_with(subject.id)
     end
   end
 
-  describe '#create!' do
-    context 'when the Container has already been created' do
-      subject { described_class.new(:id => '5e88b2a') }
+  describe '#streaming_logs' do
+    let(:options) { {} }
+    subject do
+      described_class.create(
+        {'Cmd' => ['/bin/bash', '-lc', 'echo hello'], 'Image' => 'debian:wheezy'}.merge(options)
+      )
+    end
 
-      it 'raises an error' do
-        expect { subject.create! }
-            .to raise_error(Docker::Error::ContainerError)
+    before(:each) { subject.tap(&:start).wait }
+    after(:each) { subject.remove }
+
+    context 'when not selecting any stream' do
+      let(:non_destination) { subject.streaming_logs }
+      it 'raises a client error' do
+        expect { non_destination }.to raise_error(Docker::Error::ClientError)
       end
     end
 
-    context 'when the body is not a Hash' do
-      it 'raises an error' do
-        expect { subject.create!(:not_a_hash) }
-            .to raise_error(Docker::Error::ArgumentError)
+    context 'when selecting stdout' do
+      let(:stdout) { subject.streaming_logs(stdout: 1) }
+      it 'returns blank logs' do
+        expect(stdout).to be_a String
+        expect(stdout).to match("hello")
       end
     end
 
-    context 'when the Container does not yet exist and the body is a Hash' do
+    context 'when using a tty' do
+      let(:options) { { 'Tty' => true } }
+
+      let(:output) { subject.streaming_logs(stdout: 1, tty: 1) }
+      it 'returns `hello`' do
+        expect(output).to be_a(String)
+        expect(output).to match("hello")
+      end
+    end
+
+    context 'when passing a block' do
+      let(:lines) { [] }
+      let(:output) { subject.streaming_logs(stdout: 1, follow: 1) { |s,c| lines << c } }
+      it 'returns `hello`' do
+        expect(output).to be_a(String)
+        expect(output).to match("hello")
+        expect(lines.join).to match("hello")
+      end
+    end
+  end
+
+  describe '#stats', docker_1_9: true do
+    after(:each) do
+      subject.kill!
+      subject.remove
+    end
+
+    context "when requesting container stats" do
+      subject {
+        described_class.create('Cmd' => ['echo', 'hello'], 'Image' => 'debian:wheezy')
+      }
+
+      let(:output) { subject.stats }
+      it "returns a Hash" do
+        expect(output).to be_a Hash
+      end
+    end
+
+    context "when streaming container stats" do
+      subject {
+        described_class.create('Cmd' => ['sleep', '3'], 'Image' => 'debian:wheezy')
+      }
+
+      it "yields a Hash" do
+        subject.start! # If the container isn't started, no stats will be streamed
+        called_count = 0
+        subject.stats do |output|
+          expect(output).to be_a Hash
+          called_count += 1
+          break if called_count == 2
+        end
+        expect(called_count).to eq 2
+      end
+
+      it "returns after :read_timeout if the container is not running" do
+        called_count = 0
+        subject.stats(read_timeout: 3) do |output|
+          called_count +=1
+        end
+        expect(called_count).to eq 0
+      end
+    end
+  end
+
+  describe '#logs' do
+    subject {
+      described_class.create('Cmd' => ['echo',  'hello'], 'Image' => 'debian:wheezy')
+    }
+    after(:each) { subject.remove }
+
+    context "when not selecting any stream" do
+      let(:non_destination) { subject.logs }
+      it 'raises a client error' do
+        expect { non_destination }.to raise_error(Docker::Error::ClientError)
+      end
+    end
+
+    context "when selecting stdout" do
+      let(:stdout) { subject.logs(stdout: 1) }
+      it 'returns blank logs' do
+        expect(stdout).to be_a String
+        expect(stdout).to eq ""
+      end
+    end
+  end
+
+  describe '#create' do
+    subject {
+      described_class.create({
+        'Cmd' => %w[true],
+        'Image' => 'debian:wheezy'
+      }.merge(opts))
+    }
+
+    context 'when creating a container named bob' do
+      let(:opts) { {"name" => "bob"} }
+      after(:each) { subject.remove }
+
+      it 'should have name set to bob' do
+        expect(subject.json["Name"]).to eq("/bob")
+      end
+    end
+  end
+
+  describe '#rename' do
+    subject {
+      described_class.create({
+        'name' => 'foo',
+        'Cmd' => %w[true],
+        'Image' => 'debian:wheezy'
+      })
+    }
+
+    before { subject.start }
+    after(:each) { subject.tap(&:wait).remove }
+
+    it 'renames the container' do
+      subject.rename('bar')
+      expect(subject.json["Name"]).to match(%r{bar})
+    end
+  end
+
+  describe "#update", :docker_1_10 do
+    subject {
+      described_class.create({
+        "name" => "foo",
+        "Cmd" => %w[true],
+        "Image" => "debian:wheezy",
+        "HostConfig" => {
+          "CpuShares" => 60000
+        }
+      })
+    }
+
+    before { subject.tap(&:start).tap(&:wait) }
+    after(:each) { subject.tap(&:wait).remove }
+
+    it "updates the container" do
+      subject.refresh!
+      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 60000
+      subject.update("CpuShares" => 50000)
+      subject.refresh!
+      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 50000
+    end
+  end
+
+  describe '#changes' do
+    subject {
+      described_class.create(
+        'Cmd' => %w[rm -rf /root],
+        'Image' => 'debian:wheezy'
+      )
+    }
+    let(:changes) { subject.changes }
+
+    before { subject.tap(&:start).tap(&:wait) }
+    after(:each) { subject.tap(&:wait).remove }
+
+    it 'returns the changes as an array' do
+      expect(changes).to eq [
+        {
+          "Path" => "/root",
+          "Kind" => 2
+        },
+      ]
+    end
+  end
+
+  describe '#top' do
+    let(:dir) {
+      File.join(File.dirname(__FILE__), '..', 'fixtures', 'top')
+    }
+    let(:image) { Docker::Image.build_from_dir(dir) }
+    let(:top_empty) { sleep 1; container.top }
+    let(:top_ary) { sleep 1; container.top }
+    let(:top_hash) { sleep 1; container.top(format: :hash) }
+    let!(:container) { image.run('/while') }
+    after do
+      container.kill!.remove
+      image.remove
+    end
+
+    it 'returns the top commands as an Array' do
+      expect(top_ary).to be_a Array
+      expect(top_ary).to_not be_empty
+      expect(top_ary.first.keys).to include('PID')
+    end
+
+    it 'returns the top commands as an Hash' do
+      expect(top_hash).to be_a Hash
+      expect(top_hash).to_not be_empty
+      expect(top_hash.keys).to eq ['Processes', 'Titles']
+    end
+
+    it 'returns nothing when Processes were not returned due to an error' do
+      expect(Docker::Util).to receive(:parse_json).and_return({})
+      expect(top_empty).to eq []
+    end
+  end
+
+  describe '#copy' do
+    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
+    subject { image.run('touch /test').tap { |c| c.wait } }
+
+    after(:each) { subject.remove }
+
+    context 'when the file does not exist' do
+      it 'raises an error' do
+        expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
+          .to raise_error(
+            Docker::Error::ServerError,
+            %r{Could not find the file /lol/not/a/real/file in container}
+          )
+      end
+    end
+
+    context 'when the input is a file' do
+      it 'yields each chunk of the tarred file' do
+        chunks = []
+        subject.copy('/test') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(chunks).to be_include('test')
+      end
+    end
+
+    context 'when the input is a directory' do
+      it 'yields each chunk of the tarred directory' do
+        chunks = []
+        subject.copy('/etc/logrotate.d') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
+      end
+    end
+  end
+
+  describe '#archive_in', :docker_1_8 do
+    let(:license_path) { File.absolute_path(File.join(__FILE__, '..', '..', '..', 'LICENSE')) }
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
+    let(:committed_image) { subject.commit }
+    let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
+    let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
+
+    after do
+      subject.remove
+    end
+
+    context 'when the input is a tar' do
+      after do
+        ls_container.remove
+        committed_image.remove
+      end
+
+      it 'file exists in the container' do
+        subject.archive_in(license_path, '/', overwrite: false)
+        expect(output).to include('LICENSE')
+      end
+    end
+  end
+
+  describe '#archive_in_stream', :docker_1_8 do
+    let(:tar) { StringIO.new(Docker::Util.create_tar('/lol' => 'TEST')) }
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
+    let(:committed_image) { subject.commit }
+    let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
+    let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
+
+    after do
+      subject.remove
+    end
+
+    context 'when the input is a tar' do
+      after do
+        ls_container.remove
+        committed_image.remove
+      end
+
+      it 'file exists in the container' do
+        subject.archive_in_stream('/', overwrite: false) { tar.read }
+        expect(output).to include('lol')
+      end
+    end
+
+    context 'when the input would overwrite a directory with a file' do
+      let(:tar) { StringIO.new(Docker::Util.create_tar('/etc' => 'TEST')) }
+
+      it 'raises an error' do
+        # Docs say this should return a client error: clearly wrong
+        # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.21/
+        # #extract-an-archive-of-files-or-folders-to-a-directory-in-a-container
+        expect {
+          subject.archive_in_stream('/', overwrite: false) { tar.read }
+        }.to raise_error(Docker::Error::ServerError)
+      end
+    end
+  end
+
+  describe '#archive_out', :docker_1_8 do
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['touch','/test']) }
+
+    after { subject.remove }
+
+    context 'when the file does not exist' do
+      it 'raises an error' do
+        subject.start
+        subject.wait
+
+        expect { subject.archive_out('/lol') { |chunk| puts chunk } }
+          .to raise_error(Docker::Error::NotFoundError)
+      end
+    end
+
+    context 'when the input is a file' do
+      it 'yields each chunk of the tarred file' do
+        subject.start; subject.wait
+
+        chunks = []
+        subject.archive_out('/test') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(chunks).to be_include('test')
+      end
+    end
+
+    context 'when the input is a directory' do
+      it 'yields each chunk of the tarred directory' do
+        subject.start; subject.wait
+
+        chunks = []
+        subject.archive_out('/etc/logrotate.d') { |chunk| chunks << chunk }
+        chunks = chunks.join("\n")
+        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
+      end
+    end
+  end
+
+  describe "#read_file", :docker_1_8 do
+    subject {
+      Docker::Container.create(
+        "Image" => "debian:wheezy",
+        "Cmd" => ["/bin/bash", "-c", "echo \"Hello world\" > /test"]
+      )
+    }
+
+    after { subject.remove }
+
+    before do
+      subject.start
+      subject.wait
+    end
+
+    it "reads contents from files" do
+      expect(subject.read_file("/test")).to eq "Hello world\n"
+    end
+  end
+
+  describe "#store_file", :docker_1_8 do
+    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ["ls"]) }
+
+    after { subject.remove }
+
+    it "stores content in files" do
+      subject.store_file("/test", "Hello\nWorld")
+      expect(subject.read_file("/test")).to eq "Hello\nWorld"
+    end
+  end
+
+  describe '#export' do
+    subject { described_class.create('Cmd' => %w[/true],
+                                     'Image' => 'tianon/true') }
+    before { subject.start }
+    after { subject.tap(&:wait).remove }
+
+    it 'yields each chunk' do
+      first = nil
+      subject.export do |chunk|
+        first ||= chunk
+      end
+      expect(first[257..261]).to eq "ustar" # Make sure the export is a tar.
+    end
+  end
+
+  describe '#attach' do
+    subject {
+      described_class.create(
+        'Cmd' => ['bash','-c','sleep 2; echo hello'],
+        'Image' => 'debian:wheezy'
+      )
+    }
+
+    before { subject.start }
+    after(:each) { subject.stop.remove }
+
+    context 'with normal sized chunks' do
+      it 'yields each chunk' do
+        chunk = nil
+        subject.attach do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("hello\n")
+      end
+    end
+
+    context 'with very small chunks' do
+      before do
+        Docker.options = { :chunk_size => 1 }
+      end
+
+      after do
+        Docker.options = {}
+      end
+
+      it 'yields each chunk' do
+        chunk = nil
+        subject.attach do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("hello\n")
+      end
+    end
+  end
+
+  describe '#attach with stdin' do
+    it 'yields the output' do
+      container = described_class.create(
+        'Cmd'       => %w[cat],
+        'Image'     => 'debian:wheezy',
+        'OpenStdin' => true,
+        'StdinOnce' => true
+      )
+      chunk = nil
+      container
+        .tap(&:start)
+        .attach(stdin: StringIO.new("foo\nbar\n")) do |stream, c|
+          chunk ||= c
+        end
+      container.tap(&:wait).remove
+
+      expect(chunk).to eq("foo\nbar\n")
+    end
+  end
+
+  describe '#start' do
+    subject {
+      described_class.create(
+        'Cmd' => %w[test -d /foo],
+        'Image' => 'debian:wheezy',
+        'Volumes' => {'/foo' => {}}
+      )
+    }
+    let(:all) { Docker::Container.all(all: true) }
+
+    before { subject.start('Binds' => ["/tmp:/foo"]) }
+    after(:each) { subject.remove }
+
+    it 'starts the container' do
+      expect(all.map(&:id)).to be_any { |id| id.start_with?(subject.id) }
+      expect(subject.wait(10)['StatusCode']).to be_zero
+    end
+  end
+
+  describe '#stop' do
+    subject {
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+    }
+
+    before { subject.tap(&:start).stop('timeout' => '10') }
+    after { subject.remove }
+
+    it 'stops the container' do
+      expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
+        id.start_with?(subject.id)
+      }
+      expect(described_class.all.map(&:id)).to be_none { |id|
+        id.start_with?(subject.id)
+      }
+    end
+
+    context 'with a timeout' do
+      let(:custom_timeout) { 60 }
+
+      before do
+        subject.tap(&:start)
+      end
+
+      it 'extends the Excon timeout ensuring the request does not timeout before Docker' do
+        expect(subject.connection).to receive(:request).with(
+          :post,
+          anything,
+          anything,
+          hash_including(read_timeout: custom_timeout + 5, write_timeout: custom_timeout + 5)
+        ).once
+        allow(subject.connection).to receive(:request).with(:delete, anything, anything)
+        subject.stop('timeout' => custom_timeout)
+      end
+    end
+
+    context 'without a timeout' do
+      before do
+        subject.tap(&:start)
+      end
+
+      it 'does not adjust the default Excon HTTP timeout' do
+        expect(subject.connection).to receive(:request).with(
+          :post,
+          anything,
+          anything,
+          hash_including(body: '{}')
+        ).once
+        allow(subject.connection).to receive(:request).with(:delete, anything, anything)
+        subject.stop
+      end
+    end
+  end
+
+  describe '#exec' do
+    subject {
+      described_class.create(
+        'Cmd' => %w[sleep 20],
+        'Image' => 'debian:wheezy'
+      ).start
+    }
+    after { subject.kill!.remove }
+
+    context 'when passed only a command' do
+      let(:output) { subject.exec(['bash','-c','sleep 2; echo hello']) }
+
+      it 'returns the stdout/stderr messages and exit code' do
+        expect(output).to eq([["hello\n"], [], 0])
+      end
+    end
+
+    context 'when detach is true' do
+      let(:output) { subject.exec(['date'], detach: true) }
+
+      it 'returns the Docker::Exec object' do
+        expect(output).to be_a Docker::Exec
+        expect(output.id).to_not be_nil
+      end
+    end
+
+    context 'when passed a block' do
+      it 'streams the stdout/stderr messages' do
+        chunk = nil
+        subject.exec(['bash','-c','sleep 2; echo hello']) do |stream, c|
+          chunk ||= c
+        end
+        expect(chunk).to eq("hello\n")
+      end
+    end
+
+    context 'when stdin object is passed' do
+      let(:output) { subject.exec(['cat'], stdin: StringIO.new("hello")) }
+
+      it 'returns the stdout/stderr messages' do
+        expect(output).to eq([["hello"],[],0])
+      end
+    end
+
+    context 'when tty is true' do
+      let(:command) { [
+        "bash", "-c",
+        "if [ -t 1 ]; then echo -n \"I'm a TTY!\"; fi"
+      ] }
+      let(:output) { subject.exec(command, tty: true) }
+
+      it 'returns the raw stdout/stderr output' do
+        expect(output).to eq([["I'm a TTY!"], [], 0])
+      end
+    end
+  end
+
+  describe '#kill' do
+    let(:command) { ['/bin/bash', '-c', 'while [ 1 ]; do echo hello; done'] }
+    subject {
+      described_class.create('Cmd' => command, 'Image' => 'debian:wheezy')
+    }
+
+    before { subject.start }
+    after(:each) {subject.remove }
+
+    it 'kills the container' do
+      subject.kill
+      expect(described_class.all.map(&:id)).to be_none { |id|
+        id.start_with?(subject.id)
+      }
+      expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
+        id.start_with?(subject.id)
+      }
+    end
+
+    context 'with a kill signal' do
+      let(:command) {
+        [
+          '/bin/bash',
+          '-c',
+          'trap echo SIGTERM; while [ 1 ]; do echo hello; done'
+        ]
+      }
+      it 'kills the container' do
+        subject.kill(:signal => "SIGTERM")
+        expect(described_class.all.map(&:id)).to be_any { |id|
+          id.start_with?(subject.id)
+        }
+        expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
+          id.start_with?(subject.id)
+        }
+
+        subject.kill(:signal => "SIGKILL")
+        expect(described_class.all.map(&:id)).to be_none { |id|
+          id.start_with?(subject.id)
+        }
+        expect(described_class.all(:all => true).map(&:id)).to be_any { |id|
+          id.start_with?(subject.id)
+        }
+      end
+    end
+  end
+
+  describe '#delete' do
+    subject {
+      described_class.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+    }
+
+    it 'deletes the container' do
+      subject.delete(:force => true)
+      expect(described_class.all.map(&:id)).to be_none { |id|
+        id.start_with?(subject.id)
+      }
+    end
+  end
+
+  describe '#restart' do
+    subject {
+      described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy')
+    }
+
+    before { subject.start }
+    after { subject.kill!.remove }
+
+    it 'restarts the container' do
+      expect(described_class.all.map(&:id)).to be_any { |id|
+        id.start_with?(subject.id)
+      }
+      subject.stop
+      expect(described_class.all.map(&:id)).to be_none { |id|
+        id.start_with?(subject.id)
+      }
+      subject.restart('timeout' => '10')
+      expect(described_class.all.map(&:id)).to be_any { |id|
+        id.start_with?(subject.id)
+      }
+    end
+  end
+
+  describe '#pause' do
+    subject {
+      described_class.create(
+        'Cmd' => %w[sleep 50],
+        'Image' => 'debian:wheezy'
+      ).start
+    }
+    after { subject.unpause.kill!.remove }
+
+    it 'pauses the container' do
+      subject.pause
+      expect(described_class.get(subject.id).info['State']['Paused']).to be true
+    end
+  end
+
+  describe '#unpause' do
+    subject {
+      described_class.create(
+        'Cmd' => %w[sleep 50],
+        'Image' => 'debian:wheezy'
+      ).start
+    }
+    before { subject.pause }
+    after { subject.kill!.remove }
+
+    it 'unpauses the container' do
+      subject.unpause
+      expect(
+        described_class.get(subject.id).info['State']['Paused']
+      ).to be false
+    end
+  end
+
+  describe '#wait' do
+    subject {
+      described_class.create(
+        'Cmd' => %w[tar nonsense],
+        'Image' => 'debian:wheezy'
+      )
+    }
+
+    before { subject.start }
+    after(:each) { subject.remove }
+
+    it 'waits for the command to finish' do
+      expect(subject.wait['StatusCode']).to_not be_zero
+    end
+
+    context 'when an argument is given' do
+      subject { described_class.create('Cmd' => %w[sleep 5],
+                                       'Image' => 'debian:wheezy') }
+
+      it 'sets the :read_timeout to that amount of time' do
+        expect(subject.wait(6)['StatusCode']).to be_zero
+      end
+
+      context 'and a command runs for too long' do
+        it 'raises a ServerError' do
+          expect{subject.wait(4)}.to raise_error(Docker::Error::TimeoutError)
+          subject.tap(&:wait)
+        end
+      end
+    end
+  end
+
+  describe '#run' do
+    let(:run_command) { subject.run('ls') }
+
+    context 'when the Container\'s command does not return status code of 0' do
+      subject { described_class.create('Cmd' => %w[false],
+                                       'Image' => 'debian:wheezy') }
+
+      after do
+        subject.remove
+      end
+
+      it 'raises an error' do
+        expect { run_command }
+            .to raise_error(Docker::Error::UnexpectedResponseError)
+      end
+    end
+
+    context 'when the Container\'s command returns a status code of 0' do
+      subject { described_class.create('Cmd' => %w[pwd],
+                                       'Image' => 'debian:wheezy') }
+      after do
+        subject.remove
+        image = run_command.json['Image']
+        run_command.remove
+        Docker::Image.get(image).history.each do |layer|
+          next unless layer['CreatedBy'] == 'pwd'
+          Docker::Image.get(layer['Id']).remove(:noprune => true)
+        end
+      end
+
+      it 'creates a new container to run the specified command' do
+        expect(run_command.wait['StatusCode']).to be_zero
+      end
+    end
+  end
+
+  describe '#commit' do
+    subject {
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+    }
+    let(:image) { subject.commit }
+
+    after(:each) do
+      subject.remove
+      image.remove
+    end
+
+    it 'creates a new Image from the  Container\'s changes' do
+      subject.tap(&:start).wait
+
+      expect(image).to be_a Docker::Image
+      expect(image.id).to_not be_nil
+    end
+
+    context 'if run is passed, it saves the command in the image' do
+      let(:image) { subject.commit }
+      let(:container) { image.run('pwd') }
+
+      it 'saves the command' do
+        container.wait
+        expect(container.attach(logs: true, stream: false)).to eql [["/\n"],[]]
+        container.remove
+      end
+    end
+  end
+
+  describe '.create' do
+    subject { described_class }
+
+    context 'when the Container does not yet exist' do
       context 'when the HTTP request does not return a 200' do
-        before { Excon.stub({ :method => :post }, { :status => 400 }) }
-        after { Excon.stubs.shift }
+        before do
+          Docker.options = { :mock => true }
+          Excon.stub({ :method => :post }, { :status => 400 })
+        end
+        after do
+          Excon.stubs.shift
+          Docker.options = {}
+        end
 
         it 'raises an error' do
-          expect { subject.create! }.to raise_error(Excon::Errors::BadRequest)
+          expect { subject.create }.to raise_error(Docker::Error::ClientError)
         end
       end
 
       context 'when the HTTP request returns a 200' do
         let(:options) do
           {
-            "Hostname"     => "",
-            "User"         => "",
-            "Memory"       => 0,
-            "MemorySwap"   => 0,
-            "AttachStdin"  => false,
-            "AttachStdout" => false,
-            "AttachStderr" => false,
-            "PortSpecs"    => nil,
-            "Tty"          => false,
-            "OpenStdin"    => false,
-            "StdinOnce"    => false,
-            "Env"          => nil,
             "Cmd"          => ["date"],
-            "Dns"          => nil,
-            "Image"        => "base",
-            "Volumes"      => {},
-            "VolumesFrom"  => ""
+            "Image"        => "debian:wheezy",
           }
         end
+        let(:container) { subject.create(options) }
+        after { container.remove }
 
-        it 'sets the id', :vcr do
-          expect { subject.create!(options) }
-              .to change { subject.id }
-              .from(nil)
+        it 'sets the id' do
+          expect(container).to be_a Docker::Container
+          expect(container.id).to_not be_nil
+          expect(container.connection).to_not be_nil
         end
       end
     end
   end
 
-  describe '#json' do
-    context 'when the Container has not been created' do
+  describe '.get' do
+    subject { described_class }
+
+    context 'when the HTTP response is not a 200' do
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 500 })
+      end
+      after do
+        Excon.stubs.shift
+        Docker.options = {}
+      end
+
       it 'raises an error' do
-        expect { subject.json }.to raise_error Docker::Error::ContainerError
+        expect { subject.get('randomID') }
+            .to raise_error(Docker::Error::ServerError)
       end
     end
 
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :get }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
+    context 'when the HTTP response is a 200' do
+      let(:container) {
+        subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+      }
+      after { container.remove }
 
-        it 'raises an error' do
-          expect { subject.json }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        let(:description) { subject.json }
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
-
-        it 'returns the description as a Hash', :vcr do
-          description.should be_a(Hash)
-          description['Id'].should start_with(subject.id)
-        end
-      end
-    end
-  end
-
-  describe '#changes' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.changes }
-            .to raise_error Docker::Error::ContainerError
+      it 'materializes the Container into a Docker::Container' do
+        expect(subject.get(container.id)).to be_a Docker::Container
       end
     end
 
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :get }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.changes }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        let(:changes) { subject.changes }
-        before do
-          subject.create!('Cmd' => ['ls'], 'Image' => 'base')
-          subject.start
-          subject.wait
-        end
-
-        it 'returns the changes as an array', :vcr do
-          changes.should be_a Array
-          changes.should be_all { |change| change.is_a?(Hash) }
-          changes.length.should_not be_zero
-        end
-      end
-    end
-  end
-
-  describe '#export' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.export { } }
-            .to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :get }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.export { } }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before do
-          subject.create!('Cmd' => %w[rm -rf / --no-preserve-root],
-                          'Image' => 'base')
-          subject.start
-        end
-
-        it 'yields each chunk', :vcr do
-          first = nil
-          subject.export do |chunk|
-            first = chunk
-            break
-          end
-          first[257..262].should == "ustar\000" # Make sure the export is a tar.
-        end
-      end
-    end
-  end
-
-  describe '#attach' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.attach { } }
-            .to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.attach { } }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => %w[uname -r], 'Image' => 'base') }
-
-        it 'yields each chunk', :vcr do
-          subject.tap(&:start).attach { |chunk|
-            chunk.should == "3.8.0-25-generic\n"
-          }
-        end
-      end
-    end
-  end
-
-  describe '#start' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.start }.to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.start }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => ['/usr/bin/sleep 10'],
-                                 'Image' => 'base') }
-
-        it 'starts the container', :vcr do
-          subject.start
-          described_class.all.map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#stop' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.stop }.to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 204' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.stop }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
-
-        it 'stops the container', :vcr do
-          subject.tap(&:start).stop
-          described_class.all(:all => true).map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-          described_class.all.map(&:id).should be_none { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#kill' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.kill }.to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 204' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.kill }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['ls'], 'Image' => 'base') }
-
-        it 'kills the container', :vcr do
-          subject.kill
-          described_class.all.map(&:id).should be_none { |id|
-            id.start_with?(subject.id)
-          }
-          described_class.all(:all => true).map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#restart' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.restart }.to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 204' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.restart }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 204' do
-        before { subject.create!('Cmd' => ['/usr/bin/sleep 50'],
-                                 'Image' => 'base') }
-
-        it 'restarts the container', :vcr do
-          subject.start
-          described_class.all.map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-          subject.stop
-          described_class.all.map(&:id).should be_none { |id|
-            id.start_with?(subject.id)
-          }
-          subject.restart
-          described_class.all.map(&:id).should be_any { |id|
-            id.start_with?(subject.id)
-          }
-        end
-      end
-    end
-  end
-
-  describe '#wait' do
-    context 'when the Container has not been created' do
-      it 'raises an error' do
-        expect { subject.wait }.to raise_error Docker::Error::ContainerError
-      end
-    end
-
-    context 'when the Container has been created' do
-      context 'when the HTTP response status is not 200' do
-        before do
-          subject.stub(:created?).and_return(true)
-          Excon.stub({ :method => :post }, { :status => 500 })
-        end
-        after { Excon.stubs.shift }
-
-        it 'raises an error' do
-          expect { subject.wait }
-              .to raise_error(Excon::Errors::InternalServerError)
-        end
-      end
-
-      context 'when the HTTP response status is 200' do
-        before { subject.create!('Cmd' => %w[tar nonsense],
-                                 'Image' => 'base') }
-
-        it 'waits for the command to finish', :vcr do
-          subject.start
-          subject.wait['StatusCode'].should == 64
-        end
-      end
-    end
   end
 
   describe '.all' do
     subject { described_class }
 
     context 'when the HTTP response is not a 200' do
-      before { Excon.stub({ :method => :get }, { :status => 500 }) }
-      after { Excon.stubs.shift }
+      before do
+        Docker.options = { :mock => true }
+        Excon.stub({ :method => :get }, { :status => 500 })
+      end
+      after do
+        Excon.stubs.shift
+        Docker.options = {}
+      end
 
       it 'raises an error' do
         expect { subject.all }
-            .to raise_error(Excon::Errors::InternalServerError)
+            .to raise_error(Docker::Error::ServerError)
       end
     end
 
     context 'when the HTTP response is a 200' do
-      it 'materializes each Container into a Docker::Container', :vcr do
-        subject.new.create!('Cmd' => ['ls'], 'Image' => 'base')
-        subject.all(:all => true).should be_all { |container|
+      let(:container) {
+        subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+      }
+      before { container }
+      after { container.remove }
+
+      it 'materializes each Container into a Docker::Container' do
+        expect(subject.all(:all => true)).to be_all { |container|
           container.is_a?(Docker::Container)
         }
-        subject.all(:all => true).length.should_not be_zero
+        expect(subject.all(:all => true).length).to_not be_zero
       end
     end
   end

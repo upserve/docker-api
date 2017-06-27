@@ -1,0 +1,26 @@
+sudo: required
+dist: trusty
+language: ruby
+cache: bundler
+rvm:
+  - 2.3.1
+  - 2.2
+  - 2.1
+  - 2.0
+env:
+  - DOCKER_VERSION=1.13.1-0~ubuntu-trusty
+  - DOCKER_VERSION=1.12.3-0~trusty
+  - DOCKER_VERSION=1.11.1-0~trusty
+  - DOCKER_VERSION=1.10.3-0~trusty
+  - DOCKER_VERSION=1.9.1-0~trusty
+  - DOCKER_VERSION=1.8.2-0~trusty
+matrix:
+  fast_finish: true
+before_install:
+ - docker --version
+ - gem install bundler
+before_script:
+ - sudo ./script/install_docker.sh ${DOCKER_VERSION}
+ - uname -a
+ - docker --version
+ - docker info

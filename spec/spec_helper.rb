@@ -1,14 +1,56 @@
+require 'bundler/setup'
+
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-require 'rspec'
+require 'rspec/its'
+
+require 'single_cov'
+
+# avoid coverage failure from lower docker versions not running all tests
+if !ENV['DOCKER_VERSION'] || ENV['DOCKER_VERSION'] =~ /^1\.\d\d/
+  SingleCov.setup :rspec
+end
+
 require 'docker'
+
+ENV['DOCKER_API_USER']  ||= 'debbie_docker'
+ENV['DOCKER_API_PASS']  ||= '*************'
+ENV['DOCKER_API_EMAIL'] ||= 'debbie_docker@example.com'
+
+RSpec.shared_context "local paths" do
+  def project_dir
+    File.expand_path(File.join(File.dirname(__FILE__), '..'))
+  end
+end
+
+module SpecHelpers
+  def skip_without_auth
+    skip "Disabled because of missing auth" if ENV['DOCKER_API_USER'] == 'debbie_docker'
+  end
+end
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 RSpec.configure do |config|
   config.mock_with :rspec
-  config.treat_symbols_as_metadata_keys_with_true_values = true
-  config.color_enabled = true
+  config.color = true
   config.formatter = :documentation
   config.tty = true
+  config.include SpecHelpers
+
+  case ENV['DOCKER_VERSION']
+  when /^1\.6/
+    config.filter_run_excluding :docker_1_8 => true
+    config.filter_run_excluding :docker_1_9 => true
+    config.filter_run_excluding :docker_1_10 => true
+  when /^1\.7/
+    config.filter_run_excluding :docker_1_8 => true
+    config.filter_run_excluding :docker_1_9 => true
+    config.filter_run_excluding :docker_1_10 => true
+  when /^1\.8/
+    config.filter_run_excluding :docker_1_9 => true
+    config.filter_run_excluding :docker_1_10 => true
+  when /^1\.9/
+    config.filter_run_excluding :docker_1_10 => true
+  end
 end
