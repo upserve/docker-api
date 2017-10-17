@@ -332,9 +332,7 @@ class Docker::Container
 
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    name = opts['name'] || opts[:name]
-    query = {}
-    query['name'] = name if name
+    query = opts.slice('name', :name)
     clean_opts = opts.reject {|key| ['name', :name].include?(key) }
     resp = conn.post('/containers/create', query, :body => clean_opts.to_json)
     hash = Docker::Util.parse_json(resp) || {}
