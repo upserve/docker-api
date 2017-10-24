@@ -19,7 +19,7 @@ class Docker::Node
   end
 
   def update(opts)
-    filter = opts.delete 'filter' || opts.delete :filter
+    filter = opts.delete('filter') || opts.delete(:filter)
     query = {}
     query['filter'] = filter if filter 
     
