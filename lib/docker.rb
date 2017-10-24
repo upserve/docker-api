@@ -31,6 +31,7 @@ module Docker
   require 'docker/image'
   require 'docker/messages_stack'
   require 'docker/messages'
+  require 'docker/node'
   require 'docker/service'
   require 'docker/swarm'
   require 'docker/util'
