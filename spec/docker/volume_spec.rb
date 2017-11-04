@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered!
+SingleCov.covered! uncovered: 1
 
 # Volume requests are actually slow enough to occasionally not work
 # Use sleep statements to manage that
@@ -34,6 +34,12 @@ describe Docker::Volume, :docker_1_9 do
 
     it 'gets a list of volumes' do
       expect { Docker::Volume.create(name); sleep 1 }.to change { Docker::Volume.all.length }.by(1)
+    end
+  end
+
+  describe '.prune', :docker_17_03 => true do
+    it 'prune volumes' do
+      expect { Docker::Volume.prune }.not_to raise_error
     end
   end
 

@@ -134,6 +134,8 @@ module Docker
   def validate_version!
     Docker.info
     true
+  rescue Docker::Error::TimeoutError
+    raise
   rescue Docker::Error::DockerError
     raise Docker::Error::VersionError, "Expected API Version: #{API_VERSION}"
   end

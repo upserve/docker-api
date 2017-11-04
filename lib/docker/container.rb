@@ -17,11 +17,12 @@ class Docker::Container
 
   # Return a List of Hashes that represents the top running processes.
   def top(opts = {})
+    format = opts.delete(:format) { :array }
     resp = Docker::Util.parse_json(connection.get(path_for(:top), opts))
     if resp['Processes'].nil?
-      []
+      format == :array ? [] : {}
     else
-      resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] }
+      format == :array ? resp['Processes'].map { |ary| Hash[resp['Titles'].zip(ary)] } : resp
     end
   end
 
@@ -333,10 +334,9 @@ class Docker::Container
 
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    name = opts.delete('name') || opts.delete(:name)
-    query = {}
-    query['name'] = name if name
-    resp = conn.post('/containers/create', query, body: MultiJson.dump(opts))
+    query = opts.select {|key| ['name', :name].include?(key) }
+    clean_opts = opts.reject {|key| ['name', :name].include?(key) }
+    resp = conn.post('/containers/create', query, :body => MultiJson.dump(clean_opts))
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)
   end
@@ -352,6 +352,12 @@ class Docker::Container
   def self.all(opts = {}, conn = Docker.connection)
     hashes = Docker::Util.parse_json(conn.get('/containers/json', opts)) || []
     hashes.map { |hash| new(conn, hash) }
+  end
+
+  # Prune images
+  def self.prune(conn = Docker.connection)
+    conn.post("/containers/prune", {})
+    nil
   end
 
   # Convenience method to return the path for a particular resource.

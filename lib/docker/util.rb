@@ -195,8 +195,6 @@ module Docker::Util
     body.lines.reverse_each do |line|
       if (id = line.match(/Successfully built ([a-f0-9]+)/)) && !id[1].empty?
         return id[1]
-      elsif (id = line.match(/sha256:([a-f0-9]+)/)) && !id[1].empty?
-        return id[1]
       end
     end
     raise UnexpectedResponseError, "Couldn't find id: #{body}"
@@ -235,7 +233,7 @@ module Docker::Util
 
   def build_auth_header(credentials)
     credentials = MultiJson.dump(credentials) if credentials.is_a?(Hash)
-    encoded_creds = Base64.encode64(credentials).gsub(/\n/, '')
+    encoded_creds = Base64.urlsafe_encode64(credentials)
     {
       'X-Registry-Auth' => encoded_creds
     }
@@ -253,7 +251,7 @@ module Docker::Util
       }
     )
 
-    encoded_header = Base64.encode64(header).gsub(/\n/, '')
+    encoded_header = Base64.urlsafe_encode64(header)
 
     {
       'X-Registry-Config' => encoded_header

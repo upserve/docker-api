@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 1
+SingleCov.covered! uncovered: 2
 
 describe Docker::Network, docker_1_9: true do
   let(:name) do |example|
@@ -88,6 +88,12 @@ describe Docker::Network, docker_1_9: true do
 
     it 'should return all networks' do
       expect(Docker::Network.all.map(&:id)).to include(*networks.map(&:id))
+    end
+  end
+
+  describe '.prune', :docker_17_03 => true do
+    it 'prune networks' do
+      expect { Docker::Network.prune }.not_to raise_error
     end
   end
 

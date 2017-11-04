@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 2
+SingleCov.covered! uncovered: 3
 
 describe Docker::Image do
   describe '#to_s' do
@@ -89,7 +89,7 @@ describe Docker::Image do
       end
     end
 
-    context 'when a direcory is passed' do
+    context 'when a directory is passed' do
       let(:new_image) {
         subject.insert_local(
           'localPath' => File.join(project_dir, 'lib'),
@@ -400,6 +400,47 @@ describe Docker::Image do
       end
     end
 
+    context 'image with tag' do
+      it 'pulls the image (string arguments)' do
+        image = subject.create('fromImage' => 'busybox', 'tag' => 'uclibc')
+        image.refresh!
+        expect(image.info['RepoTags']).to include('busybox:uclibc')
+      end
+
+      it 'pulls the image (symbol arguments)' do
+        image = subject.create(fromImage: 'busybox', tag: 'uclibc')
+        image.refresh!
+        expect(image.info['RepoTags']).to include('busybox:uclibc')
+      end
+
+      it 'supports identical fromImage and tag', docker_1_10: true do
+        # This is here for backwards compatibility. docker-api used to
+        # complete ignore the "tag" argument, which Docker itself prioritizes
+        # over a tag found in fromImage, which meant that we had 3 scenarios:
+        #
+        # 1 fromImage does not include a tag, and the tag argument is provided
+        #   and isn't the default (i.e. "latest"): docker-api crashes looking
+        #   for fromImage when the image that was pulled is fromImage:tag (or
+        #   returns the wrong image if fromImage:latest exists)
+        # 2 fromImage does not a include a tag, and the tag argument is absent
+        #   or default (i.e. "latest"): docker-api finds the right image.
+        # 3 fromImage includes a tag, and the tag argument is absent: docker-api
+        #   also finds the right image.
+        # 4 fromImage includes a tag, and the tag argument is present: works if
+        #   the tag is the same in both.
+        #
+        # Adding support for the tag argument to fix 1 above means we'd break 4
+        # if we didn't explicitly handle the case where both tags are identical.
+        # This is what this test checks.
+        #
+        # Note that providing the tag inline in fromImage is only supported in
+        # Docker 1.10 and up.
+        image = subject.create(fromImage: 'busybox:uclibc', tag: 'uclibc')
+        image.refresh!
+        expect(image.info['RepoTags']).to include('busybox:uclibc')
+      end
+    end
+
     context 'with a block capturing create output' do
       let(:create_output) { "" }
       let(:block) { Proc.new { |chunk| create_output << chunk } }
@@ -593,6 +634,12 @@ describe Docker::Image do
     end
   end
 
+  describe '.prune', :docker_17_03 => true do
+    it 'prune images' do
+      expect { Docker::Image.prune }.not_to raise_error
+    end
+  end
+
   describe '.search' do
     subject { described_class }
 
@@ -649,7 +696,7 @@ describe Docker::Image do
         let!(:image) { subject.build("FROM debian:wheezy\n", &block) }
 
         it 'calls the block and passes build output' do
-          expect(build_output).to match(/Step \d : FROM debian:wheezy/)
+          expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
         end
       end
     end
@@ -702,7 +749,7 @@ describe Docker::Image do
 
         it 'calls the block and passes build output' do
           image # Create the image variable, which is lazy-loaded by Rspec
-          expect(build_output).to match(/Step \d : FROM debian:wheezy/)
+          expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
         end
 
         context 'uses a cached version the second time' do
@@ -712,7 +759,7 @@ describe Docker::Image do
 
           it 'calls the block and passes build output' do
             image # Create the image variable, which is lazy-loaded by Rspec
-            expect(build_output).to match(/Step \d : FROM debian:wheezy/)
+            expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
             expect(build_output).to_not match(/Using cache/)
 
             image_two # Create the image_two variable, which is lazy-loaded by Rspec

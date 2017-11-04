@@ -159,7 +159,7 @@ describe Docker::Util do
       }
     }
     let(:credential_string) { MultiJson.dump(credentials) }
-    let(:encoded_creds) { Base64.encode64(credential_string).gsub(/\n/, '') }
+    let(:encoded_creds) { Base64.urlsafe_encode64(credential_string) }
     let(:expected_header) {
       {
         'X-Registry-Auth' => encoded_creds
@@ -178,6 +178,11 @@ describe Docker::Util do
           subject.build_auth_header(credential_string)
         ).to eq(expected_header)
       end
+    end
+
+    it 'does not contain newlines' do
+      h = subject.build_auth_header(credentials).fetch('X-Registry-Auth')
+      expect(h).not_to include("\n")
     end
   end
 
@@ -203,7 +208,7 @@ describe Docker::Util do
       )
     end
 
-    let(:encoded_creds) { Base64.encode64(credentials_object).gsub(/\n/, '') }
+    let(:encoded_creds) { Base64.urlsafe_encode64(credentials_object) }
     let(:expected_header) {
       {
         'X-Registry-Config' => encoded_creds
@@ -222,6 +227,11 @@ describe Docker::Util do
           subject.build_config_header(MultiJson.dump(credentials))
         ).to eq(expected_header)
       end
+    end
+
+    it 'does not contain newlines' do
+      h = subject.build_config_header(credentials).fetch('X-Registry-Config')
+      expect(h).not_to include("\n")
     end
   end
 

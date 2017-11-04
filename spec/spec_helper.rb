@@ -40,25 +40,50 @@ RSpec.configure do |config|
 
   case ENV['DOCKER_VERSION']
   when /^1\.6/
-    config.filter_run_excluding docker_1_8: true
-    config.filter_run_excluding docker_1_9: true
-    config.filter_run_excluding docker_1_10: true
-    config.filter_run_excluding docker_1_12: true
+    config.filter_run_excluding :docker_1_7 => true
+    config.filter_run_excluding :docker_1_8 => true
+    config.filter_run_excluding :docker_1_9 => true
+    config.filter_run_excluding :docker_1_10 => true
+    config.filter_run_excluding :docker_1_11 => true
+    config.filter_run_excluding :docker_1_12 => true
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
   when /^1\.7/
-    config.filter_run_excluding docker_1_8: true
-    config.filter_run_excluding docker_1_9: true
-    config.filter_run_excluding docker_1_10: true
-    config.filter_run_excluding docker_1_12: true
+    config.filter_run_excluding :docker_1_8 => true
+    config.filter_run_excluding :docker_1_9 => true
+    config.filter_run_excluding :docker_1_10 => true
+    config.filter_run_excluding :docker_1_11 => true
+    config.filter_run_excluding :docker_1_12 => true
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
   when /^1\.8/
-    config.filter_run_excluding docker_1_9: true
-    config.filter_run_excluding docker_1_10: true
-    config.filter_run_excluding docker_1_12: true
+    config.filter_run_excluding :docker_1_9 => true
+    config.filter_run_excluding :docker_1_10 => true
+    config.filter_run_excluding :docker_1_11 => true
+    config.filter_run_excluding :docker_1_12 => true
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
   when /^1\.9/
-    config.filter_run_excluding docker_1_10: true
-    config.filter_run_excluding docker_1_12: true
-  when /^1\.1(0|1)/
-    config.filter_run_excluding docker_1_12: true
+    config.filter_run_excluding :docker_1_10 => true
+    config.filter_run_excluding :docker_1_11 => true
+    config.filter_run_excluding :docker_1_12 => true
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
+  when /^1\.10/
+    config.filter_run_excluding :docker_1_11 => true
+    config.filter_run_excluding :docker_1_12 => true
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
+  when /^1\.11/
+    config.filter_run_excluding :docker_1_12 => true
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
   when /^1\.12/
-    config.filter_run_excluding docker_1_12: false
+    config.filter_run_excluding :docker_1_13 => true
+    config.filter_run_excluding :docker_17_03 => true
+  when /^1\.13/
+    config.filter_run_excluding :docker_17_03 => true
+  when /^17\.03/
+    config.filter_run_excluding :docker_old => true
   end
 end

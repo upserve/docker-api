@@ -83,7 +83,7 @@ describe Docker::Container do
     end
   end
 
-  describe '#stats', docker_1_9: true do
+  describe '#stats', :docker_1_9 do
     after(:each) do
       subject.kill!
       subject.remove
@@ -102,7 +102,10 @@ describe Docker::Container do
 
     context "when streaming container stats" do
       subject {
-        described_class.create('Cmd' => ['sleep', '3'], 'Image' => 'debian:wheezy')
+        described_class.create(
+          'Cmd' => ['sleep', '3'],
+          'Image' => 'debian:wheezy'
+        )
       }
 
       it "yields a Hash" do
@@ -116,7 +119,7 @@ describe Docker::Container do
         expect(called_count).to eq 2
       end
 
-      it "returns after :read_timeout if the container is not running" do
+      it "returns after :read_timeout if the container is not running", :docker_old do
         called_count = 0
         subject.stats(read_timeout: 3) do |output|
           called_count +=1
@@ -188,7 +191,7 @@ describe Docker::Container do
     subject {
       described_class.create({
         "name" => "foo",
-        "Cmd" => %w[true],
+        'Cmd' => %w[true],
         "Image" => "debian:wheezy",
         "HostConfig" => {
           "CpuShares" => 60000
@@ -196,7 +199,7 @@ describe Docker::Container do
       })
     }
 
-    before { subject.start }
+    before { subject.tap(&:start).tap(&:wait) }
     after(:each) { subject.tap(&:wait).remove }
 
     it "updates the container" do
@@ -235,7 +238,9 @@ describe Docker::Container do
       File.join(File.dirname(__FILE__), '..', 'fixtures', 'top')
     }
     let(:image) { Docker::Image.build_from_dir(dir) }
-    let(:top) { sleep 1; container.top }
+    let(:top_empty) { sleep 1; container.top }
+    let(:top_ary) { sleep 1; container.top }
+    let(:top_hash) { sleep 1; container.top(format: :hash) }
     let!(:container) { image.run('/while') }
     after do
       container.kill!.remove
@@ -243,14 +248,20 @@ describe Docker::Container do
     end
 
     it 'returns the top commands as an Array' do
-      expect(top).to be_a Array
-      expect(top).to_not be_empty
-      expect(top.first.keys).to include('PID')
+      expect(top_ary).to be_a Array
+      expect(top_ary).to_not be_empty
+      expect(top_ary.first.keys).to include('PID')
+    end
+
+    it 'returns the top commands as an Hash' do
+      expect(top_hash).to be_a Hash
+      expect(top_hash).to_not be_empty
+      expect(top_hash.keys).to eq ['Processes', 'Titles']
     end
 
     it 'returns nothing when Processes were not returned due to an error' do
       expect(Docker::Util).to receive(:parse_json).and_return({})
-      expect(top).to eq []
+      expect(top_empty).to eq []
     end
   end
 
@@ -940,6 +951,12 @@ describe Docker::Container do
         }
         expect(subject.all(:all => true).length).to_not be_zero
       end
+    end
+  end
+
+  describe '.prune', :docker_17_03 => true do
+    it 'prune containers' do
+      expect { Docker::Container.prune }.not_to raise_error
     end
   end
 end

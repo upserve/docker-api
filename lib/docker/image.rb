@@ -7,9 +7,18 @@ class Docker::Image
   # to run the Image. If the image has an embedded config, no command is
   # necessary, but it will fail with 500 if no config is saved with the image
   def run(cmd = nil, options = {})
-    opts = { 'Image' => self.id }.merge(options)
-    opts['Cmd'] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
-    Docker::Container.create(opts, connection).tap(&:start!)
+    opts = {'Image' => self.id}.merge(options)
+    opts["Cmd"] = cmd.is_a?(String) ? cmd.split(/\s+/) : cmd
+    begin
+      Docker::Container.create(opts, connection)
+                       .tap(&:start!)
+    rescue ServerError, ClientError => ex
+      if cmd
+        raise ex
+      else
+        raise ex, "No command specified."
+      end
+    end
   end
 
   # Push the Image to the Docker registry.
@@ -108,7 +117,10 @@ class Docker::Image
         :headers => headers,
         :response_block => response_block(body, &block)
         )
+      # NOTE: see associated tests for why we're looking at image#end_with?
       image = opts['fromImage'] || opts[:fromImage]
+      tag = opts['tag'] || opts[:tag]
+      image = "#{image}:#{tag}" if tag && !image.end_with?(":#{tag}")
       get(image, {}, conn)
     end
 
@@ -124,6 +136,12 @@ class Docker::Image
       conn.delete("/images/#{id}", opts)
     end
     alias_method :delete, :remove
+
+    # Prune images
+    def prune(conn = Docker.connection)
+      conn.post("/images/prune", {})
+    end
+
 
     # Save the raw binary representation or one or more Docker images
     #
@@ -194,8 +212,14 @@ class Docker::Image
 
     # Given a query like `{ :term => 'sshd' }`, queries the Docker Registry for
     # a corresponding Image.
-    def search(query = {}, connection = Docker.connection)
-      body = connection.get('/images/search', query)
+    def search(query = {}, connection = Docker.connection, creds = nil)
+      credentials = creds.nil? ? Docker.creds : creds.to_json
+      headers = credentials && Docker::Util.build_auth_header(credentials) || {}
+      body = connection.get(
+        '/images/search',
+        query,
+        :headers => headers,
+      )
       hashes = Docker::Util.parse_json(body) || []
       hashes.map { |hash| new(connection, 'id' => hash['name']) }
     end
