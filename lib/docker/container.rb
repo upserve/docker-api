@@ -352,6 +352,12 @@ class Docker::Container
     hashes.map { |hash| new(conn, hash) }
   end
 
+  # Prune images
+  def self.prune(conn = Docker.connection)
+    conn.post("/containers/prune", {})
+    nil
+  end
+
   # Convenience method to return the path for a particular resource.
   def path_for(resource)
     "/containers/#{self.id}/#{resource}"

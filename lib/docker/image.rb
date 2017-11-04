@@ -137,6 +137,12 @@ class Docker::Image
     end
     alias_method :delete, :remove
 
+    # Prune images
+    def prune(conn = Docker.connection)
+      conn.post("/images/prune", {})
+    end
+
+
     # Save the raw binary representation or one or more Docker images
     #
     # @param names [String, Array#String] The image(s) you wish to save

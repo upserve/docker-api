@@ -8,6 +8,7 @@ rvm:
   - 2.1
   - 2.0
 env:
+  - DOCKER_VERSION=17.03.1~ce-0~ubuntu-trusty DOCKER_CE=1
   - DOCKER_VERSION=1.13.1-0~ubuntu-trusty
   - DOCKER_VERSION=1.12.3-0~trusty
   - DOCKER_VERSION=1.11.1-0~trusty
@@ -20,7 +21,7 @@ before_install:
  - docker --version
  - gem install bundler
 before_script:
- - sudo ./script/install_docker.sh ${DOCKER_VERSION}
+ - sudo ./script/install_docker.sh ${DOCKER_VERSION} ${DOCKER_CE}
  - uname -a
  - docker --version
  - docker info

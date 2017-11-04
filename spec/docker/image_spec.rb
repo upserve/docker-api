@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 2
+SingleCov.covered! uncovered: 3
 
 describe Docker::Image do
   describe '#to_s' do
@@ -264,7 +264,7 @@ describe Docker::Image do
       context 'no command configured in image' do
         subject { described_class.create('fromImage' => 'swipely/base') }
         it 'should raise an error if no command is specified' do
-          expect {container}.to raise_error("No command specified.")
+          expect {container}.to raise_error('No command specified.')
         end
       end
 
@@ -613,6 +613,12 @@ describe Docker::Image do
       end
 
       expect(images.length).to_not be_zero
+    end
+  end
+
+  describe '.prune', :docker_17_03 => true do
+    it 'prune images' do
+      expect { Docker::Image.prune }.not_to raise_error
     end
   end
 

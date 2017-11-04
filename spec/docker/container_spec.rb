@@ -83,7 +83,7 @@ describe Docker::Container do
     end
   end
 
-  describe '#stats', docker_1_9: true do
+  describe '#stats', :docker_1_9 do
     after(:each) do
       subject.kill!
       subject.remove
@@ -102,7 +102,10 @@ describe Docker::Container do
 
     context "when streaming container stats" do
       subject {
-        described_class.create('Cmd' => ['sleep', '3'], 'Image' => 'debian:wheezy')
+        described_class.create(
+          'Cmd' => ['sleep', '3'],
+          'Image' => 'debian:wheezy'
+        )
       }
 
       it "yields a Hash" do
@@ -116,7 +119,7 @@ describe Docker::Container do
         expect(called_count).to eq 2
       end
 
-      it "returns after :read_timeout if the container is not running" do
+      it "returns after :read_timeout if the container is not running", :docker_old do
         called_count = 0
         subject.stats(read_timeout: 3) do |output|
           called_count +=1
@@ -188,7 +191,7 @@ describe Docker::Container do
     subject {
       described_class.create({
         "name" => "foo",
-        "Cmd" => %w[true],
+        'Cmd' => %w[true],
         "Image" => "debian:wheezy",
         "HostConfig" => {
           "CpuShares" => 60000
@@ -948,6 +951,12 @@ describe Docker::Container do
         }
         expect(subject.all(:all => true).length).to_not be_zero
       end
+    end
+  end
+
+  describe '.prune', :docker_17_03 => true do
+    it 'prune containers' do
+      expect { Docker::Container.prune }.not_to raise_error
     end
   end
 end
