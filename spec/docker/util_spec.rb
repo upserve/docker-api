@@ -158,7 +158,7 @@ describe Docker::Util do
         :serveraddress => 'https://registry.com/'
       }
     }
-    let(:credential_string) { credentials.to_json }
+    let(:credential_string) { MultiJson.dump(credentials) }
     let(:encoded_creds) { Base64.urlsafe_encode64(credential_string) }
     let(:expected_header) {
       {
@@ -198,15 +198,15 @@ describe Docker::Util do
       }
     }
 
-    let(:credentials_object) {
-      {
+    let(:credentials_object) do
+      MultiJson.dump(
         :'https://registry.com/' => {
-          :username => 'test',
-          :password => 'password',
-          :email    => 'test@example.com',
+          username: 'test',
+          password: 'password',
+          email: 'test@example.com'
         }
-      }.to_json
-    }
+      )
+    end
 
     let(:encoded_creds) { Base64.urlsafe_encode64(credentials_object) }
     let(:expected_header) {
@@ -224,7 +224,7 @@ describe Docker::Util do
     context 'given credentials as a String' do
       it 'returns an X-Registry-Config header encoded' do
         expect(
-          subject.build_config_header(credentials.to_json)
+          subject.build_config_header(MultiJson.dump(credentials))
         ).to eq(expected_header)
       end
     end
