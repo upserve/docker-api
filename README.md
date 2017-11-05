@@ -622,10 +622,6 @@ image 'repo:new_tag' => 'repo:tag' do
 end
 ```
 
-## Known issues
-
-*   If the docker daemon is always responding to your requests with a 400 Bad Request when using UNIX sockets, verify you're running Excon version 0.46.0 or greater. [Link](https://github.com/swipely/docker-api/issues/381)
-
 ## Not supported (yet)
 
 *   Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#get-a-tarball-containing-all-images-and-tags-in-a-repository
