@@ -80,7 +80,7 @@ private
     user_agent = "Swipely/Docker-API #{Docker::VERSION}"
     {
       :method        => http_method,
-      :path          => "/v#{Docker::API_VERSION}#{path}",
+      :path          => "/v#{Docker.api_version || Docker::API_VERSION}#{path}",
       :query         => query,
       :headers       => { 'Content-Type' => content_type,
                           'User-Agent'   => user_agent,

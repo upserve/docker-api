@@ -19,7 +19,7 @@ Excon.defaults[:middlewares] << Excon::Middleware::RedirectFollower
 # The top-level module for this gem. Its purpose is to hold global
 # configuration variables that are used as defaults in other classes.
 module Docker
-  attr_accessor :creds, :logger
+  attr_accessor :creds, :logger, :api_version
 
   require 'docker/error'
   require 'docker/connection'
@@ -143,5 +143,6 @@ module Docker
   module_function :default_socket_url, :env_url, :url, :url=, :env_options,
                   :options, :options=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset!, :reset_connection!, :version, :info,
-                  :ping, :authenticate!, :validate_version!, :ssl_options
+                  :ping, :authenticate!, :validate_version!, :ssl_options,
+                  :api_version, :api_version=
 end
