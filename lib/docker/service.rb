@@ -22,7 +22,7 @@ class Docker::Service
     hash = Docker::Util.parse_json(response) || {}
     new(conn, hash)
   end
-  
+
   def remove(opts = {})
     connection.delete("/services/#{self.id}", opts)
     nil
@@ -35,6 +35,6 @@ class Docker::Service
   def logs(opts = {})
     connection.get("/services/#{self.id}/logs", opts)
   end
-  
+
   private_class_method :new
 end

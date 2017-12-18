@@ -6,6 +6,6 @@ class Docker::Swarm
   def self.inspect(conn = Docker.connection)
     new(conn, Docker::Util.parse_json(conn.get('/swarm')))
   end
-  
+
   private_class_method :new
 end
