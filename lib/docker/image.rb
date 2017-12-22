@@ -138,8 +138,8 @@ class Docker::Image
     alias_method :delete, :remove
 
     # Prune images
-    def prune(conn = Docker.connection)
-      conn.post("/images/prune", {})
+    def prune(opts = {}, conn = Docker.connection)
+      conn.post("/images/prune", opts)
     end
 
 
