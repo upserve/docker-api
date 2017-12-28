@@ -296,6 +296,32 @@ Docker::Image.search('term' => 'sshd')
 # => [Docker::Image { :id => cespare/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => johnfuller/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => dhrp/mongodb-sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => rayang2004/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => dhrp/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/daemontools-sshd-nginx-php-fpm, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => mbkan/lamp, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => toorop/golang, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => wma55/u1210sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => jdswinbank/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => vgauthier/sshd, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 ```
 
+### Pushing Image to Google Container Registry
+
+When pushing to Google Container Registry, you can't use `Docker.authenticate!`. It will try to authenticate with the default docker registry. Instead, you can pass credentials directly into the `Docker::Image#push` method. There are two methods. Using a temporary OAuth token or with a Service Account json_key.
+
+#### With an OAuth token:
+
+The gcloud CLI generates temporary OAuth tokens. You can put anything into the `email` field.
+
+```
+image = Docker::Image.get("[image id]")
+token = `gcloud auth print-access-token`
+creds = { "email" => "none",  "username" => "oauth2accesstoken", "password" => token, "serveraddress" => "https://us.gcr.io" }
+image.push(creds, :repo_tag => "us.gcr.io/[project id]/[image name]/[image tag]")
+```
+
+#### With a Service Account:
+
+You'll need to create a service account in the [google cloud console IAM admin/service accounts](https://console.cloud.google.com/projectselector/iam-admin/serviceaccounts). Select your project, and then create a service account, with the role: `Storage->Storage Admin`. Check the option `Furnish a new private key` and choose `JSON` key type. 
+
+```
+image = Docker::Image.get("[image id]")
+key = File.read("[path to key.json]")
+creds = { "email" => "none",  "username" => "_json_key", "password" => key, "serveraddress" => "https://us.gcr.io" }
+image.push(creds, :repo_tag => "us.gcr.io/[project id]/[image name]/[image tag]")
+```
+
 ## Containers
 
 Much like the Images, this object also has a one-to-one mapping with the [Containers](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#2-1-containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
