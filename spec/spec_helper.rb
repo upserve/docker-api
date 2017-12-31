@@ -84,9 +84,11 @@ RSpec.configure do |config|
     config.filter_run_excluding :docker_17_03 => true
   when /^1\.13/
     config.filter_run_excluding :docker_1_12 => false
+    config.filter_run_excluding :docker_1_13 => false
     config.filter_run_excluding :docker_17_03 => true
   when /^17\.03/
     config.filter_run_excluding :docker_1_12 => false
+    config.filter_run_excluding :docker_1_13 => false
     config.filter_run_excluding :docker_old => true
   end
 end
