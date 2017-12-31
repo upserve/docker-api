@@ -653,12 +653,12 @@ describe Docker::Image do
   describe '.build' do
     subject { described_class }
     context 'with an invalid Dockerfile' do
-      it 'throws a UnexpectedResponseError', docker_1_13: false do
+      it 'throws a UnexpectedResponseError', docker_17_06: false do
         expect { subject.build('lololol') }
             .to raise_error(Docker::Error::UnexpectedResponseError)
       end
 
-      it 'throws a ClientError', docker_1_13: true do
+      it 'throws a ClientError', docker_17_06: true do
         expect { subject.build('lololol') }
             .to raise_error(Docker::Error::ClientError)
       end
