@@ -10,7 +10,7 @@ DOCKER_CE=$2
 
 # disable travis default installation
 #service docker stop
-apt-get -y --purge remove docker docker-engine
+apt-get -y --purge remove docker docker-engine docker-ce
 
 if [ "$DOCKER_CE" = "1" ]; then
     # install gpg key for docker rpo
