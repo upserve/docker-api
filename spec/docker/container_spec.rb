@@ -265,7 +265,7 @@ describe Docker::Container do
     end
   end
 
-  describe '#copy', docker_1_13: false do
+  describe '#copy', docker_1_12: false do
     let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
     subject { image.run('touch /test').tap { |c| c.wait } }
 
