@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 1
+SingleCov.covered! uncovered: 3
 
 describe Docker::Container do
   describe '#to_s' do
