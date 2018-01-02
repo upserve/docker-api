@@ -63,23 +63,25 @@ describe Docker::Event do
   end
 
   describe ".stream" do
-    let(:container) { Docker::Image.create('fromImage' => 'debian:wheezy').run('bash') }
     it 'receives at least 4 events' do
-      expect(Docker::Event)
-        .to receive(:new_event)
-        .at_least(4).times
-        .and_call_original
+      events = 0
 
       stream_thread = Thread.new do
         Docker::Event.stream do |event|
           puts "#{event}"
+          events += 1
+
+          break if events >= 4
         end
       end
 
-      stream_thread.join(0.1)
-      container.wait
-      stream_thread.join(10)
-      stream_thread.kill
+      container = Docker::Image.create('fromImage' => 'debian:wheezy')
+        .run('bash')
+        .tap(&:wait)
+
+      stream_thread.join(10) || stream_thread.kill
+
+      expect(events).to be >= 4
 
       container.remove
     end
@@ -87,24 +89,26 @@ describe Docker::Event do
 
   describe ".since" do
     let(:time) { Time.now.to_i + 1 }
-    let(:container) { Docker::Image.create('fromImage' => 'debian:wheezy').run('bash') }
 
     it 'receives at least 4 events' do
-      expect(Docker::Event)
-        .to receive(:new_event)
-        .at_least(4).times
-        .and_call_original
+      events = 0
 
       stream_thread = Thread.new do
         Docker::Event.since(time) do |event|
           puts "#{event}"
+          events += 1
+
+          break if events >= 4
         end
       end
 
-      stream_thread.join(0.1)
-      container.wait
-      stream_thread.join(10)
-      stream_thread.kill
+      container = Docker::Image.create('fromImage' => 'debian:wheezy')
+        .run('bash')
+        .tap(&:wait)
+
+      stream_thread.join(10) || stream_thread.kill
+
+      expect(events).to be >= 4
 
       container.remove
     end
