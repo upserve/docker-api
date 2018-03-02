@@ -241,8 +241,9 @@ module Docker::Util
 
   def build_config_header(credentials)
     if credentials.is_a?(String)
-      credentials = JSON.parse(credentials, symbolize_names: true)
+      credentials = MultiJson.load(credentials, symbolize_keys: true)
     end
+
     header = MultiJson.dump(
       credentials[:serveraddress].to_s => {
         'username' => credentials[:username].to_s,
