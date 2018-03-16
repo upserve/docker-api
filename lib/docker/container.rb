@@ -192,7 +192,7 @@ class Docker::Container
     stack_size = opts.delete('stack_size') || -1
     tty = opts.delete('tty') || opts.delete(:tty) || false
     msgs = Docker::MessagesStack.new(stack_size)
-    excon_params = {response_block: Docker::Util.attach_for(block, msgs, tty)}
+    excon_params = {response_block: Docker::Util.attach_for(block, msgs, tty), idempotent: false}
 
     connection.get(path_for(:logs), opts, excon_params)
     msgs.messages.join
