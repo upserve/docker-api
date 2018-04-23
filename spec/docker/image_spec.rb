@@ -301,7 +301,7 @@ describe Docker::Image do
       after { container.remove }
 
       it 'returns 50' do
-        expect(container.json["Config"]["CpuShares"]).to eq 50
+        expect(container.json["HostConfig"]["CpuShares"]).to eq 50
       end
     end
   end
@@ -653,9 +653,14 @@ describe Docker::Image do
   describe '.build' do
     subject { described_class }
     context 'with an invalid Dockerfile' do
-      it 'throws a UnexpectedResponseError' do
+      it 'throws a UnexpectedResponseError', docker_17_09: false do
         expect { subject.build('lololol') }
             .to raise_error(Docker::Error::UnexpectedResponseError)
+      end
+
+      it 'throws a ClientError', docker_17_09: true do
+        expect { subject.build('lololol') }
+            .to raise_error(Docker::Error::ClientError)
       end
     end
 
