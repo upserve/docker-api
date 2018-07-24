@@ -148,14 +148,18 @@ module Docker::Util
       remove_ignored_files!(directory, files)
 
       files.each do |prefixed_file_name|
-        stat = File.stat(prefixed_file_name)
-        next unless stat.file?
+        stat = File.lstat(prefixed_file_name)
+        next unless stat.file? || stat.symlink?
 
         unprefixed_file_name = prefixed_file_name[directory.length..-1]
-        add_file_to_tar(
-          tar, unprefixed_file_name, stat.mode, stat.size, stat.mtime
-        ) do |tar_file|
-          IO.copy_stream(File.open(prefixed_file_name, 'rb'), tar_file)
+        if stat.symlink?
+          tar.add_symlink(unprefixed_file_name, File.readlink(prefixed_file_name), stat.mode)
+        else
+          add_file_to_tar(
+            tar, unprefixed_file_name, stat.mode, stat.size, stat.mtime
+          ) do |tar_file|
+            IO.copy_stream(File.open(prefixed_file_name, 'rb'), tar_file)
+          end
         end
       end
     end
