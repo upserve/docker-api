@@ -189,7 +189,7 @@ class Docker::Container
   end
 
   def streaming_logs(opts = {}, &block)
-    stack_size = opts.delete('stack_size') || -1
+    stack_size = opts.delete('stack_size') || opts.delete(:stack_size) || -1
     tty = opts.delete('tty') || opts.delete(:tty) || false
     msgs = Docker::MessagesStack.new(stack_size)
     excon_params = {response_block: Docker::Util.attach_for(block, msgs, tty), idempotent: false}
