@@ -245,6 +245,14 @@ Docker::Image.build_from_dir('.') do |v|
   end
 end
 
+# Create an Image from a Dockerfile with buildargs
+Docker::Image.build_from_dir('.', {
+  'buildargs' => {
+    'arg1' => 'value1',
+    'arg2' => 'value2'
+  }
+})
+
 # Create an Image from a tar file.
 # docker command for reference: docker build - < docker_image.tar
 Docker::Image.build_from_tar(File.open('docker_image.tar', 'r'))
