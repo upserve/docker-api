@@ -1,8 +1,8 @@
 docker-api
 ==========
-[![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.svg?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.svg)](https://codeclimate.com/github/swipely/docker-api) [![Dependency Status](https://gemnasium.com/swipely/docker-api.svg)](https://gemnasium.com/swipely/docker-api)
+[![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.svg?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.svg)](https://codeclimate.com/github/swipely/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Remote API](https://docs.docker.com/reference/api/docker_remote_api/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.3.*
+This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.4.*
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
@@ -36,7 +36,7 @@ docker-api is designed to be very lightweight. Almost no state is cached (aside 
 
 ## Starting up
 
-Follow the [installation instructions](https://docs.docker.com/installation/#installation), and then run:
+Follow the [installation instructions](https://docs.docker.com/install/), and then run:
 
 ```shell
 $ sudo docker -d
@@ -52,7 +52,7 @@ If you're running Docker locally as a socket, there is no setup to do in Ruby. I
 Docker.url = 'tcp://example.com:5422'
 ```
 
-Two things to note here. The first is that this gem uses [excon](http://www.github.com/geemus/excon), so any of the options that are valid for `Excon.new` are also valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connect to the socket unless you specify otherwise.
+Two things to note here. The first is that this gem uses [excon](https://github.com/excon/excon), so any of the options that are valid for `Excon.new` are also valid for `Docker.options`. Second, by default Docker runs on a socket. The gem will assume you want to connect to the socket unless you specify otherwise.
 
 Also, you may set the above variables via `ENV` variables. For example:
 
