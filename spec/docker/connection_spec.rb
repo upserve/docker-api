@@ -122,4 +122,43 @@ describe Docker::Connection do
       expect(subject.to_s).to eq expected_string
     end
   end
+
+  describe '#compile_request_params' do
+    let(:url) { 'http://localhost:4243' }
+    let(:method) { :get }
+    let(:path) { '/test/' }
+    let(:query) do
+      {
+        'simple' => true,
+        'complex' => {
+          'test' => 'hash',
+          'query' => 'to_json'
+        }
+      }
+    end
+    let(:options) do
+      {
+        expects: 201,
+        headers: {'X-Custom-Header' => 'RSpec Testing'},
+      }
+    end
+
+    let(:compiled_params) do
+      {
+        expects: 201,
+        headers: { 'Content-Type'    => 'text/plain',
+                   'User-Agent'      => "Swipely/Docker-API #{Docker::VERSION}",
+                   'X-Custom-Header' => 'RSpec Testing'
+        },
+        idempotent: true,
+        method: :get,
+        path: "/v#{Docker::API_VERSION}#{path}",
+        query: { 'simple' => true, 'complex' => '{"test":"hash","query":"to_json"}' }
+      }
+    end
+    subject { described_class.new(url, options) }
+    it 'creates a request hash' do
+      expect(subject.send(:compile_request_params, method, path, query, options)).to eq compiled_params
+    end
+  end
 end

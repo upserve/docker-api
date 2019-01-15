@@ -81,7 +81,7 @@ private
     {
       :method        => http_method,
       :path          => "/v#{Docker::API_VERSION}#{path}",
-      :query         => query,
+      :query         => compile_nested_request_hash(query),
       :headers       => { 'Content-Type' => content_type,
                           'User-Agent'   => user_agent,
                         }.merge(headers),
@@ -89,5 +89,16 @@ private
       :idempotent    => http_method == :get,
       :request_block => block,
     }.merge(opts).reject { |_, v| v.nil? }
+  end
+
+  def compile_nested_request_hash(query = nil)
+    return query unless query.respond_to?(:each_with_object)
+    query.each_with_object({}) do |(k, v), h|
+      h[k] = if v.is_a?(Hash)
+        MultiJson.dump(v)
+      else
+        v
+      end
+    end
   end
 end
