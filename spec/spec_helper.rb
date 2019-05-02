@@ -8,7 +8,7 @@ require 'single_cov'
 
 # avoid coverage failure from lower docker versions not running all tests
 if !ENV['DOCKER_VERSION'] || ENV['DOCKER_VERSION'] =~ /^1\.\d\d/
-  SingleCov.setup :rspec
+  SingleCov.setup :rspec, branches: false # https://github.com/grosser/single_cov/issues/19
 end
 
 require 'docker'
