@@ -1,13 +1,11 @@
-sudo: required
 dist: trusty
 language: ruby
 cache: bundler
 rvm:
-  - 2.2
   - 2.3
   - 2.4
   - 2.5
-  - 2.6  
+  - 2.6
 
 env:
   - DOCKER_VERSION=17.03.1~ce-0~ubuntu-trusty DOCKER_CE=1
