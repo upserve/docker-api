@@ -19,7 +19,7 @@ matrix:
   fast_finish: true
 before_install:
  - docker --version
- - gem install bundler
+ - gem install bundler || true
 before_script:
  - sudo ./script/install_docker.sh ${DOCKER_VERSION} ${DOCKER_CE}
  - uname -a

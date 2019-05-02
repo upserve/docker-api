@@ -28,9 +28,8 @@ if [ "$DOCKER_CE" = "1" ]; then
     # install package
     apt-get install docker-ce=${DOCKER_VERSION}
 else
-    # install gpg key for docker rpo
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv 58118E89F3A912897C070ADBF76221572C52609D
-
+    # install gpg key for docker repo. The keyserver pool is flakey so try up to 4 times with 15 sec sleeps in between
+    for i in 1 2 3 4; do apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv 58118E89F3A912897C070ADBF76221572C52609D && break || sleep 15; done
     # enable docker repo
     echo 'deb "https://apt.dockerproject.org/repo" ubuntu-trusty main' >> /etc/apt/sources.list.d/docker-main.list
     apt-get update -o Dir::Etc::sourcelist='sources.list.d/docker-main.list' -o Dir::Etc::sourceparts='-' -o APT::Get::List-Cleanup='0'
