@@ -29,9 +29,13 @@ class Docker::Connection
   # The actual client that sends HTTP methods to the Docker server. This value
   # is not cached, since doing so may cause socket errors after bad requests.
   def resource
-    Excon.new(url, options)
+    @resource ||= Excon.new(url, options)
   end
   private :resource
+
+  def reset_resource
+    @resource = nil
+  end
 
   # Send a request to the server with the `
   def request(*args, &block)
@@ -39,6 +43,7 @@ class Docker::Connection
     log_request(request)
     resource.request(request).body
   rescue Excon::Errors::BadRequest => ex
+    reset_resource
     raise ClientError, ex.response.body
   rescue Excon::Errors::Unauthorized => ex
     raise UnauthorizedError, ex.response.body
