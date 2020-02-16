@@ -26,8 +26,7 @@ class Docker::Connection
     end
   end
 
-  # The actual client that sends HTTP methods to the Docker server. This value
-  # is not cached, since doing so may cause socket errors after bad requests.
+  # The actual client that sends HTTP methods to the Docker server.
   def resource
     @resource ||= Excon.new(url, options)
   end
