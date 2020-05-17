@@ -499,10 +499,7 @@ describe Docker::Image do
   describe '.save_stream' do
     let(:image) { 'busybox:latest' }
     let(:non_streamed) do
-      Docker.connection.get(
-        '/images/get',
-        'names' => CGI.escape(image)
-      )
+      Docker.connection.get('/images/get', 'names' => image)
     end
     let(:streamed) { '' }
     let(:tar_files) do
@@ -641,7 +638,7 @@ describe Docker::Image do
     context 'with an invalid Dockerfile' do
       it 'throws a UnexpectedResponseError', docker_17_09: false do
         expect { subject.build('lololol') }
-            .to raise_error(Docker::Error::UnexpectedResponseError)
+            .to raise_error(Docker::Error::ClientError)
       end
 
       it 'throws a ClientError', docker_17_09: true do
