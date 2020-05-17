@@ -19,9 +19,9 @@ if [ "$DOCKER_CE" = "1" ]; then
 
     # enable docker repo
     add-apt-repository \
-       "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-       $(lsb_release -cs) \
-       stable"
+      "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+      $(lsb_release -cs) \
+      stable"
     apt-get update
     apt-cache gencaches
 
@@ -29,7 +29,9 @@ if [ "$DOCKER_CE" = "1" ]; then
     apt-get install docker-ce=${DOCKER_VERSION}
 else
     # install gpg key for docker rpo
-    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv 58118E89F3A912897C070ADBF76221572C52609D
+    apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv 58118E89F3A912897C070ADBF76221572C52609D || \
+      apt-key adv --keyserver pgp.mit.edu --recv 58118E89F3A912897C070ADBF76221572C52609D || \
+      apt-key adv --keyserver keyserver.pgp.com --recv 58118E89F3A912897C070ADBF76221572C52609D
 
     # enable docker repo
     echo 'deb "https://apt.dockerproject.org/repo" ubuntu-trusty main' >> /etc/apt/sources.list.d/docker-main.list
