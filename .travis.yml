@@ -1,24 +1,19 @@
-sudo: required
-dist: trusty
+os: linux
+dist: bionic
 language: ruby
 cache: bundler
 rvm:
-  - 2.3.1
+  - 2.7
+  - 2.6
+  - 2.5
+  - 2.4
+  - 2.3
   - 2.2
-  - 2.1
-  - 2.0
 env:
-  - DOCKER_VERSION=17.12.0~ce-0~ubuntu DOCKER_CE=1
-  - DOCKER_VERSION=17.09.1~ce-0~ubuntu DOCKER_CE=1
-  - DOCKER_VERSION=17.06.2~ce-0~ubuntu DOCKER_CE=1
-  - DOCKER_VERSION=17.03.1~ce-0~ubuntu-trusty DOCKER_CE=1
-  - DOCKER_VERSION=1.13.1-0~ubuntu-trusty
-  - DOCKER_VERSION=1.12.3-0~trusty
-  - DOCKER_VERSION=1.11.1-0~trusty
-  - DOCKER_VERSION=1.10.3-0~trusty
-  - DOCKER_VERSION=1.9.1-0~trusty
-  - DOCKER_VERSION=1.8.2-0~trusty
-matrix:
+  - DOCKER_VERSION=5:19.03.8~3-0~ubuntu-bionic
+  - DOCKER_VERSION=5:18.09.9~3-0~ubuntu-bionic
+  - DOCKER_VERSION=18.06.3~ce~3-0~ubuntu
+jobs:
   fast_finish: true
 before_install:
  - docker --version
