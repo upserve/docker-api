@@ -515,7 +515,7 @@ describe Docker::Image do
     let(:non_streamed) do
       Docker.connection.get(
         '/images/get',
-        'names' => URI.encode(image)
+        'names' => CGI.escape(image)
       )
     end
     let(:streamed) { '' }

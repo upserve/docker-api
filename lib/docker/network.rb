@@ -34,7 +34,7 @@ class Docker::Network
   end
 
   def reload
-    network_json = @connection.get("/networks/#{URI.encode(@id)}")
+    network_json = @connection.get("/networks/#{CGI.escape(@id)}")
     hash = Docker::Util.parse_json(network_json) || {}
     @info = hash
   end
@@ -51,7 +51,7 @@ class Docker::Network
     end
 
     def get(id, opts = {}, conn = Docker.connection)
-      network_json = conn.get("/networks/#{URI.encode(id)}", opts)
+      network_json = conn.get("/networks/#{CGI.escape(id)}", opts)
       hash = Docker::Util.parse_json(network_json) || {}
       new(conn, hash)
     end
@@ -62,7 +62,7 @@ class Docker::Network
     end
 
     def remove(id, opts = {}, conn = Docker.connection)
-      conn.delete("/networks/#{URI.encode(id)}", opts)
+      conn.delete("/networks/#{CGI.escape(id)}", opts)
       nil
     end
     alias_method :delete, :remove
