@@ -118,14 +118,6 @@ describe Docker::Container do
         end
         expect(called_count).to eq 2
       end
-
-      it "returns after :read_timeout if the container is not running", :docker_old do
-        called_count = 0
-        subject.stats(read_timeout: 3) do |output|
-          called_count += 1
-        end
-        expect(called_count).to eq 0
-      end
     end
   end
 
@@ -275,7 +267,7 @@ describe Docker::Container do
       it 'raises an error' do
         expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
           .to raise_error(
-            Docker::Error::ServerError,
+            Docker::Error::NotFoundError,
             %r{Could not find the file /lol/not/a/real/file in container}
           )
       end

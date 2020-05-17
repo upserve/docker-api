@@ -273,20 +273,6 @@ describe Docker::Image do
       end
     end
 
-    context 'when cmd is nil', docker_1_12: false do
-      let(:cmd) { nil }
-
-      context 'no command configured in image' do
-        subject { described_class.create('fromImage' => 'swipely/base') }
-        it 'should raise an error if no command is specified' do
-          expect { container }.to raise_error(
-            Docker::Error::ServerError,
-            /No\ command\ specified/
-          )
-        end
-      end
-    end
-
     context "command configured in image" do
       let(:cmd) { 'pwd' }
       after { container.remove }
