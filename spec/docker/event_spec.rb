@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered!
+SingleCov.covered! uncovered: 4
 
 describe Docker::Event do
   let(:api_response) do
