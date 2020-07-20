@@ -266,16 +266,6 @@ class Docker::Container
     end
   end
 
-  def copy(path, &block)
-    connection.post(
-      path_for(:copy),
-      {},
-      body: MultiJson.dump('Resource' => path),
-      response_block: block
-    )
-    self
-  end
-
   def archive_out(path, &block)
     connection.get(
       path_for(:archive),

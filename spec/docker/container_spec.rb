@@ -257,41 +257,6 @@ describe Docker::Container do
     end
   end
 
-  describe '#copy', docker_1_12: false do
-    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
-    subject { image.run('touch /test').tap { |c| c.wait } }
-
-    after(:each) { subject.remove }
-
-    context 'when the file does not exist' do
-      it 'raises an error' do
-        expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
-          .to raise_error(
-            Docker::Error::NotFoundError,
-            %r{Could not find the file /lol/not/a/real/file in container}
-          )
-      end
-    end
-
-    context 'when the input is a file' do
-      it 'yields each chunk of the tarred file' do
-        chunks = []
-        subject.copy('/test') { |chunk| chunks << chunk }
-        chunks = chunks.join("\n")
-        expect(chunks).to be_include('test')
-      end
-    end
-
-    context 'when the input is a directory' do
-      it 'yields each chunk of the tarred directory' do
-        chunks = []
-        subject.copy('/etc/logrotate.d') { |chunk| chunks << chunk }
-        chunks = chunks.join("\n")
-        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
-      end
-    end
-  end
-
   describe '#archive_in', :docker_1_8 do
     let(:license_path) { File.absolute_path(File.join(__FILE__, '..', '..', '..', 'LICENSE')) }
     subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
