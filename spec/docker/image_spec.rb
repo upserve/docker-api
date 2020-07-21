@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 3
+SingleCov.covered! uncovered: 9
 
 describe Docker::Image do
   describe '#to_s' do
@@ -273,20 +273,6 @@ describe Docker::Image do
       end
     end
 
-    context 'when cmd is nil', docker_1_12: false do
-      let(:cmd) { nil }
-
-      context 'no command configured in image' do
-        subject { described_class.create('fromImage' => 'swipely/base') }
-        it 'should raise an error if no command is specified' do
-          expect { container }.to raise_error(
-            Docker::Error::ServerError,
-            /No\ command\ specified/
-          )
-        end
-      end
-    end
-
     context "command configured in image" do
       let(:cmd) { 'pwd' }
       after { container.remove }
@@ -301,7 +287,7 @@ describe Docker::Image do
       after { container.remove }
 
       it 'returns 50' do
-        expect(container.json["Config"]["CpuShares"]).to eq 50
+        expect(container.json["HostConfig"]["CpuShares"]).to eq 50
       end
     end
   end
@@ -447,12 +433,12 @@ describe Docker::Image do
 
       before do
         Docker.creds = nil
-        subject.create('fromImage' => 'tianon/true').remove
+        subject.create('fromImage' => 'busybox').remove(force: true)
       end
 
       it 'calls the block and passes build output' do
-        subject.create('fromImage' => 'tianon/true', &block)
-        expect(create_output).to match(/Pulling.*tianon\/true/)
+        subject.create('fromImage' => 'busybox', &block)
+        expect(create_output).to match(/Pulling.*busybox/)
       end
     end
   end
@@ -513,10 +499,7 @@ describe Docker::Image do
   describe '.save_stream' do
     let(:image) { 'busybox:latest' }
     let(:non_streamed) do
-      Docker.connection.get(
-        '/images/get',
-        'names' => URI.encode(image)
-      )
+      Docker.connection.get('/images/get', 'names' => image)
     end
     let(:streamed) { '' }
     let(:tar_files) do
@@ -653,9 +636,14 @@ describe Docker::Image do
   describe '.build' do
     subject { described_class }
     context 'with an invalid Dockerfile' do
-      it 'throws a UnexpectedResponseError' do
+      it 'throws a UnexpectedResponseError', docker_17_09: false do
         expect { subject.build('lololol') }
-            .to raise_error(Docker::Error::UnexpectedResponseError)
+            .to raise_error(Docker::Error::ClientError)
+      end
+
+      it 'throws a ClientError', docker_17_09: true do
+        expect { subject.build('lololol') }
+            .to raise_error(Docker::Error::ClientError)
       end
     end
 

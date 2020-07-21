@@ -266,16 +266,6 @@ class Docker::Container
     end
   end
 
-  def copy(path, &block)
-    connection.post(
-      path_for(:copy),
-      {},
-      body: MultiJson.dump('Resource' => path),
-      response_block: block
-    )
-    self
-  end
-
   def archive_out(path, &block)
     connection.get(
       path_for(:archive),
@@ -343,7 +333,7 @@ class Docker::Container
 
   # Return the container with specified ID
   def self.get(id, opts = {}, conn = Docker.connection)
-    container_json = conn.get("/containers/#{URI.encode(id)}/json", opts)
+    container_json = conn.get("/containers/#{id}/json", opts)
     hash = Docker::Util.parse_json(container_json) || {}
     new(conn, hash)
   end

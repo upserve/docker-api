@@ -78,7 +78,7 @@ describe Docker::Connection do
     let(:expected_hash) {
       {
         :method  => method,
-        :path    => "/v#{Docker::API_VERSION}#{path}",
+        :path    => path,
         :query   => query,
         :headers => { 'Content-Type' => 'text/plain',
                       'User-Agent'   => "Swipely/Docker-API #{Docker::VERSION}",

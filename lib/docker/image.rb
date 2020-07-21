@@ -126,7 +126,7 @@ class Docker::Image
 
     # Return a specific image.
     def get(id, opts = {}, conn = Docker.connection)
-      image_json = conn.get("/images/#{URI.encode(id)}/json", opts)
+      image_json = conn.get("/images/#{id}/json", opts)
       hash = Docker::Util.parse_json(image_json) || {}
       new(conn, hash)
     end
@@ -174,7 +174,7 @@ class Docker::Image
       # By using compare_by_identity we can create a Hash that has
       # the same key multiple times.
       query = {}.tap(&:compare_by_identity)
-      Array(names).each { |name| query['names'.dup] = URI.encode(name) }
+      Array(names).each { |name| query['names'.dup] = name }
       conn.get(
         '/images/get',
         query,

@@ -4,7 +4,7 @@ SingleCov.covered! uncovered: 2
 
 describe Docker::Network, docker_1_9: true do
   let(:name) do |example|
-    example.description.downcase.gsub('\s', '-')
+    example.description.downcase.gsub(/\s/, '-')
   end
 
   describe '#to_s' do

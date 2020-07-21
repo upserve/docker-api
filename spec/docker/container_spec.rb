@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 1
+SingleCov.covered! uncovered: 3
 
 describe Docker::Container do
   describe '#to_s' do
@@ -85,7 +85,7 @@ describe Docker::Container do
 
   describe '#stats', :docker_1_9 do
     after(:each) do
-      subject.kill!
+      subject.wait
       subject.remove
     end
 
@@ -117,14 +117,6 @@ describe Docker::Container do
           break if called_count == 2
         end
         expect(called_count).to eq 2
-      end
-
-      it "returns after :read_timeout if the container is not running", :docker_old do
-        called_count = 0
-        subject.stats(read_timeout: 3) do |output|
-          called_count +=1
-        end
-        expect(called_count).to eq 0
       end
     end
   end
@@ -204,10 +196,10 @@ describe Docker::Container do
 
     it "updates the container" do
       subject.refresh!
-      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 60000
+      expect(subject.info.fetch("HostConfig").fetch("CpuShares")).to eq 60000
       subject.update("CpuShares" => 50000)
       subject.refresh!
-      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 50000
+      expect(subject.info.fetch("HostConfig").fetch("CpuShares")).to eq 50000
     end
   end
 
@@ -262,41 +254,6 @@ describe Docker::Container do
     it 'returns nothing when Processes were not returned due to an error' do
       expect(Docker::Util).to receive(:parse_json).and_return({})
       expect(top_empty).to eq []
-    end
-  end
-
-  describe '#copy' do
-    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
-    subject { image.run('touch /test').tap { |c| c.wait } }
-
-    after(:each) { subject.remove }
-
-    context 'when the file does not exist' do
-      it 'raises an error' do
-        expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
-          .to raise_error(
-            Docker::Error::ServerError,
-            %r{Could not find the file /lol/not/a/real/file in container}
-          )
-      end
-    end
-
-    context 'when the input is a file' do
-      it 'yields each chunk of the tarred file' do
-        chunks = []
-        subject.copy('/test') { |chunk| chunks << chunk }
-        chunks = chunks.join("\n")
-        expect(chunks).to be_include('test')
-      end
-    end
-
-    context 'when the input is a directory' do
-      it 'yields each chunk of the tarred directory' do
-        chunks = []
-        subject.copy('/etc/logrotate.d') { |chunk| chunks << chunk }
-        chunks = chunks.join("\n")
-        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
-      end
     end
   end
 
@@ -510,12 +467,13 @@ describe Docker::Container do
       described_class.create(
         'Cmd' => %w[test -d /foo],
         'Image' => 'debian:wheezy',
-        'Volumes' => {'/foo' => {}}
+        'Volumes' => {'/foo' => {}},
+        'HostConfig' => { 'Binds' => ["/tmp:/foo"] }
       )
     }
     let(:all) { Docker::Container.all(all: true) }
 
-    before { subject.start('Binds' => ["/tmp:/foo"]) }
+    before { subject.start }
     after(:each) { subject.remove }
 
     it 'starts the container' do
