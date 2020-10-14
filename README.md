@@ -76,8 +76,6 @@ irb(main):004:0> Docker.options
 => {}
 ```
 
-Before doing anything else, ensure you have the correct version of the Docker API. To do this, run `Docker.validate_version!`. If your installed version is not supported, a `Docker::Error::VersionError` is raised.
-
 ### SSL
 
 When running docker using SSL, setting the DOCKER_CERT_PATH will configure docker-api to use SSL.
