@@ -10,8 +10,8 @@ class Docker::Network
     reload
   end
 
-  def disconnect(container, opts = {})
-    body = MultiJson.dump(container: container)
+  def disconnect(container, opts = {}, body_opts = {})
+    body = MultiJson.dump({ container: container }.merge(body_opts))
     Docker::Util.parse_json(
       connection.post(path_for('disconnect'), opts, body: body)
     )

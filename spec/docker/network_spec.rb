@@ -139,8 +139,13 @@ describe Docker::Network, docker_1_9: true do
       subject.remove
     end
 
-    it 'connects a container to a network' do
+    it 'disconnects a container from a network' do
       subject.disconnect(container.id)
+      expect(subject.info['Containers']).not_to include(container.id)
+    end
+
+    it 'force disconnects a container from a network' do
+      subject.disconnect(container.id, {}, force: true)
       expect(subject.info['Containers']).not_to include(container.id)
     end
   end
