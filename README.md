@@ -34,6 +34,8 @@ Usage
 
 docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every external method represents an API call.
 
+At this time, basic `podman` support has been added via the podman docker-compatible API socket.
+
 ## Starting up
 
 Follow the [installation instructions](https://docs.docker.com/install/), and then run:

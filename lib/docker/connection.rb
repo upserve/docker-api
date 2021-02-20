@@ -35,21 +35,58 @@ class Docker::Connection
 
   # Send a request to the server with the `
   def request(*args, &block)
+    retries ||= 0
     request = compile_request_params(*args, &block)
     log_request(request)
-    resource.request(request).body
-  rescue Excon::Errors::BadRequest => ex
-    raise ClientError, ex.response.body
-  rescue Excon::Errors::Unauthorized => ex
-    raise UnauthorizedError, ex.response.body
-  rescue Excon::Errors::NotFound => ex
-    raise NotFoundError, ex.response.body
-  rescue Excon::Errors::Conflict => ex
-    raise ConflictError, ex.response.body
-  rescue Excon::Errors::InternalServerError => ex
-    raise ServerError, ex.response.body
-  rescue Excon::Errors::Timeout => ex
-    raise TimeoutError, ex.message
+    begin
+      resource.request(request).body
+    rescue Excon::Errors::BadRequest => ex
+      if retries < 2
+        response_cause = ''
+        begin
+          response_cause = JSON.parse(ex.response.body)['cause']
+        rescue JSON::ParserError
+          #noop
+        end
+
+        if response_cause.is_a?(String)
+          # The error message will tell the application type given and then the
+          # application type that the message should be
+          #
+          # This is not perfect since it relies on processing a message that
+          # could change in the future. However, it should be a good stop-gap
+          # until all methods are updated to pass in the appropriate content
+          # type.
+          #
+          # A current example message is:
+          #   * 'Content-Type: application/json is not supported. Should be "application/x-tar"'
+          matches = response_cause.delete('"\'').scan(%r{(application/\S+)})
+          unless matches.count < 2
+            Docker.logger.warn(
+              <<~RETRY_WARNING
+              Automatically retrying with content type '#{response_cause}'
+                Original Error: #{ex}
+              RETRY_WARNING
+            ) if Docker.logger
+
+            request[:headers]['Content-Type'] = matches.last.first
+            retries += 1
+            retry
+          end
+        end
+      end
+      raise ClientError, ex.response.body
+    rescue Excon::Errors::Unauthorized => ex
+      raise UnauthorizedError, ex.response.body
+    rescue Excon::Errors::NotFound => ex
+      raise NotFoundError, ex.response.body
+    rescue Excon::Errors::Conflict => ex
+      raise ConflictError, ex.response.body
+    rescue Excon::Errors::InternalServerError => ex
+      raise ServerError, ex.response.body
+    rescue Excon::Errors::Timeout => ex
+      raise TimeoutError, ex.message
+    end
   end
 
   def log_request(request)

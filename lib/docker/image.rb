@@ -65,7 +65,16 @@ class Docker::Image
 
   # Remove the Image from the server.
   def remove(opts = {})
-    name = opts.delete(:name) || self.id
+    name = opts.delete(:name)
+
+    unless name
+      if ::Docker.podman?
+        name = self.id.split(':').last
+      else
+        name = self.id
+      end
+    end
+
     connection.delete("/images/#{name}", opts)
   end
   alias_method :delete, :remove
@@ -227,7 +236,16 @@ class Docker::Image
     # Import an Image from the output of Docker::Container#export. The first
     # argument may either be a File or URI.
     def import(imp, opts = {}, conn = Docker.connection)
-      open(imp) do |io|
+      require 'open-uri'
+
+      # This differs after Ruby 2.4
+      if URI.public_methods.include?(:open)
+        munged_open = URI.method(:open)
+      else
+        munged_open = self.method(:open)
+      end
+
+      munged_open.call(imp) do |io|
         import_stream(opts, conn) do
           io.read(Excon.defaults[:chunk_size]).to_s
         end

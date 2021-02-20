@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 9
+SingleCov.covered! uncovered: 16
 
 describe Docker::Image do
   describe '#to_s' do
@@ -10,7 +10,7 @@ describe Docker::Image do
     let(:connection) { Docker.connection }
 
     let(:info) do
-      {"id" => "bf119e2", "Repository" => "debian", "Tag" => "wheezy",
+      {"id" => "bf119e2", "Repository" => "debian", "Tag" => "stable",
         "Created" => 1364102658, "Size" => 24653, "VirtualSize" => 180116135}
     end
 
@@ -57,7 +57,7 @@ describe Docker::Image do
   describe '#insert_local' do
     include_context "local paths"
 
-    subject { described_class.create('fromImage' => 'debian:wheezy') }
+    subject { described_class.create('fromImage' => 'debian:stable') }
 
     let(:rm) { false }
     let(:new_image) {
@@ -84,8 +84,12 @@ describe Docker::Image do
       end
 
       it 'creates a new Image that has that file' do
-        output = container.streaming_logs(stdout: true)
-        expect(output).to eq(gemfile)
+        begin
+          output = container.streaming_logs(stdout: true)
+          expect(output).to eq(gemfile)
+        rescue Docker::Error::UnexpectedResponseError => ex
+          skip("Could not communicate with DockerHub: #{ex}")
+        end
       end
     end
 
@@ -104,7 +108,11 @@ describe Docker::Image do
       end
 
       it 'inserts the directory' do
-        expect(response.split("\n").sort).to eq(Dir.entries('lib/docker').sort)
+        begin
+          expect(response.split("\n").sort).to eq(Dir.entries('lib/docker').sort)
+        rescue Docker::Error::UnexpectedResponseError => ex
+          skip("Could not communicate with DockerHub: #{ex}")
+        end
       end
     end
 
@@ -124,7 +132,11 @@ describe Docker::Image do
       end
 
       it 'creates a new Image that has each file' do
-        expect(response).to eq("#{gemfile}#{license}")
+        begin
+          expect(response).to eq("#{gemfile}#{license}")
+        rescue Docker::Error::UnexpectedResponseError => ex
+          skip("Could not communicate with DockerHub: #{ex}")
+        end
       end
     end
 
@@ -134,13 +146,21 @@ describe Docker::Image do
       after(:each) { new_image.remove }
 
       it 'leave no intermediate containers' do
-        expect { new_image }.to change {
-          Docker::Container.all(:all => true).count
-        }.by 0
+        begin
+          expect { new_image }.to change {
+            Docker::Container.all(:all => true).count
+          }.by 0
+        rescue Docker::Error::UnexpectedResponseError => ex
+          skip("Could not communicate with DockerHub: #{ex}")
+        end
       end
 
       it 'creates a new image' do
-        expect{new_image}.to change{Docker::Image.all.count}.by 1
+        begin
+          expect{new_image}.to change{Docker::Image.all.count}.by 1
+        rescue Docker::Error::UnexpectedResponseError => ex
+          skip("Could not communicate with DockerHub: #{ex}")
+        end
       end
     end
   end
@@ -161,10 +181,12 @@ describe Docker::Image do
     after { image.remove(:name => repo_tag, :noprune => true) }
 
     it 'pushes the Image' do
+      skip_without_auth
       image.push(credentials)
     end
 
     it 'streams output from push' do
+      skip_without_auth
       expect { |b| image.push(credentials, &b) }
         .to yield_control.at_least(1)
     end
@@ -181,6 +203,7 @@ describe Docker::Image do
 
       context 'when no tag is specified' do
         it 'looks up the first repo tag' do
+          skip_without_auth
           expect { image.push }.to_not raise_error
         end
       end
@@ -191,13 +214,21 @@ describe Docker::Image do
       let(:repo_tag) { "localhost:5000/true" }
 
       it 'still pushes' do
-        expect { image.push }.to_not raise_error
+        begin
+          image.push
+        rescue => ex
+          if ex.message =~ /connection refused/
+            skip("Registry at #{repo_tag} is not available")
+          else
+            expect { raise(ex) }.to_not raise_error
+          end
+        end
       end
     end
   end
 
   describe '#tag' do
-    subject { described_class.create('fromImage' => 'debian:wheezy') }
+    subject { described_class.create('fromImage' => 'debian:stable') }
     after { subject.remove(:name => 'teh:latest', :noprune => true) }
 
     it 'tags the image with the repo name' do
@@ -209,7 +240,7 @@ describe Docker::Image do
   describe '#json' do
     before { skip_without_auth }
 
-    subject { described_class.create('fromImage' => 'debian:wheezy') }
+    subject { described_class.create('fromImage' => 'debian:stable') }
     let(:json) { subject.json }
 
     it 'returns additional information about image image' do
@@ -219,7 +250,7 @@ describe Docker::Image do
   end
 
   describe '#history' do
-    subject { described_class.create('fromImage' => 'debian:wheezy') }
+    subject { described_class.create('fromImage' => 'debian:stable') }
     let(:history) { subject.history }
 
     it 'returns the history of the Image' do
@@ -235,7 +266,7 @@ describe Docker::Image do
 
     subject do
       described_class.create(
-        {'fromImage' => 'debian:wheezy'})
+        {'fromImage' => 'debian:stable'})
     end
 
     let(:container) { subject.run(cmd, options).tap(&:wait) }
@@ -265,10 +296,12 @@ describe Docker::Image do
       context 'no command configured in image' do
         subject { described_class.create('fromImage' => 'swipely/base') }
         it 'should raise an error if no command is specified' do
-          expect { container }.to raise_error(
-            Docker::Error::ClientError,
-            /No\ command\ specified/
-          )
+          begin
+            container
+          rescue => ex
+            expect([Docker::Error::ServerError, Docker::Error::ClientError]).to include(ex.class)
+            expect(ex.message).to match(/No\ command\ specified/)
+          end
         end
       end
     end
@@ -287,6 +320,7 @@ describe Docker::Image do
       after { container.remove }
 
       it 'returns 50' do
+        skip('Not supported on podman') if ::Docker.podman?
         expect(container.json["HostConfig"]["CpuShares"]).to eq 50
       end
     end
@@ -314,7 +348,7 @@ describe Docker::Image do
   end
 
   describe '#refresh!' do
-    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
+    let(:image) { Docker::Image.create('fromImage' => 'debian:stable') }
 
     it 'updates the @info hash' do
       size = image.info.size
@@ -325,7 +359,7 @@ describe Docker::Image do
     context 'with an explicit connection' do
       let(:connection) { Docker::Connection.new(Docker.url, Docker.options) }
       let(:image) {
-        Docker::Image.create({'fromImage' => 'debian:wheezy'}, nil, connection)
+        Docker::Image.create({'fromImage' => 'debian:stable'}, nil, connection)
       }
 
       it 'updates using the provided connection' do
@@ -390,13 +424,13 @@ describe Docker::Image do
       it 'pulls the image (string arguments)' do
         image = subject.create('fromImage' => 'busybox', 'tag' => 'uclibc')
         image.refresh!
-        expect(image.info['RepoTags']).to include('busybox:uclibc')
+        expect(image.info['RepoTags']).to include(/busybox:uclibc$/)
       end
 
       it 'pulls the image (symbol arguments)' do
         image = subject.create(fromImage: 'busybox', tag: 'uclibc')
         image.refresh!
-        expect(image.info['RepoTags']).to include('busybox:uclibc')
+        expect(image.info['RepoTags']).to include(/busybox:uclibc$/)
       end
 
       it 'supports identical fromImage and tag', docker_1_10: true do
@@ -421,6 +455,7 @@ describe Docker::Image do
         #
         # Note that providing the tag inline in fromImage is only supported in
         # Docker 1.10 and up.
+        skip('Not supported on podman') if ::Docker.podman?
         image = subject.create(fromImage: 'busybox:uclibc', tag: 'uclibc')
         image.refresh!
         expect(image.info['RepoTags']).to include('busybox:uclibc')
@@ -438,7 +473,7 @@ describe Docker::Image do
 
       it 'calls the block and passes build output' do
         subject.create('fromImage' => 'busybox', &block)
-        expect(create_output).to match(/Pulling.*busybox/)
+        expect(create_output).to match(/ulling.*busybox/)
       end
     end
   end
@@ -448,7 +483,7 @@ describe Docker::Image do
     let(:image) { subject.get(image_name) }
 
     context 'when the image does exist' do
-      let(:image_name) { 'debian:wheezy' }
+      let(:image_name) { 'debian:stable' }
 
       it 'returns the new image' do
         expect(image).to be_a Docker::Image
@@ -522,7 +557,7 @@ describe Docker::Image do
     let(:exists) { subject.exist?(image_name) }
 
     context 'when the image does exist' do
-      let(:image_name) { 'debian:wheezy' }
+      let(:image_name) { 'debian:stable' }
 
       it 'returns true' do
         expect(exists).to eq(true)
@@ -598,7 +633,7 @@ describe Docker::Image do
     subject { described_class }
 
     let(:images) { subject.all(:all => true) }
-    before { subject.create('fromImage' => 'debian:wheezy') }
+    before { subject.create('fromImage' => 'debian:stable') }
 
     it 'materializes each Image into a Docker::Image' do
       images.each do |image|
@@ -608,7 +643,14 @@ describe Docker::Image do
 
         expect(image.id).to_not be_nil
 
-        %w(Created Size VirtualSize).each do |key|
+        expected = [
+          'Created',
+          'Size'
+        ]
+
+        expected << 'VirtualSize' unless ::Docker.podman?
+
+        expected.each do |key|
           expect(image.info).to have_key(key)
         end
       end
@@ -623,33 +665,42 @@ describe Docker::Image do
     end
   end
 
-  describe '.search' do
-    subject { described_class }
+  unless ::Docker.podman?
+    describe '.search' do
+      subject { described_class }
 
-    it 'materializes each Image into a Docker::Image' do
-      expect(subject.search('term' => 'sshd')).to be_all { |image|
-        !image.id.nil? && image.is_a?(described_class)
-      }
+      it 'materializes each Image into a Docker::Image' do
+        expect(subject.search('term' => 'sshd')).to be_all { |image|
+          !image.id.nil? && image.is_a?(described_class)
+        }
+      end
     end
   end
 
   describe '.build' do
     subject { described_class }
     context 'with an invalid Dockerfile' do
-      it 'throws a UnexpectedResponseError', docker_17_09: false do
-        expect { subject.build('lololol') }
-            .to raise_error(Docker::Error::ClientError)
-      end
+      if ::Docker.podman?
+        it 'throws a UnexpectedResponseError' do
+          expect { subject.build('lololol') }
+              .to raise_error(Docker::Error::UnexpectedResponseError)
+        end
+      else
+        it 'throws a UnexpectedResponseError', docker_17_09: false do
+          expect { subject.build('lololol') }
+              .to raise_error(Docker::Error::ClientError)
+        end
 
-      it 'throws a ClientError', docker_17_09: true do
-        expect { subject.build('lololol') }
-            .to raise_error(Docker::Error::ClientError)
+        it 'throws a ClientError', docker_17_09: true do
+            expect { subject.build('lololol') }
+                .to raise_error(Docker::Error::ClientError)
+        end
       end
     end
 
     context 'with a valid Dockerfile' do
       context 'without query parameters' do
-        let(:image) { subject.build("FROM debian:wheezy\n") }
+        let(:image) { subject.build("FROM debian:stable\n") }
 
         it 'builds an image' do
           expect(image).to be_a Docker::Image
@@ -661,7 +712,7 @@ describe Docker::Image do
       context 'with specifying a repo in the query parameters' do
         let(:image) {
           subject.build(
-            "FROM debian:wheezy\nRUN true\n",
+            "FROM debian:stable\nRUN true\n",
             "t" => "#{ENV['DOCKER_API_USER']}/debian:true"
           )
         }
@@ -672,19 +723,18 @@ describe Docker::Image do
           expect(image.id).to_not be_nil
           expect(image.connection).to be_a Docker::Connection
           image.refresh!
-          expect(image.info["RepoTags"]).to eq(
-            ["#{ENV['DOCKER_API_USER']}/debian:true"]
-          )
+          expect(image.info["RepoTags"].size).to eq(1)
+          expect(image.info["RepoTags"].first).to match(%r{#{ENV['DOCKER_API_USER']}/debian:true})
         end
       end
 
       context 'with a block capturing build output' do
         let(:build_output) { "" }
         let(:block) { Proc.new { |chunk| build_output << chunk } }
-        let!(:image) { subject.build("FROM debian:wheezy\n", &block) }
+        let!(:image) { subject.build("FROM debian:stable\n", &block) }
 
         it 'calls the block and passes build output' do
-          expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
+          expect(build_output).to match(/(Step|STEP) \d(\/\d)?\s?: FROM debian:stable/)
         end
       end
     end
@@ -725,9 +775,8 @@ describe Docker::Image do
         it 'builds the image and tags it' do
           expect(output).to eq(docker_file.read)
           image.refresh!
-          expect(image.info["RepoTags"]).to eq(
-            ["#{ENV['DOCKER_API_USER']}/debian:from_dir"]
-          )
+          expect(image.info["RepoTags"].size).to eq(1)
+          expect(image.info["RepoTags"].first).to match(%r{#{ENV['DOCKER_API_USER']}/debian:from_dir})
         end
       end
 
@@ -737,7 +786,7 @@ describe Docker::Image do
 
         it 'calls the block and passes build output' do
           image # Create the image variable, which is lazy-loaded by Rspec
-          expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
+          expect(build_output).to match(/(Step|STEP) \d(\/\d)?\s?: FROM debian:stable/)
         end
 
         context 'uses a cached version the second time' do
@@ -746,8 +795,9 @@ describe Docker::Image do
           let(:image_two) { subject.build_from_dir(dir, opts, &block_two) }
 
           it 'calls the block and passes build output' do
+            skip('Not supported on podman') if ::Docker.podman?
             image # Create the image variable, which is lazy-loaded by Rspec
-            expect(build_output).to match(/Step \d(\/\d)? : FROM debian:wheezy/)
+            expect(build_output).to match(/(Step|STEP) \d(\/\d)?\s?: FROM debian:stable/)
             expect(build_output).to_not match(/Using cache/)
 
             image_two # Create the image_two variable, which is lazy-loaded by Rspec
