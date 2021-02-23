@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 7
+SingleCov.covered! uncovered: 11
 
 describe Docker::Connection do
   subject { described_class.new('http://localhost:4243', {}) }
