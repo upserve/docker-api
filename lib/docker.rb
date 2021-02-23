@@ -121,16 +121,25 @@ module Docker
 
   # Determine if the server is podman or docker.
   def podman?(connection = self.connection)
-    not (
+    @attrs ||= {}
+    return @attrs[:podman] if @attrs[:podman]
+
+    @attrs[:podman] = !(
       Array(version(connection)['Components']).find do |component|
         component['Name'] && component['Name'].include?('Podman')
       end
     ).nil?
+
+    @attrs[:podman]
   end
 
   # Determine if the session is rootless.
   def rootless?(connection = self.connection)
-    info(connection)['Rootless'] == true
+    @attrs ||= {}
+    return @attrs[:rootless] if @attrs[:rootless]
+
+    @attrs[:rootless] = (info(connection)['Rootless'] == true)
+    @attrs[:rootless]
   end
 
   # Login to the Docker registry.
