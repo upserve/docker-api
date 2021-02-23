@@ -32,3 +32,6 @@ echo 'DOCKER_OPTS="-H unix:///var/run/docker.sock --pidfile=/var/run/docker.pid"
 cat /etc/default/docker
 
 systemctl start docker.service
+
+journalctl -f -u docker.service &
+disown %1
