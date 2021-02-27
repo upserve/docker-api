@@ -1,6 +1,9 @@
 # This class represents a Connection to a Docker server. The Connection is
 # immutable in that once the url and options is set they cannot be changed.
 class Docker::Connection
+  require 'docker/util'
+  require 'docker/error'
+
   include Docker::Error
 
   attr_reader :url, :options
@@ -97,13 +100,38 @@ class Docker::Connection
     end
   end
 
+  def to_s
+    "Docker::Connection { :url => #{url}, :options => #{options} }"
+  end
+
   # Delegate all HTTP methods to the #request.
   [:get, :put, :post, :delete].each do |method|
     define_method(method) { |*args, &block| request(method, *args, &block) }
   end
 
-  def to_s
-    "Docker::Connection { :url => #{url}, :options => #{options} }"
+  # Common attribute requests
+  def info
+    Docker::Util.parse_json(get('/info'))
+  end
+
+  def ping
+    get('/_ping')
+  end
+
+  def podman?
+    @podman ||= !(
+      Array(version['Components']).find do |component|
+        component['Name'].include?('Podman')
+      end
+    ).nil?
+  end
+
+  def rootless?
+    @rootless ||= (info['Rootless'] == true)
+  end
+
+  def version
+    @version ||= Docker::Util.parse_json(get('/version'))
   end
 
 private

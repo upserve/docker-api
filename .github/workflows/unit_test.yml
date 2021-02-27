@@ -20,13 +20,12 @@ jobs:
           - 2.5
           - 2.4
         docker_version:
-          - 5:19.03.8~3-0~ubuntu-bionic
-          - 5:18.09.9~3-0~ubuntu-bionic
-          - 18.06.3~ce~3-0~ubuntu
+          - 5:20.10.4~3-0~ubuntu-focal
+          - 5:19.03.9~3-0~ubuntu-focal
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: install bundler
@@ -53,7 +52,7 @@ jobs:
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
       - name: install bundler
