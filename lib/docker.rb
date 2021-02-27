@@ -106,7 +106,7 @@ module Docker
 
   # Get the version of Go, Docker, and optionally the Git commit.
   def version(connection = self.connection)
-    Util.parse_json(connection.get('/version'))
+    Util.parse_json(connection.version)
   end
 
   # Get more information about the Docker server.
@@ -135,11 +135,7 @@ module Docker
 
   # Determine if the session is rootless.
   def rootless?(connection = self.connection)
-    @attrs ||= {}
-    return @attrs[:rootless] if @attrs[:rootless]
-
-    @attrs[:rootless] = (info(connection)['Rootless'] == true)
-    @attrs[:rootless]
+    info(connection)['Rootless'] == true
   end
 
   # Login to the Docker registry.

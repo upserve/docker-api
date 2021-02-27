@@ -102,6 +102,10 @@ class Docker::Connection
     define_method(method) { |*args, &block| request(method, *args, &block) }
   end
 
+  def version
+    @version ||= get('/version')
+  end
+
   def to_s
     "Docker::Connection { :url => #{url}, :options => #{options} }"
   end
