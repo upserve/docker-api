@@ -11,7 +11,7 @@ on:
 jobs:
   docker-rspec:
     runs-on:
-      - ubuntu-latest
+      - ubuntu-18.04
     strategy:
       matrix:
         ruby:
@@ -20,8 +20,9 @@ jobs:
           - 2.5
           - 2.4
         docker_version:
-          - 5:20.10.4~3-0~ubuntu-focal
-          - 5:19.03.9~3-0~ubuntu-focal
+          - ':20.'
+          - ':19.'
+          - ':18.'
       fail-fast: true
     steps:
       - uses: actions/checkout@v2
@@ -35,7 +36,23 @@ jobs:
       - name: install docker
         env:
           DOCKER_VERSION: ${{ matrix.docker_version }}
-        run: sudo ./script/install_docker.sh ${DOCKER_VERSION} ${DOCKER_CE}
+        run: |
+          set -x
+          sudo apt-get remove -y docker docker-engine docker.io containerd runc ||:
+          sudo apt-get update -y
+          sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          sudo apt-get update -y
+          sudo apt-cache gencaches
+          sudo apt-get install -y docker-ce=$( apt-cache madison docker-ce | grep -e $DOCKER_VERSION | cut -f 2 -d '|' | head -1 | sed 's/\s//g' )
+          if [ $? -ne 0 ]; then
+            echo "Error: Could not install ${DOCKER_VERSION}"
+            echo "Available docker versions:"
+            apt-cache madison docker-ce
+            exit 1
+          fi
+          sudo systemctl start docker
       - name: spec tests
         run: bundle exec rake
 
