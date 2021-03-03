@@ -19,6 +19,13 @@ class Docker::Exec
   # @return [Docker::Exec] self
   def self.create(options = {}, conn = Docker.connection)
     container = options.delete('Container')
+
+    # Podman does not attach these by default but does require them to be attached
+    if ::Docker.podman?
+      options['AttachStderr'] = true if options['AttachStderr'].nil?
+      options['AttachStdout'] = true if options['AttachStdout'].nil?
+    end
+
     resp = conn.post("/containers/#{container}/exec", {},
       body: MultiJson.dump(options))
     hash = Docker::Util.parse_json(resp) || {}

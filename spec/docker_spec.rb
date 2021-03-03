@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 2
+SingleCov.covered! uncovered: 8
 
 describe Docker do
   subject { Docker }
@@ -231,6 +231,7 @@ describe Docker do
       }
 
       it "raises an error and doesn't set the creds" do
+        skip('Not supported on podman') if ::Docker.podman?
         expect {
           authentication
         }.to raise_error(Docker::Error::AuthenticationError)

@@ -1,0 +1,82 @@
+name: Unit Tests
+on:
+  push:
+    branches:
+      # A test branch for seeing if your tests will pass in your personal fork
+      - test_me_github
+  pull_request:
+    branches:
+      - main
+      - master
+jobs:
+  docker-rspec:
+    runs-on:
+      - ubuntu-18.04
+    strategy:
+      matrix:
+        ruby:
+          - 2.7
+          - 2.6
+          - 2.5
+          - 2.4
+        docker_version:
+          - ':20.'
+          - ':19.'
+          - ':18.'
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: install bundler
+        run: |
+          gem install bundler -v '~> 1.17.3'
+          bundle update
+      - name: install docker
+        env:
+          DOCKER_VERSION: ${{ matrix.docker_version }}
+        run: |
+          set -x
+          sudo apt-get remove -y docker docker-engine docker.io containerd runc ||:
+          sudo apt-get update -y
+          sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          sudo apt-get update -y
+          sudo apt-cache gencaches
+          sudo apt-get install -y docker-ce=$( apt-cache madison docker-ce | grep -e $DOCKER_VERSION | cut -f 2 -d '|' | head -1 | sed 's/\s//g' )
+          if [ $? -ne 0 ]; then
+            echo "Error: Could not install ${DOCKER_VERSION}"
+            echo "Available docker versions:"
+            apt-cache madison docker-ce
+            exit 1
+          fi
+          sudo systemctl start docker
+      - name: spec tests
+        run: bundle exec rake
+
+  podman-rspec:
+    runs-on:
+      - ubuntu-latest
+    strategy:
+      matrix:
+        ruby:
+          - 2.7
+          - 2.6
+          - 2.5
+          - 2.4
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+      - name: install bundler
+        run: |
+          gem install bundler -v '~> 1.17.3'
+          bundle update
+      - name: install podman
+        run: sudo ./script/install_podman.sh
+      - name: spec tests
+        run: bundle exec rake

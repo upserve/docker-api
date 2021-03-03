@@ -20,7 +20,7 @@ end
 
 desc 'Download the necessary base images'
 task :unpack do
-  %w( swipely/base registry busybox tianon/true debian:wheezy ).each do |image|
+  %w( swipely/base registry busybox tianon/true debian:stable ).each do |image|
     system "docker pull #{image}"
   end
 end

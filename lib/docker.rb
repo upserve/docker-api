@@ -106,17 +106,27 @@ module Docker
 
   # Get the version of Go, Docker, and optionally the Git commit.
   def version(connection = self.connection)
-    Util.parse_json(connection.get('/version'))
+    connection.version
   end
 
   # Get more information about the Docker server.
   def info(connection = self.connection)
-    Util.parse_json(connection.get('/info'))
+    connection.info
   end
 
   # Ping the Docker server.
   def ping(connection = self.connection)
-    connection.get('/_ping')
+    connection.ping
+  end
+
+  # Determine if the server is podman or docker.
+  def podman?(connection = self.connection)
+    connection.podman?
+  end
+
+  # Determine if the session is rootless.
+  def rootless?(connection = self.connection)
+    connection.rootless?
   end
 
   # Login to the Docker registry.
@@ -132,5 +142,5 @@ module Docker
   module_function :default_socket_url, :env_url, :url, :url=, :env_options,
                   :options, :options=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset!, :reset_connection!, :version, :info,
-                  :ping, :authenticate!, :ssl_options
+                  :ping, :podman?, :rootless?, :authenticate!, :ssl_options
 end

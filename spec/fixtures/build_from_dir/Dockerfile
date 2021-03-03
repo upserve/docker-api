@@ -1,2 +1,2 @@
-FROM debian:wheezy
+FROM debian:stable
 ADD . /

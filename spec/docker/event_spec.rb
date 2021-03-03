@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 4
+SingleCov.covered! uncovered: 5
 
 describe Docker::Event do
   let(:api_response) do
@@ -35,7 +35,7 @@ describe Docker::Event do
 
       let(:status) { "start" }
       let(:id) { "398c9f77b5d2" }
-      let(:from) { "debian:wheezy" }
+      let(:from) { "debian:stable" }
       let(:time) { 1381956164 }
 
       let(:expected_string) {
@@ -75,7 +75,7 @@ describe Docker::Event do
         end
       end
 
-      container = Docker::Image.create('fromImage' => 'debian:wheezy')
+      container = Docker::Image.create('fromImage' => 'debian:stable')
         .run('bash')
         .tap(&:wait)
 
@@ -91,6 +91,7 @@ describe Docker::Event do
     let(:time) { Time.now.to_i + 1 }
 
     it 'receives at least 4 events' do
+      skip('Not supported on podman') if ::Docker.podman?
       events = 0
 
       stream_thread = Thread.new do
@@ -102,7 +103,7 @@ describe Docker::Event do
         end
       end
 
-      container = Docker::Image.create('fromImage' => 'debian:wheezy')
+      container = Docker::Image.create('fromImage' => 'debian:stable')
         .run('bash')
         .tap(&:wait)
 
@@ -119,7 +120,7 @@ describe Docker::Event do
       let(:event) { Docker::Event.new_event(response_body, nil, nil) }
       let(:status) { "start" }
       let(:id) { "398c9f77b5d2" }
-      let(:from) { "debian:wheezy" }
+      let(:from) { "debian:stable" }
       let(:time) { 1381956164 }
       let(:response_body) {
         "{\"status\":\"#{status}\",\"id\":\"#{id}\""\
