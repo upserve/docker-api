@@ -260,7 +260,7 @@ module Docker::Util
   end
 
   def glob_all_files(pattern)
-    Dir.glob(pattern, File::FNM_DOTMATCH) - ['..', '.']
+    Dir.glob(pattern, File::FNM_DOTMATCH)
   end
 
   def remove_ignored_files!(directory, files)
@@ -269,11 +269,23 @@ module Docker::Util
     ignored_files(directory, ignore).each { |f| files.delete(f) }
   end
 
-  def ignored_files(directory, ignore_file)
-    patterns = File.read(ignore_file).split("\n").each(&:strip!)
-    patterns.reject! { |p| p.empty? || p.start_with?('#') }
+  def resolve_patterns(patterns, directory)
     patterns.map! { |p| File.join(directory, p) }
     patterns.map! { |p| File.directory?(p) ? "#{p}/**/*" : p }
     patterns.flat_map { |p| p =~ GLOB_WILDCARDS ? glob_all_files(p) : p }
+  end
+
+  def ignored_files(directory, ignore_file)
+    patterns = File.read(ignore_file).split("\n").each(&:strip!)
+    patterns.reject! { |p| p.empty? || p.start_with?('#') }
+
+    exclusion_patterns = patterns.select { |p| p.start_with?('!') }
+    inclusion_patterns = patterns - exclusion_patterns
+    exclusion_patterns.map! { |p| p[1..-1] }.concat(%w(Dockerfile .dockerignore))
+
+    files_ignored = resolve_patterns(inclusion_patterns, directory)
+    files_excluded = resolve_patterns(exclusion_patterns, directory)
+
+    files_ignored - files_excluded - [File.join(directory, '.'), File.join(directory, '..')]
   end
 end

@@ -99,6 +99,31 @@ describe Docker::Util do
         expect(files_in_tar(tar)).to eq ['.dockerignore', 'baz']
       end
 
+      it 'does not ignore files starting with !' do
+        File.write("#{tmpdir}/Dockerfile", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", '*')
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'Dockerfile']
+      end
+
+      it 'does not ignore the Dockerfile' do
+        File.write("#{tmpdir}/Dockerfile", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", '*')
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'Dockerfile']
+      end
+
+      it 'ignores files' do
+        File.write("#{tmpdir}/foo", 'bar')
+        File.write("#{tmpdir}/baz", 'bar')
+
+        File.write("#{tmpdir}/.dockerignore", "foo")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'baz']
+      end
+
       it 'ignores folders' do
         FileUtils.mkdir("#{tmpdir}/foo")
         File.write("#{tmpdir}/foo/bar", 'bar')
@@ -246,6 +271,61 @@ describe Docker::Util do
 
       file.unlink
       expect(actual_permissions).to eql(expected_permissions)
+    end
+  end
+
+  describe '.ignored_files' do
+    attr_accessor :tmpdir
+
+    subject do
+      described_class.ignored_files(tmpdir, ignore_file).map do |f|
+        f[tmpdir.length+1..-1]
+      end
+    end
+
+    let(:ignore_file) { "#{tmpdir}/.dockerignore" }
+
+    around do |example|
+      Dir.mktmpdir do |tmpdir|
+        self.tmpdir = tmpdir
+        example.call
+      end
+    end
+
+    it 'ignores explicit files' do
+      File.write("#{tmpdir}/foo", 'bar')
+      File.write("#{tmpdir}/baz", 'bar')
+
+      File.write("#{tmpdir}/.dockerignore", "foo")
+
+      expect(subject).to eq %w(foo)
+    end
+
+    it 'makes an exception to exclusions' do
+      File.write("#{tmpdir}/foo", 'bar')
+      File.write("#{tmpdir}/baz", 'bar')
+
+      File.write("#{tmpdir}/.dockerignore", "foo\n!foo")
+
+      expect(subject).to be_empty
+    end
+
+    it 'makes an exception to exclusions (order doesnt matter)' do
+      File.write("#{tmpdir}/foo", 'bar')
+      File.write("#{tmpdir}/baz", 'bar')
+
+      File.write("#{tmpdir}/.dockerignore", "!foo\nfoo")
+
+      expect(subject).to be_empty
+    end
+
+    it 'does not ignore the Dockerfile or .dockerignore' do
+      File.write("#{tmpdir}/Dockerfile", 'bar')
+      File.write("#{tmpdir}/baz", 'bar')
+
+      File.write("#{tmpdir}/.dockerignore", '*')
+
+      expect(subject).to eq %w(baz)
     end
   end
 
