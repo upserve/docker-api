@@ -21,7 +21,7 @@ class Docker::Exec
     container = options.delete('Container')
 
     # Podman does not attach these by default but does require them to be attached
-    if ::Docker.podman?
+    if ::Docker.podman?(conn)
       options['AttachStderr'] = true if options['AttachStderr'].nil?
       options['AttachStdout'] = true if options['AttachStdout'].nil?
     end
