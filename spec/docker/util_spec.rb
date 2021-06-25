@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'tempfile'
+require 'fileutils'
 
 SingleCov.covered! uncovered: 71
 
@@ -63,6 +64,29 @@ describe Docker::Util do
   describe '.create_dir_tar' do
     attr_accessor :tmpdir
 
+    def files_in_tar(tar)
+      Gem::Package::TarReader.new(tar) { |content| return content.map(&:full_name).sort }
+    end
+
+    # @param base_dir [String] the path to the directory where the structure should be written
+    # @param dockerignore_entries [Array<String>] the lines of the desired .dockerignore file
+    def structure_context_dir(dockerignore_entries = nil)
+      FileUtils.mkdir_p("#{tmpdir}/a_dir/a_subdir")
+      [
+        '#edge',
+        'a_file',
+        'a_file2',
+        'a_dir/a_file',
+        'a_dir/a_subdir/a_file',
+      ].each { |f| File.write("#{tmpdir}/#{f}", 'x') }
+
+      File.write("#{tmpdir}/.dockerignore", dockerignore_entries.join("\n")) unless dockerignore_entries.nil?
+    end
+
+    def expect_tar_entries(*entries)
+      expect(files_in_tar(tar)).to contain_exactly(*entries)
+    end
+
     let(:tar) { subject.create_dir_tar tmpdir }
 
     around do |example|
@@ -89,7 +113,62 @@ describe Docker::Util do
       expect(files_in_tar(tar)).to eq ['foo/bar']
     end
 
-    describe ".dockerignore" do
+    describe '.dockerignore' do
+      it 'passes all files when there is no .dockerignore' do
+        structure_context_dir
+        expect_tar_entries('#edge', 'a_dir/a_file', 'a_dir/a_subdir/a_file', 'a_file', 'a_file2')
+      end
+
+      it 'passes all files when there is an empty .dockerignore' do
+        structure_context_dir([''])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_dir/a_subdir/a_file', 'a_file', 'a_file2')
+      end
+
+      it 'does not interpret comments' do
+        structure_context_dir(['#edge'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_dir/a_subdir/a_file', 'a_file', 'a_file2')
+      end
+
+      it 'ignores files' do
+        structure_context_dir(['a_file'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_dir/a_subdir/a_file', 'a_file2')
+      end
+
+      it 'ignores files with wildcard' do
+        structure_context_dir(['a_file'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_dir/a_subdir/a_file', 'a_file2')
+      end
+
+      it 'ignores files with dir wildcard' do
+        structure_context_dir(['**/a_file'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_file2')
+      end
+
+      it 'ignores files with dir wildcard but handles exceptions' do
+        structure_context_dir(['**/a_file', '!a_dir/a_file'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_file2')
+      end
+
+      it 'ignores directories' do
+        structure_context_dir(['a_dir'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_file', 'a_file2')
+      end
+
+      it 'ignores directories with dir wildcard' do
+        structure_context_dir(['*/a_subdir'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_file', 'a_file2')
+      end
+
+      it 'ignores directories with dir double wildcard' do
+        structure_context_dir(['**/a_subdir'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_file', 'a_file', 'a_file2')
+      end
+
+      it 'ignores directories with dir wildcard' do
+        structure_context_dir(['a_dir', '!a_dir/a_subdir'])
+        expect_tar_entries('#edge', '.dockerignore', 'a_dir/a_subdir/a_file', 'a_file', 'a_file2')
+      end
+
       it 'ignores files' do
         File.write("#{tmpdir}/foo", 'bar')
         File.write("#{tmpdir}/baz", 'bar')
@@ -249,7 +328,4 @@ describe Docker::Util do
     end
   end
 
-  def files_in_tar(tar)
-    Gem::Package::TarReader.new(tar) { |content| return content.map(&:full_name).sort }
-  end
 end
