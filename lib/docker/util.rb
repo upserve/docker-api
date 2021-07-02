@@ -152,11 +152,13 @@ module Docker::Util
     dockerignore = File.join(directory, '.dockerignore')
     return all_files unless all_files.include?(dockerignore)
 
-    # iterate over non-comments and non-blanks from the dockerignore file,
-    # starting with the initial glob as working set
-    File.read(dockerignore).each_line.map(&:strip)
-      .reject(&:empty?)
-      .reject { |p| p.start_with?('#') }
+    # Iterate over valid lines, starting with the initial glob as working set
+    File
+      .read(dockerignore)                # https://docs.docker.com/engine/reference/builder/#dockerignore-file
+      .each_line                         # "a newline-separated list of patterns"
+      .map(&:strip)                      # "A preprocessing step removes leading and trailing whitespace"
+      .reject(&:empty?)                  # "Lines that are blank after preprocessing are ignored"
+      .reject { |p| p.start_with?('#') } # "if [a line starts with `#`], then this line is considered as a comment"
       .each_with_object(Set.new(all_files)) do |p, working_set|
         # determine the pattern (p) and whether it is to be added or removed from context
         add = p.start_with?("!")
@@ -299,6 +301,7 @@ module Docker::Util
   end
 
   def glob_all_files(pattern)
+    # globs of "a_dir/**/*" can return "a_dir/.", so explicitly reject those
     (Dir.glob(pattern, File::FNM_DOTMATCH) - ['..', '.']).reject { |p| p.end_with?("/.") }
   end
 
