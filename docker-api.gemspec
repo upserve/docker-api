@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ['Swipely, Inc.']
   gem.email         = 'tomhulihan@swipely.com bright@swipely.com toddlunter@swipely.com'
   gem.description   = gem.summary = 'A simple REST client for the Docker Remote API'
-  gem.homepage      = 'https://github.com/swipely/docker-api'
+  gem.homepage      = 'https://github.com/upserve/docker-api'
   gem.license       = 'MIT'
   gem.files         = `git ls-files lib README.md LICENSE`.split($\)
   gem.name          = 'docker-api'
