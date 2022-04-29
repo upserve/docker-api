@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 2
+SingleCov.covered! uncovered: 8
 
 describe Docker do
   subject { Docker }
@@ -173,10 +173,9 @@ describe Docker do
 
     let(:info) { subject.info }
     let(:keys) do
-      %w(Containers Debug DockerRootDir Driver DriverStatus ExecutionDriver ID
-         IPv4Forwarding Images IndexServerAddress KernelVersion Labels MemTotal
-         MemoryLimit NCPU NEventsListener NFd NGoroutines Name
-         OperatingSystem SwapLimit)
+      %w(Containers Debug DockerRootDir Driver DriverStatus ID IPv4Forwarding
+         Images IndexServerAddress KernelVersion Labels MemTotal MemoryLimit
+         NCPU NEventsListener NFd NGoroutines Name OperatingSystem SwapLimit)
     end
 
     it 'returns the info as a Hash' do
@@ -232,41 +231,12 @@ describe Docker do
       }
 
       it "raises an error and doesn't set the creds" do
+        skip('Not supported on podman') if ::Docker.podman?
         expect {
           authentication
         }.to raise_error(Docker::Error::AuthenticationError)
         expect(Docker.creds).to be_nil
       end
-    end
-  end
-
-  describe '#validate_version' do
-    before { Docker.reset! }
-
-    context 'when a Docker Error is raised' do
-      before do
-        allow(Docker).to receive(:info).and_raise(Docker::Error::ClientError)
-      end
-
-      it 'raises a Version Error' do
-        expect { subject.validate_version! }
-            .to raise_error(Docker::Error::VersionError)
-      end
-    end
-
-    context 'when a connection times out' do
-      before do
-        allow(Docker).to receive(:info).and_raise(Docker::Error::TimeoutError)
-      end
-
-      it 'lets the user know that docker is unreachable' do
-        expect { subject.validate_version! }
-          .to raise_error(Docker::Error::TimeoutError)
-      end
-    end
-
-    context 'when nothing is raised' do
-      its(:validate_version!) { should be true }
     end
   end
 end

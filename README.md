@@ -1,10 +1,10 @@
 docker-api
 ==========
-[![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api) [![travis-ci](https://travis-ci.org/swipely/docker-api.svg?branch=master)](https://travis-ci.org/swipely/docker-api) [![Code Climate](https://codeclimate.com/github/swipely/docker-api.svg)](https://codeclimate.com/github/swipely/docker-api)
+[![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api) [![Code Climate](https://codeclimate.com/github/upserve/docker-api.svg)](https://codeclimate.com/github/upserve/docker-api)
 
 This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.4.*
 
-If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/swipely/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
+If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/upserve/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
 Installation
 ------------
@@ -33,6 +33,8 @@ Usage
 -----
 
 docker-api is designed to be very lightweight. Almost no state is cached (aside from id's which are immutable) to ensure that each method call's information is up to date. As such, just about every external method represents an API call.
+
+At this time, basic `podman` support has been added via the podman docker-compatible API socket.
 
 ## Starting up
 
@@ -75,8 +77,6 @@ irb(main):003:0> Docker.url
 irb(main):004:0> Docker.options
 => {}
 ```
-
-Before doing anything else, ensure you have the correct version of the Docker API. To do this, run `Docker.validate_version!`. If your installed version is not supported, a `Docker::Error::VersionError` is raised.
 
 ### SSL
 

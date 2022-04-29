@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 7
+SingleCov.covered! uncovered: 12
 
 describe Docker::Connection do
   subject { described_class.new('http://localhost:4243', {}) }
@@ -20,11 +20,11 @@ describe Docker::Connection do
 
     context 'when the first argument is a String' do
       context 'and the url is a unix socket' do
-        let(:url) { 'unix:///var/run/docker.sock' }
+        let(:url) { ::Docker.env_url || ::Docker.default_socket_url }
 
         it 'sets the socket path in the options' do
           expect(subject.url).to eq('unix:///')
-          expect(subject.options).to include(:socket => '/var/run/docker.sock')
+          expect(subject.options).to include(:socket => url.split('//').last)
         end
       end
 
@@ -92,7 +92,7 @@ describe Docker::Connection do
     let(:expected_hash) {
       {
         :method  => method,
-        :path    => "/v#{Docker::API_VERSION}#{path}",
+        :path    => path,
         :query   => query,
         :headers => { 'Content-Type' => 'text/plain',
                       'User-Agent'   => "Swipely/Docker-API #{Docker::VERSION}",

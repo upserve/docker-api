@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 4
+SingleCov.covered! uncovered: 5
 
 describe Docker::Exec do
   let(:container) {
     Docker::Container.create(
       'Cmd' => %w(sleep 300),
-      'Image' => 'debian:wheezy'
+      'Image' => 'debian:stable'
     ).start!
   }
 
@@ -59,7 +59,8 @@ describe Docker::Exec do
     context 'when the parent container does not exist' do
       before do
         Docker.options = { :mock => true }
-        Excon.stub({ :method => :post }, { :status => 404 })
+        Excon.stub({ :method => :get}, { :status => 404 }) # For Podman
+        Excon.stub({ :method => :post}, { :status => 404 })
       end
       after do
         Excon.stubs.shift

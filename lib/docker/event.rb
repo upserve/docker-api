@@ -29,7 +29,9 @@ class Docker::Event
 
     def stream(opts = {}, conn = Docker.connection, &block)
       conn.get('/events', opts, :response_block => lambda { |b, r, t|
-        block.call(new_event(b, r, t))
+        b.each_line do |line|
+          block.call(new_event(line, r, t))
+        end
       })
     end
 

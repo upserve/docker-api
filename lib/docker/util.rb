@@ -1,8 +1,10 @@
+require 'set'
+
 # This module holds shared logic that doesn't really belong anywhere else in the
 # gem.
 module Docker::Util
   # http://www.tldp.org/LDP/GNU-Linux-Tools-Summary/html/x11655.htm#STANDARD-WILDCARDS
-  GLOB_WILDCARDS = /[\?\*\[\{]/
+  GLOB_WILDCARDS = /[\?\*\[\{\]\}]/
 
   include Docker::Error
 
@@ -142,10 +144,35 @@ module Docker::Util
     File.new(tempfile.path, 'r')
   end
 
+
+  # return the set of files that form the docker context
+  # implement this logic https://docs.docker.com/engine/reference/builder/#dockerignore-file
+  def docker_context(directory)
+    all_files = glob_all_files(File.join(directory, "**/*"))
+    dockerignore = File.join(directory, '.dockerignore')
+    return all_files unless all_files.include?(dockerignore)
+
+    # Iterate over valid lines, starting with the initial glob as working set
+    File
+      .read(dockerignore)                # https://docs.docker.com/engine/reference/builder/#dockerignore-file
+      .each_line                         # "a newline-separated list of patterns"
+      .map(&:strip)                      # "A preprocessing step removes leading and trailing whitespace"
+      .reject(&:empty?)                  # "Lines that are blank after preprocessing are ignored"
+      .reject { |p| p.start_with?('#') } # "if [a line starts with `#`], then this line is considered as a comment"
+      .each_with_object(Set.new(all_files)) do |p, working_set|
+        # determine the pattern (p) and whether it is to be added or removed from context
+        add = p.start_with?("!")
+        # strip leading "!" from pattern p, then prepend the base directory
+        matches = dockerignore_compatible_glob(File.join(directory, add ? p[1..-1] : p))
+        # add or remove the matched items as indicated in the ignore file
+        add ? working_set.merge(matches) : working_set.replace(working_set.difference(matches))
+      end
+    .to_a
+  end
+
   def create_relative_dir_tar(directory, output)
     Gem::Package::TarWriter.new(output) do |tar|
-      files = glob_all_files(File.join(directory, "**/*"))
-      remove_ignored_files!(directory, files)
+      files = docker_context(directory)
 
       files.each do |prefixed_file_name|
         stat = File.stat(prefixed_file_name)
@@ -259,21 +286,23 @@ module Docker::Util
     }
   end
 
+  # do a directory glob that matches .dockerignore behavior
+  # specifically: matched directories are considered a recursive match
+  def dockerignore_compatible_glob(pattern)
+    begin
+      some_dirs, some_files = glob_all_files(pattern).partition { |f| File.directory?(f) }
+      # since all directories will be re-processed with a /**/* glob, we can preemptively
+      # eliminate any whose parent directory is already in this set.  This saves significant time.
+      some_files + some_dirs.reject { |d| some_dirs.any? { |pd| d.start_with?(pd) && d != pd } }
+    end.each_with_object(Set.new) do |f, acc|
+      # expand any directories by globbing; flatten results
+      acc.merge(File.directory?(f) ? glob_all_files("#{f}/**/*") : [f])
+    end
+  end
+
   def glob_all_files(pattern)
-    Dir.glob(pattern, File::FNM_DOTMATCH) - ['..', '.']
+    # globs of "a_dir/**/*" can return "a_dir/.", so explicitly reject those
+    (Dir.glob(pattern, File::FNM_DOTMATCH) - ['..', '.']).reject { |p| p.end_with?("/.") }
   end
 
-  def remove_ignored_files!(directory, files)
-    ignore = File.join(directory, '.dockerignore')
-    return unless files.include?(ignore)
-    ignored_files(directory, ignore).each { |f| files.delete(f) }
-  end
-
-  def ignored_files(directory, ignore_file)
-    patterns = File.read(ignore_file).split("\n").each(&:strip!)
-    patterns.reject! { |p| p.empty? || p.start_with?('#') }
-    patterns.map! { |p| File.join(directory, p) }
-    patterns.map! { |p| File.directory?(p) ? "#{p}/**/*" : p }
-    patterns.flat_map { |p| p =~ GLOB_WILDCARDS ? glob_all_files(p) : p }
-  end
 end

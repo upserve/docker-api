@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 1
+SingleCov.covered! uncovered: 39
 
 describe Docker::Container do
   describe '#to_s' do
@@ -25,7 +25,7 @@ describe Docker::Container do
 
   describe '#json' do
     subject {
-      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:stable')
     }
     let(:description) { subject.json }
     after(:each) { subject.remove }
@@ -40,7 +40,7 @@ describe Docker::Container do
     let(:options) { {} }
     subject do
       described_class.create(
-        {'Cmd' => ['/bin/bash', '-lc', 'echo hello'], 'Image' => 'debian:wheezy'}.merge(options)
+        {'Cmd' => ['/bin/bash', '-lc', 'echo hello'], 'Image' => 'debian:stable'}.merge(options)
       )
     end
 
@@ -85,17 +85,18 @@ describe Docker::Container do
 
   describe '#stats', :docker_1_9 do
     after(:each) do
-      subject.kill!
+      subject.wait
       subject.remove
     end
 
     context "when requesting container stats" do
       subject {
-        described_class.create('Cmd' => ['echo', 'hello'], 'Image' => 'debian:wheezy')
+        described_class.create('Cmd' => ['echo', 'hello'], 'Image' => 'debian:stable')
       }
 
       let(:output) { subject.stats }
       it "returns a Hash" do
+        skip('Not supported on podman') if ::Docker.podman?
         expect(output).to be_a Hash
       end
     end
@@ -104,11 +105,12 @@ describe Docker::Container do
       subject {
         described_class.create(
           'Cmd' => ['sleep', '3'],
-          'Image' => 'debian:wheezy'
+          'Image' => 'debian:stable'
         )
       }
 
       it "yields a Hash" do
+        skip('Not supported on podman') if ::Docker.podman?
         subject.start! # If the container isn't started, no stats will be streamed
         called_count = 0
         subject.stats do |output|
@@ -118,20 +120,12 @@ describe Docker::Container do
         end
         expect(called_count).to eq 2
       end
-
-      it "returns after :read_timeout if the container is not running", :docker_old do
-        called_count = 0
-        subject.stats(read_timeout: 3) do |output|
-          called_count +=1
-        end
-        expect(called_count).to eq 0
-      end
     end
   end
 
   describe '#logs' do
     subject {
-      described_class.create('Cmd' => ['echo',  'hello'], 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => ['echo',  'hello'], 'Image' => 'debian:stable')
     }
     after(:each) { subject.remove }
 
@@ -155,7 +149,7 @@ describe Docker::Container do
     subject {
       described_class.create({
         'Cmd' => %w[true],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       }.merge(opts))
     }
 
@@ -174,7 +168,7 @@ describe Docker::Container do
       described_class.create({
         'name' => 'foo',
         'Cmd' => %w[true],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       })
     }
 
@@ -182,6 +176,7 @@ describe Docker::Container do
     after(:each) { subject.tap(&:wait).remove }
 
     it 'renames the container' do
+      skip('Not supported on podman') if ::Docker.podman?
       subject.rename('bar')
       expect(subject.json["Name"]).to match(%r{bar})
     end
@@ -192,7 +187,7 @@ describe Docker::Container do
       described_class.create({
         "name" => "foo",
         'Cmd' => %w[true],
-        "Image" => "debian:wheezy",
+        "Image" => "debian:stable",
         "HostConfig" => {
           "CpuShares" => 60000
         }
@@ -203,11 +198,12 @@ describe Docker::Container do
     after(:each) { subject.tap(&:wait).remove }
 
     it "updates the container" do
+      skip('Podman containers are immutable once created') if ::Docker.podman?
       subject.refresh!
-      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 60000
+      expect(subject.info.fetch("HostConfig").fetch("CpuShares")).to eq 60000
       subject.update("CpuShares" => 50000)
       subject.refresh!
-      expect(subject.info.fetch("Config").fetch("CpuShares")).to eq 50000
+      expect(subject.info.fetch("HostConfig").fetch("CpuShares")).to eq 50000
     end
   end
 
@@ -215,7 +211,7 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[rm -rf /root],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       )
     }
     let(:changes) { subject.changes }
@@ -224,12 +220,13 @@ describe Docker::Container do
     after(:each) { subject.tap(&:wait).remove }
 
     it 'returns the changes as an array' do
-      expect(changes).to eq [
+      expect(changes).to be_a(Array)
+      expect(changes).to include(
         {
           "Path" => "/root",
           "Kind" => 2
         },
-      ]
+      )
     end
   end
 
@@ -250,7 +247,7 @@ describe Docker::Container do
     it 'returns the top commands as an Array' do
       expect(top_ary).to be_a Array
       expect(top_ary).to_not be_empty
-      expect(top_ary.first.keys).to include('PID')
+      expect(top_ary.first.keys).to include(/PID/)
     end
 
     it 'returns the top commands as an Hash' do
@@ -260,49 +257,14 @@ describe Docker::Container do
     end
 
     it 'returns nothing when Processes were not returned due to an error' do
-      expect(Docker::Util).to receive(:parse_json).and_return({})
+      expect(Docker::Util).to receive(:parse_json).and_return({}).at_least(:once)
       expect(top_empty).to eq []
-    end
-  end
-
-  describe '#copy' do
-    let(:image) { Docker::Image.create('fromImage' => 'debian:wheezy') }
-    subject { image.run('touch /test').tap { |c| c.wait } }
-
-    after(:each) { subject.remove }
-
-    context 'when the file does not exist' do
-      it 'raises an error' do
-        expect { subject.copy('/lol/not/a/real/file') { |chunk| puts chunk } }
-          .to raise_error(
-            Docker::Error::ServerError,
-            %r{Could not find the file /lol/not/a/real/file in container}
-          )
-      end
-    end
-
-    context 'when the input is a file' do
-      it 'yields each chunk of the tarred file' do
-        chunks = []
-        subject.copy('/test') { |chunk| chunks << chunk }
-        chunks = chunks.join("\n")
-        expect(chunks).to be_include('test')
-      end
-    end
-
-    context 'when the input is a directory' do
-      it 'yields each chunk of the tarred directory' do
-        chunks = []
-        subject.copy('/etc/logrotate.d') { |chunk| chunks << chunk }
-        chunks = chunks.join("\n")
-        expect(%w[apt dpkg]).to be_all { |file| chunks.include?(file) }
-      end
     end
   end
 
   describe '#archive_in', :docker_1_8 do
     let(:license_path) { File.absolute_path(File.join(__FILE__, '..', '..', '..', 'LICENSE')) }
-    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
+    subject { Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ['/bin/sh']) }
     let(:committed_image) { subject.commit }
     let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
     let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
@@ -318,6 +280,7 @@ describe Docker::Container do
       end
 
       it 'file exists in the container' do
+        skip('Not supported on podman') if ::Docker.podman?
         subject.archive_in(license_path, '/', overwrite: false)
         expect(output).to include('LICENSE')
       end
@@ -326,7 +289,7 @@ describe Docker::Container do
 
   describe '#archive_in_stream', :docker_1_8 do
     let(:tar) { StringIO.new(Docker::Util.create_tar('/lol' => 'TEST')) }
-    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['/bin/sh']) }
+    subject { Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ['/bin/sh']) }
     let(:committed_image) { subject.commit }
     let(:ls_container) { committed_image.run('ls /').tap(&:wait) }
     let(:output) { ls_container.streaming_logs(stdout: true, stderr: true) }
@@ -342,6 +305,7 @@ describe Docker::Container do
       end
 
       it 'file exists in the container' do
+        skip('Not supported on podman') if ::Docker.podman?
         subject.archive_in_stream('/', overwrite: false) { tar.read }
         expect(output).to include('lol')
       end
@@ -351,6 +315,7 @@ describe Docker::Container do
       let(:tar) { StringIO.new(Docker::Util.create_tar('/etc' => 'TEST')) }
 
       it 'raises an error' do
+        skip('Not supported on podman') if ::Docker.podman?
         # Docs say this should return a client error: clearly wrong
         # https://docs.docker.com/engine/reference/api/docker_remote_api_v1.21/
         # #extract-an-archive-of-files-or-folders-to-a-directory-in-a-container
@@ -362,12 +327,13 @@ describe Docker::Container do
   end
 
   describe '#archive_out', :docker_1_8 do
-    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ['touch','/test']) }
+    subject { Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ['touch','/test']) }
 
     after { subject.remove }
 
     context 'when the file does not exist' do
       it 'raises an error' do
+        skip('Not supported on podman') if ::Docker.podman?
         subject.start
         subject.wait
 
@@ -378,6 +344,7 @@ describe Docker::Container do
 
     context 'when the input is a file' do
       it 'yields each chunk of the tarred file' do
+        skip('Not supported on podman') if ::Docker.podman?
         subject.start; subject.wait
 
         chunks = []
@@ -389,6 +356,7 @@ describe Docker::Container do
 
     context 'when the input is a directory' do
       it 'yields each chunk of the tarred directory' do
+        skip('Not supported on podman') if ::Docker.podman?
         subject.start; subject.wait
 
         chunks = []
@@ -402,7 +370,7 @@ describe Docker::Container do
   describe "#read_file", :docker_1_8 do
     subject {
       Docker::Container.create(
-        "Image" => "debian:wheezy",
+        "Image" => "debian:stable",
         "Cmd" => ["/bin/bash", "-c", "echo \"Hello world\" > /test"]
       )
     }
@@ -415,16 +383,18 @@ describe Docker::Container do
     end
 
     it "reads contents from files" do
+      skip('Not supported on podman') if ::Docker.podman?
       expect(subject.read_file("/test")).to eq "Hello world\n"
     end
   end
 
   describe "#store_file", :docker_1_8 do
-    subject { Docker::Container.create('Image' => 'debian:wheezy', 'Cmd' => ["ls"]) }
+    subject { Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ["ls"]) }
 
     after { subject.remove }
 
     it "stores content in files" do
+      skip('Not supported on podman') if ::Docker.podman?
       subject.store_file("/test", "Hello\nWorld")
       expect(subject.read_file("/test")).to eq "Hello\nWorld"
     end
@@ -449,7 +419,7 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => ['bash','-c','sleep 2; echo hello'],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       )
     }
 
@@ -487,9 +457,10 @@ describe Docker::Container do
 
   describe '#attach with stdin' do
     it 'yields the output' do
+      skip('Currently broken in podman') if ::Docker.podman?
       container = described_class.create(
         'Cmd'       => %w[cat],
-        'Image'     => 'debian:wheezy',
+        'Image'     => 'debian:stable',
         'OpenStdin' => true,
         'StdinOnce' => true
       )
@@ -509,13 +480,14 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[test -d /foo],
-        'Image' => 'debian:wheezy',
-        'Volumes' => {'/foo' => {}}
+        'Image' => 'debian:stable',
+        'Volumes' => {'/foo' => {}},
+        'HostConfig' => { 'Binds' => ["/tmp:/foo"] }
       )
     }
     let(:all) { Docker::Container.all(all: true) }
 
-    before { subject.start('Binds' => ["/tmp:/foo"]) }
+    before { subject.start }
     after(:each) { subject.remove }
 
     it 'starts the container' do
@@ -526,7 +498,7 @@ describe Docker::Container do
 
   describe '#stop' do
     subject {
-      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:stable')
     }
 
     before { subject.tap(&:start).stop('timeout' => '10') }
@@ -582,7 +554,7 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[sleep 20],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       ).start
     }
     after { subject.kill!.remove }
@@ -618,6 +590,7 @@ describe Docker::Container do
       let(:output) { subject.exec(['cat'], stdin: StringIO.new("hello")) }
 
       it 'returns the stdout/stderr messages' do
+        skip('Not supported on podman') if ::Docker.podman?
         expect(output).to eq([["hello"],[],0])
       end
     end
@@ -638,7 +611,7 @@ describe Docker::Container do
   describe '#kill' do
     let(:command) { ['/bin/bash', '-c', 'while [ 1 ]; do echo hello; done'] }
     subject {
-      described_class.create('Cmd' => command, 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => command, 'Image' => 'debian:stable')
     }
 
     before { subject.start }
@@ -684,7 +657,7 @@ describe Docker::Container do
 
   describe '#delete' do
     subject {
-      described_class.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => ['ls'], 'Image' => 'debian:stable')
     }
 
     it 'deletes the container' do
@@ -697,7 +670,7 @@ describe Docker::Container do
 
   describe '#restart' do
     subject {
-      described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => %w[sleep 10], 'Image' => 'debian:stable')
     }
 
     before { subject.start }
@@ -722,12 +695,13 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[sleep 50],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       ).start
     }
     after { subject.unpause.kill!.remove }
 
     it 'pauses the container' do
+      skip('Not supported on rootless podman') if (::Docker.podman? && ::Docker.rootless?)
       subject.pause
       expect(described_class.get(subject.id).info['State']['Paused']).to be true
     end
@@ -737,7 +711,7 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[sleep 50],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       ).start
     }
     before { subject.pause }
@@ -755,7 +729,7 @@ describe Docker::Container do
     subject {
       described_class.create(
         'Cmd' => %w[tar nonsense],
-        'Image' => 'debian:wheezy'
+        'Image' => 'debian:stable'
       )
     }
 
@@ -768,7 +742,7 @@ describe Docker::Container do
 
     context 'when an argument is given' do
       subject { described_class.create('Cmd' => %w[sleep 5],
-                                       'Image' => 'debian:wheezy') }
+                                       'Image' => 'debian:stable') }
 
       it 'sets the :read_timeout to that amount of time' do
         expect(subject.wait(6)['StatusCode']).to be_zero
@@ -788,7 +762,7 @@ describe Docker::Container do
 
     context 'when the Container\'s command does not return status code of 0' do
       subject { described_class.create('Cmd' => %w[false],
-                                       'Image' => 'debian:wheezy') }
+                                       'Image' => 'debian:stable') }
 
       after do
         subject.remove
@@ -802,7 +776,7 @@ describe Docker::Container do
 
     context 'when the Container\'s command returns a status code of 0' do
       subject { described_class.create('Cmd' => %w[pwd],
-                                       'Image' => 'debian:wheezy') }
+                                       'Image' => 'debian:stable') }
       after do
         subject.remove
         image = run_command.json['Image']
@@ -821,7 +795,7 @@ describe Docker::Container do
 
   describe '#commit' do
     subject {
-      described_class.create('Cmd' => %w[true], 'Image' => 'debian:wheezy')
+      described_class.create('Cmd' => %w[true], 'Image' => 'debian:stable')
     }
     let(:image) { subject.commit }
 
@@ -842,6 +816,7 @@ describe Docker::Container do
       let(:container) { image.run('pwd') }
 
       it 'saves the command' do
+        skip('Not supported on podman') if ::Docker.podman?
         container.wait
         expect(container.attach(logs: true, stream: false)).to eql [["/\n"],[]]
         container.remove
@@ -872,7 +847,7 @@ describe Docker::Container do
         let(:options) do
           {
             "Cmd"          => ["date"],
-            "Image"        => "debian:wheezy",
+            "Image"        => "debian:stable",
           }
         end
         let(:container) { subject.create(options) }
@@ -908,7 +883,7 @@ describe Docker::Container do
 
     context 'when the HTTP response is a 200' do
       let(:container) {
-        subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+        subject.create('Cmd' => ['ls'], 'Image' => 'debian:stable')
       }
       after { container.remove }
 
@@ -940,7 +915,7 @@ describe Docker::Container do
 
     context 'when the HTTP response is a 200' do
       let(:container) {
-        subject.create('Cmd' => ['ls'], 'Image' => 'debian:wheezy')
+        subject.create('Cmd' => ['ls'], 'Image' => 'debian:stable')
       }
       before { container }
       after { container.remove }

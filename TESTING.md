@@ -11,7 +11,7 @@ $ gem install bundler
 # Getting Started
 1. Clone the git repository from Github:
 ```shell
-$ git clone git@github.com:swipely/docker-api.git
+$ git clone git@github.com:upserve/docker-api.git
 ```
 2. Install the dependencies using Bundler
 ```shell
