@@ -31,9 +31,17 @@ class Docker::Connection
 
   # The actual client that sends HTTP methods to the Docker server.
   def resource
-    @resource ||= Excon.new(url, options)
+    if @options[:cache_resource]
+      @resource ||= new_excon
+    else
+      new_excon
+    end
   end
   private :resource
+
+  def new_excon
+    Excon.new(url, options)
+  end
 
   def reset_resource
     @resource = nil
