@@ -68,7 +68,7 @@ class Docker::Image
     name = opts.delete(:name)
 
     unless name
-      if ::Docker.podman?
+      if ::Docker.podman?(connection)
         name = self.id.split(':').last
       else
         name = self.id
