@@ -1,3 +1,5 @@
+require 'json'
+
 # This class represents a Connection to a Docker server. The Connection is
 # immutable in that once the url and options is set they cannot be changed.
 class Docker::Connection

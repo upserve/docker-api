@@ -64,6 +64,8 @@ describe Docker::Connection do
   end
 
   describe '#resource' do
+    subject { described_class.new('http://localhost:4243', cache_resource: true) }
+
     its(:resource) { should be_a Excon::Connection }
 
     it 'reuses the same connection' do
@@ -74,9 +76,9 @@ describe Docker::Connection do
     it 'spawns a new Excon::Connection if encountering a bad request' do
       previous_resource = subject.__send__(:resource)
       response = Excon::Response.new
-      error = Excon::Errors::BadRequest.new("Hello world", nil, response)
-      expect(subject).to receive(:compile_request_params).and_raise(error)
-      expect { subject.request }.to raise_error(Docker::Error::ClientError)
+      error = Excon::Errors::BadRequest.new('Hello world', nil, response)
+      expect(previous_resource).to receive(:request).and_raise(error)
+      expect { subject.request(:get, '/test', {all: true}, {}) }.to raise_error(Docker::Error::ClientError)
       expect(subject.__send__(:resource).__id__).not_to eq previous_resource.__id__
     end
   end
