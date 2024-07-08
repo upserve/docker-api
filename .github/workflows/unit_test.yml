@@ -11,7 +11,7 @@ on:
 jobs:
   docker-rspec:
     runs-on:
-      - ubuntu-18.04
+      - ubuntu-latest
     strategy:
       matrix:
         ruby:
@@ -20,10 +20,9 @@ jobs:
           - 2.5
           - 2.4
         docker_version:
-          - ':20.'
-          - ':19.'
-          - ':18.'
-      fail-fast: true
+          - ':26.'
+          - ':27.'
+      fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
@@ -66,7 +65,7 @@ jobs:
           - 2.6
           - 2.5
           - 2.4
-      fail-fast: true
+      fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - uses: ruby/setup-ruby@v1
