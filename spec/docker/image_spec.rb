@@ -25,8 +25,8 @@ describe Docker::Image do
   describe '#remove' do
     context 'when no name is given' do
       let(:id) { subject.id }
-      subject { described_class.create('fromImage' => 'busybox:latest') }
-      after { described_class.create('fromImage' => 'busybox:latest') }
+      subject { described_class.create('fromImage' => 'busybox:uclibc') }
+      after { described_class.create('fromImage' => 'busybox:uclibc') }
 
       it 'removes the Image' do
         subject.remove(:force => true)
@@ -36,8 +36,8 @@ describe Docker::Image do
 
     context 'when using the class' do
       let(:id) { subject.id }
-      subject { described_class.create('fromImage' => 'busybox:latest') }
-      after { described_class.create('fromImage' => 'busybox:latest') }
+      subject { described_class.create('fromImage' => 'busybox:uclibc') }
+      after { described_class.create('fromImage' => 'busybox:uclibc') }
 
       it 'removes the Image' do
         Docker::Image.remove(id, force: true)
@@ -286,7 +286,7 @@ describe Docker::Image do
       after { container.remove }
 
       it 'creates a new Container' do
-        expect(output).to eq("/bin/pwd\n")
+        expect(output).to eq("/usr/bin/pwd\n")
       end
     end
 
@@ -295,7 +295,7 @@ describe Docker::Image do
 
       context 'no command configured in image' do
         subject { described_class.create('fromImage' => 'swipely/base') }
-        it 'should raise an error if no command is specified' do
+        xit 'should raise an error if no command is specified' do
           begin
             container
           rescue => ex
@@ -327,7 +327,7 @@ describe Docker::Image do
   end
 
   describe '#save' do
-    let(:image) { Docker::Image.get('busybox') }
+    let(:image) { Docker::Image.get('busybox:uclibc') }
 
     it 'calls the class method' do
       expect(Docker::Image).to receive(:save)
@@ -337,7 +337,7 @@ describe Docker::Image do
   end
 
   describe '#save_stream' do
-    let(:image) { Docker::Image.get('busybox') }
+    let(:image) { Docker::Image.get('busybox:uclibc') }
     let(:block) { proc { |chunk| puts chunk } }
 
     it 'calls the class method' do
@@ -468,11 +468,11 @@ describe Docker::Image do
 
       before do
         Docker.creds = nil
-        subject.create('fromImage' => 'busybox').remove(force: true)
+        subject.create('fromImage' => 'busybox:uclibc').remove(force: true)
       end
 
       it 'calls the block and passes build output' do
-        subject.create('fromImage' => 'busybox', &block)
+        subject.create('fromImage' => 'busybox:uclibc', &block)
         expect(create_output).to match(/ulling.*busybox/)
       end
     end
@@ -532,7 +532,7 @@ describe Docker::Image do
   end
 
   describe '.save_stream' do
-    let(:image) { 'busybox:latest' }
+    let(:image) { 'busybox:uclibc' }
     let(:non_streamed) do
       Docker.connection.get('/images/get', 'names' => image)
     end

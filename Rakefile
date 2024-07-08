@@ -20,7 +20,7 @@ end
 
 desc 'Download the necessary base images'
 task :unpack do
-  %w( swipely/base registry busybox tianon/true debian:stable ).each do |image|
+  %w( swipely/base registry busybox:uclibc tianon/true debian:stable ).each do |image|
     system "docker pull #{image}"
   end
 end
@@ -44,11 +44,4 @@ task :rspec do
   ensure
     registry.kill!.remove unless registry.nil?
   end
-end
-
-desc 'Pull an Ubuntu image'
-image 'ubuntu:13.10' do
-  puts "Pulling ubuntu:13.10"
-  image = Docker::Image.create('fromImage' => 'ubuntu', 'tag' => '13.10')
-  puts "Pulled ubuntu:13.10, image id: #{image.id}"
 end
