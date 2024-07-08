@@ -619,6 +619,7 @@ describe Docker::Container do
 
     it 'kills the container' do
       subject.kill
+      sleep(1)
       expect(described_class.all.map(&:id)).to be_none { |id|
         id.start_with?(subject.id)
       }
@@ -637,6 +638,7 @@ describe Docker::Container do
       }
       it 'kills the container' do
         subject.kill(:signal => "SIGTERM")
+        sleep(1)
         expect(described_class.all.map(&:id)).to be_any { |id|
           id.start_with?(subject.id)
         }
@@ -645,6 +647,7 @@ describe Docker::Container do
         }
 
         subject.kill(:signal => "SIGKILL")
+        sleep(1)
         expect(described_class.all.map(&:id)).to be_none { |id|
           id.start_with?(subject.id)
         }

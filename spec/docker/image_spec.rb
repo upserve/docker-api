@@ -643,14 +643,7 @@ describe Docker::Image do
 
         expect(image.id).to_not be_nil
 
-        expected = [
-          'Created',
-          'Size'
-        ]
-
-        expected << 'VirtualSize' unless ::Docker.podman?
-
-        expected.each do |key|
+        %w(Created Size).each do |key|
           expect(image.info).to have_key(key)
         end
       end
