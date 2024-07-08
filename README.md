@@ -588,7 +588,19 @@ Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdae
 # => nil
 ```
 
-These methods are prone to read timeouts.  `Docker.options[:read_timeout]` will need to be made higher than 60 seconds if expecting a long time between events.
+These methods are prone to read timeouts. The timeout can be disabled by setting it to zero, or simply made much higher:
+
+```ruby
+# Disable timeouts completely
+Docker::Event.stream({ read_timeout: 0 }) { |event| … }
+
+# Timeout if no events are received in 24h
+Docker::Event.stream({ read_timeout: 60 * 60 * 24) }) { |event| … }
+
+# Set a high timeout globally. Be warned that you probably don't want this for other methods.
+Docker.options[:read_timeout] = 60 * 60 * 24
+Docker::Event.stream { |event| … }
+```
 
 ## Connecting to Multiple Servers
 
