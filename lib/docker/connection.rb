@@ -1,3 +1,5 @@
+require 'json'
+
 # This class represents a Connection to a Docker server. The Connection is
 # immutable in that once the url and options is set they cannot be changed.
 class Docker::Connection
@@ -29,12 +31,23 @@ class Docker::Connection
     end
   end
 
-  # The actual client that sends HTTP methods to the Docker server. This value
-  # is not cached, since doing so may cause socket errors after bad requests.
+  # The actual client that sends HTTP methods to the Docker server.
   def resource
-    Excon.new(url, options)
+    if @options[:cache_resource]
+      @resource ||= new_excon
+    else
+      new_excon
+    end
   end
   private :resource
+
+  def new_excon
+    Excon.new(url, options)
+  end
+
+  def reset_resource
+    @resource = nil
+  end
 
   # Send a request to the server with the `
   def request(*args, &block)
@@ -44,6 +57,8 @@ class Docker::Connection
     begin
       resource.request(request).body
     rescue Excon::Errors::BadRequest => ex
+      reset_resource
+
       if retries < 2
         response_cause = ''
         begin

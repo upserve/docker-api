@@ -600,6 +600,19 @@ require 'docker'
 Docker::Container.all({}, Docker::Connection.new('tcp://example.com:2375', {}))
 ```
 
+## Keep connection to Docker alive
+
+Each call will be done through a new established HTTP connection. This can be a bit slow if doing a lot of calls. You can keep the HTTP connection alive like this:
+
+```ruby
+connection = Docker::Connection.new("tcp://example.com:1000", cache_resource: true)
+```
+
+And then use the connection on eahc call like this:
+```ruby
+container = Docker::Image.get(id, {}, connection)
+```
+
 ## Rake Task
 
 To create images through `rake`, a DSL task is provided. For example:
