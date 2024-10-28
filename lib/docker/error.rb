@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This module holds the Errors for the gem.
 module Docker::Error
 

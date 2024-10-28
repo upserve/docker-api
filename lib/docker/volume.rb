@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # class represents a Docker Volume
 class Docker::Volume
   include Docker::Base

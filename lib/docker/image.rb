@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents a Docker Image.
 class Docker::Image
   include Docker::Base
@@ -28,7 +30,7 @@ class Docker::Image
     repo, tag = Docker::Util.parse_repo_tag(repo_tag)
     raise ArgumentError, "Image does not have a name to push." if repo.nil?
 
-    body = ""
+    body = +""
     credentials = creds || Docker.creds || {}
     headers = Docker::Util.build_auth_header(credentials)
     opts = {:tag => tag}.merge(options)
@@ -119,7 +121,7 @@ class Docker::Image
     def create(opts = {}, creds = nil, conn = Docker.connection, &block)
       credentials = creds.nil? ? Docker.creds : MultiJson.dump(creds)
       headers = credentials && Docker::Util.build_auth_header(credentials) || {}
-      body = ''
+      body = +''
       conn.post(
         '/images/create',
         opts,
@@ -168,7 +170,7 @@ class Docker::Image
         end
         nil
       else
-        string = ''
+        string = +''
         save_stream(names, {}, conn, &response_block_for_save(string))
         string
       end
@@ -196,7 +198,7 @@ class Docker::Image
     def load(tar, opts = {}, conn = Docker.connection, creds = nil, &block)
        headers = build_headers(creds)
        io = tar.is_a?(String) ? File.open(tar, 'rb') : tar
-       body = ""
+       body = +""
        conn.post(
          '/images/load',
          opts,
@@ -267,7 +269,7 @@ class Docker::Image
 
     # Given a Dockerfile as a string, builds an Image.
     def build(commands, opts = {}, connection = Docker.connection, &block)
-      body = ""
+      body = +""
       connection.post(
         '/build', opts,
         :body => Docker::Util.create_tar('Dockerfile' => commands),
@@ -288,7 +290,7 @@ class Docker::Image
       headers = build_headers(creds)
 
       # The response_block passed to Excon will build up this body variable.
-      body = ""
+      body = +""
       connection.post(
         '/build', opts,
         :headers => headers,
@@ -340,7 +342,7 @@ class Docker::Image
   # Convience method to get the Dockerfile for a file hash and a path to
   # output to.
   def dockerfile_for(file_hash, output_path)
-    dockerfile = "from #{self.id}\n"
+    dockerfile = +"from #{self.id}\n"
 
     file_hash.keys.each do |basename|
       dockerfile << "add #{basename} #{output_path}\n"

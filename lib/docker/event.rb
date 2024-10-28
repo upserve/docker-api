@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents a Docker Event.
 class Docker::Event
   include Docker::Error

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Excon
   module Middleware
     # Hijack is an Excon middleware which parses response headers and then
