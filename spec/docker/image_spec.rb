@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 SingleCov.covered! uncovered: 16
@@ -464,7 +466,7 @@ describe Docker::Image do
     end
 
     context 'with a block capturing create output' do
-      let(:create_output) { "" }
+      let(:create_output) { +"" }
       let(:block) { Proc.new { |chunk| create_output << chunk } }
 
       before do
@@ -537,7 +539,7 @@ describe Docker::Image do
     let(:non_streamed) do
       Docker.connection.get('/images/get', 'names' => image)
     end
-    let(:streamed) { '' }
+    let(:streamed) { +'' }
     let(:tar_files) do
       proc do |string|
         Gem::Package::TarReader
@@ -723,7 +725,7 @@ describe Docker::Image do
       end
 
       context 'with a block capturing build output' do
-        let(:build_output) { "" }
+        let(:build_output) { +"" }
         let(:block) { Proc.new { |chunk| build_output << chunk } }
         let!(:image) { subject.build("FROM debian:stable\n", &block) }
 
@@ -775,7 +777,7 @@ describe Docker::Image do
       end
 
       context 'with a block capturing build output' do
-        let(:build_output) { "" }
+        let(:build_output) { +"" }
         let(:block) { Proc.new { |chunk| build_output << chunk } }
 
         it 'calls the block and passes build output' do
@@ -784,7 +786,7 @@ describe Docker::Image do
         end
 
         context 'uses a cached version the second time' do
-          let(:build_output_two) { "" }
+          let(:build_output_two) { +"" }
           let(:block_two) { Proc.new { |chunk| build_output_two << chunk } }
           let(:image_two) { subject.build_from_dir(dir, opts, &block_two) }
 

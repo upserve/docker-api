@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class is a base class for Docker Container and Image.
 # It is implementing accessor methods for the models attributes.
 module Docker::Base

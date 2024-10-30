@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents a Docker Exec Instance.
 class Docker::Exec
   include Docker::Base

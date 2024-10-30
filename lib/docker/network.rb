@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents a Docker Network.
 class Docker::Network
   include Docker::Base

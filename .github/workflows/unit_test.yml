@@ -15,6 +15,10 @@ jobs:
     strategy:
       matrix:
         ruby:
+          - 3.3
+          - 3.2
+          - 3.1
+          - '3.0'
           - 2.7
           - 2.6
           - 2.5
@@ -24,14 +28,13 @@ jobs:
           - ':27.'
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: install bundler
-        run: |
-          gem install bundler -v '~> 1.17.3'
-          bundle update
+          bundler-cache: true
+      - name: Update gems
+        run: bundle update
       - name: install docker
         env:
           DOCKER_VERSION: ${{ matrix.docker_version }}
@@ -61,20 +64,23 @@ jobs:
     strategy:
       matrix:
         ruby:
+          - 3.3
+          - 3.2
+          - 3.1
+          - '3.0'
           - 2.7
           - 2.6
           - 2.5
           - 2.4
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-      - name: install bundler
-        run: |
-          gem install bundler -v '~> 1.17.3'
-          bundle update
+          bundler-cache: true
+      - name: Update gems
+        run: bundle update
       - name: install podman
         run: sudo ./script/install_podman.sh
       - name: spec tests
