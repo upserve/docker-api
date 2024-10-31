@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class allows image-based tasks to be created.
 class Docker::ImageTask < Rake::Task
   def self.scope_name(_scope, task_name)

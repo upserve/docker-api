@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents all the messages either received by chunks from attach
 class Docker::Messages
 

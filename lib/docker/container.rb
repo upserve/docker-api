@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This class represents a Docker Container. It's important to note that nothing
 # is cached so that the information is always up to date.
 class Docker::Container

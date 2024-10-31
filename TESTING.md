@@ -33,9 +33,6 @@ This repository comes with five Rake commands to assist in your testing of the c
 ## `rake rspec`
 This command will run Rspec tests normally on your local system. You must have all the required base images pulled.
 
-## `rake quality`
-This command runs a code quality threshold checker to hinder bad code.
-
 ## `rake unpack`
 Pulls down all the required base images for testing.
 

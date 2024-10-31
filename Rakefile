@@ -1,21 +1,17 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 
 ENV['PATH'] = "/opt/docker/:#{ENV['PATH']}" if ENV['CI'] == 'true'
 
 require 'docker'
 require 'rspec/core/rake_task'
-require 'cane/rake_task'
-
 
 desc 'Run the full test suite from scratch'
-task :default => [:unpack, :rspec, :quality]
+task :default => [:unpack, :rspec]
 
 RSpec::Core::RakeTask.new do |t|
   t.pattern = 'spec/**/*_spec.rb'
-end
-
-Cane::RakeTask.new(:quality) do |cane|
-  cane.canefile = '.cane'
 end
 
 desc 'Download the necessary base images'

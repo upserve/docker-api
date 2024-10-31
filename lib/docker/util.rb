@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'set'
 
 # This module holds shared logic that doesn't really belong anywhere else in the
