@@ -272,6 +272,7 @@ class Docker::Image
       body = +""
       connection.post(
         '/build', opts,
+        :headers => { 'Content-Type' => 'application/tar' },
         :body => Docker::Util.create_tar('Dockerfile' => commands),
         :response_block => response_block(body, &block)
       )
