@@ -15,6 +15,7 @@ jobs:
     strategy:
       matrix:
         ruby:
+          - 3.4
           - 3.3
           - 3.2
           - 3.1
@@ -64,6 +65,7 @@ jobs:
     strategy:
       matrix:
         ruby:
+          - 3.4
           - 3.3
           - 3.2
           - 3.1
