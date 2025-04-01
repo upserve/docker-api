@@ -423,7 +423,7 @@ container.changes
 # => [{'Path'=>'/dev', 'Kind'=>0}, {'Path'=>'/dev/kmsg', 'Kind'=>1}]
 
 # Copy files/directories from the Container. Note that these are exported as tars.
-container.copy('/etc/hosts') { |chunk| puts chunk }
+container.archive_out('/etc/hosts') { |chunk| puts chunk }
 
 hosts0000644000000000000000000000023412100405636007023 0ustar
 127.0.0.1       localhost
