@@ -324,6 +324,18 @@ class Docker::Container
     archive_in_stream("/", overwrite: true) { output_io.read }
   end
 
+  # Resize the TTY associated with the Container instance
+  #
+  # @param query [Hash] API query parameters
+  # @option query [Fixnum] h Height of the TTY
+  # @option query [Fixnum] w Width of the TTY
+  #
+  # @return [Docker::Container] self
+  def resize(query = {})
+    connection.post(path_for(:resize), query)
+    self
+  end
+
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
     query = opts.select {|key| ['name', :name].include?(key) }
