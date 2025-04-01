@@ -14,6 +14,7 @@ Gem::Specification.new do |gem|
   gem.version       = Docker::VERSION
   gem.add_dependency 'excon', '>= 0.64.0'
   gem.add_dependency 'multi_json'
+  gem.add_dependency 'base64'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', '~> 3.0'
   gem.add_development_dependency 'rspec-its'
