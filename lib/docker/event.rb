@@ -1,29 +1,28 @@
 # frozen_string_literal: true
 
 # This class represents a Docker Event.
+# @see https://github.com/moby/moby/blob/master/api/types/events/events.go
+# @see https://docs.docker.com/reference/api/engine/version/v1.49/#tag/System/operation/SystemEvents
 class Docker::Event
   include Docker::Error
 
   # Represents the actor object nested within an event
   class Actor
-    attr_accessor :ID, :Attributes
+    attr_reader :info
 
-    def initialize(actor_attributes = {})
-      [:ID, :Attributes].each do |sym|
-        value = actor_attributes[sym]
-        if value.nil?
-          value = actor_attributes[sym.to_s]
-        end
-        send("#{sym}=", value)
-      end
-
-      if self.Attributes.nil?
-        self.Attributes = {}
-      end
+    def initialize(actor_data = {})
+      @info = actor_data.transform_keys { |k| k.downcase.to_sym }
     end
 
-    alias_method :id, :ID
-    alias_method :attributes, :Attributes
+    def id
+      info[:id]
+    end
+    alias_method :ID, :id
+
+    def attributes
+      info[:attributes] || {}
+    end
+    alias_method :Attributes, :attributes
   end
 
   class << self
@@ -53,52 +52,61 @@ class Docker::Event
 
     def new_event(body, remaining, total)
       return if body.nil? || body.empty?
-      json = Docker::Util.parse_json(body)
-      Docker::Event.new(json)
+      info = Docker::Util.parse_json(body)
+      Docker::Event.new(info)
     end
   end
 
-  attr_accessor :Type, :Action, :time, :timeNano
-  attr_reader :Actor
-  # Deprecated interface
-  attr_accessor :status, :from
+  attr_reader :info
 
-  def initialize(event_attributes = {})
-    [:Type, :Action, :Actor, :time, :timeNano, :status, :from].each do |sym|
-      value = event_attributes[sym]
-      if value.nil?
-        value = event_attributes[sym.to_s]
-      end
-      send("#{sym}=", value)
-    end
-
-    if @Actor.nil?
-      value = event_attributes[:id]
-      if value.nil?
-        value = event_attributes['id']
-      end
-      self.Actor = Actor.new(ID: value)
-    end
+  def initialize(event_data = {})
+    @info = event_data.transform_keys { |k| k.downcase.to_sym }
   end
 
-  def ID
-    self.actor.ID
+  def action
+    info[:action]
+  end
+  alias_method :Action, :action
+
+  def actor
+    @actor = Actor.new(info[:actor] || {}) if !defined? @actor
+    @actor
+  end
+  alias_method :Actor, :actor
+
+  def from
+    # @deprecated Use `actor.attributes['image']` instead
+    #   Only applicable to container events. See Docker docs for details.
+    info[:from] || actor.attributes['image']
   end
 
-  def Actor=(actor)
-    return if actor.nil?
-    if actor.is_a? Actor
-      @Actor = actor
-    else
-      @Actor = Actor.new(actor)
-    end
+  def id
+    # @deprecated Use `actor.id` instead
+    info[:id] || actor.id
   end
 
-  alias_method :type, :Type
-  alias_method :action, :Action
-  alias_method :actor, :Actor
-  alias_method :time_nano, :timeNano
-  alias_method :id, :ID
+  def scope
+    info[:scope]
+  end
+
+  def status
+    # @deprecated Use `action` instead
+    info[:status] || action
+  end
+
+  def time
+    info[:time]
+  end
+
+  def time_nano
+    info[:timenano]
+  end
+  alias_method :timeNano, :time_nano
+
+  def type
+    info[:type]
+  end
+  alias_method :Type, :type
 
   def to_s
     if type.nil? && action.nil?

@@ -19,6 +19,7 @@ describe Docker::Event do
       'Type' => 'container',
       'from' => 'tianon/true',
       'id' => 'bb2c783a32330b726f18d1eb44d80c899ef45771b4f939326e0fefcfc7e05db8',
+      'scope' => 'local',
       'status' => 'start',
       'time' => 1461083270,
       'timeNano' => 1461083270652069004
@@ -193,6 +194,7 @@ describe Docker::Event do
           event.actor.id
         ).to eq('bb2c783a32330b726f18d1eb44d80c899ef45771b4f939326e0fefcfc7e05db8')
         expect(event.actor.attributes).to eq('image' => 'tianon/true', 'name' => 'true-dat')
+        expect(event.scope).to eq('local')
         expect(event.time).to eq 1461083270
         expect(event.time_nano).to eq 1461083270652069004
       end
