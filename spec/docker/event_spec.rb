@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'securerandom'
 
 SingleCov.covered! uncovered: 5
 
@@ -86,6 +87,43 @@ describe Docker::Event do
       expect(events).to be >= 4
 
       container.remove
+    end
+
+    context 'with timeouts' do
+      # @see https://github.com/upserve/docker-api/issues/584
+
+      it 'does not (seem to) time out by default' do
+        # @note Excon passes timeout-related arguments directly to IO.select, which in turn makes a system call,
+        #   so it's not possible to mock this (e.g. w/Timecop).
+        skip_slow_test
+        expect { Timeout.timeout(65) { stream_events_with_timeout } }
+          .to raise_error Timeout::Error
+      end
+
+      it 'times out immediately if read_timeout < Timeout.timeout' do
+        expect { Timeout.timeout(1) { stream_events_with_timeout(0) } }
+          .to raise_error Docker::Error::TimeoutError
+      end
+
+      it 'times out after timeout(1) if read_timeout=2' do
+        expect { Timeout.timeout(1) { stream_events_with_timeout(2) } }
+          .to raise_error Timeout::Error
+      end
+
+      private
+
+      def stream_events_with_timeout(read_timeout = [])
+        opts = {
+          # Filter to avoid unexpected Docker events interfering with timeout behavior
+          query: { filters: { container: [SecureRandom.uuid] }.to_json },
+          # Use [] to differentiate between explicit nil and not providing an arg (falling back to the default)
+          read_timeout:,
+        }.reject { |_, v| v.empty? rescue false }
+
+        Docker::Event.stream(opts) do |event|
+          raise "Unexpected event interfered with timeout test: #{event}"
+        end
+      end
     end
   end
 

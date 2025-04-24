@@ -137,24 +137,24 @@ class Docker::Connection
   end
 
 private
-  # Given an HTTP method, path, optional query, extra options, and block,
-  # compiles a request.
+
   def compile_request_params(http_method, path, query = nil, opts = nil, &block)
-    query ||= {}
     opts ||= {}
-    headers = opts.delete(:headers) || {}
-    content_type = opts[:body].nil? ?  'text/plain' : 'application/json'
-    user_agent = "Swipely/Docker-API #{Docker::VERSION}"
+    query ||= opts.delete(:query) || {}
+
+    default_headers = {
+      'Content-Type' => opts[:body].nil? ? 'text/plain' : 'application/json',
+      'User-Agent' => "Swipely/Docker-API #{Docker::VERSION}",
+    }
+    headers = default_headers.merge(opts.delete(:headers) || {})
+
     {
-      :method        => http_method,
-      :path          => path,
-      :query         => query,
-      :headers       => { 'Content-Type' => content_type,
-                          'User-Agent'   => user_agent,
-                        }.merge(headers),
-      :expects       => (200..204).to_a << 301 << 304,
-      :idempotent    => http_method == :get,
-      :request_block => block,
-    }.merge(opts).reject { |_, v| v.nil? }
+      method: http_method,
+      path: path,
+      headers:,
+      query:,
+      expects: (200..204).to_a << 301 << 304,
+      idempotent: http_method == :get,
+    }.merge(opts).tap { |params| params[:request_block] = block if block }
   end
 end
