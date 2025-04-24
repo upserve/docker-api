@@ -30,11 +30,21 @@ class Docker::Event
     include Docker::Error
 
     def stream(opts = {}, conn = Docker.connection, &block)
-      conn.get('/events', opts, :response_block => lambda { |b, r, t|
-        b.each_line do |line|
-          block.call(new_event(line, r, t))
+      # Disable timeouts by default
+      opts[:read_timeout] = nil unless opts.key? :read_timeout
+
+      # By default, avoid retrying timeout errors. Set opts[:retry_errors] to override this.
+      opts[:retry_errors] ||= Excon::DEFAULT_RETRY_ERRORS.reject do |cls|
+        cls == Excon::Error::Timeout
+      end
+
+      opts[:response_block] = lambda do |chunk, remaining, total|
+        chunk.each_line do |event_json|
+          block.call(new_event(event_json, remaining, total))
         end
-      })
+      end
+
+      conn.get('/events', opts.delete(:query), opts)
     end
 
     def since(since, opts = {}, conn = Docker.connection, &block)
