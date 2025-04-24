@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'multi_json'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', '~> 3.0'
-  gem.add_development_dependency 'rspec-its'
+  gem.add_development_dependency 'rspec-its', '~> 1'
   gem.add_development_dependency 'pry'
   gem.add_development_dependency 'single_cov'
   gem.add_development_dependency 'webmock'
