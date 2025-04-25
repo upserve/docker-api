@@ -117,7 +117,7 @@ describe Docker::Event do
           # Filter to avoid unexpected Docker events interfering with timeout behavior
           query: { filters: { container: [SecureRandom.uuid] }.to_json },
           # Use [] to differentiate between explicit nil and not providing an arg (falling back to the default)
-          read_timeout:,
+          read_timeout: read_timeout,
         }.reject { |_, v| v.empty? rescue false }
 
         Docker::Event.stream(opts) do |event|

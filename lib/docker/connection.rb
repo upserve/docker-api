@@ -151,8 +151,8 @@ private
     {
       method: http_method,
       path: path,
-      headers:,
-      query:,
+      headers: headers,
+      query: query,
       expects: (200..204).to_a << 301 << 304,
       idempotent: http_method == :get,
     }.merge(opts).tap { |params| params[:request_block] = block if block }
