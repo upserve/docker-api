@@ -13,7 +13,7 @@ class Docker::ImageTask < Rake::Task
   private
 
   def has_repo_tag?
-    images.any? { |image| image.info['RepoTags'].include?(repo_tag) }
+    images.any? { |image| image.info['RepoTags'] && image.info['RepoTags'].include?(repo_tag) }
   end
 
   def images
