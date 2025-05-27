@@ -12,7 +12,9 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files lib README.md LICENSE`.split($\)
   gem.name          = 'docker-api'
   gem.version       = Docker::VERSION
-  gem.add_dependency 'excon', '>= 0.64.0'
+  # Version 1.2.6 is incompatible with docker-api
+  # https://github.com/excon/excon/issues/884
+  gem.add_dependency 'excon', '>= 0.64.0', '!= 1.2.6'
   gem.add_dependency 'multi_json'
   gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', '~> 3.0'
