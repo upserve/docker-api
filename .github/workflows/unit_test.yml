@@ -81,7 +81,22 @@ jobs:
           bundler-cache: true
       - name: Update gems
         run: bundle update
-      - name: install podman
-        run: sudo ./script/install_podman.sh
+      - name: Start rootless Podman API service
+        run: |
+          mkdir -p "${HOME}/var/run"
+          podman system service unix://${HOME}/var/run/podman.sock --time=0 &
+          echo $! > $HOME/podman_service.pid
+          # Wait until the socket is ready
+          for i in $(seq 1 20); do
+            if podman --url unix://${HOME}/var/run/podman.sock info >/dev/null 2>&1 ; then
+              echo "Podman socket ready"; break
+            fi
+            echo "Waiting for podman socket…"
+            sleep 1
+          done
+      - name: Point Docker-API at Podman
+        run: |
+          echo "DOCKER_HOST=unix://${HOME}/var/run/podman.sock" >> $GITHUB_ENV
+          echo "EXPECT_PODMAN=true" >> $GITHUB_ENV
       - name: spec tests
         run: bundle exec rake
