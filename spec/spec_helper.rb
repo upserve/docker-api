@@ -13,6 +13,17 @@ SingleCov.setup :rspec
 
 require 'docker'
 
+# Hard-fail the build if we said we expected Podman but did not get it
+if (ENV['EXPECT_PODMAN'] == 'true') && !Docker.podman?
+  warn <<~MSG
+    EXPECT_PODMAN=true was set, but Docker.podman? returned false.
+    Connected engine information:
+    #{Docker.version}
+    Make sure the Podman API socket is running and DOCKER_HOST points to it.
+  MSG
+  exit 1
+end
+
 ENV['DOCKER_API_USER']  ||= 'debbie_docker'
 ENV['DOCKER_API_PASS']  ||= '*************'
 ENV['DOCKER_API_EMAIL'] ||= 'debbie_docker@example.com'
