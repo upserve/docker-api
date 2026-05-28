@@ -23,6 +23,9 @@ class Docker::Connection
       uri = URI.parse(url)
       if uri.scheme == "unix"
         @url, @options = 'unix:///', {:socket => uri.path}.merge(opts)
+      elsif uri.scheme == "npipe"
+        require 'docker/excon_npipe'
+        @url, @options = 'npipe:///', {:socket => uri.path}.merge(opts)
       elsif uri.scheme =~ /^(https?|tcp)$/
         @url, @options = url, opts
       else

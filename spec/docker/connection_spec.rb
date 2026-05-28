@@ -22,11 +22,20 @@ describe Docker::Connection do
 
     context 'when the first argument is a String' do
       context 'and the url is a unix socket' do
-        let(:url) { ::Docker.env_url || ::Docker.default_socket_url }
+        let(:url) { 'unix:///var/run/docker.sock' }
 
         it 'sets the socket path in the options' do
           expect(subject.url).to eq('unix:///')
           expect(subject.options).to include(:socket => url.split('//').last)
+        end
+      end
+
+      context 'and the url is a Windows named pipe' do
+        let(:url) { 'npipe:////./pipe/docker_engine' }
+
+        it 'extracts the pipe path into :socket and normalizes the scheme url' do
+          expect(subject.url).to eq('npipe:///')
+          expect(subject.options).to include(:socket => '//./pipe/docker_engine')
         end
       end
 

@@ -5,6 +5,7 @@ require 'multi_json'
 require 'excon'
 require 'tempfile'
 require 'base64'
+require 'digest'
 require 'find'
 require 'rubygems/package'
 require 'uri'
@@ -39,11 +40,49 @@ module Docker
   require 'docker/rake_task' if defined?(Rake::Task)
 
   def default_socket_url
-    'unix:///var/run/docker.sock'
+    if Gem.win_platform?
+      'npipe:////./pipe/docker_engine'
+    else
+      'unix:///var/run/docker.sock'
+    end
   end
 
   def env_url
     ENV['DOCKER_URL'] || ENV['DOCKER_HOST']
+  end
+
+  # Resolve the docker endpoint from the docker CLI config, mirroring the CLI
+  # lookup: DOCKER_CONTEXT env first, then `currentContext` from config.json
+  # under $DOCKER_CONFIG (or ~/.docker). Returns nil when no usable context is
+  # found or when disabled via DOCKER_API_SKIP_CONTEXT=1.
+  def context_url
+    return nil if ENV['DOCKER_API_SKIP_CONTEXT'] == '1'
+
+    name = ENV['DOCKER_CONTEXT'] || current_context_from_config
+    return nil if name.nil? || name.empty? || name == 'default'
+
+    endpoint_from_context(name)
+  end
+
+  def config_dir
+    ENV['DOCKER_CONFIG'] || File.join(Dir.home, '.docker')
+  end
+
+  def current_context_from_config
+    config_path = File.join(config_dir, 'config.json')
+    return nil unless File.exist?(config_path)
+    MultiJson.load(File.read(config_path))['currentContext']
+  rescue StandardError
+    nil
+  end
+
+  def endpoint_from_context(name)
+    id = Digest::SHA256.hexdigest(name)
+    meta_path = File.join(config_dir, 'contexts', 'meta', id, 'meta.json')
+    return nil unless File.exist?(meta_path)
+    MultiJson.load(File.read(meta_path)).dig('Endpoints', 'docker', 'Host')
+  rescue StandardError
+    nil
   end
 
   def env_options
@@ -70,7 +109,7 @@ module Docker
   end
 
   def url
-    @url ||= env_url || default_socket_url
+    @url ||= env_url || context_url || default_socket_url
     # docker uses a default notation tcp:// which means tcp://localhost:2375
     if @url == 'tcp://'
       @url = 'tcp://localhost:2375'
@@ -141,7 +180,9 @@ module Docker
     raise Docker::Error::AuthenticationError
   end
 
-  module_function :default_socket_url, :env_url, :url, :url=, :env_options,
+  module_function :default_socket_url, :env_url, :context_url, :config_dir,
+                  :current_context_from_config, :endpoint_from_context,
+                  :url, :url=, :env_options,
                   :options, :options=, :creds, :creds=, :logger, :logger=,
                   :connection, :reset!, :reset_connection!, :version, :info,
                   :ping, :podman?, :rootless?, :authenticate!, :ssl_options
