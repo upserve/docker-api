@@ -112,6 +112,44 @@ describe Docker::Connection do
     end
   end
 
+  describe '#rootless?' do
+    subject { described_class.new('http://example.com:2375', {}) }
+
+    # `@rootless ||= ...` cannot cache a false result, so on every non-rootless
+    # daemon each call re-issued the /info request.
+    it 'only queries /info once' do
+      expect(subject).to receive(:get).with('/info').once
+        .and_return('{"Rootless":false}')
+
+      3.times { subject.rootless? }
+    end
+
+    it 'reports false for a non-rootless daemon' do
+      allow(subject).to receive(:get).with('/info')
+        .and_return('{"Rootless":false}')
+
+      expect(subject.rootless?).to be false
+    end
+
+    it 'reports true for a rootless daemon' do
+      allow(subject).to receive(:get).with('/info')
+        .and_return('{"Rootless":true}')
+
+      expect(subject.rootless?).to be true
+    end
+  end
+
+  describe '#podman?' do
+    subject { described_class.new('http://example.com:2375', {}) }
+
+    it 'only queries /version once' do
+      expect(subject).to receive(:get).with('/version').once
+        .and_return('{"Components":[{"Name":"Engine"}]}')
+
+      3.times { subject.podman? }
+    end
+  end
+
   describe '#to_s' do
     let(:url) { 'http://google.com:4000' }
     let(:options) { {} }
