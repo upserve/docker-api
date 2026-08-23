@@ -42,19 +42,26 @@ jobs:
           set -x
           sudo apt-get remove -y docker docker-engine docker.io containerd runc ||:
           sudo apt-get update -y
-          sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-          sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+          sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+          # apt-key is deprecated and slated for removal; use a keyring instead.
+          sudo install -m 0755 -d /etc/apt/keyrings
+          curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo tee /etc/apt/keyrings/docker.asc > /dev/null
+          sudo chmod a+r /etc/apt/keyrings/docker.asc
+          echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
           sudo apt-get update -y
           sudo apt-cache gencaches
-          sudo apt-get install -y docker-ce=$( apt-cache madison docker-ce | grep -e $DOCKER_VERSION | cut -f 2 -d '|' | head -1 | sed 's/\s//g' )
-          if [ $? -ne 0 ]; then
-            echo "Error: Could not install ${DOCKER_VERSION}"
+          version=$( apt-cache madison docker-ce | grep -e "$DOCKER_VERSION" | cut -f 2 -d '|' | head -1 | sed 's/\s//g' )
+          if [ -z "$version" ]; then
+            echo "Error: Could not find a docker-ce package matching ${DOCKER_VERSION}"
             echo "Available docker versions:"
             apt-cache madison docker-ce
             exit 1
           fi
+          # The runner image preinstalls a newer docker-ce than the versions
+          # pinned in the matrix, so installing the pin is a downgrade.
+          sudo apt-get install -y --allow-downgrades docker-ce="$version"
           sudo systemctl start docker
+          docker version
       - name: spec tests
         run: bundle exec rake
 
