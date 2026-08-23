@@ -163,6 +163,32 @@ describe Docker::Container do
         expect(subject.json["Name"]).to eq("/bob")
       end
     end
+
+    context 'when a platform is given' do
+      let(:opts) { {"platform" => "linux/amd64"} }
+
+      # /containers/create takes platform as a query parameter. A "platform"
+      # body key is accepted and silently ignored by the daemon, so sending it
+      # in the body means the requested platform has no effect at all.
+      it 'sends the platform as a query parameter' do
+        expect(Docker.connection).to receive(:post).with(
+          '/containers/create',
+          hash_including('platform' => 'linux/amd64'),
+          anything
+        ).and_return('{"Id":"deadbeef"}')
+
+        subject
+      end
+
+      it 'does not send the platform in the body' do
+        expect(Docker.connection).to receive(:post) { |_path, _query, opts|
+          expect(MultiJson.load(opts[:body])).to_not have_key('platform')
+          '{"Id":"deadbeef"}'
+        }
+
+        subject
+      end
+    end
   end
 
   describe '#rename' do

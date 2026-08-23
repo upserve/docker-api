@@ -324,10 +324,15 @@ class Docker::Container
     archive_in_stream("/", overwrite: true) { output_io.read }
   end
 
+  # Keys that /containers/create takes as query parameters rather than in the
+  # request body. The daemon silently ignores them if they are sent in the
+  # body, so a misplaced key means the option has no effect at all.
+  CREATE_QUERY_KEYS = %w[name platform].freeze
+
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    query = opts.select {|key| ['name', :name].include?(key) }
-    clean_opts = opts.reject {|key| ['name', :name].include?(key) }
+    query = opts.select { |key| CREATE_QUERY_KEYS.include?(key.to_s) }
+    clean_opts = opts.reject { |key| CREATE_QUERY_KEYS.include?(key.to_s) }
     resp = conn.post('/containers/create', query, :body => MultiJson.dump(clean_opts))
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)
