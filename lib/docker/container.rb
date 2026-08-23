@@ -118,6 +118,16 @@ class Docker::Container
       opts[:stdin] = true
       excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block,
         msgs, tty)
+      # Hijacking means asking the daemon to upgrade the connection. Without
+      # these headers Docker answers 200 and leaves the payload on Excon's
+      # buffered socket, which the raw hijacked read never looks at, so the
+      # attach blocks forever. With them the daemon replies 101 and hands the
+      # socket over, so 101 has to be an accepted status.
+      excon_params[:headers] = {
+        'Connection' => 'Upgrade',
+        'Upgrade' => 'tcp'
+      }.merge(excon_params[:headers] || {})
+      excon_params[:expects] ||= (200..204).to_a + [101, 301, 304]
     else
       excon_params[:response_block] = Docker::Util.attach_for(block, msgs, tty)
     end

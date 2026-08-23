@@ -438,6 +438,34 @@ describe Docker::Container do
       end
     end
 
+    # Hijacking the socket means asking the daemon to upgrade the connection.
+    # Without the upgrade headers Docker answers 200 and keeps the response on
+    # Excon's buffered socket, so the raw hijacked read never sees the payload
+    # and the attach blocks forever.
+    context 'when attaching to stdin' do
+      # Stub only the attach request so start/stop in the hooks still reach the
+      # daemon and the container is cleaned up normally.
+      let(:attach_params) do
+        captured = nil
+        allow(subject.connection).to receive(:post).and_call_original
+        allow(subject.connection).to receive(:post)
+          .with(a_string_matching(%r{/attach\z}), anything, anything) { |_p, _q, params|
+            captured = params
+            ''
+          }
+        yield_self { subject.attach(stdin: StringIO.new("foo\n")); captured }
+      end
+
+      it 'asks the daemon to upgrade the connection' do
+        expect(attach_params[:headers]['Connection']).to eq('Upgrade')
+        expect(attach_params[:headers]['Upgrade']).to eq('tcp')
+      end
+
+      it 'accepts the 101 the daemon replies with' do
+        expect(attach_params[:expects]).to include(101)
+      end
+    end
+
     context 'with very small chunks' do
       before do
         Docker.options = { :chunk_size => 1 }
