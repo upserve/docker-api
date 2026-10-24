@@ -611,6 +611,30 @@ describe Docker::Container do
       end
     end
 
+    # `stderr = options.delete(:stderr) || !detach` turns an explicit false back
+    # into true, so both stream options were impossible to switch off.
+    context 'when stderr is false' do
+      let(:output) {
+        subject.exec(['bash', '-c', 'echo out; echo err 1>&2'], stderr: false)
+      }
+
+      it 'captures stdout but not stderr' do
+        expect(output[0]).to eq(["out\n"])
+        expect(output[1]).to be_empty
+      end
+    end
+
+    context 'when stdout is false' do
+      let(:output) {
+        subject.exec(['bash', '-c', 'echo out; echo err 1>&2'], stdout: false)
+      }
+
+      it 'captures stderr but not stdout' do
+        expect(output[0]).to be_empty
+        expect(output[1]).to eq(["err\n"])
+      end
+    end
+
     context 'when passed a block' do
       it 'streams the stdout/stderr messages' do
         chunk = nil

@@ -60,8 +60,11 @@ class Docker::Container
     detach = options.delete(:detach) || false
     user = options.delete(:user)
     stdin = options.delete(:stdin)
-    stdout = options.delete(:stdout) || !detach
-    stderr = options.delete(:stderr) || !detach
+    # `options.delete(:stdout) || !detach` turns an explicit false back into
+    # true, so these have to be tested for presence rather than truthiness.
+    # They default to the inverse of :detach when the caller says nothing.
+    stdout = options.key?(:stdout) ? options.delete(:stdout) : !detach
+    stderr = options.key?(:stderr) ? options.delete(:stderr) : !detach
     wait = options.delete(:wait)
 
     opts = {
