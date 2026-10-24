@@ -66,7 +66,11 @@ describe Docker::Connection do
   end
 
   describe '#resource' do
-    its(:resource) { should be_a Excon::Connection }
+    # #resource is private, so it cannot go through `its`, which uses
+    # public_send on Ruby 3.0+.
+    it 'is an Excon::Connection' do
+      expect(subject.send(:resource)).to be_a Excon::Connection
+    end
   end
 
   describe '#request' do
