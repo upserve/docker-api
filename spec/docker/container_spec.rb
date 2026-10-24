@@ -479,7 +479,8 @@ describe Docker::Container do
             captured = params
             ''
           }
-        yield_self { subject.attach(stdin: StringIO.new("foo\n")); captured }
+        subject.attach(stdin: StringIO.new("foo\n"))
+        captured
       end
 
       it 'asks the daemon to upgrade the connection' do
