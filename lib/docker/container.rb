@@ -60,8 +60,11 @@ class Docker::Container
     detach = options.delete(:detach) || false
     user = options.delete(:user)
     stdin = options.delete(:stdin)
-    stdout = options.delete(:stdout) || !detach
-    stderr = options.delete(:stderr) || !detach
+    # `options.delete(:stdout) || !detach` turns an explicit false back into
+    # true, so these have to be tested for presence rather than truthiness.
+    # They default to the inverse of :detach when the caller says nothing.
+    stdout = options.key?(:stdout) ? options.delete(:stdout) : !detach
+    stderr = options.key?(:stderr) ? options.delete(:stderr) : !detach
     wait = options.delete(:wait)
 
     opts = {
@@ -118,6 +121,16 @@ class Docker::Container
       opts[:stdin] = true
       excon_params[:hijack_block] = Docker::Util.hijack_for(stdin, block,
         msgs, tty)
+      # Hijacking means asking the daemon to upgrade the connection. Without
+      # these headers Docker answers 200 and leaves the payload on Excon's
+      # buffered socket, which the raw hijacked read never looks at, so the
+      # attach blocks forever. With them the daemon replies 101 and hands the
+      # socket over, so 101 has to be an accepted status.
+      excon_params[:headers] = {
+        'Connection' => 'Upgrade',
+        'Upgrade' => 'tcp'
+      }.merge(excon_params[:headers] || {})
+      excon_params[:expects] ||= (200..204).to_a + [101, 301, 304]
     else
       excon_params[:response_block] = Docker::Util.attach_for(block, msgs, tty)
     end
@@ -324,10 +337,15 @@ class Docker::Container
     archive_in_stream("/", overwrite: true) { output_io.read }
   end
 
+  # Keys that /containers/create takes as query parameters rather than in the
+  # request body. The daemon silently ignores them if they are sent in the
+  # body, so a misplaced key means the option has no effect at all.
+  CREATE_QUERY_KEYS = %w[name platform].freeze
+
   # Create a new Container.
   def self.create(opts = {}, conn = Docker.connection)
-    query = opts.select {|key| ['name', :name].include?(key) }
-    clean_opts = opts.reject {|key| ['name', :name].include?(key) }
+    query = opts.select { |key| CREATE_QUERY_KEYS.include?(key.to_s) }
+    clean_opts = opts.reject { |key| CREATE_QUERY_KEYS.include?(key.to_s) }
     resp = conn.post('/containers/create', query, :body => MultiJson.dump(clean_opts))
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)

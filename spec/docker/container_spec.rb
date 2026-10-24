@@ -163,6 +163,32 @@ describe Docker::Container do
         expect(subject.json["Name"]).to eq("/bob")
       end
     end
+
+    context 'when a platform is given' do
+      let(:opts) { {"platform" => "linux/amd64"} }
+
+      # /containers/create takes platform as a query parameter. A "platform"
+      # body key is accepted and silently ignored by the daemon, so sending it
+      # in the body means the requested platform has no effect at all.
+      it 'sends the platform as a query parameter' do
+        expect(Docker.connection).to receive(:post).with(
+          '/containers/create',
+          hash_including('platform' => 'linux/amd64'),
+          anything
+        ).and_return('{"Id":"deadbeef"}')
+
+        subject
+      end
+
+      it 'does not send the platform in the body' do
+        expect(Docker.connection).to receive(:post) { |_path, _query, opts|
+          expect(MultiJson.load(opts[:body])).to_not have_key('platform')
+          '{"Id":"deadbeef"}'
+        }
+
+        subject
+      end
+    end
   end
 
   describe '#rename' do
@@ -438,6 +464,35 @@ describe Docker::Container do
       end
     end
 
+    # Hijacking the socket means asking the daemon to upgrade the connection.
+    # Without the upgrade headers Docker answers 200 and keeps the response on
+    # Excon's buffered socket, so the raw hijacked read never sees the payload
+    # and the attach blocks forever.
+    context 'when attaching to stdin' do
+      # Stub only the attach request so start/stop in the hooks still reach the
+      # daemon and the container is cleaned up normally.
+      let(:attach_params) do
+        captured = nil
+        allow(subject.connection).to receive(:post).and_call_original
+        allow(subject.connection).to receive(:post)
+          .with(a_string_matching(%r{/attach\z}), anything, anything) { |_p, _q, params|
+            captured = params
+            ''
+          }
+        subject.attach(stdin: StringIO.new("foo\n"))
+        captured
+      end
+
+      it 'asks the daemon to upgrade the connection' do
+        expect(attach_params[:headers]['Connection']).to eq('Upgrade')
+        expect(attach_params[:headers]['Upgrade']).to eq('tcp')
+      end
+
+      it 'accepts the 101 the daemon replies with' do
+        expect(attach_params[:expects]).to include(101)
+      end
+    end
+
     context 'with very small chunks' do
       before do
         Docker.options = { :chunk_size => 1 }
@@ -503,7 +558,14 @@ describe Docker::Container do
       described_class.create('Cmd' => %w[true], 'Image' => 'debian:stable')
     }
 
-    before { subject.tap(&:start).stop('timeout' => '10') }
+    # POST /containers/{id}/stop returns once the daemon has signalled the
+    # container, which can land just before it leaves the running list. Wait on
+    # the not-running condition so the assertion below is not racing that
+    # transition.
+    before do
+      subject.tap(&:start).stop('timeout' => '10')
+      subject.wait(10)
+    end
     after { subject.remove }
 
     it 'stops the container' do
@@ -575,6 +637,30 @@ describe Docker::Container do
       it 'returns the Docker::Exec object' do
         expect(output).to be_a Docker::Exec
         expect(output.id).to_not be_nil
+      end
+    end
+
+    # `stderr = options.delete(:stderr) || !detach` turns an explicit false back
+    # into true, so both stream options were impossible to switch off.
+    context 'when stderr is false' do
+      let(:output) {
+        subject.exec(['bash', '-c', 'echo out; echo err 1>&2'], stderr: false)
+      }
+
+      it 'captures stdout but not stderr' do
+        expect(output[0]).to eq(["out\n"])
+        expect(output[1]).to be_empty
+      end
+    end
+
+    context 'when stdout is false' do
+      let(:output) {
+        subject.exec(['bash', '-c', 'echo out; echo err 1>&2'], stdout: false)
+      }
+
+      it 'captures stderr but not stdout' do
+        expect(output[0]).to be_empty
+        expect(output[1]).to eq(["err\n"])
       end
     end
 
