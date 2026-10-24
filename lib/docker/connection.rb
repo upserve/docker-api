@@ -129,7 +129,12 @@ class Docker::Connection
   end
 
   def rootless?
-    @rootless ||= (info['Rootless'] == true)
+    # `||=` cannot cache a false result, so this has to test for the ivar
+    # itself. #info is not memoized, so re-evaluating means another /info
+    # request on every call against a non-rootless daemon.
+    return @rootless if defined?(@rootless)
+
+    @rootless = (info['Rootless'] == true)
   end
 
   def version
