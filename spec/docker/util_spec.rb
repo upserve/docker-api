@@ -226,6 +226,52 @@ describe Docker::Util do
         expect(files_in_tar(tar)).to eq ['.dockerignore', 'zig']
       end
     end
+
+    describe 'build context containment' do
+      attr_accessor :outside
+
+      def entries_in_tar(tar)
+        Gem::Package::TarReader.new(tar) do |content|
+          return content.map { |e| [e.full_name, e.header.typeflag, e.read.to_s] }
+        end
+      end
+
+      around do |example|
+        Dir.mktmpdir do |dir|
+          self.outside = dir
+          File.write("#{dir}/secret", 'OUTSIDE')
+          example.call
+        end
+      end
+
+      it 'archives a symlink as a symlink rather than following it' do
+        File.symlink("#{outside}/secret", "#{tmpdir}/innocent.txt")
+
+        name, typeflag, body = entries_in_tar(tar).first
+        expect(name).to eq 'innocent.txt'
+        expect(typeflag).to eq '2'
+        expect(body).to_not include 'OUTSIDE'
+      end
+
+      it 'does not raise on a dangling symlink' do
+        File.symlink("#{tmpdir}/no_such_target", "#{tmpdir}/dangling")
+
+        expect { files_in_tar(tar) }.to_not raise_error
+      end
+
+      it 'does not pack a file a negation pattern reaches outside the build directory' do
+        File.write("#{tmpdir}/.dockerignore", "!#{'../' * 12}#{outside[1..-1]}/secret")
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore']
+      end
+
+      it 'does not pack a file reached through a symlinked directory' do
+        File.symlink(outside, "#{tmpdir}/a_link")
+        File.write("#{tmpdir}/.dockerignore", '!a_link/secret')
+
+        expect(files_in_tar(tar)).to eq ['.dockerignore', 'a_link']
+      end
+    end
   end
 
   describe '.build_auth_header' do

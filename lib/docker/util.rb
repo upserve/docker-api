@@ -173,14 +173,25 @@ module Docker::Util
   end
 
   def create_relative_dir_tar(directory, output)
+    root = File.realpath(directory)
+
     Gem::Package::TarWriter.new(output) do |tar|
       files = docker_context(directory)
 
       files.each do |prefixed_file_name|
-        stat = File.stat(prefixed_file_name)
+        stat = File.lstat(prefixed_file_name)
+        unprefixed_file_name = prefixed_file_name[directory.length..-1]
+
+        if stat.symlink?
+          tar.add_symlink(
+            unprefixed_file_name, File.readlink(prefixed_file_name), stat.mode
+          )
+          next
+        end
         next unless stat.file?
 
-        unprefixed_file_name = prefixed_file_name[directory.length..-1]
+        next unless contained?(prefixed_file_name, root)
+
         add_file_to_tar(
           tar, unprefixed_file_name, stat.mode, stat.size, stat.mtime
         ) do |tar_file|
@@ -188,6 +199,14 @@ module Docker::Util
         end
       end
     end
+  end
+
+  # True when path resolves, with every symlink and '..' expanded, to
+  # something underneath root.
+  def contained?(path, root)
+    File.realpath(path).start_with?(root + File::SEPARATOR)
+  rescue SystemCallError
+    false
   end
 
   def add_file_to_tar(tar, name, mode, size, mtime)
