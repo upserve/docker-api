@@ -240,14 +240,7 @@ class Docker::Image
     def import(imp, opts = {}, conn = Docker.connection)
       require 'open-uri'
 
-      # This differs after Ruby 2.4
-      if URI.public_methods.include?(:open)
-        munged_open = URI.method(:open)
-      else
-        munged_open = self.method(:open)
-      end
-
-      munged_open.call(imp) do |io|
+      URI.open(imp) do |io|
         import_stream(opts, conn) do
           io.read(Excon.defaults[:chunk_size]).to_s
         end

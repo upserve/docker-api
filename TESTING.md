@@ -1,6 +1,6 @@
 # Prerequisites
 To develop on this gem, you must the following installed:
-* a Ruby 2.4+ environment with `bundler`
+* a Ruby 2.7+ environment with `bundler`
 ```shell
 $ gem install bundler
 ```

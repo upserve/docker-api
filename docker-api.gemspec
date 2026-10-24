@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
     'source_code_uri' => 'https://github.com/upserve/docker-api',
     'rubygems_mfa_required' => 'true'
   }
+  gem.required_ruby_version = '>= 2.7'
   gem.add_dependency 'excon', '>= 0.64.0'
   # base64 stopped being a default gem in Ruby 3.4, so `require 'base64'` in
   # lib/docker.rb raises LoadError under Bundler unless it is declared.
