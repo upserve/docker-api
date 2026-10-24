@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. At the time of this writing, docker-api is meant to interface with Docker version 1.4.*
+This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. The gem does not pin an API version, so requests use the daemon's default. It is tested against Docker 26 and 27.
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/upserve/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 
@@ -41,7 +41,7 @@ At this time, basic `podman` support has been added via the podman docker-compat
 Follow the [installation instructions](https://docs.docker.com/install/), and then run:
 
 ```shell
-$ sudo docker -d
+$ sudo dockerd
 ```
 
 This will daemonize Docker so that it can be used for the remote API calls.
@@ -138,15 +138,15 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 
 ## Images
 
-Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#2-2-images) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/engine/) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
 
 ```ruby
 require 'docker'
 # => true
 
 # Pull an Image.
-# docker command for reference: docker pull ubuntu:14.04
-image = Docker::Image.create('fromImage' => 'ubuntu:14.04')
+# docker command for reference: docker pull ubuntu:24.04
+image = Docker::Image.create('fromImage' => 'ubuntu:24.04')
 # => Docker::Image { :id => ae7ffbcd1, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Insert a local file into an Image.
@@ -194,12 +194,12 @@ image.run('ls -l')
 # Remove the Image from the server.
 # docker command for reference: docker rmi -f <IMAGE.ID>
 image.remove(:force => true)
-# => true
+# => "[{\"Untagged\":\"base2:latest\"}]\n"
 
 # Export a single Docker Image to a file
 # docker command for reference: docker save <IMAGE.ID> my_export.tar
 image.save('my_export.tar')
-# => Docker::Image { :id => 66b712aef, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
+# => nil
 
 # Return the raw image binary data
 image.save
@@ -225,7 +225,7 @@ File.open('my-export.tar') do |file|
 end
 
 # Create an Image from a Dockerfile as a String.
-Docker::Image.build("from base\nrun touch /test")
+Docker::Image.build("FROM debian:stable\nRUN touch /test")
 # => Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Create an Image from a Dockerfile.
@@ -256,7 +256,7 @@ Docker::Image.all
 # => [Docker::Image { :id => b750fe79269d2ec9a3c593ef05b4332b1d1a02a62b4accb2c21d589ff2f5f2dc, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }, Docker::Image { :id => 8dbd9e392a964056420e5d58ca5cc376ef18e2de93b5cc90e868a1bbc8318c1c, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }]
 
 # Get Image from the server, with id
-# docker command for reference: docker images <IMAGE.ID>
+# docker command for reference: docker inspect <IMAGE.ID>
 Docker::Image.get('df4f1bdecf40')
 # => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
@@ -298,13 +298,13 @@ Docker::Image.search('term' => 'sshd')
 
 ## Containers
 
-Much like the Images, this object also has a one-to-one mapping with the [Containers](https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#2-1-containers) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
+Much like the Images, this object also has a one-to-one mapping with the [Containers](https://docs.docker.com/reference/api/engine/) section of the API. Also like Images, `.new` is a private method, so you must use `.create` to make an instance.
 
 ```ruby
 require 'docker'
 
 # Create a Container.
-container = Docker::Container.create('Cmd' => ['ls'], 'Image' => 'base')
+container = Docker::Container.create('Cmd' => ['ls'], 'Image' => 'debian:stable')
 # => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Get more information about the Container.
@@ -425,13 +425,13 @@ container.changes
 # Copy files/directories from the Container. Note that these are exported as tars.
 container.archive_out('/etc/hosts') { |chunk| puts chunk }
 
-hosts0000644000000000000000000000023412100405636007023 0ustar
-127.0.0.1       localhost
-::1             localhost ip6-localhost ip6-loopback
-fe00::0         ip6-localnet
-ff00::0         ip6-mcastprefix
-ff02::1         ip6-allnodes
-ff02::2         ip6-allrouters
+# hosts0000644000000000000000000000023412100405636007023 0ustar
+# 127.0.0.1       localhost
+# ::1             localhost ip6-localhost ip6-loopback
+# fe00::0         ip6-localnet
+# ff00::0         ip6-mcastprefix
+# ff02::1         ip6-allnodes
+# ff02::2         ip6-allrouters
 # => Docker::Container { :id => a1759f3e2873, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Wait for the current command to finish executing. If an argument is given,
@@ -445,13 +445,13 @@ container.attach(:stream => true, :stdin => nil, :stdout => true, :stderr => tru
 # => [["bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar", []]
 
 # If you wish to stream the attach method, a block may be supplied.
-container = Docker::Container.create('Image' => 'base', 'Cmd' => ['find / -name *'])
+container = Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ['find / -name *'])
 container.tap(&:start).attach { |stream, chunk| puts "#{stream}: #{chunk}" }
-stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
+# stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
 # => [[], ["2013/10/30 17:16:24 Unable to locate find / -name *\n"]]
 
 # If you want to attach to stdin of the container, supply an IO-like object:
-container = Docker::Container.create('Image' => 'base', 'Cmd' => ['cat'], 'OpenStdin' => true, 'StdinOnce' => true)
+container = Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ['cat'], 'OpenStdin' => true, 'StdinOnce' => true)
 container.tap(&:start).attach(stdin: StringIO.new("foo\nbar\n"))
 # => [["foo\nbar\n"], []]
 
@@ -470,16 +470,16 @@ container.logs(stdout: true)
 
 # Streaming logs from non-TTY container removing multiplex prefix with a block printing out each line (block not possible with Container#logs)
 container.streaming_logs(stdout: true) { |stream, chunk| puts "#{stream}: #{chunk}" }
-stdout: 1
-stdout: 2
-stdout: 3
-stdout: 4
-stdout: 5
-stdout: 6
-stdout: 7
-stdout: 8
-stdout: 9
-stdout: 10
+# stdout: 1
+# stdout: 2
+# stdout: 3
+# stdout: 4
+# stdout: 5
+# stdout: 6
+# stdout: 7
+# stdout: 8
+# stdout: 9
+# stdout: 10
 # => "1\n\n2\n\n3\n\n4\n\n5\n\n6\n\n7\n\n8\n\n9\n\n10\n"
 
 # If the container has TTY enabled, set `tty => true` to get the raw stream:
@@ -499,7 +499,7 @@ container.commit
 # Commit the Container and run a new command. The second argument is the number
 # of seconds the Container should wait before stopping its current command.
 container.run('pwd', 10)
-# => Docker::Image { :id => 4427be4199ac, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
+# => Docker::Container { :id => 4427be4199ac, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Run an Exec instance inside the container and capture its output and exit status
 container.exec(['date'])
@@ -511,12 +511,13 @@ container.exec(['./my_service'], detach: true)
 
 # Parse the output of an Exec instance
 container.exec(['find', '/', '-name *']) { |stream, chunk| puts "#{stream}: #{chunk}" }
-stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
+# stderr: 2013/10/30 17:16:24 Unable to locate find / -name *
 # => [[], ["2013/10/30 17:16:24 Unable to locate find / -name *\n"], 1]
 
-# Run an Exec instance by grab only the STDOUT output
-container.exec(['date'], stderr: false)
-# => [["Wed Nov 26 11:10:30 CST 2014\n"], [], 0]
+# The return value is [stdout_lines, stderr_lines, exit_code], so destructure
+# it if you only care about one stream.
+stdout, _stderr, _exit_code = container.exec(['date'])
+# stdout => ["Wed Nov 26 11:10:30 CST 2014\n"]
 
 # Pass input to an Exec instance command via Stdin
 container.exec(['cat'], stdin: StringIO.new("foo\nbar\n"))
@@ -529,7 +530,7 @@ container.exec(command, tty: true)
 
 # Wait for the current command to finish executing. If an argument is given,
 # will timeout after that number of seconds. The default is one minute.
-command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"Set max seconds for exec!!\"; fi"]
+command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"Set max seconds for exec!\"; fi"]
 container.exec(command, wait: 120)
 # => [["Set max seconds for exec!"], [], 0]
 
@@ -538,7 +539,7 @@ container.delete(:force => true)
 # => nil
 
 # Update the container.
-container.update("CpuShares" => 50000")
+container.update("CpuShares" => 50000)
 
 # Request a Container by ID or name.
 Docker::Container.get('500f53b25e6e')
@@ -578,28 +579,36 @@ require 'docker'
 
 # Action on a stream of events as they come in
 Docker::Event.stream { |event| puts event; break }
-Docker::Event { :status => create, :id => aeb8b55726df63bdd69d41e1b2650131d7ce32ca0d2fa5cbc75f24d0df34c7b0, :from => base:latest, :time => 1416958554 }
+# Docker::Event { :status => create, :id => aeb8b55726df63bdd69d41e1b2650131d7ce32ca0d2fa5cbc75f24d0df34c7b0, :from => debian:stable, :time => 1416958554 }
 # => nil
 
 # Action on all events after a given time (will execute the block for all events up till the current time, and wait to execute on any new events after)
 Docker::Event.since(1416958763) { |event| puts event; puts Time.now.to_i; break }
-Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdaef329043b409ecb97fb68d7e, :from => base:latest, :time => 1416958764 }
-1416959041
+# Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdaef329043b409ecb97fb68d7e, :from => debian:stable, :time => 1416958764 }
+# 1416959041
 # => nil
 ```
 
-These methods are prone to read timeouts. The timeout can be disabled by setting it to zero, or simply made much higher:
+These methods are prone to read timeouts. Note that the first argument to
+`Docker::Event.stream` and `Docker::Event.since` is a hash of **query parameters**
+for the `/events` endpoint, not Excon options. Passing `read_timeout` there sends
+it to Docker as a query parameter and has no effect on the timeout. Set it on the
+connection instead:
 
 ```ruby
-# Disable timeouts completely
-Docker::Event.stream({ read_timeout: 0 }) { |event| … }
+# Disable timeouts completely, for this call only
+conn = Docker::Connection.new(Docker.url, Docker.options.merge(read_timeout: 0))
+Docker::Event.stream({}, conn) { |event| puts event }
 
 # Timeout if no events are received in 24h
-Docker::Event.stream({ read_timeout: 60 * 60 * 24) }) { |event| … }
+conn = Docker::Connection.new(Docker.url, Docker.options.merge(read_timeout: 60 * 60 * 24))
+Docker::Event.stream({}, conn) { |event| puts event }
 
-# Set a high timeout globally. Be warned that you probably don't want this for other methods.
+# Or set a high timeout globally. Be warned that you probably don't want this
+# for other methods. This has to happen before the default connection is first
+# used, since `Docker.connection` is memoized.
 Docker.options[:read_timeout] = 60 * 60 * 24
-Docker::Event.stream { |event| … }
+Docker::Event.stream { |event| puts event }
 ```
 
 ## Connecting to Multiple Servers
@@ -636,8 +645,8 @@ end
 
 ## Not supported (yet)
 
-*   Generating a tarball of images and metadata for a repository specified by a name: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#get-a-tarball-containing-all-images-and-tags-in-a-repository
-*   Load a tarball generated from docker that contains all the images and metadata of a repository: https://docs.docker.com/engine/reference/api/docker_remote_api_v1.14/#load-a-tarball-with-a-set-of-images-and-tags-into-docker
+*   Generating a tarball of images and metadata for a repository specified by a name
+*   Load a tarball generated from docker that contains all the images and metadata of a repository
 
 License
 -----
