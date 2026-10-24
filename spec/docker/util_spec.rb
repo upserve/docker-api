@@ -260,7 +260,7 @@ describe Docker::Util do
       end
 
       it 'does not pack a file a negation pattern reaches outside the build directory' do
-        File.write("#{tmpdir}/.dockerignore", "!#{'../' * 12}#{outside[1..]}/secret")
+        File.write("#{tmpdir}/.dockerignore", "!#{'../' * 12}#{outside[1..-1]}/secret")
 
         expect(files_in_tar(tar)).to eq ['.dockerignore']
       end
