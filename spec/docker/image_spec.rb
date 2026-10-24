@@ -178,7 +178,7 @@ describe Docker::Image do
     }
     let(:repo_tag) { "#{ENV['DOCKER_API_USER']}/true" }
     let(:image) {
-      described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
+      described_class.build("FROM hello-world\n", "t" => repo_tag).refresh!
     }
     after { image.remove(:name => repo_tag, :noprune => true) }
 
@@ -199,7 +199,7 @@ describe Docker::Image do
 
     context 'when the image was retrived by get' do
       let(:image) {
-        described_class.build("FROM tianon/true\n", "t" => repo_tag).refresh!
+        described_class.build("FROM hello-world\n", "t" => repo_tag).refresh!
         described_class.get(repo_tag)
       }
 
@@ -296,7 +296,7 @@ describe Docker::Image do
       let(:cmd) { nil }
 
       context 'no command configured in image' do
-        subject { described_class.create('fromImage' => 'swipely/base') }
+        subject { described_class.create('fromImage' => 'hello-world') }
         xit 'should raise an error if no command is specified' do
           begin
             container
@@ -398,7 +398,7 @@ describe Docker::Image do
     subject { described_class }
 
     context 'when the Image does not yet exist and the body is a Hash' do
-      let(:image) { subject.create('fromImage' => 'swipely/base') }
+      let(:image) { subject.create('fromImage' => 'hello-world') }
       let(:creds) {
         {
           :username => ENV['DOCKER_API_USER'],
@@ -409,9 +409,9 @@ describe Docker::Image do
 
       before do
         skip_without_auth
-        Docker::Image.create('fromImage' => 'swipely/base').remove
+        Docker::Image.create('fromImage' => 'hello-world').remove
       end
-      after { Docker::Image.create('fromImage' => 'swipely/base') }
+      after { Docker::Image.create('fromImage' => 'hello-world') }
 
       it 'sets the id and sends Docker.creds' do
         allow(Docker).to receive(:creds).and_return(creds)
@@ -520,7 +520,7 @@ describe Docker::Image do
       after { FileUtils.remove(file) }
 
       it 'exports tarball of image to specified file' do
-        Docker::Image.save('swipely/base', file)
+        Docker::Image.save('hello-world', file)
         expect(File.exist?(file)).to eq true
         expect(File.read(file)).to_not be_nil
       end
@@ -528,7 +528,7 @@ describe Docker::Image do
 
     context 'when no filename is specified' do
       it 'returns raw binary data as string' do
-        raw = Docker::Image.save('swipely/base')
+        raw = Docker::Image.save('hello-world')
         expect(raw).to_not be_nil
       end
     end
