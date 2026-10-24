@@ -2,7 +2,7 @@ docker-api
 ==========
 [![Gem Version](https://badge.fury.io/rb/docker-api.svg)](https://badge.fury.io/rb/docker-api)
 
-This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. The gem does not pin an API version, so requests use the daemon's default. It is tested against Docker 26 and 27.
+This gem provides an object-oriented interface to the [Docker Engine API](https://docs.docker.com/develop/sdk/). Every method listed there is implemented. The gem does not pin an API version, so requests use the daemon's default. It is tested against Docker 28 and 29.
 
 If you're interested in using Docker to package your apps, we recommend the [dockly](https://github.com/upserve/dockly) gem. Dockly provides a simple DSL for describing Docker containers that install as Debian packages and are controlled by upstart scripts.
 

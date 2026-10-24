@@ -26,8 +26,8 @@ jobs:
           - 2.5
           - 2.4
         docker_version:
-          - ':26.'
-          - ':27.'
+          - ':28.'
+          - ':29.'
       fail-fast: false
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
