@@ -2,8 +2,6 @@
 
 require 'bundler/setup'
 
-ENV['PATH'] = "/opt/docker/:#{ENV['PATH']}" if ENV['CI'] == 'true'
-
 require 'docker'
 require 'rspec/core/rake_task'
 
@@ -16,7 +14,7 @@ end
 
 desc 'Download the necessary base images'
 task :unpack do
-  %w( swipely/base registry busybox:uclibc tianon/true debian:stable ).each do |image|
+  %w( hello-world registry busybox:uclibc debian:stable ).each do |image|
     system "docker pull #{image}"
   end
 end
