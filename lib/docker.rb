@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'cgi'
-require 'multi_json'
+require 'json'
 require 'excon'
 require 'tempfile'
 require 'base64'
@@ -133,7 +133,7 @@ module Docker
 
   # Login to the Docker registry.
   def authenticate!(options = {}, connection = self.connection)
-    creds = MultiJson.dump(options)
+    creds = JSON.generate(options)
     connection.post('/auth', {}, body: creds)
     @creds = creds
     true

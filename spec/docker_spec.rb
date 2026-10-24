@@ -218,7 +218,7 @@ describe Docker do
       it 'logs in and sets the creds' do
         skip_without_auth
         expect(authentication).to be true
-        expect(Docker.creds).to eq(MultiJson.dump(credentials))
+        expect(Docker.creds).to eq(JSON.generate(credentials))
       end
     end
 

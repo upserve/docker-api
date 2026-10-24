@@ -141,7 +141,7 @@ describe Docker::Event do
     context 'with a new api response' do
       let(:event) do
         Docker::Event.new_event(
-          MultiJson.dump(api_response),
+          JSON.generate(api_response),
           nil,
           nil
         )

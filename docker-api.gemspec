@@ -13,7 +13,6 @@ Gem::Specification.new do |gem|
   gem.name          = 'docker-api'
   gem.version       = Docker::VERSION
   gem.add_dependency 'excon', '>= 0.64.0'
-  gem.add_dependency 'multi_json'
   # base64 stopped being a default gem in Ruby 3.4, so `require 'base64'` in
   # lib/docker.rb raises LoadError under Bundler unless it is declared.
   gem.add_dependency 'base64'
