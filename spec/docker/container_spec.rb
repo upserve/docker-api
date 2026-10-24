@@ -529,7 +529,14 @@ describe Docker::Container do
       described_class.create('Cmd' => %w[true], 'Image' => 'debian:stable')
     }
 
-    before { subject.tap(&:start).stop('timeout' => '10') }
+    # POST /containers/{id}/stop returns once the daemon has signalled the
+    # container, which can land just before it leaves the running list. Wait on
+    # the not-running condition so the assertion below is not racing that
+    # transition.
+    before do
+      subject.tap(&:start).stop('timeout' => '10')
+      subject.wait(10)
+    end
     after { subject.remove }
 
     it 'stops the container' do
