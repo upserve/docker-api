@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
   gem.files         = `git ls-files lib README.md LICENSE`.split($\)
   gem.name          = 'docker-api'
   gem.version       = Docker::VERSION
+  gem.required_ruby_version = '>= 2.7'
   gem.add_dependency 'excon', '>= 0.64.0'
   gem.add_dependency 'multi_json'
   # base64 stopped being a default gem in Ruby 3.4, so `require 'base64'` in
