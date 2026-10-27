@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 16
+# Specs that are skipped on Podman leave one more line uncovered there.
+SingleCov.covered! uncovered: (::Docker.podman? ? 17 : 16)
 
 describe Docker::Image do
   describe '#to_s' do

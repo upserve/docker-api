@@ -2,7 +2,8 @@
 
 require 'spec_helper'
 
-SingleCov.covered! uncovered: 12
+# Specs that are skipped on Podman leave one more line uncovered there.
+SingleCov.covered! uncovered: (::Docker.podman? ? 13 : 12)
 
 describe Docker::Connection do
   subject { described_class.new('http://localhost:4243', {}) }
