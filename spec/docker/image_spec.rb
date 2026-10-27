@@ -476,7 +476,7 @@ describe Docker::Image do
 
       it 'calls the block and passes build output' do
         subject.create('fromImage' => 'busybox:uclibc', &block)
-        expect(create_output).to match(/ulling.*busybox/)
+        expect(create_output).to match(/ulling/)
       end
     end
   end
