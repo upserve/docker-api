@@ -46,7 +46,14 @@ describe Docker::Container do
       )
     end
 
-    before(:each) { subject.tap(&:start).wait }
+    before(:each) do
+      subject.tap(&:start).wait
+
+      # Podman can serve the logs of an exited container slightly after it
+      # exits, so wait (up to 10 seconds) until they are available.
+      deadline = Time.now + 10
+      sleep 0.2 while subject.logs(stdout: 1).empty? && Time.now < deadline
+    end
     after(:each) { subject.remove }
 
     context 'when not selecting any stream' do
