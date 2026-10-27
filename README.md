@@ -85,7 +85,7 @@ The cert path is a folder that contains the cert, key and cacert files.
 docker-api is expecting the files to be named: cert.pem, key.pem, and ca.pem.
 If your files are named different, you'll want to set your options explicity:
 
-```
+```ruby
 Docker.options = {
     client_cert: File.join(cert_path, 'cert.pem'),
     client_key: File.join(cert_path, 'key.pem'),
@@ -96,7 +96,7 @@ Docker.options = {
 
 If you want to load the cert files from a variable, e.g. you want to load them from ENV as needed on Heroku:
 
-```
+```ruby
 cert_store = OpenSSL::X509::Store.new
 certificate = OpenSSL::X509::Certificate.new ENV["DOCKER_CA"]
 cert_store.add_cert certificate
