@@ -138,7 +138,7 @@ Docker.authenticate!('username' => 'docker-fan-boi', 'password' => 'i<3docker', 
 
 ## Images
 
-Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/engine/) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Also, note that `Docker::Image.new` is a private method, so you must use `.create`, `.build`, `.build_from_dir`, `build_from_tar`, or `.import` to make an instance.
+Just about every method here has a one-to-one mapping with the [Images](https://docs.docker.com/reference/api/engine/) section of the API. If an API call accepts query parameters, these can be passed as an Hash to it's corresponding method. Instances are normally obtained from `.create`, `.get`, `.all`, `.build`, `.build_from_dir`, `.build_from_tar`, or `.import` rather than by calling `.new` directly.
 
 ```ruby
 require 'docker'
@@ -157,15 +157,16 @@ image.insert_local('localPath' => 'Gemfile', 'outputPath' => '/')
 image.insert_local('localPath' => [ 'Gemfile', 'Rakefile' ], 'outputPath' => '/')
 # => Docker::Image { :id => eb693ec80, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
-# Add a repo name to Image.
+# Add a repo name to Image. The tag defaults to latest, and the return value
+# is every repo tag the Image now has.
 # docker command for reference: docker tag <IMAGE.ID> base2
-image.tag('repo' => 'base2', 'force' => true)
-# => ["base2"]
+image.tag('repo' => 'base2')
+# => ["ubuntu:24.04", "base2:latest"]
 
 # Add a repo name and tag an Image.
-# docker command for reference: docker tag <IMAGE.ID> base2:latest
-image.tag('repo' => 'base2', 'tag' => 'latest', force: true)
-# => ["base2:latest"]
+# docker command for reference: docker tag <IMAGE.ID> base2:v1
+image.tag('repo' => 'base2', 'tag' => 'v1')
+# => ["ubuntu:24.04", "base2:latest", "base2:v1"]
 
 # Get more information about the Image.
 # docker command for reference: docker inspect <IMAGE.ID>
@@ -187,7 +188,7 @@ image.push(nil, tag: "tag_name")
 image.push(nil, repo_tag: 'registry/repo_name:tag_name')
 
 # Given a command, create a new Container to run that command in the Image.
-# docker command for reference: docker run -ti <IMAGE.ID> ls -l
+# docker command for reference: docker run -d <IMAGE.ID> ls -l
 image.run('ls -l')
 # => Docker::Container { id => aaef712eda, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
@@ -238,10 +239,12 @@ Docker::Image.build_from_dir('.')
 Docker::Image.build_from_dir('.', { 'dockerfile' => 'Dockerfile.Centos' })
 # => Docker::Image { :id => 1266dc19e, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
-# Create an Image from a Dockerfile and stream the logs
-Docker::Image.build_from_dir('.') do |v|
-  if (log = JSON.parse(v)) && log.has_key?("stream")
-    $stdout.puts log["stream"]
+# Create an Image from a Dockerfile and stream the logs. A chunk can hold
+# several JSON messages, one per line.
+Docker::Image.build_from_dir('.') do |chunk|
+  chunk.each_line do |line|
+    log = JSON.parse(line)
+    $stdout.puts log["stream"] if log.has_key?("stream")
   end
 end
 
@@ -350,9 +353,9 @@ container.top(format: :hash)
 #      "Processes" => [["4851", "pts/0", "00:00:00", "lxc-start"]]
 #    }
 
-# To expose 1234 to bridge
-# In Dockerfile: EXPOSE 1234/tcp
-# docker run resulting-image-name
+# To publish 1234 (exposed in the Dockerfile with EXPOSE 1234/tcp) to a
+# random host port
+# docker run -p 1234 resulting-image-name
 Docker::Container.create(
   'Image' => 'image-name',
   'HostConfig' => {
@@ -413,10 +416,10 @@ container.read_file("/test")
 
 # Export a Container. Since an export is typically at least 300M, chunks of the
 # export are yielded instead of just returning the whole thing.
-File.open('export.tar', 'w') do |file|
+File.open('export.tar', 'wb') do |file|
   container.export { |chunk| file.write(chunk) }
 end
-# => nil
+# => Docker::Container { :id => 492510dd38e4, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
 # Inspect a Container's changes to the file system.
 container.changes
@@ -442,7 +445,7 @@ container.wait(15)
 # Attach to the Container. Currently, the below options are the only valid ones.
 # By default, :stream, :stdout, and :stderr are set.
 container.attach(:stream => true, :stdin => nil, :stdout => true, :stderr => true, :logs => true, :tty => false)
-# => [["bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar", []]
+# => [["bin\nboot\ndev\netc\nhome\nlib\nlib64\nmedia\nmnt\nopt\nproc\nroot\nrun\nsbin\nselinux\nsrv\nsys\ntmp\nusr\nvar\n"], []]
 
 # If you wish to stream the attach method, a block may be supplied.
 container = Docker::Container.create('Image' => 'debian:stable', 'Cmd' => ['find / -name *'])
@@ -496,8 +499,9 @@ container.stats
 container.commit
 # => Docker::Image { :id => eaeb8d00efdf, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
-# Commit the Container and run a new command. The second argument is the number
-# of seconds the Container should wait before stopping its current command.
+# Start the Container, wait for its current command to finish, then commit it
+# and run a new command in a Container created from that commit. The second
+# argument is how many seconds to wait for the current command to finish.
 container.run('pwd', 10)
 # => Docker::Container { :id => 4427be4199ac, :connection => Docker::Connection { :url => tcp://localhost, :options => {:port=>2375} } }
 
@@ -534,12 +538,12 @@ command = ["bash", "-c", "if [ -t 1 ]; then echo -n \"Set max seconds for exec!\
 container.exec(command, wait: 120)
 # => [["Set max seconds for exec!"], [], 0]
 
+# Update the container.
+container.update("CpuShares" => 50000)
+
 # Delete a Container.
 container.delete(:force => true)
 # => nil
-
-# Update the container.
-container.update("CpuShares" => 50000)
 
 # Request a Container by ID or name.
 Docker::Container.get('500f53b25e6e')
@@ -579,19 +583,20 @@ require 'docker'
 
 # Action on a stream of events as they come in
 Docker::Event.stream { |event| puts event; break }
-# Docker::Event { :status => create, :id => aeb8b55726df63bdd69d41e1b2650131d7ce32ca0d2fa5cbc75f24d0df34c7b0, :from => debian:stable, :time => 1416958554 }
+# Docker::Event { 1793078946119331801 container create aeb8b55726df63bdd69d41e1b2650131d7ce32ca0d2fa5cbc75f24d0df34c7b0 (image=debian:stable, name=happy_turing) }
 # => nil
 
 # Action on all events after a given time (will execute the block for all events up till the current time, and wait to execute on any new events after)
-Docker::Event.since(1416958763) { |event| puts event; puts Time.now.to_i; break }
-# Docker::Event { :status => die, :id => 663005cdeb56f50177c395a817dbc8bdcfbdfbdaef329043b409ecb97fb68d7e, :from => debian:stable, :time => 1416958764 }
-# 1416959041
+Docker::Event.since(1793078940) { |event| puts event; puts Time.now.to_i; break }
+# Docker::Event { 1793078946431907325 container die 663005cdeb56f50177c395a817dbc8bdcfbdfbdaef329043b409ecb97fb68d7e (execDuration=0, exitCode=0, image=debian:stable, name=happy_turing) }
+# 1793078950
 # => nil
 ```
 
-These methods are prone to read timeouts. Note that the first argument to
-`Docker::Event.stream` and `Docker::Event.since` is a hash of **query parameters**
-for the `/events` endpoint, not Excon options. Passing `read_timeout` there sends
+These methods are prone to read timeouts. Note that the options hash passed to
+`Docker::Event.stream` (its first argument) and `Docker::Event.since` (its second
+argument, after the timestamp) holds **query parameters** for the `/events`
+endpoint, not Excon options. Passing `read_timeout` there sends
 it to Docker as a query parameter and has no effect on the timeout. Set it on the
 connection instead:
 
@@ -632,12 +637,12 @@ require 'docker'
 
 image 'repo:tag' do
   image = Docker::Image.create('fromImage' => 'repo', 'tag' => 'old_tag')
-  image = Docker::Image.run('rm -rf /etc').commit
+  image = image.run('rm -rf /etc').tap(&:wait).commit
   image.tag('repo' => 'repo', 'tag' => 'tag')
 end
 
 image 'repo:new_tag' => 'repo:tag' do
-  image = Docker::Image.create('fromImage' => 'repo', 'tag' => 'tag')
+  image = Docker::Image.get('repo:tag')
   image = image.insert_local('localPath' => 'some-file.tar.gz', 'outputPath' => '/')
   image.tag('repo' => 'repo', 'tag' => 'new_tag')
 end
