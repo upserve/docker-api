@@ -150,7 +150,7 @@ class Docker::Container
     # Based on the link, the config passed as run, needs to be passed as the
     # body of the post so capture it, remove from the options, and pass it via
     # the post body
-    config = MultiJson.dump(options.delete('run'))
+    config = JSON.generate(options.delete('run'))
     hash = Docker::Util.parse_json(
       connection.post('/commit', options, body: config)
     )
@@ -200,7 +200,7 @@ class Docker::Container
   end
 
   def update(opts)
-    connection.post(path_for(:update), {}, body: MultiJson.dump(opts))
+    connection.post(path_for(:update), {}, body: JSON.generate(opts))
   end
 
   def streaming_logs(opts = {}, &block)
@@ -214,7 +214,7 @@ class Docker::Container
   end
 
   def start!(opts = {})
-    connection.post(path_for(:start), {}, body: MultiJson.dump(opts))
+    connection.post(path_for(:start), {}, body: JSON.generate(opts))
     self
   end
 
@@ -240,7 +240,7 @@ class Docker::Container
       timeout = opts.delete('timeout')
       query = {}
       request_options = {
-        :body => MultiJson.dump(opts)
+        :body => JSON.generate(opts)
       }
       if timeout
         query['t'] = timeout
@@ -346,7 +346,7 @@ class Docker::Container
   def self.create(opts = {}, conn = Docker.connection)
     query = opts.select { |key| CREATE_QUERY_KEYS.include?(key.to_s) }
     clean_opts = opts.reject { |key| CREATE_QUERY_KEYS.include?(key.to_s) }
-    resp = conn.post('/containers/create', query, :body => MultiJson.dump(clean_opts))
+    resp = conn.post('/containers/create', query, :body => JSON.generate(clean_opts))
     hash = Docker::Util.parse_json(resp) || {}
     new(conn, hash)
   end

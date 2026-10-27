@@ -5,7 +5,7 @@ class Docker::Network
   include Docker::Base
 
   def connect(container, opts = {}, body_opts = {})
-    body = MultiJson.dump({ container: container }.merge(body_opts))
+    body = JSON.generate({ container: container }.merge(body_opts))
     Docker::Util.parse_json(
       connection.post(path_for('connect'), opts, body: body)
     )
@@ -13,7 +13,7 @@ class Docker::Network
   end
 
   def disconnect(container, opts = {})
-    body = MultiJson.dump(container: container)
+    body = JSON.generate(container: container)
     Docker::Util.parse_json(
       connection.post(path_for('disconnect'), opts, body: body)
     )
@@ -43,7 +43,7 @@ class Docker::Network
 
   class << self
     def create(name, opts = {}, conn = Docker.connection)
-      default_opts = MultiJson.dump({
+      default_opts = JSON.generate({
         'Name' => name,
         'CheckDuplicate' => true
       }.merge(opts))

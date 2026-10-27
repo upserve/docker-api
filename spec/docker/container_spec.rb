@@ -182,7 +182,7 @@ describe Docker::Container do
 
       it 'does not send the platform in the body' do
         expect(Docker.connection).to receive(:post) { |_path, _query, opts|
-          expect(MultiJson.load(opts[:body])).to_not have_key('platform')
+          expect(JSON.parse(opts[:body])).to_not have_key('platform')
           '{"Id":"deadbeef"}'
         }
 
