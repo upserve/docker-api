@@ -77,11 +77,16 @@ describe Docker::Event do
         end
       end
 
+      # Give the stream time to connect so it does not miss the events below.
+      sleep 1
+
       container = Docker::Image.create('fromImage' => 'debian:stable')
         .run('bash')
         .tap(&:wait)
 
-      stream_thread.join(10) || stream_thread.kill
+      deadline = Time.now + 10
+      sleep 0.1 until events >= 4 || Time.now >= deadline
+      stream_thread.kill
 
       expect(events).to be >= 4
 
