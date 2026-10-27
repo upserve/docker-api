@@ -429,8 +429,8 @@ describe Docker::Container do
   end
 
   describe '#export' do
-    subject { described_class.create('Cmd' => %w[/true],
-                                     'Image' => 'tianon/true') }
+    subject { described_class.create('Cmd' => %w[/hello],
+                                     'Image' => 'hello-world') }
     before { subject.start }
     after { subject.tap(&:wait).remove }
 

@@ -1,10 +1,10 @@
 # Prerequisites
 To develop on this gem, you must the following installed:
-* a sane Ruby 1.9+ environment with `bundler`
+* a Ruby 2.4+ environment with `bundler`
 ```shell
 $ gem install bundler
 ```
-* Docker v1.3.1 or greater
+* a currently supported Docker Engine release (or Podman)
 
 
 
