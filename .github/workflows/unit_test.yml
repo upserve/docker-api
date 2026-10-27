@@ -86,6 +86,14 @@ jobs:
           bundler-cache: true
       - name: Update gems
         run: bundle update
+      - name: Allow plain HTTP to the local test registry
+        run: |
+          mkdir -p "${HOME}/.config/containers"
+          cat >> "${HOME}/.config/containers/registries.conf" <<'EOF'
+          [[registry]]
+          location = "localhost:5000"
+          insecure = true
+          EOF
       - name: Start rootless Podman API service
         run: |
           mkdir -p "${HOME}/var/run"
