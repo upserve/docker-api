@@ -9,9 +9,14 @@ Gem::Specification.new do |gem|
   gem.description   = gem.summary = 'A simple REST client for the Docker Remote API'
   gem.homepage      = 'https://github.com/upserve/docker-api'
   gem.license       = 'MIT'
-  gem.files         = `git ls-files lib README.md LICENSE`.split($\)
+  gem.files         = Dir['lib/**/*.rb'] + %w[README.md LICENSE]
   gem.name          = 'docker-api'
   gem.version       = Docker::VERSION
+  gem.metadata      = {
+    'bug_tracker_uri' => 'https://github.com/upserve/docker-api/issues',
+    'source_code_uri' => 'https://github.com/upserve/docker-api',
+    'rubygems_mfa_required' => 'true'
+  }
   gem.add_dependency 'excon', '>= 0.64.0'
   gem.add_dependency 'multi_json'
   # base64 stopped being a default gem in Ruby 3.4, so `require 'base64'` in
